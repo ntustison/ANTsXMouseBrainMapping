@@ -103,7 +103,7 @@ for i in range(len(point_sets)):
 normalized_time_points = (time_points - time_points[0]) / (time_points[-1] - time_points[0])
 
 initial_velocity_field = None
-velocity_field_file = output_prefix + "velocity_field.nii.gz"
+velocity_field_file = output_directory + "/velocity_field.nii.gz"
 if os.path.exists(velocity_field_file):
     initial_velocity_field = ants.image_read(velocity_field_file)
 
@@ -123,7 +123,7 @@ for i in range(20):
         rasterize_points=False, verbose=True)
     initial_velocity_field = ants.image_clone(tv['velocity_field'])
     # ants.image_write(initial_velocity_field, output_prefix + "velocity_field_" + str(i) + ".nii.gz")
-    ants.image_write(initial_velocity_field, output_prefix + "velocity_field.nii.gz")
+    ants.image_write(initial_velocity_field, output_directory + "velocity_field.nii.gz")
     print("\n\n\n\n\n\n")
 
 
