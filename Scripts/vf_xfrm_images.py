@@ -2,63 +2,42 @@ import ants
 import os
 import pandas as pd
 import numpy as np
+import math
+import matplotlib.pyplot as plt
 
-os.environ["ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS"] = "4"
+os.environ["ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS"] = "12"
 
-annotation_directory = "/Users/ntustison/Data/JimGee/AllenDevelopmentalVelocityFlows/AlignedSimpleSegmentations/"
-output_directory = "/Users/ntustison/Data/JimGee/AllenDevelopmentalVelocityFlows/Registrations/"
+annotation_directory = "../Data/P56xAlignedSimpleSegmentations/"
+output_directory = "../Data/Results/"
 
 template_ids = tuple(reversed(("E11-5", "E13-5", "E15-5", "E18-5", "P04", "P14", "P56")))
-velocity_field = ants.image_read(output_directory + "P56xE11-5_velocity_field.nii.gz")
+velocity_field = ants.image_read(output_directory + "velocity_field.nii.gz")
 
-total_field = ants.compose_displacement_fields(ants.integrate_velocity_field(velocity_field, 0.33, 0.85, 10),
-                                               ants.integrate_velocity_field(velocity_field, 0.85, 0.33, 10))
-total_field = ants.compose_displacement_fields(ants.integrate_velocity_field(velocity_field, 0.0, 1.0, 100),
-                                               ants.integrate_velocity_field(velocity_field, 1.0, 0.0, 100))
-ants.image_write(total_field, "~/Desktop/total_field.nii.gz")
-
-
-
-
-updated_fixed_points = np.zeros(point_sets[0].shape)
-updated_moving_points = np.zeros(point_sets[0].shape)
-t_index = 1
-t = 0.5
-time_points = np.array((0, 0.5, 1.0))
-number_of_integration_steps = 10
-
-integrated_forward_field = ants.integrate_velocity_field(velocity_field, time_points[t_index-1], t, number_of_integration_steps)
-integrated_forward_field_xfrm = ants.transform_from_displacement_field(integrated_forward_field)
-for j in range(updated_fixed_points.shape[0]):
-    updated_fixed_points[j,:] = integrated_forward_field_xfrm.apply_to_point(tuple(point_sets[t_index-1][j,:]))
-
-integrated_inverse_field = ants.integrate_velocity_field(velocity_field, time_points[t_index], t, number_of_integration_steps)
-integrated_inverse_field_xfrm = ants.transform_from_displacement_field(integrated_inverse_field)
-for j in range(updated_moving_points.shape[0]):
-    updated_moving_points[j,:] = integrated_inverse_field_xfrm.apply_to_point(tuple(point_sets[t_index][j,:]))
-
-error = np.mean(np.sqrt(np.sum(np.square(updated_moving_points - updated_fixed_points), axis=1, keepdims=True)))
-
-
-grid = ants.create_warped_grid(fixed_labels)
-inverse_warped_grid = integrated_inverse_field_xfrm.apply_to_image(grid, interpolation="linear")
-ants.plot(inverse_warped_grid)
-forward_warped_grid = integrated_forward_field_xfrm.apply_to_image(grid, interpolation="linear")
-ants.plot(forward_warped_grid)
-
-
-fixed_labels_file = annotation_directory + "P56x" + template_ids[0] + "_LABELS.nii.gz"
+fixed_labels_file = annotation_directory + "P56x" + template_ids[0] + "_DevCCF_Annotations_20um_symmetric_commonROIs_hemi_resampled.nii.gz"
 fixed_labels = ants.image_read(fixed_labels_file)
-fixed_labels = ants.resample_image(fixed_labels, resample_params=velocity_field.shape[:3], use_voxels=True, interp_type=0)
+fixed_image_file = "../Data/P56xAlignedTemplates/P56_MRI_50um/P56_MRI-fa_50um.nii.gz"
+fixed_image = ants.image_read(fixed_image_file)
 grid = ants.create_warped_grid(fixed_labels)
 
-# time_points = np.array(np.linspace(1, 0, len(template_ids)))
-time_points = np.array(np.linspace(1, 0, 50))
+time_points = np.array(np.linspace(0, 1, 20))
+log_time_points = np.array(np.linspace(0, 1, 20))
 for i in range(len(time_points)):
-    print(i)
-    displacement_field = ants.integrate_velocity_field(velocity_field, time_points[i], 0.0, 10)
+    log_time_points[i] = (math.exp(time_points[i]) - 1.0) / (math.exp(1) - 1.0)
+
+fig, ax = plt.subplots()
+ax.plot(time_points, log_time_points)
+ax.set(xlabel="time_point", ylabel="log_time_point", title="XX")
+ax.grid()
+fig.savefig("/Users/ntustison/Desktop/time_point.png")
+
+for i in range(len(time_points)):
+    t = (math.exp(time_points[i]) - 1.0) / (math.exp(1) - 1.0)
+    print("time point: ", str(t))
+    displacement_field = ants.integrate_velocity_field(velocity_field, t, 0.0, 10)
     displacement_field_xfrm = ants.transform_from_displacement_field(displacement_field)
-    warped_image = displacement_field_xfrm.apply_to_image(fixed_labels, interpolation="nearestneighbor")
-    ants.image_write(warped_image, output_directory + "WarpedImages/" + "warped_" + template_ids[0] + "_" + "{:02d}".format(i) + ".nii.gz")
-    warped_grid = displacement_field_xfrm.apply_to_image(grid, interpolation="linear")
-    ants.image_write(warped_grid, output_directory + "WarpedImages/" + "warpedgrid_" + template_ids[0] + "_" + "{:02d}".format(i) + ".nii.gz")
+    # warped_labels = displacement_field_xfrm.apply_to_image(fixed_labels, interpolation="nearestneighbor")
+    # ants.image_write(warped_labels, output_directory + "P56xVelocityFieldWarped_" + "{:02d}".format(i) + ".nii.gz")
+    # warped_grid = displacement_field_xfrm.apply_to_image(grid, interpolation="linear")
+    # ants.image_write(warped_grid, output_directory + "P56xVelocityFieldWarpedGrid_" + "{:02d}".format(i) + ".nii.gz")
+    warped_image = displacement_field_xfrm.apply_to_image(fixed_image, interpolation="linear")
+    ants.image_write(warped_image, output_directory + "P56_MRI-faxVelocityFieldWarped_" + "{:02d}".format(i) + ".nii.gz")

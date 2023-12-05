@@ -6,7 +6,7 @@ import random
 
 os.environ["ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS"] = "12"
 
-annotation_directory = "../Data/AlignedSimpleSegmentations/"
+annotation_directory = "../Data/P56xAlignedSimpleSegmentations/"
 registration_directory = annotation_directory + "PairwiseRegistrations/"
 output_directory = "../Data/Results/"
 
@@ -33,9 +33,6 @@ if not os.path.exists(output_directory):
 template_ids = tuple(reversed(("E11-5", "E13-5", "E15-5", "E18-5", "P04", "P14", "P56")))
 time_points = np.flip(-1.0 * np.log(np.array((11.5, 13.5, 15.5, 18.5, 23, 33, 47))))
 
-fixed_labels_file = annotation_directory + "P56x" + template_ids[0] + "_LABELS.nii.gz"
-fixed_labels = ants.image_read(fixed_labels_file)
-
 # Extract points.  As a first-pass and proof-of-concept, we're going to use four
 # sets of points (randomly sampled based on the user-selected number of points).  
 # The first three are from the outer surface of each of the three regions labeled
@@ -45,27 +42,66 @@ fixed_labels = ants.image_read(fixed_labels_file)
 # We then use the pairwise registrations to propagate these points to previous
 # time points.
 
-number_of_points_per_label = (10000, 10000, 10000, 5000)
+fixed_labels_file = annotation_directory + template_ids[0] + "x" + template_ids[0] + "_DevCCF_Annotations_20um_symmetric_commonROIs_hemi_resampled.nii.gz"
+fixed_labels = ants.image_read(fixed_labels_file)
 
-indices = list()
-for i in range(1, 5):
-    if i < 4:
-        single_label_image = ants.threshold_image(fixed_labels, i, i, 1, 0)
+label_geoms = ants.label_geometry_measures(fixed_labels)
+label_ids = np.array(label_geoms['Label'])
+number_of_labels = len(label_ids)
+
+contour_indices = list()
+for i in range(0, number_of_labels + 1):
+    if i < number_of_labels:
+        print("Extracting contour points from label ", label_ids[i])
+        single_label_image = ants.threshold_image(fixed_labels, label_ids[i], label_ids[i], 1, 0)
     else:
         single_label_image = ants.threshold_image(fixed_labels, 0, 0, 0, 1)
     contour_image = single_label_image - ants.iMath_ME(single_label_image, 1)
-    if i == 1:
-         single_label_indices = (contour_image.numpy()).nonzero()
-         random_indices = random.sample(range(len(single_label_indices[0])), number_of_points_per_label[i-1])
-         indices.append(single_label_indices[0][random_indices])
-         indices.append(single_label_indices[1][random_indices])
-         indices.append(single_label_indices[2][random_indices])
+    single_label_indices = (contour_image.numpy()).nonzero()
+    number_of_points_per_label = int(len(single_label_indices[0]) * 0.1)
+    print("  Number of points: ", number_of_points_per_label)
+    random_indices = random.sample(range(len(single_label_indices[0])), number_of_points_per_label)
+    if i == 0:
+         contour_indices.append(single_label_indices[0][random_indices])
+         contour_indices.append(single_label_indices[1][random_indices])
+         contour_indices.append(single_label_indices[2][random_indices])
     else:
-         single_label_indices = (contour_image.numpy()).nonzero()
-         random_indices = random.sample(range(len(single_label_indices[0])), number_of_points_per_label[i-1])
-         indices[0] = np.concatenate([indices[0], single_label_indices[0][random_indices]])
-         indices[1] = np.concatenate([indices[1], single_label_indices[1][random_indices]])
-         indices[2] = np.concatenate([indices[2], single_label_indices[2][random_indices]])
+         contour_indices[0] = np.concatenate([contour_indices[0], single_label_indices[0][random_indices]])
+         contour_indices[1] = np.concatenate([contour_indices[1], single_label_indices[1][random_indices]])
+         contour_indices[2] = np.concatenate([contour_indices[2], single_label_indices[2][random_indices]])
+         
+contour_weights = [1] * len(contour_indices[0])
+
+regional_indices = list()
+for i in range(0, number_of_labels + 1):
+    if i < number_of_labels:
+        print("Extracting regional points from label ", label_ids[i])
+        single_label_image = ants.threshold_image(fixed_labels, label_ids[i], label_ids[i], 1, 0)
+    else:
+        single_label_image = ants.threshold_image(fixed_labels, 0, 0, 0, 1)
+    single_label_indices = (single_label_image.numpy()).nonzero()
+    number_of_points_per_label = int(len(single_label_indices[0]) * 0.01)
+    print("  Number of points: ", number_of_points_per_label)
+    random_indices = random.sample(range(len(single_label_indices[0])), number_of_points_per_label)
+    if i == 0:
+         regional_indices.append(single_label_indices[0][random_indices])
+         regional_indices.append(single_label_indices[1][random_indices])
+         regional_indices.append(single_label_indices[2][random_indices])
+    else:
+         regional_indices[0] = np.concatenate([regional_indices[0], single_label_indices[0][random_indices]])
+         regional_indices[1] = np.concatenate([regional_indices[1], single_label_indices[1][random_indices]])
+         regional_indices[2] = np.concatenate([regional_indices[2], single_label_indices[2][random_indices]])
+         
+regional_weights = [0.5] * len(regional_indices[0])
+
+indices = contour_indices
+indices[0] = np.concatenate([contour_indices[0], regional_indices[0]])
+indices[1] = np.concatenate([contour_indices[1], regional_indices[1]])
+indices[2] = np.concatenate([contour_indices[2], regional_indices[2]])
+weights = np.concatenate([contour_weights, regional_weights])
+
+print("Number of contour points:  ", str(len(contour_weights)))
+print("Number of regional points:  ", str(len(regional_weights)))
 
 points_time0 = np.zeros((len(indices[0]), 3))
 for i in range(len(indices[0])):
@@ -115,6 +151,7 @@ if os.path.exists(velocity_field_file):
 for i in range(20):
     print("Iteration " + str(i))
     tv = ants.fit_time_varying_transform_to_point_sets(point_sets, time_points=normalized_time_points,
+        displacement_weights=weights,
         initial_velocity_field=initial_velocity_field,
         number_of_time_steps=11, domain_image=fixed_labels,
         number_of_fitting_levels=4, mesh_size=4, number_of_compositions=10,

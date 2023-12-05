@@ -32,7 +32,7 @@ template_ids = tuple(reversed(("E11-5", "E13-5", "E15-5", "E18-5", "P04", "P14",
 time_points = np.flip(-1.0 * np.log(np.array((11.5, 13.5, 15.5, 18.5, 23, 33, 47))))
 normalized_time_points = (time_points - time_points[0]) / (time_points[-1] - time_points[0])
 
-fixed_labels_file = annotation_directory + "P56x" + template_ids[0] + "_LABELS.nii.gz"
+fixed_labels_file = annotation_directory + "P56x" + template_ids[0] + "_DevCCF_Annotations_20um_symmetric_commonROIs_hemi_resampled.nii.gz"
 fixed_labels = ants.image_read(fixed_labels_file)
 
 velocity_field_file = output_directory + "/velocity_field.nii.gz"
@@ -52,7 +52,7 @@ print("Creating pseudo-template at normalized time point: ", str(normalized_time
 print("Warping P04")
 P04_field = ants.integrate_velocity_field(velocity_field, normalized_time_point_for_template, normalized_time_points[2], 10)
 P04_xfrm = ants.transform_from_displacement_field(P04_field)
-P04_labels_file = annotation_directory + "P56x" + template_ids[2] + "_LABELS.nii.gz"
+P04_labels_file = annotation_directory + "P56x" + template_ids[2] + "_DevCCF_Annotations_20um_symmetric_commonROIs_hemi_resampled.nii.gz"
 P04_labels = ants.image_read(P04_labels_file)
 P04_warped_labels = P04_xfrm.apply_to_image(P04_labels, reference=P04_labels, interpolation="nearestneighbor")
 ants.image_write(P04_warped_labels, output_directory + "P04_to_P08_warped_labels.nii.gz")
@@ -60,7 +60,7 @@ ants.image_write(P04_warped_labels, output_directory + "P04_to_P08_warped_labels
 print("Warping P14")
 P14_field = ants.integrate_velocity_field(velocity_field, normalized_time_point_for_template, normalized_time_points[1], 10)
 P14_xfrm = ants.transform_from_displacement_field(P14_field)
-P14_labels_file = annotation_directory + "P56x" + template_ids[1] + "_LABELS.nii.gz"
+P14_labels_file = annotation_directory + "P56x" + template_ids[1] + "_DevCCF_Annotations_20um_symmetric_commonROIs_hemi_resampled.nii.gz"
 P14_labels = ants.image_read(P14_labels_file)
 P14_warped_labels = P14_xfrm.apply_to_image(P14_labels, reference=P14_labels, interpolation="nearestneighbor")
 ants.image_write(P14_warped_labels, output_directory + "P14_to_P08_warped_labels.nii.gz")
