@@ -95,9 +95,9 @@ for i in range(0, number_of_labels + 1):
 regional_weights = [0.5] * len(regional_indices[0])
 
 indices = contour_indices
-indices[0] = np.concatenate([contour_indices[0], regional_indices[0]])
-indices[1] = np.concatenate([contour_indices[1], regional_indices[1]])
-indices[2] = np.concatenate([contour_indices[2], regional_indices[2]])
+indices[0] = np.concatenate([indices[0], regional_indices[0]])
+indices[1] = np.concatenate([indices[1], regional_indices[1]])
+indices[2] = np.concatenate([indices[2], regional_indices[2]])
 weights = np.concatenate([contour_weights, regional_weights])
 
 print("Number of contour points:  ", str(len(contour_weights)))
