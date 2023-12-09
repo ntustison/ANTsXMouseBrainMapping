@@ -22,4 +22,23 @@ flow field.
 
 Before attempting to use any of the code found in this repository, please 
 attempt to reproduce this small [self-contained example](https://gist.github.com/ntustison/12a656a5fc2f6f9c4494c88dc09c5621#file-b_3_ants_velocity_flows-md)
-illustrating the code and principles used.
+illustrating the code and principles used.  The idea is to create a time-
+parameterized velocity flow model in the range $t=[0,1]$ from three 2-D point 
+sets comprising 8 points each representing a rectangle ($t=0.0$), a square 
+($t=0.5$), and a circle ($t=1.0$).  The ANTsPy example should produce the 
+following plots:
+
+<p align="middle">
+  <img src="https://github.com/ntustison/MouseBrainVelocityFlow/assets/324811/dbc63553-27ad-4130-8bbf-c10cdf8fc893" width="300" />
+  <img src="https://github.com/ntustison/MouseBrainVelocityFlow/assets/324811/cd78595b-1e12-47fc-b606-ae4b5012cbd6" width="300" /> 
+  <img src="https://github.com/ntustison/MouseBrainVelocityFlow/assets/324811/c7ee9ad6-1f3a-4da4-832e-ba64b1b15f31" width="300" /> 
+</p>
+
+<!--
+![original_data](https://github.com/ntustison/MouseBrainVelocityFlow/assets/324811/dbc63553-27ad-4130-8bbf-c10cdf8fc893)
+![warping_between_endpoints](https://github.com/ntustison/MouseBrainVelocityFlow/assets/324811/cd78595b-1e12-47fc-b606-ae4b5012cbd6)
+![warping_to_middle](https://github.com/ntustison/MouseBrainVelocityFlow/assets/324811/c7ee9ad6-1f3a-4da4-832e-ba64b1b15f31)
+-->
+
+
+
