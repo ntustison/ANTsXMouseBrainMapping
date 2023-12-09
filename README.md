@@ -21,9 +21,9 @@ flow field.
 ## Preliminaries
 
 Before attempting to use any of the code found in this repository, please 
-attempt to reproduce this small [self-contained example](https://gist.github.com/ntustison/12a656a5fc2f6f9c4494c88dc09c5621#file-b_3_ants_velocity_flows-md)
+attempt to reproduce a [small, self-contained example](https://gist.github.com/ntustison/12a656a5fc2f6f9c4494c88dc09c5621#file-b_3_ants_velocity_flows-md)
 illustrating the code and principles used.  The idea is to create a time-
-parameterized velocity flow model in the range $t=[0,1]$ from three 2-D point 
+parameterized velocity flow model in the range $t=[0,1]$ using three 2-D point 
 sets comprising 8 points each representing a rectangle at $t=0.0$, a square 
 at $t=0.5$, and a circle at $t=1.0$.  The ANTsPy example should produce the 
 following plots:
