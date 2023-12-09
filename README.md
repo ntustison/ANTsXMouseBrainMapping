@@ -56,6 +56,8 @@ template_ids = tuple(reversed(("E11-5", "E13-5", "E15-5", "E18-5", "P04", "P14",
 time_points = np.flip(-1.0 * np.log(np.array((11.5, 13.5, 15.5, 18.5, 23, 33, 47))))
 normalized_time_points = (time_points - time_points[0]) / (time_points[-1] - time_points[0])
 
+velocity_field = ants.image_read("DevCCF_flow_model.nii.gz")
+
 # Read template files.
 # template_files = list()
 # for i in range(len(template_ids)):
