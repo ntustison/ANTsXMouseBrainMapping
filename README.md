@@ -1,4 +1,4 @@
-# Velocity Flow Transformation Model for the Developmental Mouse Brain Common Coordinate Framework
+# Velocity Flow Transformation Model for the Developmental Mouse Brain Common Coordinate Framework (DevCCF)
 
 ## Description
 
@@ -18,7 +18,7 @@ above cited work and using [ANTsX tools](https://github.com/ANTsX).  This
 repository provides the scripts to both reproduce and utilize the velocity
 flow field.
 
-## Code usage
+## Preliminaries
 
 Before attempting to use any of the code found in this repository, please 
 attempt to reproduce this small [self-contained example](https://gist.github.com/ntustison/12a656a5fc2f6f9c4494c88dc09c5621#file-b_3_ants_velocity_flows-md)
@@ -40,5 +40,5 @@ following plots:
 ![warping_to_middle](https://github.com/ntustison/MouseBrainVelocityFlow/assets/324811/c7ee9ad6-1f3a-4da4-832e-ba64b1b15f31)
 -->
 
-
+## DevCCF Flow Model
 
