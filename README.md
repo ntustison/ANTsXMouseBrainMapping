@@ -44,9 +44,10 @@ following plots:
 
 ## Using the DevCCF Flow Model
 
-### Example:  warp P56 in a continuous manner from identity to E11.5
 
 ```python
+# Example:  warp P56 in a continuous manner from identity to E11.5
+
 import ants
 
 velocity_field = ants.image_read("DevCCF_flow_model.nii.gz")
