@@ -18,7 +18,7 @@ above cited work and using [ANTsX tools](https://github.com/ANTsX).  This
 repository provides the scripts to both reproduce and utilize the velocity
 flow field.
 
-## Implementaiton
+## Code usage
 
 Before attempting to use any of the code found in this repository, please 
 attempt to reproduce this small [self-contained example](https://gist.github.com/ntustison/12a656a5fc2f6f9c4494c88dc09c5621#file-b_3_ants_velocity_flows-md)
