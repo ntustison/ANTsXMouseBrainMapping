@@ -25,7 +25,7 @@ attempt to reproduce this small [self-contained example](https://gist.github.com
 illustrating the code and principles used.  The idea is to create a time-
 parameterized velocity flow model in the range $t=[0,1]$ from three 2-D point 
 sets comprising 8 points each representing a rectangle at $t=0.0$, a square 
-at $t=0.5$, and a circle $t=1.0$.  The ANTsPy example should produce the 
+at $t=0.5$, and a circle at $t=1.0$.  The ANTsPy example should produce the 
 following plots:
 
 <p align="middle">
