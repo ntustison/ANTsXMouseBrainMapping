@@ -52,12 +52,11 @@ import ants
 velocity_field = ants.image_read("DevCCF_flow_model.nii.gz")
 P56 = ants.image_read("P56.nii.gz")  
 
-template_ids = tuple(reversed(("E11-5", "E13-5", "E15-5", "E18-5", "P04", "P14", "P56")))
-time_points = np.flip(-1.0 * np.log(np.array((11.5, 13.5, 15.5, 18.5, 23, 33, 47))))
+time_points = np.array(np.linspace(0, 1, 20))
 
 for i in range(len(time_points)):
-    print("time point: ", str(t))
     t = (math.exp(time_points[i]) - 1.0) / (math.exp(1) - 1.0)
+    print("time point: ", str(t))
     displacement_field = ants.integrate_velocity_field(velocity_field, t, 0.0, 10)
     displacement_field_xfrm = ants.transform_from_displacement_field(displacement_field)
     P56warped = displacement_field_xfrm.apply_to_image(P56, interpolation="linear")
