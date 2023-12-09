@@ -40,5 +40,9 @@ following plots:
 ![warping_to_middle](https://github.com/ntustison/MouseBrainVelocityFlow/assets/324811/c7ee9ad6-1f3a-4da4-832e-ba64b1b15f31)
 -->
 
-## DevCCF Flow Model
+## Reproducing the DevCCF Flow Model
+
+## Using the DevCCF Flow Model
+
+
 
