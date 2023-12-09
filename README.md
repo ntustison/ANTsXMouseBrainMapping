@@ -46,6 +46,32 @@ following plots:
 
 
 ```python
+# Example:  warp every template to every other template
+
+import ants
+import numpy as np
+import math
+
+template_ids = tuple(reversed(("E11-5", "E13-5", "E15-5", "E18-5", "P04", "P14", "P56")))
+time_points = np.flip(-1.0 * np.log(np.array((11.5, 13.5, 15.5, 18.5, 23, 33, 47))))
+normalized_time_points = (time_points - time_points[0]) / (time_points[-1] - time_points[0])
+
+# Read template files here
+# template_files = list()
+# for i in range(len(template_ids)):
+#      fa_template_files.append(glob.glob(templates_directory + template_ids[i] + "*/*fa*.nii.gz")[0])
+
+for i in range(len(template_ids)):
+    for j in range(len(template_ids)):
+        print("Warping ", template_ids[j], "to", template_ids[i])
+        reference_template = ants.image_read(template_files[i])
+        moving_template = ants.image_read(template_files[j])
+        displacement_field = ants.integrate_velocity_field(velocity_field, normalized_time_points[i], normalized_time_points[j], 10)
+        displacement_field_xfrm = ants.transform_from_displacement_field(displacement_field)
+        warped_template = displacement_field_xfrm.apply_to_image(moving_template, interpolation="linear")
+```
+
+```python
 # Example:  warp P56 in a continuous manner from identity to E11.5
 
 import ants
