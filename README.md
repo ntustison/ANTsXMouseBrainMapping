@@ -44,5 +44,25 @@ following plots:
 
 ## Using the DevCCF Flow Model
 
+### Example:  warp P56 in a continuous manner from identity to E11.5
+
+```python
+import ants
+
+template_ids = tuple(reversed(("E11-5", "E13-5", "E15-5", "E18-5", "P04", "P14", "P56")))
+time_points = np.flip(-1.0 * np.log(np.array((11.5, 13.5, 15.5, 18.5, 23, 33, 47))))
+normalized_time_points = (time_points - time_points[0]) / (time_points[-1] - time_points[0])
+
+# Assume DevCCF velocity field is 
+velocity_field = ants.image_read("DevCCF_flow_model.nii.gz")
+P56 = ants.image_read("P56.nii.gz")  
+
+for i in range(len(time_points)):
+    print("time point: ", str(t))
+    t = (math.exp(time_points[i]) - 1.0) / (math.exp(1) - 1.0)
+    displacement_field = ants.integrate_velocity_field(velocity_field, t, 0.0, 10)
+    displacement_field_xfrm = ants.transform_from_displacement_field(displacement_field)
+    P56warped = displacement_field_xfrm.apply_to_image(P56, interpolation="linear")
+```
 
 
