@@ -1,4 +1,4 @@
-# Velocity Flow Transformation Model for the Developmental Mouse Brain Common Coordinate Framework (DevCCF)
+# Velocity Flow Transformation Model for the Developmental Mouse Brain Common Coordinate Framework
 
 ## Description
 
