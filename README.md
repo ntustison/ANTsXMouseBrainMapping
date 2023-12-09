@@ -56,10 +56,10 @@ template_ids = tuple(reversed(("E11-5", "E13-5", "E15-5", "E18-5", "P04", "P14",
 time_points = np.flip(-1.0 * np.log(np.array((11.5, 13.5, 15.5, 18.5, 23, 33, 47))))
 normalized_time_points = (time_points - time_points[0]) / (time_points[-1] - time_points[0])
 
-# Read template files here
+# Read template files.
 # template_files = list()
 # for i in range(len(template_ids)):
-#      fa_template_files.append(glob.glob(templates_directory + template_ids[i] + "*/*fa*.nii.gz")[0])
+#      fa_template_files.append(glob.glob(template_ids[i] + "*.nii.gz")[0])
 
 for i in range(len(template_ids)):
     for j in range(len(template_ids)):
@@ -84,6 +84,7 @@ import math
 velocity_field = ants.image_read("DevCCF_flow_model.nii.gz")
 P56 = ants.image_read("P56.nii.gz")  
 
+# We discretize the time domain into 20 intervals.
 time_points = np.array(np.linspace(0, 1, 20))
 
 for i in range(len(time_points)):
