@@ -66,9 +66,12 @@ for i in range(len(template_ids)):
         print("Warping ", template_ids[j], "to", template_ids[i])
         reference_template = ants.image_read(template_files[i])
         moving_template = ants.image_read(template_files[j])
-        displacement_field = ants.integrate_velocity_field(velocity_field, normalized_time_points[i], normalized_time_points[j], 10)
+        displacement_field = ants.integrate_velocity_field(velocity_field,
+                                                           normalized_time_points[i],
+                                                           normalized_time_points[j], 10)
         displacement_field_xfrm = ants.transform_from_displacement_field(displacement_field)
-        warped_template = displacement_field_xfrm.apply_to_image(moving_template, interpolation="linear")
+        warped_template = displacement_field_xfrm.apply_to_image(moving_template,
+                                                                 interpolation="linear")
 ```
 
 ```python
