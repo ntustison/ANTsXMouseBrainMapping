@@ -49,6 +49,8 @@ following plots:
 # Example:  warp P56 in a continuous manner from identity to E11.5
 
 import ants
+import numpy as np
+import math
 
 velocity_field = ants.image_read("DevCCF_flow_model.nii.gz")
 P56 = ants.image_read("P56.nii.gz")  
