@@ -87,11 +87,11 @@ velocity_field = ants.image_read("DevCCF_flow_model.nii.gz")
 P56 = ants.image_read("P56.nii.gz")  
 
 # We discretize the time domain into 20 intervals.
-time_points = np.array(np.linspace(0, 1, 20))
+time_points = np.log(np.array(np.linspace(11.5, 47, 20)))
+normalized_time_points = (time_points - time_points[0]) / (time_points[-1] - time_points[0])
 
-for i in range(len(time_points)):
-    t = (math.exp(time_points[i]) - 1.0) / (math.exp(1) - 1.0)
-    print("time point: ", str(t))
+for i in range(len(normalized_time_points)):
+    t = normalized_time_points[i]
     displacement_field = ants.integrate_velocity_field(velocity_field, t, 0.0, 10)
     displacement_field_xfrm = ants.transform_from_displacement_field(displacement_field)
     P56warped = displacement_field_xfrm.apply_to_image(P56, interpolation="linear")
