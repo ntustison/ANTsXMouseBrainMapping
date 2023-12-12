@@ -87,7 +87,7 @@ velocity_field = ants.image_read("DevCCF_flow_model.nii.gz")
 P56 = ants.image_read("P56.nii.gz")  
 
 # We discretize the time domain into 20 intervals.
-time_points = np.log(np.array(np.linspace(11.5, 47, 20)))
+time_points = np.flip(-1.0 * np.log(np.linspace(11.5, 47, 50)))
 normalized_time_points = (time_points - time_points[0]) / (time_points[-1] - time_points[0])
 
 for i in range(len(normalized_time_points)):
