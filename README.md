@@ -20,12 +20,18 @@ flow field.
 
 ## Preliminaries
 
-Before attempting to use any of the code found in this repository, please 
-attempt to reproduce a [small, self-contained example](https://gist.github.com/ntustison/12a656a5fc2f6f9c4494c88dc09c5621#file-b_3_ants_velocity_flows-md)
-illustrating the code and principles used.  The idea is to create a time-
-parameterized velocity flow model in the range $t=[0,1]$ using three 2-D point 
-sets comprising 8 points each representing a rectangle at $t=0.0$, a square 
-at $t=0.5$, and a circle at $t=1.0$.  The ANTsPy example should produce the 
+### Code
+
+All data processing uses [ANTsPy](https://github.com/ANTsX/ANTsPy) with 
+equivalent calls possible in [ANTsR](https://github.com/ANTsX/ANTsR).
+Be sure to [install ANTsPy](https://github.com/ANTsX/ANTsPy#installation)
+prior to attempting to reproduce the results below.  To test your installation 
+in the context of this work,  please attempt to reproduce a 
+[small, self-contained example](https://gist.github.com/ntustison/12a656a5fc2f6f9c4494c88dc09c5621#file-b_3_ants_velocity_flows-md)
+illustrating the code and principles used.  Conceptually, this code snippet 
+creates a time-parameterized velocity flow model in the range $t=[0,1]$ using 
+three 2-D point sets comprising 8 points each representing a rectangle at $t=0.0$, 
+a square at $t=0.5$, and a circle at $t=1.0$.  The ANTsPy example should produce the 
 following plots:
 
 <p align="middle">
@@ -39,6 +45,10 @@ following plots:
 ![warping_between_endpoints](https://github.com/ntustison/MouseBrainVelocityFlow/assets/324811/cd78595b-1e12-47fc-b606-ae4b5012cbd6)
 ![warping_to_middle](https://github.com/ntustison/MouseBrainVelocityFlow/assets/324811/c7ee9ad6-1f3a-4da4-832e-ba64b1b15f31)
 -->
+
+### Data
+
+The DevCCF atlas can be downloaded from [here](https://kimlab.io/brain-map/DevCCF/).
 
 ## Reproducing the DevCCF Flow Model
 
