@@ -203,7 +203,7 @@ for i in range(1, len(template_ids)):
     print("\n\n\n\n")
 ```
 
-### Part III:  Extract points in P56, propagate to all developmental atlases, build model.
+### Part III:  Extract points in P56, propagate to all developmental atlases, build model
 
 ```python
 
