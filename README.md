@@ -57,7 +57,7 @@ from [here](https://kimlab.io/brain-map/DevCCF/).
 ## Reproducing the DevCCF Velocity Flow Model
 
 <details>
-<summary>Step 1:  Rigidly register all annotated labels to P56</summary>
+<summary>Step 1:  Rigidly register all label images to P56</summary>
 
 ```python
 
