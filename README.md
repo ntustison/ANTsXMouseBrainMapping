@@ -24,7 +24,8 @@ flow field.
 
 ## Preliminaries
 
-### Code
+<details>
+<summary>Code</summary>
 
 All data processing uses [ANTsPy](https://github.com/ANTsX/ANTsPy) with 
 equivalent calls possible in [ANTsR](https://github.com/ANTsX/ANTsR).
@@ -44,7 +45,10 @@ following plots:
   <img src="https://github.com/ntustison/MouseBrainVelocityFlow/assets/324811/c7ee9ad6-1f3a-4da4-832e-ba64b1b15f31" width="250" /> 
 </p>
 
-### Data
+</details>
+
+<details>
+<summary>Data</summary>
 
 For simplicity only the data used to create the velocity flow model is 
 [available in this repository](https://github.com/ntustison/DevCCF-Velocity-Flow/tree/main/Data/DevCCFSimpleSegmentations).
@@ -56,6 +60,7 @@ from [here](https://kimlab.io/brain-map/DevCCF/).
   <img src="https://github.com/ntustison/DevCCF-Velocity-Flow/assets/324811/3f3a4369-eb82-4dce-b1a3-3e4481f66509" width="450" />
 </p>
 
+</details>
 
 ## Reproducing the DevCCF Velocity Flow Model
 
