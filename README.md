@@ -1,7 +1,7 @@
 # The DevCCF velocity flow transformation model
 
 <p align="middle">
-  <img src="https://github.com/ntustison/DevCCF-Velocity-Flow/assets/324811/e899fd96-4ff1-4315-b29f-be517d368215" width="500" />
+  <img src="https://github.com/ntustison/DevCCF-Velocity-Flow/assets/324811/fd145f9f-4852-49ad-bef1-ad1e4e0ae181" width="500" />
 </p>
 
 ## Description
