@@ -372,7 +372,7 @@ for i in range(20):
 ## Using the DevCCF Velocity Flow Model
 
 <details>
-<summary>Example:  warp every template to every other template</summary>
+<summary>Example:  Warp every template to every other template</summary>
 
 ```python
 import ants
@@ -405,7 +405,7 @@ for i in range(len(atlas_ids)):
 </details>
 
 <details>
-<summary>Example:  warp P56 in a continuous manner from identity to E11.5</summary>
+<summary>Example:  Warp P56 in a continuous manner from identity to E11.5</summary>
 ```python
 import ants
 import numpy as np
