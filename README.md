@@ -371,11 +371,13 @@ for i in range(20):
     ants.image_write(initial_velocity_field, output_directory + "velocity_field.nii.gz")
     print("\n\n\n\n\n\n")
 ```
-</details>
 
 <p align="middle">
   <img src="https://github.com/ntustison/DevCCF-Velocity-Flow/assets/324811/5dc3247c-e75d-453c-979a-71775dd8d91c" width="550" />
 </p>
+
+</details>
+
 
 ## Using the DevCCF Velocity Flow Model
 
@@ -410,11 +412,14 @@ for i in range(len(atlas_ids)):
         warped_template = displacement_field_xfrm.apply_to_image(moving_template,
                                                                  interpolation="linear")
 ```
-</details>
 
 <p align="middle">
   <img src="https://github.com/ntustison/DevCCF-Velocity-Flow/assets/324811/df61e8c6-93a7-4b1a-91b8-9deeefe700bb" width="550" />
 </p>
+
+
+</details>
+
 
 <details>
 <summary>Example:  Warp P56 in a continuous manner from identity to E11.5</summary>
@@ -438,9 +443,10 @@ for i in range(len(normalized_time_points)):
     P56warped = displacement_field_xfrm.apply_to_image(P56, interpolation="linear")
 ```
 
-</details>
-
 <p align="middle">
   <img src="https://github.com/ntustison/DevCCF-Velocity-Flow/assets/324811/a8412f23-9167-4cbe-9c7d-021ad97f4429" width="550" />
 </p>
+
+</details>
+
 
