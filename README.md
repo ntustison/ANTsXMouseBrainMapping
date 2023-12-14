@@ -48,10 +48,10 @@ following plots:
 
 ### Data
 
-To simplify this repository, only the data used to create the velocity flow model is 
-available in this repository in Data/DevCCFSimpleSegmentations/.  The label images in
-this directory are the simplified annotations comprising 26 common regions (13 per 
-hemisphere) across all developmental stages.  The full DevCCF atlas can be downloaded 
+For simplicity only the data used to create the velocity flow model is 
+available in this repository (Data/DevCCFSimpleSegmentations/).  The label images in
+this directory are the simplified annotations comprising common regions
+across all developmental stages.  The full DevCCF atlas can be downloaded 
 from [here](https://kimlab.io/brain-map/DevCCF/).  
 
 ## Reproducing the DevCCF Velocity Flow Model
