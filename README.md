@@ -216,11 +216,9 @@ import random
 os.environ["ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS"] = "4"
 
 data_directory = "Data/Output/P56RigidTransformData/"
-registration_directory = output_directory + "PairwiseRegistrations/"
 output_directory = "Data/Output/"
-
-if not os.path.exists(output_directory):
-    os.makedirs(output_directory, exist_ok=True)
+warped_labels_directory = output_directory + "P56RigidTransformData/" 
+registration_directory = output_directory + "PairwiseRegistrations/"
 
 ################################
 #
@@ -242,9 +240,9 @@ template_ids = tuple(reversed(("E11-5", "E13-5", "E15-5", "E18-5", "P04", "P14",
 time_points = np.flip(-1.0 * np.log(np.array((11.5, 13.5, 15.5, 18.5, 23, 33, 47))))
 
 contour_percentage = 0.1
-regional_percenage = 0.01
+regional_percentage = 0.01
 
-fixed_labels_file = annotation_directory + "P56xP56_DevCCF_Annotations_20um_symmetric_commonROIs_hemi.nii.gz"
+fixed_labels_file = warped_labels_directory + "P56xP56_DevCCF_Annotations_20um_symmetric_commonROIs_hemi.nii.gz"
 fixed_labels = ants.image_read(fixed_labels_file)
 
 label_geoms = ants.label_geometry_measures(fixed_labels)
