@@ -1,5 +1,9 @@
 # The DevCCF velocity flow transformation model
 
+<p align="middle">
+  <img src="https://github.com/ntustison/DevCCF-Velocity-Flow/assets/324811/80d57ceb-fafc-4938-a239-def0c4a7297d" width="700" />
+</p>
+
 ## Description
 
 A multimodal 3D developmental common coordinate framework (DevCCF) spanning 
@@ -20,7 +24,8 @@ flow field.
 
 ## Preliminaries
 
-### Code
+<details>
+<summary>Code</summary>
 
 All data processing uses [ANTsPy](https://github.com/ANTsX/ANTsPy) with 
 equivalent calls possible in [ANTsR](https://github.com/ANTsX/ANTsR).
@@ -40,19 +45,22 @@ following plots:
   <img src="https://github.com/ntustison/MouseBrainVelocityFlow/assets/324811/c7ee9ad6-1f3a-4da4-832e-ba64b1b15f31" width="250" /> 
 </p>
 
-<!--
-![original_data](https://github.com/ntustison/MouseBrainVelocityFlow/assets/324811/dbc63553-27ad-4130-8bbf-c10cdf8fc893)
-![warping_between_endpoints](https://github.com/ntustison/MouseBrainVelocityFlow/assets/324811/cd78595b-1e12-47fc-b606-ae4b5012cbd6)
-![warping_to_middle](https://github.com/ntustison/MouseBrainVelocityFlow/assets/324811/c7ee9ad6-1f3a-4da4-832e-ba64b1b15f31)
--->
+</details>
 
-### Data
+<details>
+<summary>Data</summary>
 
 For simplicity only the data used to create the velocity flow model is 
 [available in this repository](https://github.com/ntustison/DevCCF-Velocity-Flow/tree/main/Data/DevCCFSimpleSegmentations).
 These label images are the simplified annotations comprising common regions
 across all developmental stages.  The full DevCCF atlas can be downloaded 
 from [here](https://kimlab.io/brain-map/DevCCF/).  
+
+<p align="middle">
+  <img src="https://github.com/ntustison/DevCCF-Velocity-Flow/assets/324811/3f3a4369-eb82-4dce-b1a3-3e4481f66509" width="450" />
+</p>
+
+</details>
 
 ## Reproducing the DevCCF Velocity Flow Model
 
@@ -211,6 +219,10 @@ for i in range(1, len(template_ids)):
 <details>
 <summary>Step 3:  Extract points from P56 labels, propagate to all developmental atlases, and build the model</summary>
 
+<p align="middle">
+  <img src="https://github.com/ntustison/DevCCF-Velocity-Flow/assets/324811/5dc3247c-e75d-453c-979a-71775dd8d91c" width="550" />
+</p>
+
 ```python
 
 import ants
@@ -368,12 +380,18 @@ for i in range(20):
     ants.image_write(initial_velocity_field, output_directory + "velocity_field.nii.gz")
     print("\n\n\n\n\n\n")
 ```
+
 </details>
+
 
 ## Using the DevCCF Velocity Flow Model
 
 <details>
 <summary>Example:  Warp every template to every other template</summary>
+
+<p align="middle">
+  <img src="https://github.com/ntustison/DevCCF-Velocity-Flow/assets/324811/df61e8c6-93a7-4b1a-91b8-9deeefe700bb" width="550" />
+</p>
 
 ```python
 import ants
@@ -403,10 +421,17 @@ for i in range(len(atlas_ids)):
         warped_template = displacement_field_xfrm.apply_to_image(moving_template,
                                                                  interpolation="linear")
 ```
+
 </details>
+
 
 <details>
 <summary>Example:  Warp P56 in a continuous manner from identity to E11.5</summary>
+
+<p align="middle">
+  <img src="https://github.com/ntustison/DevCCF-Velocity-Flow/assets/324811/a8412f23-9167-4cbe-9c7d-021ad97f4429" width="550" />
+</p>
+
 ```python
 import ants
 import numpy as np
@@ -425,5 +450,7 @@ for i in range(len(normalized_time_points)):
     displacement_field_xfrm = ants.transform_from_displacement_field(displacement_field)
     P56warped = displacement_field_xfrm.apply_to_image(P56, interpolation="linear")
 ```
+
 </details>
+
 
