@@ -214,6 +214,10 @@ for i in range(1, len(template_ids)):
 <details>
 <summary>Step 3:  Extract points from P56 labels, propagate to all developmental atlases, and build the model</summary>
 
+<p align="middle">
+  <img src="https://github.com/ntustison/DevCCF-Velocity-Flow/assets/324811/5dc3247c-e75d-453c-979a-71775dd8d91c" width="550" />
+</p>
+
 ```python
 
 import ants
@@ -372,10 +376,6 @@ for i in range(20):
     print("\n\n\n\n\n\n")
 ```
 
-<p align="middle">
-  <img src="https://github.com/ntustison/DevCCF-Velocity-Flow/assets/324811/5dc3247c-e75d-453c-979a-71775dd8d91c" width="550" />
-</p>
-
 </details>
 
 
@@ -383,6 +383,10 @@ for i in range(20):
 
 <details>
 <summary>Example:  Warp every template to every other template</summary>
+
+<p align="middle">
+  <img src="https://github.com/ntustison/DevCCF-Velocity-Flow/assets/324811/df61e8c6-93a7-4b1a-91b8-9deeefe700bb" width="550" />
+</p>
 
 ```python
 import ants
@@ -413,16 +417,15 @@ for i in range(len(atlas_ids)):
                                                                  interpolation="linear")
 ```
 
-<p align="middle">
-  <img src="https://github.com/ntustison/DevCCF-Velocity-Flow/assets/324811/df61e8c6-93a7-4b1a-91b8-9deeefe700bb" width="550" />
-</p>
-
-
 </details>
 
 
 <details>
 <summary>Example:  Warp P56 in a continuous manner from identity to E11.5</summary>
+
+<p align="middle">
+  <img src="https://github.com/ntustison/DevCCF-Velocity-Flow/assets/324811/a8412f23-9167-4cbe-9c7d-021ad97f4429" width="550" />
+</p>
 
 ```python
 import ants
@@ -442,10 +445,6 @@ for i in range(len(normalized_time_points)):
     displacement_field_xfrm = ants.transform_from_displacement_field(displacement_field)
     P56warped = displacement_field_xfrm.apply_to_image(P56, interpolation="linear")
 ```
-
-<p align="middle">
-  <img src="https://github.com/ntustison/DevCCF-Velocity-Flow/assets/324811/a8412f23-9167-4cbe-9c7d-021ad97f4429" width="550" />
-</p>
 
 </details>
 
