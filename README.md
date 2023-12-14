@@ -197,16 +197,9 @@ for i in range(1, len(template_ids)):
 
     output_registration_prefix = output_directory + "P56x" + template_ids[i-1] + "x" + template_ids[i] + "_"
 
-    reg = ants.registration(fixed_image, moving_image, type_of_transform="antsRegistrationSyNQuick[s]", 
+    reg = ants.registration(fixed_image, moving_image, type_of_transform="antsRegistrationSyN[s]", 
                             multivariate_extras=multivariate_extras, 
                             outprefix=output_registration_prefix, verbose=True)    
-
-    warped_fixed_labels = ants.apply_transforms(fixed_image, moving_labels, 
-                                                transformlist=reg['fwdtransforms'], 
-                                                interpolator="nearestNeighbor")
-    warped_moving_labels = ants.apply_transforms(moving_image, fixed_labels, 
-                                                 transformlist=reg['invtransforms'], whichtoinvert=[True, False], 
-                                                 interpolator="nearestNeighbor")
     print("\n\n\n\n")
 ```
 
