@@ -49,15 +49,15 @@ following plots:
 ### Data
 
 For simplicity only the data used to create the velocity flow model is 
-available in this repository (Data/DevCCFSimpleSegmentations/).  The label images in
-this directory are the simplified annotations comprising common regions
+[available in this repository](https://github.com/ntustison/DevCCF-Velocity-Flow/tree/main/Data/DevCCFSimpleSegmentations).
+These label images are the simplified annotations comprising common regions
 across all developmental stages.  The full DevCCF atlas can be downloaded 
 from [here](https://kimlab.io/brain-map/DevCCF/).  
 
 ## Reproducing the DevCCF Velocity Flow Model
 
 <details>
-<summary>Step 1:  Rigidly register everything to P56</summary>
+<summary>Step 1:  Rigidly register all annotated labels to P56</summary>
 
 ```python
 
@@ -208,7 +208,7 @@ for i in range(1, len(template_ids)):
 </details>
 
 <details>
-<summary>Step 3:  Extract points in P56, propagate to all developmental atlases, build model</summary>
+<summary>Step 3:  Extract points from P56 labels, propagate to all developmental atlases, and build the model</summary>
 
 ```python
 
