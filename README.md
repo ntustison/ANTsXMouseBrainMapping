@@ -54,7 +54,7 @@ this directory are the simplified annotations comprising 26 common regions (13 p
 hemisphere) across all developmental stages.  The full DevCCF atlas can be downloaded 
 from [here](https://kimlab.io/brain-map/DevCCF/).  
 
-## Reproducing the DevCCF Flow Model
+## Reproducing the DevCCF Velocity Flow Model
 
 ### Part I:  Rigidly register everything to P56
 
