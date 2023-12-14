@@ -56,7 +56,8 @@ from [here](https://kimlab.io/brain-map/DevCCF/).
 
 ## Reproducing the DevCCF Velocity Flow Model
 
-### Part I:  Rigidly register everything to P56
+<details>
+<summary>Step 1:  Rigidly register everything to P56</summary>
 
 ```python
 
@@ -133,8 +134,10 @@ for i in range(len(atlas_ids)):
     warped_labels_file = output_directory + "P56x" + atlas_ids[i] + "_DevCCF_Annotations_20um_symmetric_commonROIs_hemi.nii.gz"
     ants.image_write(warped_labels, warped_labels_file)
 ```
+</details>
 
-### Part II:  Perform pairwise registrations of the P56-aligned label images 
+<details>
+<summary>Step 2:  Perform pairwise registrations of the P56-aligned label images</summary>
 
 ```python
 
@@ -202,8 +205,10 @@ for i in range(1, len(template_ids)):
                             outprefix=output_registration_prefix, verbose=True)    
     print("\n\n\n\n")
 ```
+</details>
 
-### Part III:  Extract points in P56, propagate to all developmental atlases, build model
+<details>
+<summary>Step 3:  Extract points in P56, propagate to all developmental atlases, build model</summary>
 
 ```python
 
@@ -362,13 +367,14 @@ for i in range(20):
     ants.image_write(initial_velocity_field, output_directory + "velocity_field.nii.gz")
     print("\n\n\n\n\n\n")
 ```
+</details>
 
-## Using the DevCCF Flow Model
+## Using the DevCCF Velocity Flow Model
 
+<details>
+<summary>Example:  Warp every template to every other template</summary>
 
 ```python
-# Example:  warp every template to every other template
-
 import ants
 import numpy as np
 import math
@@ -377,7 +383,7 @@ atlas_ids = tuple(reversed(("E11-5", "E13-5", "E15-5", "E18-5", "P04", "P14", "P
 time_points = np.flip(-1.0 * np.log(np.array((11.5, 13.5, 15.5, 18.5, 23, 33, 47))))
 normalized_time_points = (time_points - time_points[0]) / (time_points[-1] - time_points[0])
 
-velocity_field = ants.image_read("DevCCF_velocity_flow.nii.gz")
+velocity_field = ants.image_read("Data/Output/DevCCF_velocity_flow.nii.gz")
 
 # Read template files.
 # template_files = list()
@@ -396,10 +402,11 @@ for i in range(len(atlas_ids)):
         warped_template = displacement_field_xfrm.apply_to_image(moving_template,
                                                                  interpolation="linear")
 ```
+</details>
 
+<details>
+<summary>Example:  Warp P56 in a continuous manner from identity to E11.5</summary>
 ```python
-# Example:  warp P56 in a continuous manner from identity to E11.5
-
 import ants
 import numpy as np
 import math
@@ -417,5 +424,5 @@ for i in range(len(normalized_time_points)):
     displacement_field_xfrm = ants.transform_from_displacement_field(displacement_field)
     P56warped = displacement_field_xfrm.apply_to_image(P56, interpolation="linear")
 ```
-
+</details>
 
