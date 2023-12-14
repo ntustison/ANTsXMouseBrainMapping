@@ -72,6 +72,7 @@ from [here](https://kimlab.io/brain-map/DevCCF/).
 
 import ants
 import os
+import numpy as np
 
 data_directory = "Data/DevCCFSimpleSegmentations/"
 output_directory = "Data/Output/P56RigidTransformData/"
