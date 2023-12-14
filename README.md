@@ -130,7 +130,7 @@ for i in range(len(atlas_ids)):
     moving_labels_file = data_directory + atlas_ids[i] + "_DevCCF_Annotations_20um_symmetric_commonROIs_hemi.nii.gz"
     moving_labels = ants.image_read(moving_labels_file)
     warped_labels = xfrm.apply_to_image(moving_labels, fixed_labels, interpolation='nearestneighbor') 
-    warped_labels = ants.resample_image(warped_labels, (0.05. 0.05, 0.05), False, 1)
+    warped_labels = ants.resample_image(warped_labels, (0.05, 0.05, 0.05), False, 1)
     warped_labels_file = output_directory + "P56x" + atlas_ids[i] + "_DevCCF_Annotations_20um_symmetric_commonROIs_hemi.nii.gz"
     ants.image_write(warped_labels, warped_labels_file)
 ```
