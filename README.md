@@ -59,7 +59,7 @@ across all developmental stages.
   <img src="https://github.com/ntustison/DevCCF-Velocity-Flow/assets/324811/3f3a4369-eb82-4dce-b1a3-3e4481f66509" width="450" />
 </p>
 
-The full DevCCF atlas can be downloaded from [here](https://kimlab.io/brain-map/DevCCF/).
+The full DevCCF atlas can be downloaded [here](https://kimlab.io/brain-map/DevCCF/).
 </details>
 
 ## Reproducing the DevCCF Velocity Flow Model
