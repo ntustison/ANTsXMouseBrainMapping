@@ -1,0 +1,54 @@
+
+\begin{table}
+  \small
+   \centering
+   \vspace{-0.25cm}
+   \caption{Sampling of ANTsX functionality} 
+   \begin{tabular*}{0.95\textwidth}{l @{\extracolsep{\fill}} p{.575\textwidth}}
+    \toprule
+    \multicolumn{2}{c}{\cellcolor{gray!25} \em ANTsPy: Preprocessing} \\
+    \cmidrule[1pt](lr){1-2}
+    bias field correction & \texttt{n4\_bias\_field\_correction(...)} \\
+    image denoising  & \texttt{denoise\_image(...)} \\
+    \cmidrule[1pt](lr){1-2}
+    \multicolumn{2}{c}{\cellcolor{gray!25} \em ANTsPy: Registration} \\
+    \cmidrule[1pt](lr){1-2}
+    image registration & \texttt{registration(...)} \\
+    template generation  & \texttt{build\_template(...)} \\
+    landmark registration & \texttt{fit\_transform\_to\_paired\_points(...)} \\
+    time-varying landmark reg. & \texttt{fit\_time\_varying\_transform\_to\_point\_sets(...)} \\
+    integrate velocity field & \texttt{integrate\_velocity\_field(...)} \\
+    invert displacement field & \texttt{invert\_displacement\_field(...)} \\
+    \cmidrule[1pt](lr){1-2}
+    \multicolumn{2}{c}{\cellcolor{gray!25} \em ANTsPy: Segmentation} \\
+    \cmidrule[1pt](lr){1-2}
+    MRF-based registration & \texttt{atropos(...)} \\
+    Joint label fusion & \texttt{joint\_label\_fusion(...)} \\
+    diffeormorphic thickness   & \texttt{kelly\_kapowski(...)} \\
+    \cmidrule[1pt](lr){1-2}
+    \multicolumn{2}{c}{\cellcolor{gray!25} \em ANTsPy: Miscellaneous} \\
+    \cmidrule[1pt](lr){1-2}
+    Regional intensity statistics & \texttt{label\_stats(...)} \\
+    Regional shape measures & \texttt{label\_geometry\_measures(...)} \\
+    B-spline approximation & \texttt{fit\_bspline\_object\_to\_scattered\_data(...)} \\
+    Visualize images and overlays\,\,\,\,\,\,\,\,\,\,\,\, & \texttt{plot(...)} \\
+    \cmidrule[1pt](lr){1-2}
+    \multicolumn{2}{c}{\cellcolor{gray!25} \em ANTsPyNet} \\
+    \cmidrule[1pt](lr){1-2}
+    brain extraction & \texttt{mouse\_brain\_extraction(...modality="t2"...)} \par \texttt{mouse\_brain\_extraction(...modality="ex5"...)} \\
+    foreground extraction & \texttt{mouse\_histology\_brain\_mask(...)} \\
+    midline segmentation & \texttt{mouse\_histology\_hemispherical\_coronal\_mask(...)} \\
+    cerebellum segmentation & \texttt{mouse\_histology\_cerebellum\_mask(...)} \\
+    super resolution & \texttt{mouse\_histology\_super\_resolution(...)} \\
+    \bottomrule
+    \multicolumn{2}{l}{\makecell[l]{
+     \vspace{-3pt}
+     \scriptsize ANTsX provides state-of-the-art open-science functionality for processing image data.  Such tools, including deep \\
+     \vspace{-3pt}
+     \scriptsize learning networks, support a variety of mapping-related tasks.  A more comprehensive listing of ANTsX tools with \\
+     \vspace{-3pt}
+     \scriptsize self-contained R and Python examples is provided as a gist page on GitHub (\url{https://tinyurl.com/antsxtutorial}). }
+    }
+   \end{tabular*}
+ \label{table:methods}
+\end{table}
