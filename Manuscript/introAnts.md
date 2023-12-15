@@ -30,7 +30,7 @@ for algorithmic contributions.
 
 \begin{figure}[!htb]
 \centering
-\makebox[\textwidth][c]{\includegraphics[width=1.3\textwidth]{Figures/pipeline3.png}}%
+\makebox[\textwidth][c]{\includegraphics[width=1.2\textwidth]{Figures/pipeline3.png}}%
 \caption{Illustration of a mouse brain template generation workflow and 
 related template-based applications demonstrating the utility of different 
 ANTsX tools.  After imaging acquisition of the study population, various 

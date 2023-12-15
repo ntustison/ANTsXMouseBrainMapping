@@ -97,13 +97,16 @@ correspondence between neighboring atlases using the mean squares metric and
 the SyN transform.  
 
 To provide the common point sets across all seven developmental atlases, the
-label boundaries and whole regions were sampled in the P56 atlas (10\% for the
-former and 1\% for the latter) and then propagated to each atlas using the
-transformations derived from the pairwise registrations.  Boundary points were
-weighted twice as those of regional points in the B-spline optimization.
+label boundaries and whole regions were sampled in the P56 atlas and then
+propagated to each atlas using the transformations derived from the pairwise
+registrations.  Based on previous experience as both the developers of users of
+these tools, we selected a sampling rate of 10\% for the contour points and 1\%
+for the regional points for a total number of points being per atlas being
+$173303$ ($N_{contour} = 98151$ and $N_{region}=75152$). Boundary points were
+weighted twice as those of regional points for the B-spline data approximation
+optimization.  
 
 ### Optimization {-}
-
 
 \begin{figure}[!htb]
 \centering
@@ -113,14 +116,48 @@ transformation through the developmental stages from E11.5 through P56.}
 \label{fig:convergence}
 \end{figure}
 
-### Applications {-}
+``fit_time_varying_transform_to_point_sets(...)`` from the ANTsPy package was used 
+to optimize the velocity field. Input comprised the seven
+corresponding point sets and their associated weight values, the selected number
+of integration points for the velocity field ($N=11$), and the parameters
+defining the geometry of the spatial dimensions of the velocity field (same as
+the downsampled P56 atlas noted above). In addition, the normalized time point
+for each atlas/point-set was also defined. Given the increasingly larger gaps in
+the postnatal timepoint sampling, we made two adjustments.  Based on known mouse
+brain development, we used 28 days for the P56 data.  We then computed the log
+transform of the adjusted set of time points prior to normalization between 0
+and 1 (see the right side of Figure \ref{fig:convergence}.)  This log transform,
+as part of the temporal normalization, significantly improved data spacing. 
+
+The max number of iterations was set to 200.  At each iteration we looped over
+the 11 integration points. At each integration point, the velocity field
+estimate was updated by warping the two immediately adjacent point sets to the
+integration time point and determining the regularized displacement field
+between the two warped point sets.  As with any gradient-based descent
+algorithm, this field was multiplied by a small step size ($\delta = 0.2$)
+before adding to the current velocity field.  Using multithreading, each
+iteration took about six minutes.
 
 \begin{figure}[!htb]
 \centering
-\includegraphics[width=0.99\textwidth]{Figures/warpedP56Volumes.pdf}
-\caption{Warped P56.}
+\includegraphics[width=0.75\textwidth]{Figures/warpedP56Volumes.pdf}
+\caption{After the velocity field is generated, we can use it to warp
+the simplified labels of the P56 atlas continuously over the interval
+$[0, 1]$ and plot the volumes of the atlas regions.  Note how they 
+compare with the volumes of the same regions in the other atlases.}
 \label{fig:warpedP56}
 \end{figure}
+
+Convergence is determined by the average displacement error over each of the
+integration points. As can be seen in the left panel of Figure
+\ref{fig:convergence}, convergence occurred around 125 iterations when the
+average displacement error is minimized. The median displacement error at each
+of the integration points also trends towards zero but at different rates.
+After optimization, we use the velocity field to warp the P56 set of labels
+to each of the other atlas time points to compare the volumes of the different
+simplified annotated regions.  This is shown in Figure \ref{fig:warpedP56}.
+
+### The DevCCF transform model {-}
 
 \begin{figure}[!htb]
 \centering
@@ -133,6 +170,13 @@ each image is warped.}
 \label{fig:crosswarp}
 \end{figure}
 
+Once optimized, the resulting velocity field can be used to generate the deformable 
+transform between any two continuous points within the time interval bounded by 
+E11.5 and P56.  So, for example, one can transform each atlas to the space of every
+other atlas.  This is illustrated in Figure \ref{fig:crosswarp} where we render a 
+mid-sagittal location for each atlas and the results of warping every atlas to 
+that space.  
+
 \begin{figure}[!htb]
 \centering
 \includegraphics[width=0.99\textwidth]{Figures/pseudo_template.pdf}
@@ -144,4 +188,13 @@ those images in the ANTsX template building process.}
 \label{fig:pseudo}
 \end{figure}
 
+One potential application for this particular transformation model is
+facilitating the construction of pseudo-templates in the temporal gaps of the
+DevCCF.  This is illustrated in Figure \ref{fig:pseudo} where we used the
+optimized velocity field to construct pseudo-templates at time point P10.3 and
+P20---arbitrarily chosen simply to demonstrate the concept.  After situating
+these time points within the normalized time point interval, the existing
+adjacent DevCCF atlases on either side can be warped to the desired time point.
+A subsequent call to one of the ANTsX template building functions then permits
+the construction of the template at that time point.  
 

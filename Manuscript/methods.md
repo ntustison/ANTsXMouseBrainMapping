@@ -145,12 +145,7 @@ a steady convergence based on the average Euclidean norm between transformed
 point sets.  Ten integration points were used and point sets were distributed
 along the temporal dimension using a log transform for a more evenly spaced
 sampling.  Further details including links to data and scripts to reproduce our
-reported results is found in the associated GitHub repository [^1]. 
-
-[^1]: https://github.com/ntustison/MouseBrainVelocityFlow/
-
-One potential application is the possible construction of "pseudo"-templates
-at currently non-existing developmental stages.
+reported results is found in the associated GitHub repository.
 
 ## Visualization {-}
 
