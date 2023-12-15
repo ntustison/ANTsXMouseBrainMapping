@@ -424,13 +424,21 @@ CCFDev atlas, the ANTsPy
 \texttt{ants.fit\_transform\_to\_paired\_points(...)} function was used
 to warp each atlas to the space of the P56 atlas and then downsampled to
 \(50 \mu\)m isotropic resolution. In order to determine the common point
-sets across stages, \texttt{ants.registration(...)} and its multi-metric
-capabilities were used. Instead of performing intensity-based
-registration directly on these multi-label images, each label was used
-to construct a separate fixed and moving image pair resulting in a
-multi-metric registration optimization scenario involving 24 image pairs
-(each label weighted equally) for optimizing correspondence between
-neighboring atlases.
+sets across stages, the multi-metric capabilities of
+\texttt{ants.registration(...)} were used. Instead of performing
+intensity-based pairwise registration directly on these multi-label
+images, each label was used to construct a separate fixed and moving
+image pair resulting in a multi-metric registration optimization
+scenario involving 24 binary image pairs (each label weighted equally)
+for optimizing correspondence between neighboring atlases using the mean
+squares metric and the SyN transform.
+
+To provide the common point sets across all seven developmental atlases,
+the label boundaries and whole regions were sampled in the P56 atlas
+(10\% for the former and 1\% for the latter) and then propagated to each
+atlas using the transformations derived from the pairwise registrations.
+Boundary points were weighted twice as those of regional points in the
+B-spline optimization.
 
 \hypertarget{optimization}{%
 \subsubsection*{Optimization}\label{optimization}}

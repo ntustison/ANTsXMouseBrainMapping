@@ -338,19 +338,28 @@ set of labels, there were a common set of 24 labels (12 per hemisphere) across
 all atlases that were used for optimization and evaluation.  These regions are 
 illustrated for the P4 and P14 stages in Figure \ref{fig:simplifiedannotations}.
 
-Prior to velocity field optimization, the data was rigidly transformed
-to a common space.  Using the centroids for the common label set of each CCFDev
-atlas, the ANTsPy ``ants.fit_transform_to_paired_points(...)`` function was used to
-warp each atlas to the space of the P56 atlas and then downsampled to $50 \mu$m
-isotropic resolution.  In order to determine the common point sets across
-stages, ``ants.registration(...)`` and its multi-metric capabilities were used.
-Instead of performing intensity-based registration directly on these multi-label
-images, each label was used to construct a separate fixed and moving image pair
-resulting in a multi-metric registration optimization scenario involving 24
-image pairs (each label weighted equally) for optimizing correspondence between 
-neighboring atlases.
+Prior to velocity field optimization, the data was rigidly transformed to a
+common space.  Using the centroids for the common label set of each CCFDev
+atlas, the ANTsPy ``ants.fit_transform_to_paired_points(...)`` function was used
+to warp each atlas to the space of the P56 atlas and then downsampled to $50
+\mu$m isotropic resolution.  In order to determine the common point sets across
+stages, the multi-metric capabilities of ``ants.registration(...)`` were used.
+Instead of performing intensity-based pairwise registration directly on these
+multi-label images, each label was used to construct a separate fixed and moving
+image pair resulting in a multi-metric registration optimization scenario
+involving 24 binary image pairs (each label weighted equally) for optimizing
+correspondence between neighboring atlases using the mean squares metric and 
+the SyN transform.  
+
+To provide the common point sets across all seven developmental atlases, the
+label boundaries and whole regions were sampled in the P56 atlas (10\% for the
+former and 1\% for the latter) and then propagated to each atlas using the
+transformations derived from the pairwise registrations.  Boundary points were
+weighted twice as those of regional points in the B-spline optimization.
+
 
 ### Optimization {-}
+
 
 \begin{figure}[!htb]
 \centering
