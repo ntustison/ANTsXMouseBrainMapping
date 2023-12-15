@@ -53,7 +53,7 @@ $ $
 
 \LARGE
 
-{\bf The ANTsX Ecosystem for Precision Spatiotemporal Mapping of the Mouse Brain}
+{\bf The ANTsX Ecosystem for Spatiotemporal Mapping of the Mouse Brain}
 
 \vspace{1.0 cm}
 
@@ -113,9 +113,7 @@ as a further illustration of ANTsX capabilities, we use these publicly available
 mouse brain atlases to generate a velocity flow-based mapping encompassing the 
 entire developmental trajectory, which we also make available to the public. 
 
-\clearpage<!--
-# Introduction {-}
--->
+\clearpage# Introduction {-}
 
 Over the past two decades there has been a notable increase in significant
 advancements in mesoscopic analysis of the mouse brain. It is now possible to
@@ -138,11 +136,11 @@ relationships between structures, cells, and genetics in the brain. This has
 motivated the development of detailed structural image atlases of the mouse
 brain.  Notable examples include the Allen Brain Atlas and Coordinate Frameworks
 [@Dong:2008aa,@Wang:2020aa] and the Waxholm Space [@Johnson:2010aa]. Despite the
-significances of these contributions, challenges still exist in large part due
+significance of these contributions, challenges still exist in large part due
 to the wide heterogeneity in associated study-specific image data. Variance in
 the acquisition methods can introduce artifacts such as tissue distortion,
 holes, bubbles, folding, tears, and missing slices. These severely complicate
-assumptions of mapping correspondence for conventional registration approaches.
+assumed correspondence for registration.
 
 To address such challenges, several software packages have been developed over
 the years comprising solutions of varying comprehensibility, sophistication, and
@@ -175,39 +173,38 @@ based on WholeBrain [@Furth:2018aa].  FriendlyClearMap [@Negwer:2022aa] uses the
 landmark-based registration functionality of Elastix [@Klein:2010aa]. Finally,
 the widespread adoption of deep learning techniques has also influenced
 development in mouse brain imaging methodologies.  For example, if tissue
-deformations are not a problematic artifact, DeepSlice can be used to determine
-affine mappings [@Carey:2023aa] with the computational efficiency associated
-with neural networks.
-<!--
-## The ANTs Ecosystem  {-}
--->
+deformations are not considered problematic for a particular dataset, DeepSlice
+can be used to determine affine mappings [@Carey:2023aa] with the optimal
+computational efficiency associated with neural networks.
 
-As noted above, many of the existing approaches for image data processing of
-mouse brain use ANTsX tools for core steps in various workflows, particularly
-its pairwise, intensity-based image registration tools and bias field
-correction. Historically, ANTsX development is originally based on fundamental
-approaches to image mapping [@Bajcsy:1982aa;@Bajcsy:1989aa;@Gee:2003aa] which
-resulted in such core contributions to the field as the Symmetric Normalization
-(SyN) algorithm [@Avants:2008aa].  Since its development, various independent
-platforms have been used to evaluate ANTsX image registration capabilities in
-the context of different application foci (e.g., multi-site brain MRI data
-[@Klein:2009aa], pulmonary CT data [@Murphy:2011aa]), and most recently multi-modal
-brain registration in the presence of tumors [@Baheti:2021aa]. 
+### The ANTsX Ecosystem  {-}
+
+As noted above, many of the existing approaches for processing of mouse brain
+image data use ANTsX tools for core steps in various workflows, particularly its
+pairwise, intensity-based image registration tools and bias field correction.
+Historically, ANTsX development is originally based on fundamental approaches to
+image mapping [@Bajcsy:1982aa;@Bajcsy:1989aa;@Gee:2003aa], particularly in the
+human brain, which has resulted in core contributions to the field such as the
+well-known and highly-vetted Symmetric Normalization (SyN) algorithm
+[@Avants:2008aa].  Since its development, various independent platforms have
+been used to evaluate ANTsX image registration capabilities in the context of
+different application foci which include multi-site brain MRI data
+[@Klein:2009aa], pulmonary CT data [@Murphy:2011aa], and most recently
+multi-modal brain registration in the presence of tumors [@Baheti:2021aa]. 
 
 \input{antsx_functionality_table}
 
-Apart from its founding contribution, ANTsX is a comprehensive biological and
-medical image analysis toolkit, that comprises additional functionality such as
-template generation, general data approximation, and deep learning networks
+Apart from its registration capabilities, ANTsX is a comprehensive biological
+and medical image analysis toolkit, that comprises additional functionality such
+as template generation, general data approximation, and deep learning networks
 specifically trained for mouse data (see Table \ref{table:methods}). The
 collective use of the toolkit has demonstrated superb performance in multiple
 application areas (e.g., consensus labeling [@Wang:2013ab], brain tumor
 segmentation [@Tustison:2014aa], and cardiac motion estimation
 [@Tustison:2015ab]).  Importantly, ANTs is built on the Insight Toolkit (ITK)
-deriving benefit from a very capable open-source community of scientists and 
-programmers as well as providing a venue for algorithmic contributions.
-
-# Results {-}
+[@McCormick:2014aa] deriving benefit from a very capable open-source community
+of scientists and programmers as well as providing a visible, open-source venue
+for algorithmic contributions.
 
 \begin{figure}[!htb]
 \centering
@@ -226,45 +223,134 @@ and the associated velocity flow model for pseudo-template generation.}
 
 Recently, the developmental common coordinate framework (DevCCF) was introduced
 to the mouse brain research community as a public resource [@Kronman:2023aa].
-These symmetric atlases, comprising both multimodal image data and
-anatomical segmentations defined by developmental ontology, span the mouse
-embryonic days (E) 11.5, E13.5, E15.5, E18.5 and postnatal day (P) 4, P14, and
-P56 with Allen CCFv3 integration with the P56 template.  Modalities include at
-least four MRI contrasts and light sheet flourescence miscroscopy (LSFM) per
-developmental stage.  Gene expression and other cell type data were mapped to
-the corresponding developmental time point to guide the associated anatomical
-parcellations. In addition to conventional preprocessing (e.g., bias field
-correction, brain extraction) difficulties for the various mapping tasks
-included tissue distortion, missing slices, and acquisition artifacts. We
-illustrate the utility of the ANTsX ecosystem in providing solutions for these
-issues in constructing the DevCCF.  In addition, we also demonstrate ANTsX
-functionality in the generation of a single diffeomorphic transformation model
-[@Joshi:2000aa] between developmental stages where mappings between any two
-continuous time points within the temporal span of the E11.5 and P56 atlases is
-determined by integration of the governing time-varying velocity field
-[@Christensen:1996aa].  Such transformations permit the possibility of "pseudo"
-templates generated between available developmental stages, which we also
-demonstrate.
+These symmetric atlases, comprising both multimodal image data and anatomical
+segmentations defined by developmental ontology, span the mouse embryonic days
+(E) 11.5, E13.5, E15.5, E18.5 and postnatal day (P) 4, P14, and P56.  Modalities
+include at least four MRI contrasts and light sheet flourescence miscroscopy
+(LSFM) per developmental stage.  Gene expression and other cell type data were
+mapped to the corresponding developmental time point to guide the associated
+anatomical parcellations.  To further demonstrate the practical utility of the
+DevCCF, the P56 template was integrated with the Allen CCFv3 for mapping spatial
+transcriptome cell-type data.  These processes, specifically template generation
+and multi-modal image mapping, were performed using ANTsX functionality in the
+presence of previously noted image mapping difficulties (e.g., missing slices,
+tissue distortion) illustrated in Figure \ref{fig:pipeline}.
 
-<!-- \begin{landscape}
-\begin{figure}[t]
-    \centering
-    \begin{minipage}{9in}
-        \includegraphics[width=8.5in]{Figures/pipeline.pdf}
-        \caption{}
-       \label{fig:convergence}
-   \end{minipage}
-    \end{figure}
-\end{landscape} -->
+Given the temporal gaps in the discrete set of developmental atlases, we augment
+the template generation explanation previously given [@Kronman:2023aa] from a
+developer's perspective.  We hope that this will provide additional information
+for the interested reader for potential future template generation.
+Related, we also provide a complementary strategy for inferring correspondence
+and mapping information within the temporally continuous domain spanned and
+sampled by the existing set of embryonic and postnatal atlas brains of the
+DevCCF.  Recently developed ANTsX functionality include the generation of a
+diffeomorphic velocity flow transformation model [@Joshi:2000aa] spanning
+developmental stages where mappings between any two continuous time points
+within the span bounded by the E11.5 and P56 atlases is determined by
+integration of the generated time-varying velocity field [@Christensen:1996aa].
+Such transformations permit the possibility of "pseudo" templates generated
+between available developmental stages.  
 
 
+
+\clearpage
+\newpage
+
+# Results {-}
+
+## Template building {-}
+
+Template building using ANTsX tools was first described in [@Avants:2010aa].
+Subsequently, multi-modal and symmetrical variants were more explicitly 
+described as part of the brain tumor segmentation approach [@Tustison:2015vl].
+
+<!--
+Each symmetric template is an intensity and morphological average of multiple
+male and female samples with a sample size ranging from 6 to 14 (Extended Data
+Table 1). After stitching, images were preprocessed for template construction.
+MRI data preprocessing involved (1) digital postnatal brain extraction and (2)
+sample orientation correction. LSFM data preprocessing involved (1) image
+resampling to 3 sizes: 50 μm, 20 μm, and 10 μm isotropic voxel resolution, and
+(2) sample orientation correction to ensure all images were facing the same
+direction. To ensure template symmetry, each preprocessed image was duplicated
+and reflected across the sagittal midline, doubling the number of input datasets
+used in the template construction pipeline. Template construction, using
+functionality contained in ANTs34,74, was employed on Penn State’s
+High-Performance Computing system (HPC). Briefly, starting from an initial
+template estimate derived as the average image of the input cohort, this
+function iteratively performed three steps: (1) non-linearly registered each
+input image to the current estimate of the template, (2) voxel-wise averaged the
+warped images, and (3) applied the average transform to the resulting image from
+step 2 to update the morphology of the current estimate of the template.
+Iterations continued until the template shape and intensity values stabilized.
+MRI templates were constructed at their imaged resolution using ADC MRI
+contrasts for initial postnatal templates and diffusion weighted imaging (DWI)
+contrasts for embryonic templates. Once the initial MRI template was
+constructed, the sample to template warp fields were applied to all MRI
+contrasts for each sample. Warped samples were averaged to construct templates
+for each contrast. LSFM templates were constructed from autofluorescence data
+collected from C57bl/6J mice and transgenic mice with a C57bl/6J background. To
+save memory and improve speed, LSFM templates were initially constructed at 50
+μm isotropic resolution. This template was resampled for template construction
+initialization at 20 μm isotropic resolution, a process repeated to construct
+the final LSFM template with 10 μm isotropic resolution input images.
+-->
+
+## The DevCCF Velocity Flow Model {-}
+
+To continuously link the DevCCF atlases, a velocity flow model was constructed
+using Dev-CCF derived data and ANTsX functionality available in both ANTsR
+and ANTsPy.  Although many implementations optimize variations of this transformtion 
+model (and others) using various image intensity similarity metrics, we opted to 
+to implement a separate determination of iterative correspondence and transformation 
+optimization.  This decision was based on existing ANTsX functionality and wanting 
+complementary utility for the toolkit.
+
+ANTsX, being built on top of ITK, uses an ITK image data structure for the 4-D
+velocity field where each voxel contains the $x$, $y$, $z$ components of the
+field at that point. Field regularization is provided by a novel B-spline
+scattered data approximation technique [@Tustison:2006aa] which permits
+individual point-based weighting.  Both field regularization and integration of
+the velocity field are built on ITK functions written by ANTsX developers.  
+
+The optimized velocity field described here is of size $[256, 182, 360]$
+(or $50 \mu$m isotropic) $\times 11$ integration points for a total compressed
+size of a little over 2 GB.  This choice represented weighing the trade-off 
+between tractability, portability, and accuracy.  However,  all
+data and code to reproduce the results described are available in a dedicated 
+GitHub repository (\url{https://github.com/ntustison/DevCCF-Velocity-Flow}).
+
+### Data preparation {-}
 
 \begin{figure}[!htb]
 \centering
-\includegraphics[width=0.7\textwidth]{Figures/SimplifiedAnnotations.pdf}
-\caption{}
+\includegraphics[width=0.75\textwidth]{Figures/SimplifiedAnnotations.pdf}
+\caption{Annotated regions representing common labels across developmental stages which
+are illustrated for both P4 and P14.}
 \label{fig:simplifiedannotations}
 \end{figure}
+
+Labeled annotations are available as part of the original DevCCF and reside
+in the space of each developmental template which range in resolution from 
+$31.5-50 \mu$m.  Across all atlases, the total number of labels exceeded 
+2500 without taken into account per hemispherical enumeration.  From this 
+set of labels, there were a common set of 24 labels (12 per hemisphere) across 
+all atlases that were used for optimization and evaluation.  These regions are 
+illustrated for the P4 and P14 stages in Figure \ref{fig:simplifiedannotations}.
+
+Prior to velocity field optimization, the data was rigidly transformed
+to a common space.  Using the centroids for the common label set of each CCFDev
+atlas, the ANTsPy ``ants.fit_transform_to_paired_points(...)`` function was used to
+warp each atlas to the space of the P56 atlas and then downsampled to $50 \mu$m
+isotropic resolution.  In order to determine the common point sets across
+stages, ``ants.registration(...)`` and its multi-metric capabilities were used.
+Instead of performing intensity-based registration directly on these multi-label
+images, each label was used to construct a separate fixed and moving image pair
+resulting in a multi-metric registration optimization scenario involving 24
+image pairs (each label weighted equally) for optimizing correspondence between 
+neighboring atlases.
+
+### Optimization {-}
 
 \begin{figure}[!htb]
 \centering
@@ -273,6 +359,8 @@ demonstrate.
 transformation through the developmental stages from E11.5 through P56.}
 \label{fig:convergence}
 \end{figure}
+
+### Applications {-}
 
 \begin{figure}[!htb]
 \centering
@@ -305,6 +393,8 @@ those images in the ANTsX template building process.}
 
 
 
+\clearpage
+\newpage
 
 # Methods {-} 
 

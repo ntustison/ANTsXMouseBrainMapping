@@ -1,6 +1,4 @@
-<!--
 # Introduction {-}
--->
 
 Over the past two decades there has been a notable increase in significant
 advancements in mesoscopic analysis of the mouse brain. It is now possible to
@@ -23,11 +21,11 @@ relationships between structures, cells, and genetics in the brain. This has
 motivated the development of detailed structural image atlases of the mouse
 brain.  Notable examples include the Allen Brain Atlas and Coordinate Frameworks
 [@Dong:2008aa,@Wang:2020aa] and the Waxholm Space [@Johnson:2010aa]. Despite the
-significances of these contributions, challenges still exist in large part due
+significance of these contributions, challenges still exist in large part due
 to the wide heterogeneity in associated study-specific image data. Variance in
 the acquisition methods can introduce artifacts such as tissue distortion,
 holes, bubbles, folding, tears, and missing slices. These severely complicate
-assumptions of mapping correspondence for conventional registration approaches.
+assumed correspondence for registration.
 
 To address such challenges, several software packages have been developed over
 the years comprising solutions of varying comprehensibility, sophistication, and
@@ -60,6 +58,6 @@ based on WholeBrain [@Furth:2018aa].  FriendlyClearMap [@Negwer:2022aa] uses the
 landmark-based registration functionality of Elastix [@Klein:2010aa]. Finally,
 the widespread adoption of deep learning techniques has also influenced
 development in mouse brain imaging methodologies.  For example, if tissue
-deformations are not a problematic artifact, DeepSlice can be used to determine
-affine mappings [@Carey:2023aa] with the computational efficiency associated
-with neural networks.
+deformations are not considered problematic for a particular dataset, DeepSlice
+can be used to determine affine mappings [@Carey:2023aa] with the optimal
+computational efficiency associated with neural networks.

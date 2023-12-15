@@ -11,7 +11,7 @@ $ $
 
 \LARGE
 
-{\bf The ANTsX Ecosystem for Precision Spatiotemporal Mapping of the Mouse Brain}
+{\bf The ANTsX Ecosystem for Spatiotemporal Mapping of the Mouse Brain}
 
 \vspace{1.0 cm}
 
