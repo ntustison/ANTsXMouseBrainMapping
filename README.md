@@ -59,6 +59,7 @@ across all developmental stages.
 <p align="middle">
   <img src="https://github.com/ntustison/DevCCF-Velocity-Flow/assets/324811/3f3a4369-eb82-4dce-b1a3-3e4481f66509" width="450" />
 </p>
+</details>
 
 ## Reproducing the DevCCF Velocity Flow Model
 
