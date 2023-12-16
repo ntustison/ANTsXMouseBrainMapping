@@ -13,7 +13,7 @@ is described in [Kronman et al.](https://www.biorxiv.org/content/10.1101/2023.09
 At each age, the DevCCF features undistorted morphologically averaged atlas 
 templates created from magnetic resonance imaging and co-registered high-
 resolution templates from light sheet fluorescence microscopy. Expert-curated 
-3D anatomical segmentations at each age are [also available](). 
+3D anatomical segmentations at each age are also available. 
 As part of this work, we generate a [diffeomorphic velocity flow model](https://en.wikipedia.org/wiki/Large_deformation_diffeomorphic_metric_mapping)
 permitting deformations between the above mouse developmental stages and
 at any continuous point within the developmental range.  The transformation
