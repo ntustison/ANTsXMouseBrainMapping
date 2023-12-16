@@ -19,7 +19,7 @@ permitting deformations between the above mouse developmental stages and
 at any continuous point within the developmental range.  The transformation
 model is generated using the publicly available data provided through the
 above cited work and using [ANTsX tools](https://github.com/ANTsX).  This
-repository provides the scripts to both reproduce and utilize the velocity
+repository provides the scripts and data to reproduce and utilize the velocity
 flow field.
 
 ## Preliminaries
