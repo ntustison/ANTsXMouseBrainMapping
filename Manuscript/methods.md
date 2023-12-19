@@ -48,7 +48,7 @@ of random spatial warping: ``randomly_transform_image_data(...)``.
 For all GPU training, we used Python scripts for creating custom batch
 generators. As such batch generators tend to be application-specific, we store
 them in a separate GitHub repository for public availability
-(https://github.com/ntustison/ANTsXNetTraining). In terms of GPU hardware, all
+(\url{https://github.com/ntustison/ANTsXNetTraining}). In terms of GPU hardware, all
 training was done on a DGX (GPUs: 4X Tesla V100, system memory: 256 GB LRDIMM
 DDR4).
 
@@ -80,8 +80,6 @@ super-resolution applications [@Avants:2023aa], including mouse data.  Finally,
 features of anatomical significance, namely the cerebellum and hemispherical
 midline were captured in these data using deep learning networks.  
 
-## Image registration {-}
-
 ## Intra-slice image registration with missing slice imputation {-}
 
 Volumetric gene expression slice data was collated into 3-D volumes using ...
@@ -100,6 +98,28 @@ more than one iteration cycling through data interpolation and slicewise
 alignment.  The other possibility was incorporating the super-resolution
 technique described earlier.  But again, our data did not require these
 additional steps. 
+
+## Image registration {-}
+
+The ANTs registration toolkit is a complex framework permitting highly tailored
+solutions to pairwise image registration scenarios [@Avants:2014aa].  It
+includes innovative transformation models for biological modeling
+[@Avants:2008aa;@Tustison:2013ac] and has proven capable of excellent
+performance [@Klein:2009aa;@Avants:2011wx].  Various parameter sets targeting
+specific applications have been packaged with the different ANTsX platforms,
+specifically ANTs, ANTsPy, and ANTsR [@Tustison:2021aa]. In ANTsPy, the function
+``ants.registration(...)`` is used to register two (sets) of images where
+``type_of_transform`` is a user-specified option that invokes a specific
+parameter set.  Initially, linear optimization is initialized with center of
+(intensity) mass alignment typically followed by optimization of both rigid and
+affine transforms using the mutual information similarity metric. This was
+followed by diffeomorphic deformable alignment using symmetric normalization
+(SyN) with Gaussian [@Avants:2008aa] or B-spline regularization
+[@Tustison:2013ac] where the forward transform is invertible and differentiable.
+The similarity metric employed at this latter stage is typically either
+neighborhood cross-correlation or mutual information similarity metric.   Further
+details can be found in the various documentation sources for these ANTsX 
+packages.
 
 ## Template generation {-}
 

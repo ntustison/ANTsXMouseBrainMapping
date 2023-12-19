@@ -1,12 +1,52 @@
 %% This BibTeX bibliography file was created using BibDesk.
 %% https://bibdesk.sourceforge.io/
 
-%% Created for Nick Tustison at 2023-12-14 14:13:40 -0800 
+%% Created for Nick Tustison at 2023-12-18 15:53:52 -0800 
 
 
 %% Saved with string encoding Unicode (UTF-8) 
 
 
+
+@article{Avants:2008aa,
+	abstract = {One of the most challenging problems in modern neuroimaging is detailed characterization of neurodegeneration. Quantifying spatial and longitudinal atrophy patterns is an important component of this process. These spatiotemporal signals will aid in discriminating between related diseases, such as frontotemporal dementia (FTD) and Alzheimer's disease (AD), which manifest themselves in the same at-risk population. Here, we develop a novel symmetric image normalization method (SyN) for maximizing the cross-correlation within the space of diffeomorphic maps and provide the Euler-Lagrange equations necessary for this optimization. We then turn to a careful evaluation of our method. Our evaluation uses gold standard, human cortical segmentation to contrast SyN's performance with a related elastic method and with the standard ITK implementation of Thirion's Demons algorithm. The new method compares favorably with both approaches, in particular when the distance between the template brain and the target brain is large. We then report the correlation of volumes gained by algorithmic cortical labelings of FTD and control subjects with those gained by the manual rater. This comparison shows that, of the three methods tested, SyN's volume measurements are the most strongly correlated with volume measurements gained by expert labeling. This study indicates that SyN, with cross-correlation, is a reliable method for normalizing and making anatomical measurements in volumetric MRI of patients and at-risk elderly individuals.},
+	author = {Avants, B B and Epstein, C L and Grossman, M and Gee, J C},
+	date-added = {2023-12-18 15:53:45 -0800},
+	date-modified = {2023-12-18 15:53:45 -0800},
+	doi = {10.1016/j.media.2007.06.004},
+	journal = {Med Image Anal},
+	journal-full = {Medical image analysis},
+	mesh = {Algorithms; Atrophy; Cerebral Cortex; Dementia; Humans; Image Enhancement; Image Interpretation, Computer-Assisted; Magnetic Resonance Imaging},
+	month = {Feb},
+	number = {1},
+	pages = {26-41},
+	pmc = {PMC2276735},
+	pmid = {17659998},
+	pst = {ppublish},
+	title = {Symmetric diffeomorphic image registration with cross-correlation: evaluating automated labeling of elderly and neurodegenerative brain},
+	volume = {12},
+	year = {2008},
+	bdsk-url-1 = {https://doi.org/10.1016/j.media.2007.06.004}}
+
+@article{Klein:2009aa,
+	abstract = {All fields of neuroscience that employ brain imaging need to communicate their results with reference to anatomical regions. In particular, comparative morphometry and group analysis of functional and physiological data require coregistration of brains to establish correspondences across brain structures. It is well established that linear registration of one brain to another is inadequate for aligning brain structures, so numerous algorithms have emerged to nonlinearly register brains to one another. This study is the largest evaluation of nonlinear deformation algorithms applied to brain image registration ever conducted. Fourteen algorithms from laboratories around the world are evaluated using 8 different error measures. More than 45,000 registrations between 80 manually labeled brains were performed by algorithms including: AIR, ANIMAL, ART, Diffeomorphic Demons, FNIRT, IRTK, JRD-fluid, ROMEO, SICLE, SyN, and four different SPM5 algorithms ("SPM2-type" and regular Normalization, Unified Segmentation, and the DARTEL Toolbox). All of these registrations were preceded by linear registration between the same image pairs using FLIRT. One of the most significant findings of this study is that the relative performances of the registration methods under comparison appear to be little affected by the choice of subject population, labeling protocol, and type of overlap measure. This is important because it suggests that the findings are generalizable to new subject populations that are labeled or evaluated using different labeling protocols. Furthermore, we ranked the 14 methods according to three completely independent analyses (permutation tests, one-way ANOVA tests, and indifference-zone ranking) and derived three almost identical top rankings of the methods. ART, SyN, IRTK, and SPM's DARTEL Toolbox gave the best results according to overlap and distance measures, with ART and SyN delivering the most consistently high accuracy across subjects and label sets. Updates will be published on the http://www.mindboggle.info/papers/ website.},
+	author = {Klein, Arno and Andersson, Jesper and Ardekani, Babak A and Ashburner, John and Avants, Brian and Chiang, Ming-Chang and Christensen, Gary E and Collins, D Louis and Gee, James and Hellier, Pierre and Song, Joo Hyun and Jenkinson, Mark and Lepage, Claude and Rueckert, Daniel and Thompson, Paul and Vercauteren, Tom and Woods, Roger P and Mann, J John and Parsey, Ramin V},
+	date-added = {2023-12-18 15:49:37 -0800},
+	date-modified = {2023-12-18 15:49:37 -0800},
+	doi = {10.1016/j.neuroimage.2008.12.037},
+	journal = {Neuroimage},
+	journal-full = {NeuroImage},
+	mesh = {Adult; Algorithms; Artificial Intelligence; Brain; Female; Humans; Image Enhancement; Image Interpretation, Computer-Assisted; Magnetic Resonance Imaging; Male; Nonlinear Dynamics; Pattern Recognition, Automated; Reproducibility of Results; Sensitivity and Specificity; Subtraction Technique},
+	month = {Jul},
+	number = {3},
+	pages = {786-802},
+	pmc = {PMC2747506},
+	pmid = {19195496},
+	pst = {ppublish},
+	title = {Evaluation of 14 nonlinear deformation algorithms applied to human brain MRI registration},
+	volume = {46},
+	year = {2009},
+	bdsk-url-1 = {https://doi.org/10.1016/j.neuroimage.2008.12.037}}
 
 @article{Kapur:2016aa,
 	abstract = {The National Alliance for Medical Image Computing (NA-MIC) was launched in 2004 with the goal of investigating and developing an open source software infrastructure for the extraction of information and knowledge from medical images using computational methods. Several leading research and engineering groups participated in this effort that was funded by the US National Institutes of Health through a variety of infrastructure grants. This effort transformed 3D Slicer from an internal, Boston-based, academic research software application into a professionally maintained, robust, open source platform with an international leadership and developer and user communities. Critical improvements to the widely used underlying open source libraries and tools-VTK, ITK, CMake, CDash, DCMTK-were an additional consequence of this effort. This project has contributed to close to a thousand peer-reviewed publications and a growing portfolio of US and international funded efforts expanding the use of these tools in new medical computing applications every year. In this editorial, we discuss what we believe are gaps in the way medical image computing is pursued today; how a well-executed research platform can enable discovery, innovation and reproducible science ("Open Science"); and how our quest to build such a software platform has evolved into a productive and rewarding social engineering exercise in building an open-access community with a shared vision.},

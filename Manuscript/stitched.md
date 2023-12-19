@@ -451,9 +451,75 @@ P20---arbitrarily chosen simply to demonstrate the concept.  After situating
 these time points within the normalized time point interval, the existing
 adjacent DevCCF atlases on either side can be warped to the desired time point.
 A subsequent call to one of the ANTsX template building functions then permits
-the construction of the template at that time point.  
+the construction of the template at that time point.  Note that both of these
+usage examples can be found on the GitHub repository given above.
 
 
+\clearpage
+\newpage
+
+# Discussion {-}
+
+In this study, we employed precision mapping techniques and high-resolution
+image acquisition to investigate the spatial organization of gene activity and
+their interactions in the mouse brain. Leveraging the Advanced Normalization
+Tools Ecosystem (ANTsX), an open-source software image analysis toolkit, we
+demonstrated its utility in generating precise spatial mappings of the mouse
+brain at different developmental ages. The focus of this discussion is on the
+construction and application of the DevCCF Velocity Flow Model, showcasing its
+versatility and potential implications.
+
+The velocity flow model was constructed to continuously link the developmental
+atlases, providing a dynamic representation of the mouse brain's transformation
+across different developmental stages. ANTsX, built on the Insight Segmentation
+and Registration Toolkit (ITK), facilitated the creation of a 4-D velocity
+field, employing a B-spline scattered data approximation technique for field
+regularization. The optimization of the velocity field was achieved through a
+unique approach, involving iterative correspondence determination and
+transformation optimization.
+
+The choice of a velocity field size of $[256, 182, 360]$ with 11 integration
+points struck a balance between tractability, portability, and accuracy. The
+resulting velocity field, though compact, encapsulated the intricate changes
+across developmental stages, ensuring the representativeness of the model. The
+entire process, including data preparation and optimization, is well-documented
+and accessible through a dedicated GitHub repository.
+
+Data preparation involved the transformation of labeled annotations to a common
+space, enabling the establishment of a common point set across all developmental
+atlases. The optimization process included the rigid transformation of data,
+determination of common point sets, and the subsequent generation of the
+velocity field. The convergence of the optimization process, illustrated in
+Figure \ref{fig:convergence}, highlighted the efficiency of the employed
+methodology.
+
+The velocity field was further validated through the warping of simplified
+labels, providing visual insights into the consistency and accuracy of the
+model. The availability of the warped P56 atlas volumes, as depicted in Figure
+\ref{fig:warpedP56}, enables a comprehensive comparison of annotated regions
+across developmental stages.
+
+The DevCCF transform model, once optimized, offers a powerful tool for
+generating deformable transformations between any two continuous points within
+the developmental time interval. This capability is exemplified in Figure
+\ref{fig:crosswarp}, where each atlas is transformed to the space of every other
+atlas, providing a detailed view of the developmental trajectory.
+
+An intriguing application of this transformation model is the creation of
+pseudo-templates in temporal gaps within the DevCCF. As depicted in Figure
+\ref{fig:pseudo}, the velocity flow model enables the generation of templates at
+continuous time points not represented in existing developmental stages. This
+novel application can significantly enhance our understanding of intermediate
+developmental states.
+
+In conclusion, the presented DevCCF Velocity Flow Model, constructed and
+optimized using ANTsX, represents a valuable contribution to the field of mouse
+brain mapping. The ability to continuously link developmental atlases, visualize
+transformations, and generate pseudo-templates opens avenues for in-depth
+explorations of gene activity and structural-functional relationships during
+brain development. The accessibility of the methodology and results through the
+provided GitHub repository encourages further exploration and collaboration
+within the scientific community.
 \clearpage
 \newpage
 
@@ -503,7 +569,7 @@ of random spatial warping: ``randomly_transform_image_data(...)``.
 For all GPU training, we used Python scripts for creating custom batch
 generators. As such batch generators tend to be application-specific, we store
 them in a separate GitHub repository for public availability
-(https://github.com/ntustison/ANTsXNetTraining). In terms of GPU hardware, all
+(\url{https://github.com/ntustison/ANTsXNetTraining}). In terms of GPU hardware, all
 training was done on a DGX (GPUs: 4X Tesla V100, system memory: 256 GB LRDIMM
 DDR4).
 
@@ -535,8 +601,6 @@ super-resolution applications [@Avants:2023aa], including mouse data.  Finally,
 features of anatomical significance, namely the cerebellum and hemispherical
 midline were captured in these data using deep learning networks.  
 
-## Image registration {-}
-
 ## Intra-slice image registration with missing slice imputation {-}
 
 Volumetric gene expression slice data was collated into 3-D volumes using ...
@@ -555,6 +619,28 @@ more than one iteration cycling through data interpolation and slicewise
 alignment.  The other possibility was incorporating the super-resolution
 technique described earlier.  But again, our data did not require these
 additional steps. 
+
+## Image registration {-}
+
+The ANTs registration toolkit is a complex framework permitting highly tailored
+solutions to pairwise image registration scenarios [@Avants:2014aa].  It
+includes innovative transformation models for biological modeling
+[@Avants:2008aa;@Tustison:2013ac] and has proven capable of excellent
+performance [@Klein:2009aa;@Avants:2011wx].  Various parameter sets targeting
+specific applications have been packaged with the different ANTsX platforms,
+specifically ANTs, ANTsPy, and ANTsR [@Tustison:2021aa]. In ANTsPy, the function
+``ants.registration(...)`` is used to register two (sets) of images where
+``type_of_transform`` is a user-specified option that invokes a specific
+parameter set.  Initially, linear optimization is initialized with center of
+(intensity) mass alignment typically followed by optimization of both rigid and
+affine transforms using the mutual information similarity metric. This was
+followed by diffeomorphic deformable alignment using symmetric normalization
+(SyN) with Gaussian [@Avants:2008aa] or B-spline regularization
+[@Tustison:2013ac] where the forward transform is invertible and differentiable.
+The similarity metric employed at this latter stage is typically either
+neighborhood cross-correlation or mutual information similarity metric.   Further
+details can be found in the various documentation sources for these ANTsX 
+packages.
 
 ## Template generation {-}
 
@@ -609,6 +695,27 @@ ggplot2 and matplotlib, respectively, image-specific visualization capabilities
 are available in the ``ants.plot(...)`` (Python) and ``plot.antsImage(...)`` (R).
 These are capable of illustrating multiple slices in different orientations with
 both other image overlays as well as label images.  
+
+\clearpage
+\newpage
+
+<!--
+__Ethical compliance.__ We complied with all relevant ethical regulations. 
+
+__Reporting Summary.__ Further information on research design is available in
+the Nature Research Reporting Summary linked to this article.
+
+__Software availability.__ 
+-->
+
+__Data availability.__ All data used in this work are publicly available.  The
+DevCCF atlas is available at \url{https://kimlab.io/brain-map/DevCCF/}.
+Additionally, all software discussed is publicly available.  ANTsPy and ANTsR
+are available through GitHub at the ANTsX Ecosystem
+(\url{https://github.com/ANTsX}).  A GitHub repository specific to the work
+discussed in the manuscript was created and is available at
+\url{https://github.com/ntustison/DevCCF-Velocity-Flow}.
+
 
 \clearpage
 

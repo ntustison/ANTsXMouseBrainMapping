@@ -196,5 +196,6 @@ P20---arbitrarily chosen simply to demonstrate the concept.  After situating
 these time points within the normalized time point interval, the existing
 adjacent DevCCF atlases on either side can be warped to the desired time point.
 A subsequent call to one of the ANTsX template building functions then permits
-the construction of the template at that time point.  
+the construction of the template at that time point.  Note that both of these
+usage examples can be found on the GitHub repository given above.
 

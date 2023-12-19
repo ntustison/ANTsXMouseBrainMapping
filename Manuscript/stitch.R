@@ -9,7 +9,9 @@ rmdFiles <- c( "format.md",
                "intro.md",
                "introAnts.md",
                "results.md",
+               "discussion.md",
                "methods.md",
+               "declarations.md",
                "references.md"
              )
 
