@@ -9,17 +9,18 @@
 A multimodal 3D developmental common coordinate framework (DevCCF) spanning 
 mouse embryonic day (E) 11.5, E13.5, E15.5, E18.5, and postnatal day (P) 4, 
 P14, and P56 with anatomical segmentations defined by a developmental ontology
-is described in [Kronman et al.](https://www.biorxiv.org/content/10.1101/2023.09.14.557789v1).
+is described in [Kronman et al.](https://www.biorxiv.org/content/10.1101/2023.09.14.557789v1)
+available [here](https://kimlab.io/brain-map/DevCCF/).
 At each age, the DevCCF features undistorted morphologically averaged atlas 
 templates created from magnetic resonance imaging and co-registered high-
 resolution templates from light sheet fluorescence microscopy. Expert-curated 
-3D anatomical segmentations at each age are [also available](). 
+3D anatomical segmentations at each age are also available. 
 As part of this work, we generate a [diffeomorphic velocity flow model](https://en.wikipedia.org/wiki/Large_deformation_diffeomorphic_metric_mapping)
 permitting deformations between the above mouse developmental stages and
 at any continuous point within the developmental range.  The transformation
 model is generated using the publicly available data provided through the
 above cited work and using [ANTsX tools](https://github.com/ANTsX).  This
-repository provides the scripts to both reproduce and utilize the velocity
+repository provides the code and data to reproduce and utilize the velocity
 flow field.
 
 ## Preliminaries
@@ -58,8 +59,6 @@ across all developmental stages.
 <p align="middle">
   <img src="https://github.com/ntustison/DevCCF-Velocity-Flow/assets/324811/3f3a4369-eb82-4dce-b1a3-3e4481f66509" width="450" />
 </p>
-
-The full DevCCF atlas can be downloaded [here](https://kimlab.io/brain-map/DevCCF/).
 </details>
 
 ## Reproducing the DevCCF Velocity Flow Model
