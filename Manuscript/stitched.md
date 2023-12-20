@@ -105,68 +105,68 @@ structural/functional relationships. Such research is facilitated by
 standardized anatomical coordinate systems, such as the well-known Allen Common
 Coordinate Framework version 3 (CCFv3), and the ability to map to such reference
 atlases.   The Advanced Normalization Tools Ecosystem (ANTsX) is a comprehensive
-open-source software image analysis toolkit with applicability to multiple organ
-systems, modalities, and animal species.  Herein, we illustrate the utility of
-ANTsX for generating precision spatial mappings of the mouse brain of different
-developmental ages including the prerequisite preprocessing steps. Additionally,
-as a further illustration of ANTsX capabilities, we use these publicly available 
-mouse brain atlases to generate a velocity flow-based mapping encompassing the 
-entire developmental trajectory, which we also make available to the public. 
+open-source software image analysis toolkit, including template building and
+mapping functionality, with applicability to multiple organ systems, modalities,
+ and animal species.  Herein, we illustrate the utility of ANTsX for generating
+precision spatial mappings of the mouse brain of different developmental ages
+including the prerequisite preprocessing steps. Additionally, as a further
+illustration of ANTsX capabilities, we use these publicly available mouse brain
+atlases to generate a velocity flow-based mapping encompassing the entire
+developmental trajectory, which we also make available to the public. 
 
 \clearpage# Introduction {-}
 
-Over the past two decades there has been a notable increase in significant
-advancements in mesoscopic analysis of the mouse brain. It is now possible to
-track single cell neurons in 3-D across full mouse brains [@Keller:2015aa],
-observe whole brain developmental changes on a cellular level
-[@La-Manno:2021aa], associate brain regions and tissues with their genetic
-composition [@Wen:2022aa], and locally characterize neural connectivity
-[@Oh:2014aa]. Much of this scientific achievement has been made possible due to
-breakthroughs in high resolution imaging techniques that permit submicron, 3-D
-imaging of whole mouse brains. Associated research techniques such as
-micro-optical sectioning tomography [@Gong:2013aa,@Li:2010aa], tissue clearing
-[@Keller:2015aa;@Ueda:2020aa], spatial transcriptomics
-[@Stahl:2016aa,@Burgess:2019aa] are all well-utilized in the course of
-scientific investigations of mesoscale relationships in the mouse brain. 
+Over the past two decades there have been significant advancements in mesoscopic
+analysis of the mouse brain. It is now possible to track single cell neurons in
+3-D across full mouse brains [@Keller:2015aa], observe whole brain developmental
+changes on a cellular level [@La-Manno:2021aa], associate brain regions and
+tissues with their genetic composition [@Wen:2022aa], and locally characterize
+neural connectivity [@Oh:2014aa]. Much of this scientific achievement has been
+made possible due to breakthroughs in high resolution imaging techniques that
+permit submicron, 3-D imaging of whole mouse brains. Associated research
+techniques such as micro-optical sectioning tomography
+[@Gong:2013aa,@Li:2010aa], tissue clearing [@Keller:2015aa;@Ueda:2020aa],
+spatial transcriptomics [@Stahl:2016aa,@Burgess:2019aa] are all well-utilized in
+the course of scientific investigations of mesoscale relationships in the mouse
+brain. 
 
-An important component of these research programs is the ability to map the
-various image data to anatomical reference frames
+An important component of this research is the ability to map the various image
+data to anatomical reference frames
 [@MacKenzie-Graham:2004aa,@Mackenzie-Graham:2007aa] for inferring spatial
-relationships between structures, cells, and genetics in the brain. This has
-motivated the development of detailed structural image atlases of the mouse
-brain.  Notable examples include the Allen Brain Atlas and Coordinate Frameworks
+relationships between structures, cells, and genetics. This has motivated the
+development of detailed structural image atlases of the mouse brain.  Notable
+examples include the Allen Brain Atlas and Coordinate Frameworks
 [@Dong:2008aa,@Wang:2020aa] and the Waxholm Space [@Johnson:2010aa]. Despite the
-significance of these contributions, challenges still exist in large part due
-to the wide heterogeneity in associated study-specific image data. Variance in
-the acquisition methods can introduce artifacts such as tissue distortion,
-holes, bubbles, folding, tears, and missing slices. These severely complicate
-assumed correspondence for registration.
+significance of these contributions, challenges still exist in large part due to
+the wide heterogeneity in associated study-specific image data. For example,
+variance in the acquisition methods can introduce artifacts such as tissue
+distortion, holes, bubbles, folding, tears, and missing slices. These severely
+complicate assumed correspondence for conventional registration approaches.
 
 To address such challenges, several software packages have been developed over
 the years comprising solutions of varying comprehensibility, sophistication, and
 availability.  An early contribution to the community was the Rapid Automatic
-Tissue Segmentation (RATS) package [@Oguz:2014aa] for brain extraction
-(available upon request).  Of the publicly available packages, most, if not all
-rely on well-established package dependencies originally developed on human
-brain data. Another early tool was SPMMouse [@Sawiak:2014aa] based on the
-well-known Statistical Parametric Mapping (SPM) software package
-[@Ashburner:2012aa]. The automated mouse atlas propagation (aMAP) tool is
-largely a front-end for the NiftyReg image registration package [@Modat:2010aa]
-applied to mouse data which is currently available as a Python module
-[@Tyson:2022aa]. NiftyReg is also used by the Atlas-based Imaging Data Analysis
-(AIDA) MRI pipeline [@Pallast:2019aa] as well as the Multi Atlas Segmentation
-and Morphometric Analysis Toolkit (MASMAT). Whereas the former also incorporates
-the FMRIB Software Library (FSL) [@Jenkinson:2012wi] for brain extraction and
-DSIStudio [@Yeh:2010aa] for DTI processing, the latter uses NiftySeg and
-multi-consensus labeling tools [@Jorge-Cardoso:2013aa] for brain extraction and
-parcellation. In addition, MASMAT incorporates N4 bias field correction
-[@Tustison:2010ac] from the Advanced Normalization Tools Ecosystem (ANTsX)
-[@Tustison:2021aa] as do the packages Multi-modal Image Registration And
-Connectivity anaLysis (MIRACL) [@Goubran:2019aa], Sammba-MRI
-[@Celestine:2020aa], and Small Animal Magnetic Resonance Imaging (SAMRI)
-[@Ioanas:2021aa].  However, whereas Saamba-MRI uses AFNI [@Cox:2012aa] for image
-registration; MIRACL, SAMRI, and BrainsMapi [@Ni:2020aa] all use ANTsX tools for
-computing image-based correspondences. Other packages use landmark-based
+Tissue Segmentation (RATS) package [@Oguz:2014aa] for brain extraction which is
+available upon request.  Of the publicly available packages, most, if not all
+have well-established package dependencies originally developed on human brain
+data. SPMMouse [@Sawiak:2014aa], for example, is based on the well-known
+Statistical Parametric Mapping (SPM) software package [@Ashburner:2012aa]. The
+automated mouse atlas propagation (aMAP) tool is largely a front-end for the
+NiftyReg image registration package [@Modat:2010aa] applied to mouse data which
+is currently available as a Python module [@Tyson:2022aa]. NiftyReg is also used
+by the Atlas-based Imaging Data Analysis (AIDA) MRI pipeline [@Pallast:2019aa]
+as well as the Multi Atlas Segmentation and Morphometric Analysis Toolkit
+(MASMAT). Whereas the former also incorporates the FMRIB Software Library (FSL)
+[@Jenkinson:2012wi] for brain extraction and DSIStudio [@Yeh:2010aa] for DTI
+processing, the latter uses NiftySeg and multi-consensus labeling tools
+[@Jorge-Cardoso:2013aa] for brain extraction and parcellation. In addition,
+MASMAT incorporates N4 bias field correction [@Tustison:2010ac] from the
+Advanced Normalization Tools Ecosystem (ANTsX) [@Tustison:2021aa] as do the
+packages Multi-modal Image Registration And Connectivity anaLysis (MIRACL)
+[@Goubran:2019aa], Sammba-MRI [@Celestine:2020aa], and Small Animal Magnetic
+Resonance Imaging (SAMRI) [@Ioanas:2021aa].  However, whereas Saamba-MRI uses
+AFNI [@Cox:2012aa] for image registration; MIRACL, SAMRI, and BrainsMapi
+[@Ni:2020aa] all use ANTsX registration tools. Other packages use landmark-based
 approaches to image registration including SMART [@Jin:2022aa]---an R package
 for semi-automated landmark-based registration and segmentation of mouse brain
 based on WholeBrain [@Furth:2018aa].  FriendlyClearMap [@Negwer:2022aa] uses the
@@ -229,27 +229,27 @@ segmentations defined by developmental ontology, span the mouse embryonic days
 include at least four MRI contrasts and light sheet flourescence miscroscopy
 (LSFM) per developmental stage.  Gene expression and other cell type data were
 mapped to the corresponding developmental time point to guide the associated
-anatomical parcellations.  To further demonstrate the practical utility of the
-DevCCF, the P56 template was integrated with the Allen CCFv3 for mapping spatial
-transcriptome cell-type data.  These processes, specifically template generation
-and multi-modal image mapping, were performed using ANTsX functionality in the
-presence of previously noted image mapping difficulties (e.g., missing slices,
-tissue distortion) illustrated in Figure \ref{fig:pipeline}.
+anatomical parcellations.  The P56 template was integrated with the Allen CCFv3
+to further increase the practical utility of the DevCCF.  These processes,
+specifically template generation and multi-modal image mapping, were performed
+using ANTsX functionality in the presence of previously noted image mapping
+difficulties (e.g., missing slices, tissue distortion) illustrated in Figure
+\ref{fig:pipeline}.
 
 Given the temporal gaps in the discrete set of developmental atlases, we augment
 the template generation explanation previously given [@Kronman:2023aa] from a
 developer's perspective.  We hope that this will provide additional information
-for the interested reader for potential future template generation.
-Related, we also provide a complementary strategy for inferring correspondence
-and mapping information within the temporally continuous domain spanned and
-sampled by the existing set of embryonic and postnatal atlas brains of the
-DevCCF.  Recently developed ANTsX functionality include the generation of a
-diffeomorphic velocity flow transformation model [@Joshi:2000aa] spanning
-developmental stages where mappings between any two continuous time points
-within the span bounded by the E11.5 and P56 atlases is determined by
-integration of the generated time-varying velocity field [@Christensen:1996aa].
-Such transformations permit the possibility of "pseudo" templates generated
-between available developmental stages.  
+for the interested reader for potential future template generation. Related, we
+also provide a complementary strategy for inferring correspondence and mapping
+information within the temporally continuous domain spanned and sampled by the
+existing set of embryonic and postnatal atlas brains of the DevCCF.  Recently
+developed ANTsX functionality include the generation of a diffeomorphic velocity
+flow transformation model [@Joshi:2000aa] spanning developmental stages where
+mappings between any two continuous time points within the span bounded by the
+E11.5 and P56 atlases is determined by integration of the generated time-varying
+velocity field [@Christensen:1996aa]. Such transformations permit the
+possibility of "pseudo" templates generated between available developmental
+stages.  
 
 
 
@@ -525,6 +525,13 @@ within the scientific community.
 
 # Methods {-} 
 
+The following methods are all available as part of the ANTsX ecosystem
+with analogous elements existing in both ANTsR (ANTs in R) and ANTsPy
+(ANTs in Python) with and ANTs/ITK C++ core.  However, most of the 
+development for the work described below was performed using ANTsPy.
+For equivalent calls in ANTsR, please see the ANTsX tutorial at
+\url{https://tinyurl.com/antsxtutorial}.
+
 ## Preprocessing: bias field correction and denoising {-}
 
 As in human studies, bias field correction and image denoising are standard
@@ -631,15 +638,20 @@ specific applications have been packaged with the different ANTsX platforms,
 specifically ANTs, ANTsPy, and ANTsR [@Tustison:2021aa]. In ANTsPy, the function
 ``ants.registration(...)`` is used to register two (sets) of images where
 ``type_of_transform`` is a user-specified option that invokes a specific
-parameter set.  Initially, linear optimization is initialized with center of
-(intensity) mass alignment typically followed by optimization of both rigid and
-affine transforms using the mutual information similarity metric. This was
-followed by diffeomorphic deformable alignment using symmetric normalization
-(SyN) with Gaussian [@Avants:2008aa] or B-spline regularization
-[@Tustison:2013ac] where the forward transform is invertible and differentiable.
-The similarity metric employed at this latter stage is typically either
-neighborhood cross-correlation or mutual information similarity metric.   Further
-details can be found in the various documentation sources for these ANTsX 
+parameter set.  For example ``type_of_transform='antsRegistrationSyNQuick[s]'``
+is an oft-used parameter set.
+
+Initially, linear optimization is initialized with center of (intensity) mass
+alignment typically followed by optimization of both rigid and affine transforms
+using the mutual information similarity metric. This was followed by
+diffeomorphic deformable alignment using symmetric normalization (SyN) with
+Gaussian [@Avants:2008aa] or B-spline regularization [@Tustison:2013ac] where
+the forward transform is invertible and differentiable. The similarity metric
+employed at this latter stage is typically either neighborhood cross-correlation
+or mutual information similarity metric. Note that these parameter sets are
+robust to input image type (i.e., LSFM, Nissl staining, and the various MRI
+modalities) and are adapatable to mousing image geometry scaling.  Further
+details can be found in the various documentation sources for these ANTsX
 packages.
 
 ## Template generation {-}

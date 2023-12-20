@@ -4,6 +4,13 @@
 
 # Methods {-} 
 
+The following methods are all available as part of the ANTsX ecosystem
+with analogous elements existing in both ANTsR (ANTs in R) and ANTsPy
+(ANTs in Python) with and ANTs/ITK C++ core.  However, most of the 
+development for the work described below was performed using ANTsPy.
+For equivalent calls in ANTsR, please see the ANTsX tutorial at
+\url{https://tinyurl.com/antsxtutorial}.
+
 ## Preprocessing: bias field correction and denoising {-}
 
 As in human studies, bias field correction and image denoising are standard
@@ -110,15 +117,20 @@ specific applications have been packaged with the different ANTsX platforms,
 specifically ANTs, ANTsPy, and ANTsR [@Tustison:2021aa]. In ANTsPy, the function
 ``ants.registration(...)`` is used to register two (sets) of images where
 ``type_of_transform`` is a user-specified option that invokes a specific
-parameter set.  Initially, linear optimization is initialized with center of
-(intensity) mass alignment typically followed by optimization of both rigid and
-affine transforms using the mutual information similarity metric. This was
-followed by diffeomorphic deformable alignment using symmetric normalization
-(SyN) with Gaussian [@Avants:2008aa] or B-spline regularization
-[@Tustison:2013ac] where the forward transform is invertible and differentiable.
-The similarity metric employed at this latter stage is typically either
-neighborhood cross-correlation or mutual information similarity metric.   Further
-details can be found in the various documentation sources for these ANTsX 
+parameter set.  For example ``type_of_transform='antsRegistrationSyNQuick[s]'``
+is an oft-used parameter set.
+
+Initially, linear optimization is initialized with center of (intensity) mass
+alignment typically followed by optimization of both rigid and affine transforms
+using the mutual information similarity metric. This was followed by
+diffeomorphic deformable alignment using symmetric normalization (SyN) with
+Gaussian [@Avants:2008aa] or B-spline regularization [@Tustison:2013ac] where
+the forward transform is invertible and differentiable. The similarity metric
+employed at this latter stage is typically either neighborhood cross-correlation
+or mutual information similarity metric. Note that these parameter sets are
+robust to input image type (i.e., LSFM, Nissl staining, and the various MRI
+modalities) and are adapatable to mousing image geometry scaling.  Further
+details can be found in the various documentation sources for these ANTsX
 packages.
 
 ## Template generation {-}
