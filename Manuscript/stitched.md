@@ -210,21 +210,20 @@ for algorithmic contributions.
 \centering
 \makebox[\textwidth][c]{\includegraphics[width=1.2\textwidth]{Figures/pipeline3.png}}%
 \caption{Illustration of a mouse brain template generation workflow and 
-related template-based applications demonstrating the utility of different 
-ANTsX tools.  After imaging acquisition of the study population, various 
-preprocessing steps are applied to the imaging data such as bias correction,
-denoising, and brain extraction as dictated by the needs of the study 
-protocol.  Not shown is the possibility of template symmetrization by 
-contralaterally flipping the image data associated with each specimen.  
-In the case of the DevCCF, applications include gene expression mapping 
-and the associated velocity flow model for pseudo-template generation.}
+related template-based applications demonstrating the utility of different ANTsX
+tools.  After imaging acquisition of the study population, various preprocessing
+steps are applied to the imaging data such as bias correction, denoising, and
+brain extraction as dictated by the needs of the study protocol.  In the specific 
+case of the DevCCF, potential applications include gene expression mapping and the 
+generation of the associated velocity flow model for continuous spatiotemporal 
+mapping in the temporal domain spanned by the DevCCF.}
 \label{fig:pipeline}
 \end{figure}
 
 Recently, the developmental common coordinate framework (DevCCF) was introduced
 to the mouse brain research community as a public resource [@Kronman:2023aa].
 These symmetric atlases, comprising both multimodal image data and anatomical
-segmentations defined by developmental ontology, span the mouse embryonic days
+segmentations defined by developmental ontology, sample the mouse embryonic days
 (E) 11.5, E13.5, E15.5, E18.5 and postnatal day (P) 4, P14, and P56.  Modalities
 include at least four MRI contrasts and light sheet flourescence miscroscopy
 (LSFM) per developmental stage.  Gene expression and other cell type data were
@@ -233,23 +232,22 @@ anatomical parcellations.  The P56 template was integrated with the Allen CCFv3
 to further increase the practical utility of the DevCCF.  These processes,
 specifically template generation and multi-modal image mapping, were performed
 using ANTsX functionality in the presence of previously noted image mapping
-difficulties (e.g., missing slices, tissue distortion) illustrated in Figure
-\ref{fig:pipeline}.
+difficulties (e.g., missing slices, tissue distortion).
 
-Given the temporal gaps in the discrete set of developmental atlases, we augment
-the template generation explanation previously given [@Kronman:2023aa] from a
-developer's perspective.  We hope that this will provide additional information
-for the interested reader for potential future template generation. Related, we
-also provide a complementary strategy for inferring correspondence and mapping
-information within the temporally continuous domain spanned and sampled by the
-existing set of embryonic and postnatal atlas brains of the DevCCF.  Recently
-developed ANTsX functionality include the generation of a diffeomorphic velocity
-flow transformation model [@Joshi:2000aa] spanning developmental stages where
-mappings between any two continuous time points within the span bounded by the
-E11.5 and P56 atlases is determined by integration of the generated time-varying
-velocity field [@Christensen:1996aa]. Such transformations permit the
-possibility of "pseudo" templates generated between available developmental
-stages.  
+Given the temporal gaps in the discrete set of developmental atlases with the 
+potential to add additional time points, we discuss the strategy of the 
+current DevCCF template generation described previously [@Kronman:2023aa] and 
+provide additional information for the interested reader for potential future
+template generation. Related, we also provide a complementary strategy for
+inferring correspondence and mapping information within the temporally
+continuous domain spanned and sampled by the existing set of embryonic and
+postnatal atlas brains of the DevCCF.  Recently developed ANTsX functionality
+includes the generation of a diffeomorphic velocity flow transformation model
+[@Joshi:2000aa] spanning developmental stages where mappings between any two
+continuous time points within the span bounded by the E11.5 and P56 atlases is
+determined by integration of the optimized velocity field [@Beg:2005aa]. Such
+transformations permit the possibility of virtual templates generated between
+available developmental stages.  
 
 
 
@@ -260,47 +258,83 @@ stages.
 
 ## Template building {-}
 
-Template building using ANTsX tools was first described in [@Avants:2010aa].
-Subsequently, multi-modal and symmetrical variants were more explicitly 
-described as part of the brain tumor segmentation approach [@Tustison:2015vl].
+Template building using ANTsX tools was first described in the context of
+hippocampal studies [@Avants:2010aa].  Multi-modal and symmetrical variants were
+subsequently described as part of a proposed brain tumor segmentation approach
+based on random forests [@Tustison:2015vl].  Template building
+capabilities are available in both ANTsPy (``ants.build_template(...)``) and
+ANTsR (``buildTemplate(...)``) as well as part of 
+the core ANTs package (e.g., ``antsMultivariateTemplateConstruction.sh``).
 
-<!--
-Each symmetric template is an intensity and morphological average of multiple
-male and female samples with a sample size ranging from 6 to 14 (Extended Data
-Table 1). After stitching, images were preprocessed for template construction.
-MRI data preprocessing involved (1) digital postnatal brain extraction and (2)
-sample orientation correction. LSFM data preprocessing involved (1) image
-resampling to 3 sizes: 50 μm, 20 μm, and 10 μm isotropic voxel resolution, and
-(2) sample orientation correction to ensure all images were facing the same
-direction. To ensure template symmetry, each preprocessed image was duplicated
-and reflected across the sagittal midline, doubling the number of input datasets
-used in the template construction pipeline. Template construction, using
-functionality contained in ANTs34,74, was employed on Penn State’s
-High-Performance Computing system (HPC). Briefly, starting from an initial
-template estimate derived as the average image of the input cohort, this
-function iteratively performed three steps: (1) non-linearly registered each
-input image to the current estimate of the template, (2) voxel-wise averaged the
-warped images, and (3) applied the average transform to the resulting image from
-step 2 to update the morphology of the current estimate of the template.
-Iterations continued until the template shape and intensity values stabilized.
-MRI templates were constructed at their imaged resolution using ADC MRI
-contrasts for initial postnatal templates and diffusion weighted imaging (DWI)
-contrasts for embryonic templates. Once the initial MRI template was
-constructed, the sample to template warp fields were applied to all MRI
-contrasts for each sample. Warped samples were averaged to construct templates
-for each contrast. LSFM templates were constructed from autofluorescence data
-collected from C57bl/6J mice and transgenic mice with a C57bl/6J background. To
-save memory and improve speed, LSFM templates were initially constructed at 50
-μm isotropic resolution. This template was resampled for template construction
-initialization at 20 μm isotropic resolution, a process repeated to construct
-the final LSFM template with 10 μm isotropic resolution input images.
--->
+### Data preparation {-}
+
+Multi-modal symmetric template construction is performed separately for each
+developmental stage. Prior to optimization, preprocessing can include several
+steps not all of which are required but are dependent on the data and the
+particular requirements of the study.  For MRI scans, inhomogeneity correction
+is often necessary and can be performed using the ANTsPy function
+``ants.n4_bias_field_correction(...)`` which is a wrapper for the N4 algorithm
+[@Tustison:2010ac].  Denoising is another preprocessing step that can
+potentially improve template quality results.  The ANTsPy function
+``ants.denoise_image(...)`` is an implementation of a well-known denoising
+algorithm [@Manjon:2010aa].  For a typical image, both of these steps takes
+approximately on the order of a couple minutes.  In ANTsX, due to legacy code
+issues, only bias correction is wrapped with template building so one need not
+perform this step prior to optimization.  In addition,
+brain extraction has demonstrated improved performance in the context of human
+brain normalization [@Klein:2010ab] and is similarly used in mouse brain
+registration to maximize alignment.  Various approaches within ANTs are possible
+including a template-based approach ``antsBrainExtraction.sh`` or using deep
+learning ``antspynet.mouse_brain_extraction(...)``.  Additionally, it is
+important to ensure a standardized orientation, similar to the Dicom standard
+for human brain imaging.  A study requirement of template bilateral symmetry is
+also an important consideration prior to template generation.  This can 
+be performed by either flipping all the input images contralaterally such that
+all input specimens are represented twice or one can generate an initial 
+asymmetric template, flipping it contralaterally, and using the two asymmetric 
+templates in a subsequent template generation call to create a single symmetric 
+template.  For multi-modal templates, all the images for a single specimen need
+to be mutually aligned in the same image space prior to optimization.  After 
+selecting the target image space for a particular specimen (e.g., T2-weighted MRI),
+this can be performed with a rigid transform registration call using 
+``ants.registration(...)``.  It should be noted that for most applications, the 
+general hueristic of $\approx 10$ randomly sampled specimens is sufficient for
+a satisfactory template.
+
+In the case of the DevCCF, bias correction was employed in generating the
+multiple stage templates using the shell script
+``antsMultivariateConstruction.sh``.  Brain extraction was applied to the
+postnatal images.  Template symmetrization employed the original and
+contralateral versions of all specimen images.
+
+### Optimization {-}
+
+Template generation is initialized with either a user-provided image or a
+bootstrapped initialization template constructed from the input data.  If the
+latter is selected, the voxelwise averaged image for each modality is
+constructed followed by a linear registration of each specimen to this template
+initialization which refines the estimate.  The former option is often used
+where computational considerations are important.  For example, this initial
+template can be generated using low resolution input data or only a subset of
+the input cohort.  This higher quality initial estimate can then be further
+refined using the entire data set at full resolution.  
+
+Following template initialization, each specimen is registered to the current
+template estimate, which can be performed in parallel.  After the current round
+of registrations is complete, a voxelwise average of each modality is performed
+with optional Laplacian sharpening followed by a "shape update" step. This shape
+update step is used to warp the current estimate of the template so that its
+shape is closer to the mean shape of the input data.  Implementation-wise this
+is done by averaging each displacement field that points from the template to
+the affinely warped specimen.  This average displacement field is then used to
+deform the voxelwise-averaged template.  Shape and intensity template
+convergence typically occurs in four deformable iterations.
 
 ## The DevCCF Velocity Flow Model {-}
 
 To continuously link the DevCCF atlases, a velocity flow model was constructed
 using Dev-CCF derived data and ANTsX functionality available in both ANTsR
-and ANTsPy.  Although many implementations optimize variations of this transformtion 
+and ANTsPy.  Although many implementations optimize variations of this transformation 
 model (and others) using various image intensity similarity metrics, we opted to 
 to implement a separate determination of iterative correspondence and transformation 
 optimization.  This decision was based on existing ANTsX functionality and wanting 
@@ -314,7 +348,7 @@ individual point-based weighting.  Both field regularization and integration of
 the velocity field are built on ITK functions written by ANTsX developers.  
 
 The optimized velocity field described here is of size $[256, 182, 360]$
-(or $50 \mu$m isotropic) $\times 11$ integration points for a total compressed
+($50 \mu$m isotropic) $\times 11$ integration points for a total compressed
 size of a little over 2 GB.  This choice represented weighing the trade-off 
 between tractability, portability, and accuracy.  However,  all
 data and code to reproduce the results described are available in a dedicated 
@@ -435,18 +469,18 @@ that space.
 \begin{figure}[!htb]
 \centering
 \includegraphics[width=0.99\textwidth]{Figures/pseudo_template.pdf}
-\caption{Illustration of the use of the velocity flow model for creating pseudo-templates
-at continuous time points not represented in one of the existing developmental stages.
+\caption{Illustration of the use of the velocity flow model for creating virtual templates
+at continuous time points not represented in one of the existing DevCCF time points.
 For example, FA templates at time point P10.3 and P20 can be generated by warping the 
 existing temporally adjacent developmental templates to the target time point and using 
 those images in the ANTsX template building process.}
-\label{fig:pseudo}
+\label{fig:virtual}
 \end{figure}
 
 One potential application for this particular transformation model is
-facilitating the construction of pseudo-templates in the temporal gaps of the
-DevCCF.  This is illustrated in Figure \ref{fig:pseudo} where we used the
-optimized velocity field to construct pseudo-templates at time point P10.3 and
+facilitating the construction of virtual-templates in the temporal gaps of the
+DevCCF.  This is illustrated in Figure \ref{fig:virtual} where we used the
+optimized velocity field to construct virtual-templates at time point P10.3 and
 P20---arbitrarily chosen simply to demonstrate the concept.  After situating
 these time points within the normalized time point interval, the existing
 adjacent DevCCF atlases on either side can be warped to the desired time point.
@@ -506,8 +540,8 @@ the developmental time interval. This capability is exemplified in Figure
 atlas, providing a detailed view of the developmental trajectory.
 
 An intriguing application of this transformation model is the creation of
-pseudo-templates in temporal gaps within the DevCCF. As depicted in Figure
-\ref{fig:pseudo}, the velocity flow model enables the generation of templates at
+virtual templates in temporal gaps within the DevCCF. As depicted in Figure
+\ref{fig:virtual}, the velocity flow model enables the generation of templates at
 continuous time points not represented in existing developmental stages. This
 novel application can significantly enhance our understanding of intermediate
 developmental states.
@@ -567,11 +601,12 @@ functionality, simulated bias fields based on N4 bias field modeling, and
 histogram warping for mimicking well-known MRI intensity nonlinearities
 [@Nyul:2000aa;@Tustison:2021aa]. These augmentation techniques are available in
 ANTsXNet (only ANTsPyNet versions are listed):  simulated bias field:
-``simulate_bias_field(...)``, image noise: ``add_noise_to_image(...)``, and MRI
-intensity nonlinear characterization: ``histogram_warp_image_intensities(...)``.
+``antspynet.simulate_bias_field(...)``, image noise:
+``antspyhet.add_noise_to_image(...)``, and MRI intensity nonlinear
+characterization: ``antspynet.histogram_warp_image_intensities(...)``.
 Shape-based data augmentation used both random linear and nonlinear
 deformations.  This functionality is also instantiated within ANTsXNet in terms
-of random spatial warping: ``randomly_transform_image_data(...)``.
+of random spatial warping: ``antspynet.randomly_transform_image_data(...)``.
 
 For all GPU training, we used Python scripts for creating custom batch
 generators. As such batch generators tend to be application-specific, we store
@@ -593,7 +628,7 @@ slice-wise fashion given the limitations of the acquisition protocols (e.g.,
 missing slices, slice thickness).  Currently, coronal and sagittal networks are
 available for both E13.5 and E15.5 data and coronal network for T2-weighted MRI.
 In ANTsPyNet, this functionality is available in the program
-``brain_extraction(...)``.  Even when physical brain extraction is
+``antspynet.mouse_brain_extraction(...)``.  Even when physical brain extraction is
 performed prior to image acquisition, artifacts, such as bubbles or debris, can
 complicate subsequent processing.  Similar to the brain extraction networks, a
 2-D U-net architecture [@Falk:2019aa] was created to separate the background and
@@ -619,7 +654,7 @@ number of consecutive missing slices, and the different locations of these
 missing slices.  To handle this missing data problem, we found that data
 interpolation using the B-spline approximation algorithm cited earlier
 [@Tustison:2006aa] (ANTsPy function:
-``fit_bspline_object_to_scattered_data(...)``).  This provided sufficient data
+``ants.fit_bspline_object_to_scattered_data(...)``).  This provided sufficient data
 interpolation fidelity to perform continuous slicewise registration.  Other
 possible variants that were considered but deemed unnecessary was performing
 more than one iteration cycling through data interpolation and slicewise

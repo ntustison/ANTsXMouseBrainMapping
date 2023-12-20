@@ -306,14 +306,13 @@ providing a visible, open-source venue for algorithmic contributions.
 \centering
 \makebox[\textwidth][c]{\includegraphics[width=1.2\textwidth]{Figures/pipeline3.png}}%
 \caption{Illustration of a mouse brain template generation workflow and 
-related template-based applications demonstrating the utility of different 
-ANTsX tools.  After imaging acquisition of the study population, various 
-preprocessing steps are applied to the imaging data such as bias correction,
-denoising, and brain extraction as dictated by the needs of the study 
-protocol.  Not shown is the possibility of template symmetrization by 
-contralaterally flipping the image data associated with each specimen.  
-In the case of the DevCCF, applications include gene expression mapping 
-and the associated velocity flow model for pseudo-template generation.}
+related template-based applications demonstrating the utility of different ANTsX
+tools.  After imaging acquisition of the study population, various preprocessing
+steps are applied to the imaging data such as bias correction, denoising, and
+brain extraction as dictated by the needs of the study protocol.  In the specific 
+case of the DevCCF, potential applications include gene expression mapping and the 
+generation of the associated velocity flow model for continuous spatiotemporal 
+mapping in the temporal domain spanned by the DevCCF.}
 \label{fig:pipeline}
 \end{figure}
 
@@ -321,7 +320,7 @@ Recently, the developmental common coordinate framework (DevCCF) was
 introduced to the mouse brain research community as a public
 resource.\textsuperscript{47} These symmetric atlases, comprising both
 multimodal image data and anatomical segmentations defined by
-developmental ontology, span the mouse embryonic days (E) 11.5, E13.5,
+developmental ontology, sample the mouse embryonic days (E) 11.5, E13.5,
 E15.5, E18.5 and postnatal day (P) 4, P14, and P56. Modalities include
 at least four MRI contrasts and light sheet flourescence miscroscopy
 (LSFM) per developmental stage. Gene expression and other cell type data
@@ -331,25 +330,24 @@ with the Allen CCFv3 to further increase the practical utility of the
 DevCCF. These processes, specifically template generation and
 multi-modal image mapping, were performed using ANTsX functionality in
 the presence of previously noted image mapping difficulties (e.g.,
-missing slices, tissue distortion) illustrated in Figure
-\ref{fig:pipeline}.
+missing slices, tissue distortion).
 
-Given the temporal gaps in the discrete set of developmental atlases, we
-augment the template generation explanation previously
-given\textsuperscript{47} from a developer's perspective. We hope that
-this will provide additional information for the interested reader for
-potential future template generation. Related, we also provide a
-complementary strategy for inferring correspondence and mapping
-information within the temporally continuous domain spanned and sampled
-by the existing set of embryonic and postnatal atlas brains of the
-DevCCF. Recently developed ANTsX functionality include the generation of
-a diffeomorphic velocity flow transformation model\textsuperscript{48}
-spanning developmental stages where mappings between any two continuous
-time points within the span bounded by the E11.5 and P56 atlases is
-determined by integration of the generated time-varying velocity
-field.\textsuperscript{49} Such transformations permit the possibility
-of ``pseudo'' templates generated between available developmental
-stages.
+Given the temporal gaps in the discrete set of developmental atlases
+with the potential to add additional time points, we discuss the
+strategy of the current DevCCF template generation described
+previously\textsuperscript{47} and provide additional information for
+the interested reader for potential future template generation. Related,
+we also provide a complementary strategy for inferring correspondence
+and mapping information within the temporally continuous domain spanned
+and sampled by the existing set of embryonic and postnatal atlas brains
+of the DevCCF. Recently developed ANTsX functionality includes the
+generation of a diffeomorphic velocity flow transformation
+model\textsuperscript{48} spanning developmental stages where mappings
+between any two continuous time points within the span bounded by the
+E11.5 and P56 atlases is determined by integration of the optimized
+velocity field.\textsuperscript{49} Such transformations permit the
+possibility of virtual templates generated between available
+developmental stages.
 
 \clearpage
 \newpage
@@ -362,10 +360,88 @@ stages.
 \subsection*{Template building}\label{template-building}}
 \addcontentsline{toc}{subsection}{Template building}
 
-Template building using ANTsX tools was first described
-in.\textsuperscript{50} Subsequently, multi-modal and symmetrical
-variants were more explicitly described as part of the brain tumor
-segmentation approach.\textsuperscript{51}
+Template building using ANTsX tools was first described in the context
+of hippocampal studies.\textsuperscript{50} Multi-modal and symmetrical
+variants were subsequently described as part of a proposed brain tumor
+segmentation approach based on random forests.\textsuperscript{51}
+Template building capabilities are available in both ANTsPy
+(\texttt{ants.build\_template(...)}) and ANTsR
+(\texttt{buildTemplate(...)}) as well as part of the core ANTs package
+(e.g., \texttt{antsMultivariateTemplateConstruction.sh}).
+
+\hypertarget{data-preparation}{%
+\subsubsection*{Data preparation}\label{data-preparation}}
+\addcontentsline{toc}{subsubsection}{Data preparation}
+
+Multi-modal symmetric template construction is performed separately for
+each developmental stage. Prior to optimization, preprocessing can
+include several steps not all of which are required but are dependent on
+the data and the particular requirements of the study. For MRI scans,
+inhomogeneity correction is often necessary and can be performed using
+the ANTsPy function \texttt{ants.n4\_bias\_field\_correction(...)} which
+is a wrapper for the N4 algorithm.\textsuperscript{24} Denoising is
+another preprocessing step that can potentially improve template quality
+results. The ANTsPy function \texttt{ants.denoise\_image(...)} is an
+implementation of a well-known denoising algorithm.\textsuperscript{52}
+For a typical image, both of these steps takes approximately on the
+order of a couple minutes. In ANTsX, due to legacy code issues, only
+bias correction is wrapped with template building so one need not
+perform this step prior to optimization. In addition, brain extraction
+has demonstrated improved performance in the context of human brain
+normalization\textsuperscript{53} and is similarly used in mouse brain
+registration to maximize alignment. Various approaches within ANTs are
+possible including a template-based approach
+\texttt{antsBrainExtraction.sh} or using deep learning
+\texttt{antspynet.mouse\_brain\_extraction(...)}. Additionally, it is
+important to ensure a standardized orientation, similar to the Dicom
+standard for human brain imaging. A study requirement of template
+bilateral symmetry is also an important consideration prior to template
+generation. This can be performed by either flipping all the input
+images contralaterally such that all input specimens are represented
+twice or one can generate an initial asymmetric template, flipping it
+contralaterally, and using the two asymmetric templates in a subsequent
+template generation call to create a single symmetric template. For
+multi-modal templates, all the images for a single specimen need to be
+mutually aligned in the same image space prior to optimization. After
+selecting the target image space for a particular specimen (e.g.,
+T2-weighted MRI), this can be performed with a rigid transform
+registration call using \texttt{ants.registration(...)}. It should be
+noted that for most applications, the general hueristic of
+\(\approx 10\) randomly sampled specimens is sufficient for a
+satisfactory template.
+
+In the case of the DevCCF, bias correction was employed in generating
+the multiple stage templates using the shell script
+\texttt{antsMultivariateConstruction.sh}. Brain extraction was applied
+to the postnatal images. Template symmetrization employed the original
+and contralateral versions of all specimen images.
+
+\hypertarget{optimization}{%
+\subsubsection*{Optimization}\label{optimization}}
+\addcontentsline{toc}{subsubsection}{Optimization}
+
+Template generation is initialized with either a user-provided image or
+a bootstrapped initialization template constructed from the input data.
+If the latter is selected, the voxelwise averaged image for each
+modality is constructed followed by a linear registration of each
+specimen to this template initialization which refines the estimate. The
+former option is often used where computational considerations are
+important. For example, this initial template can be generated using low
+resolution input data or only a subset of the input cohort. This higher
+quality initial estimate can then be further refined using the entire
+data set at full resolution.
+
+Following template initialization, each specimen is registered to the
+current template estimate, which can be performed in parallel. After the
+current round of registrations is complete, a voxelwise average of each
+modality is performed with optional Laplacian sharpening followed by a
+``shape update'' step. This shape update step is used to warp the
+current estimate of the template so that its shape is closer to the mean
+shape of the input data. Implementation-wise this is done by averaging
+each displacement field that points from the template to the affinely
+warped specimen. This average displacement field is then used to deform
+the voxelwise-averaged template. Shape and intensity template
+convergence typically occurs in four deformable iterations.
 
 \hypertarget{the-devccf-velocity-flow-model}{%
 \subsection*{The DevCCF Velocity Flow
@@ -375,7 +451,7 @@ Model}\label{the-devccf-velocity-flow-model}}
 To continuously link the DevCCF atlases, a velocity flow model was
 constructed using Dev-CCF derived data and ANTsX functionality available
 in both ANTsR and ANTsPy. Although many implementations optimize
-variations of this transformtion model (and others) using various image
+variations of this transformation model (and others) using various image
 intensity similarity metrics, we opted to to implement a separate
 determination of iterative correspondence and transformation
 optimization. This decision was based on existing ANTsX functionality
@@ -385,20 +461,20 @@ ANTsX, being built on top of ITK, uses an ITK image data structure for
 the 4-D velocity field where each voxel contains the \(x\), \(y\), \(z\)
 components of the field at that point. Field regularization is provided
 by a novel B-spline scattered data approximation
-technique\textsuperscript{52} which permits individual point-based
+technique\textsuperscript{54} which permits individual point-based
 weighting. Both field regularization and integration of the velocity
 field are built on ITK functions written by ANTsX developers.
 
 The optimized velocity field described here is of size
-\([256, 182, 360]\) (or \(50 \mu\)m isotropic) \(\times 11\) integration
+\([256, 182, 360]\) (\(50 \mu\)m isotropic) \(\times 11\) integration
 points for a total compressed size of a little over 2 GB. This choice
 represented weighing the trade-off between tractability, portability,
 and accuracy. However, all data and code to reproduce the results
 described are available in a dedicated GitHub repository
 (\url{https://github.com/ntustison/DevCCF-Velocity-Flow}).
 
-\hypertarget{data-preparation}{%
-\subsubsection*{Data preparation}\label{data-preparation}}
+\hypertarget{data-preparation-1}{%
+\subsubsection*{Data preparation}\label{data-preparation-1}}
 \addcontentsline{toc}{subsubsection}{Data preparation}
 
 \begin{figure}[!htb]
@@ -444,8 +520,8 @@ number of points being per atlas being \(173303\)
 weighted twice as those of regional points for the B-spline data
 approximation optimization.
 
-\hypertarget{optimization}{%
-\subsubsection*{Optimization}\label{optimization}}
+\hypertarget{optimization-1}{%
+\subsubsection*{Optimization}\label{optimization-1}}
 \addcontentsline{toc}{subsubsection}{Optimization}
 
 \begin{figure}[!htb]
@@ -526,18 +602,18 @@ each atlas and the results of warping every atlas to that space.
 \begin{figure}[!htb]
 \centering
 \includegraphics[width=0.99\textwidth]{Figures/pseudo_template.pdf}
-\caption{Illustration of the use of the velocity flow model for creating pseudo-templates
-at continuous time points not represented in one of the existing developmental stages.
+\caption{Illustration of the use of the velocity flow model for creating virtual templates
+at continuous time points not represented in one of the existing DevCCF time points.
 For example, FA templates at time point P10.3 and P20 can be generated by warping the 
 existing temporally adjacent developmental templates to the target time point and using 
 those images in the ANTsX template building process.}
-\label{fig:pseudo}
+\label{fig:virtual}
 \end{figure}
 
 One potential application for this particular transformation model is
-facilitating the construction of pseudo-templates in the temporal gaps
-of the DevCCF. This is illustrated in Figure \ref{fig:pseudo} where we
-used the optimized velocity field to construct pseudo-templates at time
+facilitating the construction of virtual-templates in the temporal gaps
+of the DevCCF. This is illustrated in Figure \ref{fig:virtual} where we
+used the optimized velocity field to construct virtual-templates at time
 point P10.3 and P20---arbitrarily chosen simply to demonstrate the
 concept. After situating these time points within the normalized time
 point interval, the existing adjacent DevCCF atlases on either side can
@@ -603,8 +679,8 @@ space of every other atlas, providing a detailed view of the
 developmental trajectory.
 
 An intriguing application of this transformation model is the creation
-of pseudo-templates in temporal gaps within the DevCCF. As depicted in
-Figure \ref{fig:pseudo}, the velocity flow model enables the generation
+of virtual templates in temporal gaps within the DevCCF. As depicted in
+Figure \ref{fig:virtual}, the velocity flow model enables the generation
 of templates at continuous time points not represented in existing
 developmental stages. This novel application can significantly enhance
 our understanding of intermediate developmental states.
@@ -651,7 +727,7 @@ signal-to-noise ratio and improving the overall image quality. The
 well-known N4 bias field correction algorithm\textsuperscript{24} has
 its origins in the ANTs toolkit which was implemented and introduced
 into the ITK toolkit. Similarly, ANTsX contains an implementation of a
-well-performing patch-based denoising technique\textsuperscript{53} and
+well-performing patch-based denoising technique\textsuperscript{52} and
 is also available as a image filter to the ITK community.
 
 \hypertarget{antsxnet-mouse-brain-applications}{%
@@ -673,15 +749,16 @@ techniques.
 Intensity-based data augmentation consisted of randomly added noise
 based on ITK functionality, simulated bias fields based on N4 bias field
 modeling, and histogram warping for mimicking well-known MRI intensity
-nonlinearities.\textsuperscript{25,54} These augmentation techniques are
+nonlinearities.\textsuperscript{25,55} These augmentation techniques are
 available in ANTsXNet (only ANTsPyNet versions are listed): simulated
-bias field: \texttt{simulate\_bias\_field(...)}, image noise:
-\texttt{add\_noise\_to\_image(...)}, and MRI intensity nonlinear
-characterization: \texttt{histogram\_warp\_image\_intensities(...)}.
-Shape-based data augmentation used both random linear and nonlinear
-deformations. This functionality is also instantiated within ANTsXNet in
-terms of random spatial warping:
-\texttt{randomly\_transform\_image\_data(...)}.
+bias field: \texttt{antspynet.simulate\_bias\_field(...)}, image noise:
+\texttt{antspyhet.add\_noise\_to\_image(...)}, and MRI intensity
+nonlinear characterization:
+\texttt{antspynet.histogram\_warp\_image\_intensities(...)}. Shape-based
+data augmentation used both random linear and nonlinear deformations.
+This functionality is also instantiated within ANTsXNet in terms of
+random spatial warping:
+\texttt{antspynet.randomly\_transform\_image\_data(...)}.
 
 For all GPU training, we used Python scripts for creating custom batch
 generators. As such batch generators tend to be application-specific, we
@@ -699,24 +776,25 @@ image modalities (e.g., T1, FLAIR, fractional anisotropy). Similarly,
 for the developmental brain atlas work\textsuperscript{47} we developed
 similar functionality for mouse brains of different modalities and
 developmental age. All networks use a conventional 2-D U-net
-architecture\textsuperscript{55} and perform prediction in a slice-wise
+architecture\textsuperscript{56} and perform prediction in a slice-wise
 fashion given the limitations of the acquisition protocols (e.g.,
 missing slices, slice thickness). Currently, coronal and sagittal
 networks are available for both E13.5 and E15.5 data and coronal network
 for T2-weighted MRI. In ANTsPyNet, this functionality is available in
-the program \texttt{brain\_extraction(...)}. Even when physical brain
-extraction is performed prior to image acquisition, artifacts, such as
-bubbles or debris, can complicate subsequent processing. Similar to the
-brain extraction networks, a 2-D U-net architecture\textsuperscript{55}
-was created to separate the background and foreground.
+the program \texttt{antspynet.mouse\_brain\_extraction(...)}. Even when
+physical brain extraction is performed prior to image acquisition,
+artifacts, such as bubbles or debris, can complicate subsequent
+processing. Similar to the brain extraction networks, a 2-D U-net
+architecture\textsuperscript{56} was created to separate the background
+and foreground.
 
 \emph{Miscellaneous networks: Super-resolution, cerebellum, and
 hemispherical masking.}
 
 To further enhance the data prior to designing mapping protocols,
 additional networks were created. A well-performing deep back projection
-network\textsuperscript{56} was ported to ANTsXNet and expanded to 3-D
-for various super-resolution applications,\textsuperscript{57} including
+network\textsuperscript{57} was ported to ANTsXNet and expanded to 3-D
+for various super-resolution applications,\textsuperscript{58} including
 mouse data. Finally, features of anatomical significance, namely the
 cerebellum and hemispherical midline were captured in these data using
 deep learning networks.
@@ -736,14 +814,14 @@ these image data was the unknown number of missing slices, the number of
 consecutive missing slices, and the different locations of these missing
 slices. To handle this missing data problem, we found that data
 interpolation using the B-spline approximation algorithm cited
-earlier\textsuperscript{52} (ANTsPy function:
-\texttt{fit\_bspline\_object\_to\_scattered\_data(...)}). This provided
-sufficient data interpolation fidelity to perform continuous slicewise
-registration. Other possible variants that were considered but deemed
-unnecessary was performing more than one iteration cycling through data
-interpolation and slicewise alignment. The other possibility was
-incorporating the super-resolution technique described earlier. But
-again, our data did not require these additional steps.
+earlier\textsuperscript{54} (ANTsPy function:
+\texttt{ants.fit\_bspline\_object\_to\_scattered\_data(...)}). This
+provided sufficient data interpolation fidelity to perform continuous
+slicewise registration. Other possible variants that were considered but
+deemed unnecessary was performing more than one iteration cycling
+through data interpolation and slicewise alignment. The other
+possibility was incorporating the super-resolution technique described
+earlier. But again, our data did not require these additional steps.
 
 \hypertarget{image-registration}{%
 \subsection*{Image registration}\label{image-registration}}
@@ -751,9 +829,9 @@ again, our data did not require these additional steps.
 
 The ANTs registration toolkit is a complex framework permitting highly
 tailored solutions to pairwise image registration
-scenarios.\textsuperscript{58} It includes innovative transformation
-models for biological modeling\textsuperscript{39,59} and has proven
-capable of excellent performance.\textsuperscript{40,60} Various
+scenarios.\textsuperscript{59} It includes innovative transformation
+models for biological modeling\textsuperscript{39,60} and has proven
+capable of excellent performance.\textsuperscript{40,61} Various
 parameter sets targeting specific applications have been packaged with
 the different ANTsX platforms, specifically ANTs, ANTsPy, and
 ANTsR.\textsuperscript{25} In ANTsPy, the function
@@ -768,7 +846,7 @@ mass alignment typically followed by optimization of both rigid and
 affine transforms using the mutual information similarity metric. This
 was followed by diffeomorphic deformable alignment using symmetric
 normalization (SyN) with Gaussian\textsuperscript{39} or B-spline
-regularization\textsuperscript{59} where the forward transform is
+regularization\textsuperscript{60} where the forward transform is
 invertible and differentiable. The similarity metric employed at this
 latter stage is typically either neighborhood cross-correlation or
 mutual information similarity metric. Note that these parameter sets are
@@ -811,7 +889,7 @@ can then be used to describe the displacement between any two time
 points within this time-parameterized domain. Regularization of the
 sparse correspondence between point sets is performed using a
 generalized B-spline scattered data approximation
-technique,\textsuperscript{52} also developed by the ANTsX developers
+technique,\textsuperscript{54} also developed by the ANTsX developers
 and contributed to ITK.
 
 To apply this methodology to the developmental
@@ -1159,11 +1237,12 @@ doi:\href{https://doi.org/10.1101/2023.09.14.557789}{10.1101/2023.09.14.557789}.
 large deformation diffeomorphisms. \emph{IEEE Trans Image Process}
 \textbf{9}, 1357--70 (2000).}
 
-\leavevmode\vadjust pre{\hypertarget{ref-Christensen:1996aa}{}}%
+\leavevmode\vadjust pre{\hypertarget{ref-Beg:2005aa}{}}%
 \CSLLeftMargin{49. }
-\CSLRightInline{Christensen, G. E., Rabbitt, R. D. \& Miller, M. I.
-Deformable templates using large deformation kinematics. \emph{IEEE
-Trans Image Process} \textbf{5}, 1435--47 (1996).}
+\CSLRightInline{Beg, M. F., Miller, M. I., Trouvé, A. \& Younes, L.
+Computing large deformation metric mappings via geodesic flows of
+diffeomorphisms. \emph{International Journal of Computer Vision}
+\textbf{61}, 139--157 (2005).}
 
 \leavevmode\vadjust pre{\hypertarget{ref-Avants:2010aa}{}}%
 \CSLLeftMargin{50. }
@@ -1178,34 +1257,40 @@ multimodal templates and concatenated random forests for supervised
 brain tumor segmentation (simplified) with ANTsR.
 \emph{Neuroinformatics} \textbf{13}, 209--25 (2015).}
 
-\leavevmode\vadjust pre{\hypertarget{ref-Tustison:2006aa}{}}%
-\CSLLeftMargin{52. }
-\CSLRightInline{Tustison, N. J. \& Amini, A. A. Biventricular myocardial
-strains via nonrigid registration of anatomical {NURBS} model
-{[}corrected{]}. \emph{IEEE Trans Med Imaging} \textbf{25}, 94--112
-(2006).}
-
 \leavevmode\vadjust pre{\hypertarget{ref-Manjon:2010aa}{}}%
-\CSLLeftMargin{53. }
+\CSLLeftMargin{52. }
 \CSLRightInline{Manjón, J. V., Coupé, P., Martí-Bonmatí, L., Collins, D.
 L. \& Robles, M. Adaptive non-local means denoising of {MR} images with
 spatially varying noise levels. \emph{J Magn Reson Imaging} \textbf{31},
 192--203 (2010).}
 
-\leavevmode\vadjust pre{\hypertarget{ref-Nyul:2000aa}{}}%
+\leavevmode\vadjust pre{\hypertarget{ref-Klein:2010ab}{}}%
+\CSLLeftMargin{53. }
+\CSLRightInline{Klein, A. \emph{et al.} Evaluation of volume-based and
+surface-based brain image registration methods. \emph{Neuroimage}
+\textbf{51}, 214--20 (2010).}
+
+\leavevmode\vadjust pre{\hypertarget{ref-Tustison:2006aa}{}}%
 \CSLLeftMargin{54. }
+\CSLRightInline{Tustison, N. J. \& Amini, A. A. Biventricular myocardial
+strains via nonrigid registration of anatomical {NURBS} model
+{[}corrected{]}. \emph{IEEE Trans Med Imaging} \textbf{25}, 94--112
+(2006).}
+
+\leavevmode\vadjust pre{\hypertarget{ref-Nyul:2000aa}{}}%
+\CSLLeftMargin{55. }
 \CSLRightInline{Nyúl, L. G., Udupa, J. K. \& Zhang, X. New variants of a
 method of MRI scale standardization. \emph{IEEE Trans Med Imaging}
 \textbf{19}, 143--50 (2000).}
 
 \leavevmode\vadjust pre{\hypertarget{ref-Falk:2019aa}{}}%
-\CSLLeftMargin{55. }
+\CSLLeftMargin{56. }
 \CSLRightInline{Falk, T. \emph{et al.} U-net: Deep learning for cell
 counting, detection, and morphometry. \emph{Nat Methods} \textbf{16},
 67--70 (2019).}
 
 \leavevmode\vadjust pre{\hypertarget{ref-Haris:2018aa}{}}%
-\CSLLeftMargin{56. }
+\CSLLeftMargin{57. }
 \CSLRightInline{Haris, M., Shakhnarovich, G. \& Ukita, N. Deep
 back-projection networks for super-resolution. in \emph{2018 {IEEE/CVF}
 {C}onference on {C}omputer {V}ision and {P}attern {R}ecognition}
@@ -1213,26 +1298,26 @@ back-projection networks for super-resolution. in \emph{2018 {IEEE/CVF}
 doi:\href{https://doi.org/10.1109/CVPR.2018.00179}{10.1109/CVPR.2018.00179}.}
 
 \leavevmode\vadjust pre{\hypertarget{ref-Avants:2023aa}{}}%
-\CSLLeftMargin{57. }
+\CSLLeftMargin{58. }
 \CSLRightInline{Avants, B. B. \emph{et al.} Concurrent 3D super
 resolution on intensity and segmentation maps improves detection of
 structural effects in neurodegenerative disease. \emph{medRxiv} (2023)
 doi:\href{https://doi.org/10.1101/2023.02.02.23285376}{10.1101/2023.02.02.23285376}.}
 
 \leavevmode\vadjust pre{\hypertarget{ref-Avants:2014aa}{}}%
-\CSLLeftMargin{58. }
+\CSLLeftMargin{59. }
 \CSLRightInline{Avants, B. B. \emph{et al.} The {Insight} {ToolKit}
 image registration framework. \emph{Front Neuroinform} \textbf{8}, 44
 (2014).}
 
 \leavevmode\vadjust pre{\hypertarget{ref-Tustison:2013ac}{}}%
-\CSLLeftMargin{59. }
+\CSLLeftMargin{60. }
 \CSLRightInline{Tustison, N. J. \& Avants, B. B. Explicit {B}-spline
 regularization in diffeomorphic image registration. \emph{Front
 Neuroinform} \textbf{7}, 39 (2013).}
 
 \leavevmode\vadjust pre{\hypertarget{ref-Avants:2011wx}{}}%
-\CSLLeftMargin{60. }
+\CSLLeftMargin{61. }
 \CSLRightInline{Avants, B. B. \emph{et al.} A reproducible evaluation of
 ANTs similarity metric performance in brain image registration.
 \emph{Neuroimage} \textbf{54}, 2033--44 (2011).}

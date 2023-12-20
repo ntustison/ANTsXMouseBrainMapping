@@ -32,21 +32,20 @@ for algorithmic contributions.
 \centering
 \makebox[\textwidth][c]{\includegraphics[width=1.2\textwidth]{Figures/pipeline3.png}}%
 \caption{Illustration of a mouse brain template generation workflow and 
-related template-based applications demonstrating the utility of different 
-ANTsX tools.  After imaging acquisition of the study population, various 
-preprocessing steps are applied to the imaging data such as bias correction,
-denoising, and brain extraction as dictated by the needs of the study 
-protocol.  Not shown is the possibility of template symmetrization by 
-contralaterally flipping the image data associated with each specimen.  
-In the case of the DevCCF, applications include gene expression mapping 
-and the associated velocity flow model for pseudo-template generation.}
+related template-based applications demonstrating the utility of different ANTsX
+tools.  After imaging acquisition of the study population, various preprocessing
+steps are applied to the imaging data such as bias correction, denoising, and
+brain extraction as dictated by the needs of the study protocol.  In the specific 
+case of the DevCCF, potential applications include gene expression mapping and the 
+generation of the associated velocity flow model for continuous spatiotemporal 
+mapping in the temporal domain spanned by the DevCCF.}
 \label{fig:pipeline}
 \end{figure}
 
 Recently, the developmental common coordinate framework (DevCCF) was introduced
 to the mouse brain research community as a public resource [@Kronman:2023aa].
 These symmetric atlases, comprising both multimodal image data and anatomical
-segmentations defined by developmental ontology, span the mouse embryonic days
+segmentations defined by developmental ontology, sample the mouse embryonic days
 (E) 11.5, E13.5, E15.5, E18.5 and postnatal day (P) 4, P14, and P56.  Modalities
 include at least four MRI contrasts and light sheet flourescence miscroscopy
 (LSFM) per developmental stage.  Gene expression and other cell type data were
@@ -55,23 +54,22 @@ anatomical parcellations.  The P56 template was integrated with the Allen CCFv3
 to further increase the practical utility of the DevCCF.  These processes,
 specifically template generation and multi-modal image mapping, were performed
 using ANTsX functionality in the presence of previously noted image mapping
-difficulties (e.g., missing slices, tissue distortion) illustrated in Figure
-\ref{fig:pipeline}.
+difficulties (e.g., missing slices, tissue distortion).
 
-Given the temporal gaps in the discrete set of developmental atlases, we augment
-the template generation explanation previously given [@Kronman:2023aa] from a
-developer's perspective.  We hope that this will provide additional information
-for the interested reader for potential future template generation. Related, we
-also provide a complementary strategy for inferring correspondence and mapping
-information within the temporally continuous domain spanned and sampled by the
-existing set of embryonic and postnatal atlas brains of the DevCCF.  Recently
-developed ANTsX functionality include the generation of a diffeomorphic velocity
-flow transformation model [@Joshi:2000aa] spanning developmental stages where
-mappings between any two continuous time points within the span bounded by the
-E11.5 and P56 atlases is determined by integration of the generated time-varying
-velocity field [@Christensen:1996aa]. Such transformations permit the
-possibility of "pseudo" templates generated between available developmental
-stages.  
+Given the temporal gaps in the discrete set of developmental atlases with the 
+potential to add additional time points, we discuss the strategy of the 
+current DevCCF template generation described previously [@Kronman:2023aa] and 
+provide additional information for the interested reader for potential future
+template generation. Related, we also provide a complementary strategy for
+inferring correspondence and mapping information within the temporally
+continuous domain spanned and sampled by the existing set of embryonic and
+postnatal atlas brains of the DevCCF.  Recently developed ANTsX functionality
+includes the generation of a diffeomorphic velocity flow transformation model
+[@Joshi:2000aa] spanning developmental stages where mappings between any two
+continuous time points within the span bounded by the E11.5 and P56 atlases is
+determined by integration of the optimized velocity field [@Beg:2005aa]. Such
+transformations permit the possibility of virtual templates generated between
+available developmental stages.  
 
 
 

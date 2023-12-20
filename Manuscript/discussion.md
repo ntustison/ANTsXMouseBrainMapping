@@ -50,8 +50,8 @@ the developmental time interval. This capability is exemplified in Figure
 atlas, providing a detailed view of the developmental trajectory.
 
 An intriguing application of this transformation model is the creation of
-pseudo-templates in temporal gaps within the DevCCF. As depicted in Figure
-\ref{fig:pseudo}, the velocity flow model enables the generation of templates at
+virtual templates in temporal gaps within the DevCCF. As depicted in Figure
+\ref{fig:virtual}, the velocity flow model enables the generation of templates at
 continuous time points not represented in existing developmental stages. This
 novel application can significantly enhance our understanding of intermediate
 developmental states.

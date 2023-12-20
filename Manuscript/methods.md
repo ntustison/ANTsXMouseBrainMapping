@@ -46,11 +46,12 @@ functionality, simulated bias fields based on N4 bias field modeling, and
 histogram warping for mimicking well-known MRI intensity nonlinearities
 [@Nyul:2000aa;@Tustison:2021aa]. These augmentation techniques are available in
 ANTsXNet (only ANTsPyNet versions are listed):  simulated bias field:
-``simulate_bias_field(...)``, image noise: ``add_noise_to_image(...)``, and MRI
-intensity nonlinear characterization: ``histogram_warp_image_intensities(...)``.
+``antspynet.simulate_bias_field(...)``, image noise:
+``antspyhet.add_noise_to_image(...)``, and MRI intensity nonlinear
+characterization: ``antspynet.histogram_warp_image_intensities(...)``.
 Shape-based data augmentation used both random linear and nonlinear
 deformations.  This functionality is also instantiated within ANTsXNet in terms
-of random spatial warping: ``randomly_transform_image_data(...)``.
+of random spatial warping: ``antspynet.randomly_transform_image_data(...)``.
 
 For all GPU training, we used Python scripts for creating custom batch
 generators. As such batch generators tend to be application-specific, we store
@@ -72,7 +73,7 @@ slice-wise fashion given the limitations of the acquisition protocols (e.g.,
 missing slices, slice thickness).  Currently, coronal and sagittal networks are
 available for both E13.5 and E15.5 data and coronal network for T2-weighted MRI.
 In ANTsPyNet, this functionality is available in the program
-``brain_extraction(...)``.  Even when physical brain extraction is
+``antspynet.mouse_brain_extraction(...)``.  Even when physical brain extraction is
 performed prior to image acquisition, artifacts, such as bubbles or debris, can
 complicate subsequent processing.  Similar to the brain extraction networks, a
 2-D U-net architecture [@Falk:2019aa] was created to separate the background and
@@ -98,7 +99,7 @@ number of consecutive missing slices, and the different locations of these
 missing slices.  To handle this missing data problem, we found that data
 interpolation using the B-spline approximation algorithm cited earlier
 [@Tustison:2006aa] (ANTsPy function:
-``fit_bspline_object_to_scattered_data(...)``).  This provided sufficient data
+``ants.fit_bspline_object_to_scattered_data(...)``).  This provided sufficient data
 interpolation fidelity to perform continuous slicewise registration.  Other
 possible variants that were considered but deemed unnecessary was performing
 more than one iteration cycling through data interpolation and slicewise

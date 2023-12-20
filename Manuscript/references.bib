@@ -1,12 +1,55 @@
 %% This BibTeX bibliography file was created using BibDesk.
 %% https://bibdesk.sourceforge.io/
 
-%% Created for Nick Tustison at 2023-12-18 15:53:52 -0800 
+%% Created for Nick Tustison at 2023-12-20 12:56:50 -0800 
 
 
 %% Saved with string encoding Unicode (UTF-8) 
 
 
+
+@article{Klein:2010ab,
+	abstract = {Establishing correspondences across brains for the purposes of comparison and group analysis is almost universally done by registering images to one another either directly or via a template. However, there are many registration algorithms to choose from. A recent evaluation of fully automated nonlinear deformation methods applied to brain image registration was restricted to volume-based methods. The present study is the first that directly compares some of the most accurate of these volume registration methods with surface registration methods, as well as the first study to compare registrations of whole-head and brain-only (de-skulled) images. We used permutation tests to compare the overlap or Hausdorff distance performance for more than 16,000 registrations between 80 manually labeled brain images. We compared every combination of volume-based and surface-based labels, registration, and evaluation. Our primary findings are the following: 1. de-skulling aids volume registration methods; 2. custom-made optimal average templates improve registration over direct pairwise registration; and 3. resampling volume labels on surfaces or converting surface labels to volumes introduces distortions that preclude a fair comparison between the highest ranking volume and surface registration methods using present resampling methods. From the results of this study, we recommend constructing a custom template from a limited sample drawn from the same or a similar representative population, using the same algorithm used for registering brains to the template.},
+	author = {Klein, Arno and Ghosh, Satrajit S and Avants, Brian and Yeo, B T T and Fischl, Bruce and Ardekani, Babak and Gee, James C and Mann, J J and Parsey, Ramin V},
+	date-added = {2023-12-20 12:56:42 -0800},
+	date-modified = {2023-12-20 12:56:42 -0800},
+	doi = {10.1016/j.neuroimage.2010.01.091},
+	journal = {Neuroimage},
+	journal-full = {NeuroImage},
+	mesh = {Adult; Algorithms; Brain; Female; Head; Humans; Image Processing, Computer-Assisted; Imaging, Three-Dimensional; Magnetic Resonance Imaging; Male; Organ Size; Software; Young Adult},
+	month = {May},
+	number = {1},
+	pages = {214-20},
+	pmc = {PMC2862732},
+	pmid = {20123029},
+	pst = {ppublish},
+	title = {Evaluation of volume-based and surface-based brain image registration methods},
+	volume = {51},
+	year = {2010},
+	bdsk-url-1 = {https://doi.org/10.1016/j.neuroimage.2010.01.091}}
+
+@article{Beg:2005aa,
+	abstract = {This paper examine the Euler-Lagrange equations for the solution of the large deformation diffeomorphic metric mapping problem studied in Dupuis et al. (1998) and Trouv{\'e}(1995) in which two images I        0, I        1 are given and connected via the diffeomorphic change of coordinates I        0○ϕ−1=I        1 where ϕ=Φ1 is the end point at t= 1 of curve Φt, t∈{$[$}0, 1{$]$} satisfying .Φt=v        t (Φt), t∈{$[$}0,1{$]$} with Φ0=id. The variational problem takes the form},
+	author = {Beg, M. Faisal and Miller, Michael I. and Trouv{\'e}, Alain and Younes, Laurent},
+	date = {2005/02/01},
+	date-added = {2023-12-19 19:52:08 -0800},
+	date-modified = {2023-12-19 19:52:08 -0800},
+	doi = {10.1023/B:VISI.0000043755.93987.aa},
+	id = {Beg2005},
+	isbn = {1573-1405},
+	journal = {International Journal of Computer Vision},
+	number = {2},
+	pages = {139--157},
+	title = {Computing Large Deformation Metric Mappings via Geodesic Flows of Diffeomorphisms},
+	url = {https://doi.org/10.1023/B:VISI.0000043755.93987.aa},
+	volume = {61},
+	year = {2005},
+	bdsk-url-1 = {https://doi.org/10.1023/B:VISI.0000043755.93987.aa}}
+
+@book{cite-key,
+	date-added = {2023-12-19 19:50:25 -0800},
+	date-modified = {2023-12-19 19:50:41 -0800},
+	title = {Computing Large Deformation Metric Mappings via Geodesic Flows of Diffeomorphisms}}
 
 @article{Avants:2008aa,
 	abstract = {One of the most challenging problems in modern neuroimaging is detailed characterization of neurodegeneration. Quantifying spatial and longitudinal atrophy patterns is an important component of this process. These spatiotemporal signals will aid in discriminating between related diseases, such as frontotemporal dementia (FTD) and Alzheimer's disease (AD), which manifest themselves in the same at-risk population. Here, we develop a novel symmetric image normalization method (SyN) for maximizing the cross-correlation within the space of diffeomorphic maps and provide the Euler-Lagrange equations necessary for this optimization. We then turn to a careful evaluation of our method. Our evaluation uses gold standard, human cortical segmentation to contrast SyN's performance with a related elastic method and with the standard ITK implementation of Thirion's Demons algorithm. The new method compares favorably with both approaches, in particular when the distance between the template brain and the target brain is large. We then report the correlation of volumes gained by algorithmic cortical labelings of FTD and control subjects with those gained by the manual rater. This comparison shows that, of the three methods tested, SyN's volume measurements are the most strongly correlated with volume measurements gained by expert labeling. This study indicates that SyN, with cross-correlation, is a reliable method for normalizing and making anatomical measurements in volumetric MRI of patients and at-risk elderly individuals.},
