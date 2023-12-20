@@ -152,7 +152,7 @@ transformation through the developmental stages from E11.5 through P56.}
 \label{fig:convergence}
 \end{figure}
 
-``fit_time_varying_transform_to_point_sets(...)`` from the ANTsPy package was used 
+``ants.fit_time_varying_transform_to_point_sets(...)`` from the ANTsPy package was used 
 to optimize the velocity field. Input comprised the seven
 corresponding point sets and their associated weight values, the selected number
 of integration points for the velocity field ($N=11$), and the parameters
