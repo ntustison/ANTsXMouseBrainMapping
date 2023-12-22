@@ -379,7 +379,7 @@ for i in range(20):
         number_of_integration_steps=10,
         rasterize_points=False, verbose=True)
     initial_velocity_field = ants.image_clone(tv['velocity_field'])
-    ants.image_write(initial_velocity_field, output_directory + "velocity_field.nii.gz")
+    ants.image_write(initial_velocity_field, velocity_field_file)
     print("\n\n\n\n\n\n")
 ```
 
