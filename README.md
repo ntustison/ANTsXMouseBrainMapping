@@ -81,8 +81,9 @@ import ants
 import os
 import numpy as np
 
-data_directory = "Data/DevCCFSimpleSegmentations/"
-output_directory = "Data/Output/P56RigidTransformData/"
+base_directory = "./"
+data_directory = base_directory + "Data/DevCCFSimpleSegmentations/"
+output_directory = base_directory + "Data/Output/P56RigidTransformData/"
 
 if not os.path.exists(output_directory):
     os.makedirs(output_directory, exist_ok=True)
@@ -163,8 +164,9 @@ import numpy as np
 
 os.environ["ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS"] = "4"
 
-data_directory = "Data/Output/P56RigidTransformData/"
-output_directory = "Data/Output/PairwiseRegistrations/"
+base_directory = "./"
+data_directory = base_directory + "Data/Output/P56RigidTransformData/"
+output_directory = base_directory + "Data/Output/PairwiseRegistrations/"
 
 if not os.path.exists(output_directory):
     os.makedirs(output_directory, exist_ok=True)
@@ -232,8 +234,9 @@ import random
 
 os.environ["ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS"] = "4"
 
-data_directory = "Data/Output/P56RigidTransformData/"
-output_directory = "Data/Output/"
+base_directory = "./"
+data_directory = base_directory + "Data/Output/P56RigidTransformData/"
+output_directory = base_directory + "Data/Output/"
 warped_labels_directory = output_directory + "P56RigidTransformData/" 
 registration_directory = output_directory + "PairwiseRegistrations/"
 
