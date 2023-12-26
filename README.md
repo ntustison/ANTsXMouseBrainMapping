@@ -54,7 +54,8 @@ following plots:
 For simplicity only the data used to create the velocity flow model is 
 [available in this repository](https://github.com/ntustison/DevCCF-Velocity-Flow/tree/main/Data/DevCCFSimpleSegmentations).
 These label images are the simplified annotations comprising common regions
-across all developmental stages.    
+across all developmental stages and are based on the DevCCF pre-released 
+segmentations version 3.8.    
 
 <p align="middle">
   <img src="https://github.com/ntustison/DevCCF-Velocity-Flow/assets/324811/3f3a4369-eb82-4dce-b1a3-3e4481f66509" width="450" />
