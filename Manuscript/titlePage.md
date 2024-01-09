@@ -11,7 +11,7 @@ $ $
 
 \LARGE
 
-{\bf The ANTsX Ecosystem for Spatiotemporal Mapping of the Mouse Brain}
+{\bf The ANTsX Ecosystem for Spatiotemporal Mapping of the Developmental Mouse Brain Common Coordinate Framework}
 
 \vspace{1.0 cm}
 
@@ -33,7 +33,7 @@ $^{2}$Department of Radiology, University of Pennsylvania, Philadelphia, PA \\
 $^{3}$Department of Neural and Behavioral Sciences, Penn State University, Hershey, PA \\
 $^{4}$Allen Institute for Brain Science, Seattle, WA \\
 
-\vspace{1.5 cm}
+\vspace{1.2 cm}
 
 \end{centering}
 
