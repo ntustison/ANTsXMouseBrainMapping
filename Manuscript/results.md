@@ -77,29 +77,35 @@ the affinely warped specimen.  This average displacement field is then used to
 deform the voxelwise-averaged template.  Shape and intensity template
 convergence typically occurs in four deformable iterations.
 
+<!--
+############################################
+############################################
+############################################
+############################################
+-->
+
 ## The DevCCF Velocity Flow Model {-}
 
-To continuously link the DevCCF atlases, a velocity flow model was constructed
-using Dev-CCF derived data and ANTsX functionality available in both ANTsR
-and ANTsPy.  Although many implementations optimize variations of this transformation 
-model (and others) using various image intensity similarity metrics, we opted to 
-to implement a separate determination of iterative correspondence and transformation 
-optimization.  This decision was based on existing ANTsX functionality and wanting 
-complementary utility for the toolkit.
+To continuously interpolate transformations between the different stages of the
+DevCCF atlases, a velocity flow model was constructed using Dev-CCF derived data
+and ANTsX functionality recently introduced into both the ANTsR and ANTsPy
+packages.  Both platforms include a complete suite of functions for determining
+dense correspondence from sparse landmarks based on a variety of transformation
+models ranging from standard linear models (i.e., rigid, affine) to deformable
+diffeomorphic models (e.g, symmetric normalization [@Avants:2008aa]).  The
+latter set includes velocity flow models for both the pairwise scenario
+(``ants.fit_transform_to_paired_points(...)``) and for multiple sets
+(``ants.fit_time_varying_transform_to_point_sets(...)``), as in the case of the
+DevCCF. Several self-contained tutorials illustrating usage for these functions 
+are available at \url{https://tinyurl.com/antsxtutorial}.
 
 ANTsX, being built on top of ITK, uses an ITK image data structure for the 4-D
 velocity field where each voxel contains the $x$, $y$, $z$ components of the
-field at that point. Field regularization is provided by a novel B-spline
-scattered data approximation technique [@Tustison:2006aa] which permits
-individual point-based weighting.  Both field regularization and integration of
-the velocity field are built on ITK functions written by ANTsX developers.  
-
-The optimized velocity field described here is of size $[256, 182, 360]$
-($50 \mu$m isotropic) $\times 11$ integration points for a total compressed
-size of a little over 2 GB.  This choice represented weighing the trade-off 
-between tractability, portability, and accuracy.  However,  all
-data and code to reproduce the results described are available in a dedicated 
-GitHub repository (\url{https://github.com/ntustison/DevCCF-Velocity-Flow}).
+field at that point. Field regularization is provided by a B-spline scattered
+data approximation technique [@Tustison:2006aa,@Tustison:2013ac] which permits
+individual point weighting.  Both field regularization and integration of
+the velocity field are built on ITK functions contributed from ANTsX
+development.  
 
 ### Data preparation {-}
 
@@ -113,34 +119,30 @@ are illustrated for both P4 and P14.}
 
 Labeled annotations are available as part of the original DevCCF and reside
 in the space of each developmental template which range in resolution from 
-$31.5-50 \mu$m.  Across all atlases, the total number of labels exceeded 
-2500 without taken into account per hemispherical enumeration.  From this 
-set of labels, there were a common set of 24 labels (12 per hemisphere) across 
-all atlases that were used for optimization and evaluation.  These regions are 
+$31.5-50 \mu$m.  Across all atlases, the total number of labeled regions exceeds 
+2500.  From these labels, a common set of 26 labels (13 per hemisphere) across 
+all atlases were used for optimization and evaluation.  These regions are 
 illustrated for the P4 and P14 stages in Figure \ref{fig:simplifiedannotations}.
 
-Prior to velocity field optimization, the data was rigidly transformed to a
-common space.  Using the centroids for the common label set of each CCFDev
-atlas, the ANTsPy ``ants.fit_transform_to_paired_points(...)`` function was used
-to warp each atlas to the space of the P56 atlas and then downsampled to $50
-\mu$m isotropic resolution.  In order to determine the common point sets across
-stages, the multi-metric capabilities of ``ants.registration(...)`` were used.
-Instead of performing intensity-based pairwise registration directly on these
-multi-label images, each label was used to construct a separate fixed and moving
-image pair resulting in a multi-metric registration optimization scenario
-involving 24 binary image pairs (each label weighted equally) for optimizing
-correspondence between neighboring atlases using the mean squares metric and 
-the SyN transform.  
+Prior to velocity field optimization, all data were rigidly transformed to a
+common space.  Using the centroids for the common label set of each DevCCF
+atlas, each atlas was rigidly aligned to the space of the P56 atlas In order to
+determine the landmark correspondence across DevCCF stages, the multi-metric
+capabilities of ``ants.registration(...)`` were used. Instead of performing
+intensity-based pairwise registration directly on these multi-label images, each
+label was used to construct a separate fixed and moving image pair resulting in
+a multi-metric registration optimization scenario involving 24 binary image
+pairs (each label weighted equally) for optimizing diffeomorphic correspondence
+between neighboring time point atlases using the mean squares metric and the
+symmetric normalization transform.
 
-To provide the common point sets across all seven developmental atlases, the
-label boundaries and whole regions were sampled in the P56 atlas and then
+To generate the set of common point sets across all seven developmental atlases,
+the label boundaries and whole regions were sampled in the P56 atlas and then
 propagated to each atlas using the transformations derived from the pairwise
-registrations.  Based on previous experience as both the developers of users of
-these tools, we selected a sampling rate of 10\% for the contour points and 1\%
-for the regional points for a total number of points being per atlas being
-$173303$ ($N_{contour} = 98151$ and $N_{region}=75152$). Boundary points were
-weighted twice as those of regional points for the B-spline data approximation
-optimization.  
+registrations.  We selected a sampling rate of 10\% for the contour points and
+1\% for the regional points for a total number of points being per atlas being
+$173303$ ($N_{contour} = 98151$ and $N_{region}=75152$). Regional boundary
+points were weighted twice as those of regional points during optimization.  
 
 ### Optimization {-}
 
@@ -152,17 +154,24 @@ transformation through the developmental stages from E11.5 through P56.}
 \label{fig:convergence}
 \end{figure}
 
-``ants.fit_time_varying_transform_to_point_sets(...)`` from the ANTsPy package was used 
-to optimize the velocity field. Input comprised the seven
-corresponding point sets and their associated weight values, the selected number
-of integration points for the velocity field ($N=11$), and the parameters
-defining the geometry of the spatial dimensions of the velocity field (same as
-the downsampled P56 atlas noted above). In addition, the normalized time point
-for each atlas/point-set was also defined. Given the increasingly larger gaps in
-the postnatal timepoint sampling, we made two adjustments.  Based on known mouse
+``ants.fit_time_varying_transform_to_point_sets(...)`` from the ANTsPy package
+was used to optimize the velocity field. Input comprised the seven corresponding
+point sets and their associated weight values, the selected number of
+integration points for the velocity field ($N=11$), and the parameters defining
+the geometry of the spatial dimensions of the velocity field.  Thus, the optimized 
+velocity field described here is of size $[256, 182, 360]$
+($50 \mu$m isotropic) $\times 11$ integration points for a total compressed
+size of a little over 2 GB.  This choice represented weighing the trade-off 
+between tractability, portability, and accuracy.  However,  all
+data and code to reproduce the results described are available in a dedicated 
+GitHub repository (\url{https://github.com/ntustison/DevCCF-Velocity-Flow}).
+
+The normalized time point scalar value for each atlas/point-set in the temporal
+domains $[0, 1]$ was also defined. Given the increasingly larger gaps in the
+postnatal timepoint sampling, we made two adjustments.  Based on known mouse
 brain development, we used 28 days for the P56 data.  We then computed the log
 transform of the adjusted set of time points prior to normalization between 0
-and 1 (see the right side of Figure \ref{fig:convergence}.)  This log transform,
+and 1 (see the right side of Figure \ref{fig:convergence}).  This log transform,
 as part of the temporal normalization, significantly improved data spacing. 
 
 The max number of iterations was set to 200.  At each iteration we looped over
@@ -187,11 +196,14 @@ compare with the volumes of the same regions in the other atlases.}
 Convergence is determined by the average displacement error over each of the
 integration points. As can be seen in the left panel of Figure
 \ref{fig:convergence}, convergence occurred around 125 iterations when the
-average displacement error is minimized. The median displacement error at each
-of the integration points also trends towards zero but at different rates.
-After optimization, we use the velocity field to warp the P56 set of labels
-to each of the other atlas time points to compare the volumes of the different
-simplified annotated regions.  This is shown in Figure \ref{fig:warpedP56}.
+average displacement error over all integration points is minimized. The median
+displacement error at each of the integration points also trends towards zero
+but at different rates. After optimization, we use the velocity field to warp
+the P56 set of labels to each of the other atlas time points to compare the
+volumes of the different simplified annotated regions.  This is shown in Figure
+\ref{fig:warpedP56}.
+
+
 
 ### The DevCCF transform model {-}
 
@@ -206,12 +218,20 @@ each image is warped.}
 \label{fig:crosswarp}
 \end{figure}
 
-Once optimized, the resulting velocity field can be used to generate the deformable 
-transform between any two continuous points within the time interval bounded by 
-E11.5 and P56.  So, for example, one can transform each atlas to the space of every
-other atlas.  This is illustrated in Figure \ref{fig:crosswarp} where we render a 
-mid-sagittal location for each atlas and the results of warping every atlas to 
-that space.  
+Once optimized, the resulting velocity field can be used to generate the
+deformable transform between any two continuous points within the time interval
+bounded by E11.5 and P56.  In Figure \ref{fig:crosswarp}, we transform each
+atlas to the space of every other atlas using the DevCCF transform model.
+Additionally, one can use this transformation model to construct virtual
+templates in the temporal gaps of the DevCCF.  This is illustrated in Figure
+\ref{fig:virtual} where we used the optimized velocity field to construct
+virtual-templates at time point P10.3 and P20---arbitrarily chosen simply to
+demonstrate the concept.  After situating these time points within the
+normalized time point interval, the existing adjacent DevCCF atlases on either
+chronological side can be warped to the desired time point. A subsequent call to
+one of the ANTsX template building functions then permits the construction of
+the template at that time point.  Note that both of these usage examples can be
+found on the GitHub repository given above.
 
 \begin{figure}[!htb]
 \centering
@@ -223,15 +243,3 @@ existing temporally adjacent developmental templates to the target time point an
 those images in the ANTsX template building process.}
 \label{fig:virtual}
 \end{figure}
-
-One potential application for this particular transformation model is
-facilitating the construction of virtual-templates in the temporal gaps of the
-DevCCF.  This is illustrated in Figure \ref{fig:virtual} where we used the
-optimized velocity field to construct virtual-templates at time point P10.3 and
-P20---arbitrarily chosen simply to demonstrate the concept.  After situating
-these time points within the normalized time point interval, the existing
-adjacent DevCCF atlases on either side can be warped to the desired time point.
-A subsequent call to one of the ANTsX template building functions then permits
-the construction of the template at that time point.  Note that both of these
-usage examples can be found on the GitHub repository given above.
-

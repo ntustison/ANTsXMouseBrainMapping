@@ -58,16 +58,17 @@ mapping difficulties (e.g., missing slices, tissue distortion).
 
 Given the temporal gaps in the discrete set of developmental atlases with the
 potential for additional interpolative time points, we discuss the strategy of
-the current DevCCF template generation described in [@Kronman:2023aa] and
+the current DevCCF template generation [@Kronman:2023aa] and
 provide additional information for the interested reader. Related, we also
 provide an open-source framework, through ANTsX, for inferring correspondence
 within the temporally continuous domain sampled by the existing set of embryonic
-and postnatal atlases of the DevCCF.  This recently developed ANTsX
+and postnatal atlases of the DevCCF.  Although alternative approaches are
+possible for interpolating between time points, this recently developed ANTsX
 functionality permits the generation of a diffeomorphic velocity flow
-transformation model [@Beg:2005aa], with variation based on the ideas introduced
-previously [@Tustison:2013ac].  The resulting time-parameterized velocity field
-spans the stages of the DevCCF where mappings between any two continuous time
-points within the span bounded by the E11.5 and P56 atlases is determined by
+transformation model [@Beg:2005aa], influenced by previous work
+[@Tustison:2013ac].  The resulting time-parameterized velocity field spans the
+stages of the DevCCF where mappings between any two continuous time points
+within the span bounded by the E11.5 and P56 atlases is determined by
 integration of the optimized velocity field. This functionality is available
 through ANTsX (via R and Python ANTsX packages) with a dedicated GitHub
 repository that contains all data, scripts, and other guidance necessary to both
