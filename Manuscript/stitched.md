@@ -53,7 +53,7 @@ $ $
 
 \LARGE
 
-{\bf The ANTsX Ecosystem for Spatiotemporal Mapping of the Developmental Mouse Brain Common Coordinate Framework}
+{\bf The ANTsX Ecosystem for Mapping the Mouse Brain}
 
 \vspace{1.0 cm}
 
@@ -103,16 +103,21 @@ the mouse brain permit the study of the spatial organization of gene activity
 and their mutual interaction for a comprehensive view of salient
 structural/functional relationships. Such research is facilitated by
 standardized anatomical coordinate systems, such as the well-known Allen Common
-Coordinate Framework , and the ability to spatially map to such standardized
-spaces.   The Advanced Normalization Tools Ecosystem (ANTsX) is a comprehensive
-open-source software image analysis toolkit, which includes template building and
-mapping functionality, with applicability to multiple organ systems, modalities,
-and animal species. Herein, we illustrate the utility of ANTsX for generating
-precision spatial mappings of the mouse brain using the recently proposed
-Developmental Common Coordinate Framework.  These longitudinal, discretely
-sampled atlases are used to generate a velocity flow-based mapping spanning
-the spatiotemporal domain of the developmental trajectory with future work 
-accommodating the introduction of additional developmental time points.
+Coordinate Framework (AllenCCFv3), and the ability to spatially map to such
+standardized spaces.   The Advanced Normalization Tools Ecosystem (ANTsX) is a
+comprehensive open-source software toolkit for generalized quantitative imaging,
+which includes template building and mapping functionality, with applicability
+to multiple organ systems, modalities, and animal species. Herein, we illustrate
+the utility of ANTsX for generating precision spatial mappings of the mouse
+brain.  First, we provide ANTsX-based protocols for mapping MERFISH, fMOST, and
+lightsheet datasets to AllenCCFv3 accounting for common artefacts and other
+confounds.  Additionally, recently developed ANTsX functionality permits the
+generation of velocity flow-based mappings for serial data. Using the recently
+introduced Developmental Common Coordinate Framework, we evaluate and describe
+the publicly available ANTsX-based protocols for generating a velocity
+flow-based mapping spanning the spatiotemporal domain of the developmental
+trajectory.   Possible future work includes the introduction of additional
+developmental time points and application to histological slice stacking.
 
 \clearpage# Introduction {-}
 
@@ -134,19 +139,21 @@ data to anatomical reference frames
 [@MacKenzie-Graham:2004aa,@Mackenzie-Graham:2007aa] for inferring spatial
 relationships between structures, cells, and genetics. This has motivated the
 development of detailed structural image atlases of the mouse brain.  Notable
-examples include the Allen Brain Atlas and Coordinate Frameworks
-[@Dong:2008aa,@Wang:2020aa] and the Waxholm Space [@Johnson:2010aa]. Despite the
-significance of these contributions, challenges still exist in large part due to
-the wide heterogeneity in associated study-specific image data. For example,
-variance in the acquisition methods can introduce artifacts such as tissue
-distortion, holes, bubbles, folding, tears, and missing slices. These severely
-complicate assumed correspondence for conventional spatial mapping approaches.
+examples include the Allen Brain Atlas and Coordinate Frameworks (AllenCCFv3)
+[@Dong:2008aa,@Wang:2020aa], the Waxholm Space [@Johnson:2010aa], and more
+recently, the Developmental Common Coordinate Framework (DevCCF)
+[@Kronman:2023aa]. Despite the significance of these contributions, challenges
+still exist in large part due to the wide heterogeneity in associated
+study-specific image data. For example, variance in the acquisition methods can
+introduce artifacts such as tissue distortion, holes, bubbles, folding, tears,
+and missing slices. These severely complicate assumed correspondence for
+conventional spatial mapping approaches.
 
 To address such challenges, several software packages have been developed over
 the years comprising solutions of varying comprehensibility, sophistication, and
 availability.  An early contribution to the community was the Rapid Automatic
 Tissue Segmentation (RATS) package [@Oguz:2014aa] for brain extraction.
-Of the publicly available packages, most, if not all have well-established
+Of the many publicly available packages, most, if not all have well-established
 package dependencies originally developed on human brain data. SPMMouse
 [@Sawiak:2014aa], for example, is based on the well-known Statistical Parametric
 Mapping (SPM) software package [@Ashburner:2012aa]. The automated mouse atlas
@@ -178,10 +185,10 @@ computational efficiency associated with neural networks.
 
 ### The ANTsX Ecosystem  {-}
 
-As noted previously, many of the existing approaches for processing of mouse
+As noted previously, many of the existing packages designed for processing mouse
 brain image data use ANTsX tools for core processing steps in various workflows,
-particularly its pairwise, intensity-based image registration tools and bias
-field correction. Historically, ANTsX development is originally based on
+particularly its pairwise, intensity-based image registration capabilities and
+bias field correction. Historically, ANTsX development is originally based on
 fundamental approaches to image mapping
 [@Bajcsy:1982aa;@Bajcsy:1989aa;@Gee:2003aa], particularly in the human brain,
 which has resulted in core contributions to the field such as the well-known and
@@ -189,33 +196,34 @@ highly-vetted Symmetric Normalization (SyN) algorithm [@Avants:2008aa].  Since
 its development, various independent platforms have been used to evaluate ANTsX
 image registration capabilities in the context of different application foci
 which include multi-site brain MRI data [@Klein:2009aa], pulmonary CT data
-[@Murphy:2011aa], and most recently multi-modal brain registration in the
+[@Murphy:2011aa], and most recently, multi-modal brain registration in the
 presence of tumors [@Baheti:2021aa]. 
 
 \input{antsx_functionality_table}
 
 Apart from its registration capabilities, ANTsX comprises additional
-functionality such as template generation, general data approximation, and deep
-learning networks specifically trained for mouse data (see Table
-\ref{table:methods}). The collective use of the toolkit has demonstrated superb
-performance in multiple application areas (e.g., consensus labeling
-[@Wang:2013ab], brain tumor segmentation [@Tustison:2014aa], and cardiac motion
-estimation [@Tustison:2015ab] ).  Importantly, ANTs is built on the Insight
-Toolkit (ITK) [@McCormick:2014aa] deriving benefit from the
-open-source community of scientists and programmers and providing a
-visible, open-source venue for algorithmic contributions.
+functionality such as template generation [@Avants:2010aa], point set data
+approximation [@Tustison:2006aa], and deep learning networks specifically
+trained for mouse data (see Table \ref{table:methods}). The comprehensive use of
+the toolkit has demonstrated superb performance in multiple application areas
+(e.g., consensus labeling [@Wang:2013ab], brain tumor segmentation
+[@Tustison:2014aa], and cardiac motion estimation [@Tustison:2015ab] ).
+Importantly, ANTs is built on the Insight Toolkit (ITK) [@McCormick:2014aa]
+deriving benefit from the open-source community of scientists and programmers
+and providing an open-source venue for algorithmic development, evaluation, and
+improvement.
 
 \begin{figure}[!htb]
 \centering
 \makebox[\textwidth][c]{\includegraphics[width=1.2\textwidth]{Figures/pipeline3.png}}%
-\caption{Illustration of a mouse brain template generation workflow and 
-related template-based applications demonstrating the utility of different ANTsX
-tools.  After imaging acquisition of the study population, various preprocessing
-steps are applied to the imaging data such as bias correction, denoising, and
-brain extraction as dictated by the needs of the study protocol.  In the specific 
-case of the DevCCF, potential applications include gene expression mapping and the 
-generation of the associated velocity flow model for continuous spatiotemporal 
-mapping in the temporal domain spanned by the DevCCF.}
+\caption{Illustration of a mouse brain template generation workflow and related
+template-based applications demonstrating the utility of different ANTsX tools.
+After imaging acquisition of the study population, various preprocessing steps
+are applied to the imaging data such as bias correction, denoising, and brain
+extraction as dictated by the needs of the study protocol.  
+Potential applications, such as in the case of the DevCCF, include gene
+expression mapping and the generation of the associated velocity flow model for
+continuous spatiotemporal mapping in the temporal domain.}
 \label{fig:pipeline}
 \end{figure}
 
@@ -759,10 +767,10 @@ the Nature Research Reporting Summary linked to this article.
 __Software availability.__ 
 -->
 
-__Data availability.__ All data used in this work are publicly available.  The
-DevCCF atlas is available at \url{https://kimlab.io/brain-map/DevCCF/}.
-Additionally, all software discussed is publicly available.  ANTsPy and ANTsR
-are available through GitHub at the ANTsX Ecosystem
+__Data availability.__ All data and doftware used in this work are publicly
+available.  The DevCCF atlas is available at
+\url{https://kimlab.io/brain-map/DevCCF/}. ANTsPy, ANTsR, ANTsPyNet, and
+ANTsRNet are available through GitHub at the ANTsX Ecosystem
 (\url{https://github.com/ANTsX}).  A GitHub repository specific to the work
 discussed in the manuscript was created and is available at
 \url{https://github.com/ntustison/DevCCF-Velocity-Flow}.

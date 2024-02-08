@@ -124,7 +124,7 @@ $ $
 
 \LARGE
 
-{\bf The ANTsX Ecosystem for Spatiotemporal Mapping of the Developmental Mouse Brain Common Coordinate Framework}
+{\bf The ANTsX Ecosystem for Mapping the Mouse Brain}
 
 \vspace{1.0 cm}
 
@@ -179,18 +179,24 @@ acquisition of the mouse brain permit the study of the spatial
 organization of gene activity and their mutual interaction for a
 comprehensive view of salient structural/functional relationships. Such
 research is facilitated by standardized anatomical coordinate systems,
-such as the well-known Allen Common Coordinate Framework , and the
-ability to spatially map to such standardized spaces. The Advanced
-Normalization Tools Ecosystem (ANTsX) is a comprehensive open-source
-software image analysis toolkit, which includes template building and
-mapping functionality, with applicability to multiple organ systems,
-modalities, and animal species. Herein, we illustrate the utility of
-ANTsX for generating precision spatial mappings of the mouse brain using
-the recently proposed Developmental Common Coordinate Framework. These
-longitudinal, discretely sampled atlases are used to generate a velocity
+such as the well-known Allen Common Coordinate Framework (AllenCCFv3),
+and the ability to spatially map to such standardized spaces. The
+Advanced Normalization Tools Ecosystem (ANTsX) is a comprehensive
+open-source software toolkit for generalized quantitative imaging, which
+includes template building and mapping functionality, with applicability
+to multiple organ systems, modalities, and animal species. Herein, we
+illustrate the utility of ANTsX for generating precision spatial
+mappings of the mouse brain. First, we provide ANTsX-based protocols for
+mapping MERFISH, fMOST, and lightsheet datasets to AllenCCFv3 accounting
+for common artefacts and other confounds. Additionally, recently
+developed ANTsX functionality permits the generation of velocity
+flow-based mappings for serial data. Using the recently introduced
+Developmental Common Coordinate Framework, we evaluate and describe the
+publicly available ANTsX-based protocols for generating a velocity
 flow-based mapping spanning the spatiotemporal domain of the
-developmental trajectory with future work accommodating the introduction
-of additional developmental time points.
+developmental trajectory. Possible future work includes the introduction
+of additional developmental time points and application to histological
+slice stacking.
 
 \clearpage
 
@@ -218,53 +224,54 @@ various image data to anatomical reference frames\textsuperscript{11}
 for inferring spatial relationships between structures, cells, and
 genetics. This has motivated the development of detailed structural
 image atlases of the mouse brain. Notable examples include the Allen
-Brain Atlas and Coordinate Frameworks\textsuperscript{13} and the
-Waxholm Space.\textsuperscript{14} Despite the significance of these
-contributions, challenges still exist in large part due to the wide
-heterogeneity in associated study-specific image data. For example,
-variance in the acquisition methods can introduce artifacts such as
-tissue distortion, holes, bubbles, folding, tears, and missing slices.
-These severely complicate assumed correspondence for conventional
-spatial mapping approaches.
+Brain Atlas and Coordinate Frameworks (AllenCCFv3),\textsuperscript{13}
+the Waxholm Space,\textsuperscript{14} and more recently, the
+Developmental Common Coordinate Framework (DevCCF).\textsuperscript{15}
+Despite the significance of these contributions, challenges still exist
+in large part due to the wide heterogeneity in associated study-specific
+image data. For example, variance in the acquisition methods can
+introduce artifacts such as tissue distortion, holes, bubbles, folding,
+tears, and missing slices. These severely complicate assumed
+correspondence for conventional spatial mapping approaches.
 
 To address such challenges, several software packages have been
 developed over the years comprising solutions of varying
 comprehensibility, sophistication, and availability. An early
 contribution to the community was the Rapid Automatic Tissue
-Segmentation (RATS) package\textsuperscript{15} for brain extraction. Of
-the publicly available packages, most, if not all have well-established
-package dependencies originally developed on human brain data.
-SPMMouse,\textsuperscript{16} for example, is based on the well-known
-Statistical Parametric Mapping (SPM) software
-package.\textsuperscript{17} The automated mouse atlas propagation
+Segmentation (RATS) package\textsuperscript{16} for brain extraction. Of
+the many publicly available packages, most, if not all have
+well-established package dependencies originally developed on human
+brain data. SPMMouse,\textsuperscript{17} for example, is based on the
+well-known Statistical Parametric Mapping (SPM) software
+package.\textsuperscript{18} The automated mouse atlas propagation
 (aMAP) tool is largely a front-end for the NiftyReg image registration
-package\textsuperscript{18} applied to mouse data which is currently
-available as a Python module.\textsuperscript{19} NiftyReg is also used
+package\textsuperscript{19} applied to mouse data which is currently
+available as a Python module.\textsuperscript{20} NiftyReg is also used
 by the Atlas-based Imaging Data Analysis (AIDA) MRI
-pipeline\textsuperscript{20} as well as the Multi Atlas Segmentation and
+pipeline\textsuperscript{21} as well as the Multi Atlas Segmentation and
 Morphometric Analysis Toolkit (MASMAT). Whereas the former also
-incorporates the FMRIB Software Library (FSL)\textsuperscript{21} for
-brain extraction and DSIStudio\textsuperscript{22} for DTI processing,
+incorporates the FMRIB Software Library (FSL)\textsuperscript{22} for
+brain extraction and DSIStudio\textsuperscript{23} for DTI processing,
 the latter uses NiftySeg and multi-consensus labeling
-tools\textsuperscript{23} for brain extraction and parcellation. In
+tools\textsuperscript{24} for brain extraction and parcellation. In
 addition, MASMAT incorporates N4 bias field
-correction\textsuperscript{24} from the Advanced Normalization Tools
-Ecosystem (ANTsX)\textsuperscript{25} as do the packages Multi-modal
+correction\textsuperscript{25} from the Advanced Normalization Tools
+Ecosystem (ANTsX)\textsuperscript{26} as do the packages Multi-modal
 Image Registration And Connectivity anaLysis
-(MIRACL),\textsuperscript{26} Sammba-MRI,\textsuperscript{27} and Small
-Animal Magnetic Resonance Imaging (SAMRI).\textsuperscript{28} However,
-whereas Saamba-MRI uses AFNI\textsuperscript{29} for image registration;
-MIRACL, SAMRI, and BrainsMapi\textsuperscript{30} all use ANTsX
+(MIRACL),\textsuperscript{27} Sammba-MRI,\textsuperscript{28} and Small
+Animal Magnetic Resonance Imaging (SAMRI).\textsuperscript{29} However,
+whereas Saamba-MRI uses AFNI\textsuperscript{30} for image registration;
+MIRACL, SAMRI, and BrainsMapi\textsuperscript{31} all use ANTsX
 registration tools. Other packages use landmark-based approaches to
-image registration including SMART---\textsuperscript{31}an R package
+image registration including SMART---\textsuperscript{32}an R package
 for semi-automated landmark-based registration and segmentation of mouse
-brain based on WholeBrain.\textsuperscript{32}
-FriendlyClearMap\textsuperscript{33} uses the landmark-based
-registration functionality of Elastix.\textsuperscript{34} Finally, the
+brain based on WholeBrain.\textsuperscript{33}
+FriendlyClearMap\textsuperscript{34} uses the landmark-based
+registration functionality of Elastix.\textsuperscript{35} Finally, the
 widespread adoption of deep learning techniques has also influenced
 development in mouse brain imaging methodologies. For example, if tissue
 deformations are not considered problematic for a particular dataset,
-DeepSlice can be used to determine affine mappings\textsuperscript{35}
+DeepSlice can be used to determine affine mappings\textsuperscript{36}
 with the optimal computational efficiency associated with neural
 networks.
 
@@ -272,52 +279,54 @@ networks.
 \subsubsection*{The ANTsX Ecosystem}\label{the-antsx-ecosystem}}
 \addcontentsline{toc}{subsubsection}{The ANTsX Ecosystem}
 
-As noted previously, many of the existing approaches for processing of
-mouse brain image data use ANTsX tools for core processing steps in
-various workflows, particularly its pairwise, intensity-based image
-registration tools and bias field correction. Historically, ANTsX
-development is originally based on fundamental approaches to image
-mapping,\textsuperscript{36--38} particularly in the human brain, which
+As noted previously, many of the existing packages designed for
+processing mouse brain image data use ANTsX tools for core processing
+steps in various workflows, particularly its pairwise, intensity-based
+image registration capabilities and bias field correction. Historically,
+ANTsX development is originally based on fundamental approaches to image
+mapping,\textsuperscript{37--39} particularly in the human brain, which
 has resulted in core contributions to the field such as the well-known
 and highly-vetted Symmetric Normalization (SyN)
-algorithm.\textsuperscript{39} Since its development, various
+algorithm.\textsuperscript{40} Since its development, various
 independent platforms have been used to evaluate ANTsX image
 registration capabilities in the context of different application foci
-which include multi-site brain MRI data,\textsuperscript{40} pulmonary
-CT data,\textsuperscript{41} and most recently multi-modal brain
-registration in the presence of tumors.\textsuperscript{42}
+which include multi-site brain MRI data,\textsuperscript{41} pulmonary
+CT data,\textsuperscript{42} and most recently, multi-modal brain
+registration in the presence of tumors.\textsuperscript{43}
 
 \input{antsx_functionality_table}
 
 Apart from its registration capabilities, ANTsX comprises additional
-functionality such as template generation, general data approximation,
-and deep learning networks specifically trained for mouse data (see
-Table \ref{table:methods}). The collective use of the toolkit has
-demonstrated superb performance in multiple application areas (e.g.,
-consensus labeling,\textsuperscript{43} brain tumor
-segmentation,\textsuperscript{44} and cardiac motion
-estimation\textsuperscript{45} ). Importantly, ANTs is built on the
-Insight Toolkit (ITK)\textsuperscript{46} deriving benefit from the
-open-source community of scientists and programmers and providing a
-visible, open-source venue for algorithmic contributions.
+functionality such as template generation,\textsuperscript{44} point set
+data approximation,\textsuperscript{45} and deep learning networks
+specifically trained for mouse data (see Table \ref{table:methods}). The
+comprehensive use of the toolkit has demonstrated superb performance in
+multiple application areas (e.g., consensus
+labeling,\textsuperscript{46} brain tumor
+segmentation,\textsuperscript{47} and cardiac motion
+estimation\textsuperscript{48} ). Importantly, ANTs is built on the
+Insight Toolkit (ITK)\textsuperscript{49} deriving benefit from the
+open-source community of scientists and programmers and providing an
+open-source venue for algorithmic development, evaluation, and
+improvement.
 
 \begin{figure}[!htb]
 \centering
 \makebox[\textwidth][c]{\includegraphics[width=1.2\textwidth]{Figures/pipeline3.png}}%
-\caption{Illustration of a mouse brain template generation workflow and 
-related template-based applications demonstrating the utility of different ANTsX
-tools.  After imaging acquisition of the study population, various preprocessing
-steps are applied to the imaging data such as bias correction, denoising, and
-brain extraction as dictated by the needs of the study protocol.  In the specific 
-case of the DevCCF, potential applications include gene expression mapping and the 
-generation of the associated velocity flow model for continuous spatiotemporal 
-mapping in the temporal domain spanned by the DevCCF.}
+\caption{Illustration of a mouse brain template generation workflow and related
+template-based applications demonstrating the utility of different ANTsX tools.
+After imaging acquisition of the study population, various preprocessing steps
+are applied to the imaging data such as bias correction, denoising, and brain
+extraction as dictated by the needs of the study protocol.  
+Potential applications, such as in the case of the DevCCF, include gene
+expression mapping and the generation of the associated velocity flow model for
+continuous spatiotemporal mapping in the temporal domain.}
 \label{fig:pipeline}
 \end{figure}
 
 Recently, the developmental common coordinate framework (DevCCF) was
 introduced to the mouse brain research community as a public
-resource.\textsuperscript{47} These symmetric atlases, comprising both
+resource.\textsuperscript{15} These symmetric atlases, comprising both
 multimodal image data and anatomical segmentations defined by
 developmental ontology, sample the mouse embryonic days (E) 11.5, E13.5,
 E15.5, E18.5 and postnatal day (P) 4, P14, and P56. Modalities include
@@ -334,15 +343,15 @@ missing slices, tissue distortion).
 Given the temporal gaps in the discrete set of developmental atlases
 with the potential for additional interpolative time points, we discuss
 the strategy of the current DevCCF template
-generation\textsuperscript{47} and provide additional information for
+generation\textsuperscript{15} and provide additional information for
 the interested reader. Related, we also provide an open-source
 framework, through ANTsX, for inferring correspondence within the
 temporally continuous domain sampled by the existing set of embryonic
 and postnatal atlases of the DevCCF. Although alternative approaches are
 possible for interpolating between time points, this recently developed
 ANTsX functionality permits the generation of a diffeomorphic velocity
-flow transformation model,\textsuperscript{48} influenced by previous
-work.\textsuperscript{49} The resulting time-parameterized velocity
+flow transformation model,\textsuperscript{50} influenced by previous
+work.\textsuperscript{51} The resulting time-parameterized velocity
 field spans the stages of the DevCCF where mappings between any two
 continuous time points within the span bounded by the E11.5 and P56
 atlases is determined by integration of the optimized velocity field.
@@ -365,9 +374,9 @@ straightforward manner.
 \addcontentsline{toc}{subsection}{Template building}
 
 Template building using ANTsX tools was first described in the context
-of hippocampal studies.\textsuperscript{50} Multi-modal and symmetrical
+of hippocampal studies.\textsuperscript{44} Multi-modal and symmetrical
 variants were subsequently described as part of a proposed brain tumor
-segmentation approach based on random forests.\textsuperscript{51}
+segmentation approach based on random forests.\textsuperscript{52}
 Template building capabilities are available in both ANTsPy
 (\texttt{ants.build\_template(...)}) and ANTsR
 (\texttt{buildTemplate(...)}) as well as part of the core ANTs package
@@ -383,16 +392,16 @@ include several steps not all of which are required but are dependent on
 the data and the particular requirements of the study. For MRI scans,
 inhomogeneity correction is often necessary and can be performed using
 the ANTsPy function \texttt{ants.n4\_bias\_field\_correction(...)} which
-is a wrapper for the N4 algorithm.\textsuperscript{24} Denoising is
+is a wrapper for the N4 algorithm.\textsuperscript{25} Denoising is
 another preprocessing step that can potentially improve template quality
 results. The ANTsPy function \texttt{ants.denoise\_image(...)} is an
-implementation of a well-known denoising algorithm.\textsuperscript{52}
+implementation of a well-known denoising algorithm.\textsuperscript{53}
 For a typical image, both of these steps takes approximately on the
 order of a couple minutes. In ANTsX, due to legacy code issues, only
 bias correction is wrapped with template building so one need not
 perform this step prior to optimization. In addition, brain extraction
 has demonstrated improved performance in the context of human brain
-normalization\textsuperscript{53} and is similarly used in mouse brain
+normalization\textsuperscript{54} and is similarly used in mouse brain
 registration to maximize alignment. Various approaches within ANTs are
 possible including a template-based approach
 \texttt{antsBrainExtraction.sh} or using deep learning
@@ -459,7 +468,7 @@ both the ANTsR and ANTsPy packages. Both platforms include a complete
 suite of functions for determining dense correspondence from sparse
 landmarks based on a variety of transformation models ranging from
 standard linear models (i.e., rigid, affine) to deformable diffeomorphic
-models (e.g, symmetric normalization).\textsuperscript{39} The latter
+models (e.g, symmetric normalization).\textsuperscript{40} The latter
 set includes velocity flow models for both the pairwise scenario
 (\texttt{ants.fit\_transform\_to\_paired\_points(...)}) and for multiple
 sets
@@ -471,7 +480,7 @@ usage for these functions are available at
 ANTsX, being built on top of ITK, uses an ITK image data structure for
 the 4-D velocity field where each voxel contains the \(x\), \(y\), \(z\)
 components of the field at that point. Field regularization is provided
-by a B-spline scattered data approximation technique\textsuperscript{49}
+by a B-spline scattered data approximation technique\textsuperscript{51}
 which permits individual point weighting. Both field regularization and
 integration of the velocity field are built on ITK functions contributed
 from ANTsX development.
@@ -720,10 +729,10 @@ images are often susceptible to various forms of noise, which can
 obscure subtle features and affect the precision of measurements.
 Denoising techniques help mitigate the impact of noise, enhancing the
 signal-to-noise ratio and improving the overall image quality. The
-well-known N4 bias field correction algorithm\textsuperscript{24} has
+well-known N4 bias field correction algorithm\textsuperscript{25} has
 its origins in the ANTs toolkit which was implemented and introduced
 into the ITK toolkit. Similarly, ANTsX contains an implementation of a
-well-performing patch-based denoising technique\textsuperscript{52} and
+well-performing patch-based denoising technique\textsuperscript{53} and
 is also available as an image filter to the ITK community.
 
 \hypertarget{antsxnet-mouse-brain-applications}{%
@@ -745,7 +754,7 @@ techniques.
 Intensity-based data augmentation consisted of randomly added noise
 based on ITK functionality, simulated bias fields based on N4 bias field
 modeling, and histogram warping for mimicking well-known MRI intensity
-nonlinearities.\textsuperscript{25,55} These augmentation techniques are
+nonlinearities.\textsuperscript{26,55} These augmentation techniques are
 available in ANTsXNet (only ANTsPyNet versions are listed): simulated
 bias field: \texttt{antspynet.simulate\_bias\_field(...)}, image noise:
 \texttt{antspyhet.add\_noise\_to\_image(...)}, and MRI intensity
@@ -769,7 +778,7 @@ Similar to human neuroimage processing, brain extraction is a crucial
 preprocessing step for accurate brain mapping. Within ANTsXNet, we have
 created several deep learning networks for brain extraction for several
 image modalities (e.g., T1, FLAIR, fractional anisotropy). Similarly,
-for the developmental brain atlas work\textsuperscript{47} we developed
+for the developmental brain atlas work\textsuperscript{15} we developed
 similar functionality for mouse brains of different modalities and
 developmental age. All networks use a conventional 2-D U-net
 architecture\textsuperscript{56} and perform prediction in a slice-wise
@@ -809,7 +818,7 @@ complications associated with these image data was the unknown number of
 missing slices, the number of consecutive missing slices, and the
 different locations of these missing slices. To handle this missing data
 problem, we found that data interpolation using the B-spline
-approximation algorithm cited earlier\textsuperscript{54} (ANTsPy
+approximation algorithm cited earlier\textsuperscript{45} (ANTsPy
 function: \texttt{ants.fit\_bspline\_object\_to\_scattered\_data(...)}).
 This provided sufficient data interpolation fidelity to perform
 continuous slicewise registration. Other possible variants that were
@@ -825,11 +834,11 @@ earlier. But again, our data did not require these additional steps.
 The ANTs registration toolkit is a complex framework permitting highly
 tailored solutions to pairwise image registration
 scenarios.\textsuperscript{59} It includes innovative transformation
-models for biological modeling\textsuperscript{39,49} and has proven
-capable of excellent performance.\textsuperscript{40,60} Various
+models for biological modeling\textsuperscript{40,51} and has proven
+capable of excellent performance.\textsuperscript{41,60} Various
 parameter sets targeting specific applications have been packaged with
 the different ANTsX platforms, specifically ANTs, ANTsPy, and
-ANTsR.\textsuperscript{25} In ANTsPy, the function
+ANTsR.\textsuperscript{26} In ANTsPy, the function
 \texttt{ants.registration(...)} is used to register a pair of images or
 a pair of image sets where \texttt{type\_of\_transform} is a
 user-specified option that invokes a specific parameter set. For example
@@ -840,8 +849,8 @@ Initially, linear optimization is initialized with center of (intensity)
 mass alignment typically followed by optimization of both rigid and
 affine transforms using the mutual information similarity metric. This
 is followed by diffeomorphic deformable alignment using symmetric
-normalization (SyN) with Gaussian\textsuperscript{39} or B-spline
-regularization\textsuperscript{49} where the forward transform is
+normalization (SyN) with Gaussian\textsuperscript{40} or B-spline
+regularization\textsuperscript{51} where the forward transform is
 invertible and differentiable. The similarity metric employed at this
 latter stage is typically either neighborhood cross-correlation or
 mutual information. Note that these parameter sets are robust to input
@@ -855,13 +864,13 @@ be found in the various documentation sources for these ANTsX packages.
 
 ANTsX provides functionality for constructing templates from a set (or
 multi-modal sets) of input images as originally
-described\textsuperscript{50} and recently used to create the DevCCF
-templates.\textsuperscript{47} An initial template estimate is
+described\textsuperscript{44} and recently used to create the DevCCF
+templates.\textsuperscript{15} An initial template estimate is
 constructed from an existing subject image or a voxelwise average
 derived from a rigid pre-alignment of the image population. Pairwise
 registration between each subject and the current template estimate is
 performed using the Symmetric Normalization (SyN)
-algorithm.\textsuperscript{39} The template estimate is updated by
+algorithm.\textsuperscript{40} The template estimate is updated by
 warping all subjects to the space of the template, performing a
 voxelwise average, and then performing a ``shape update'' of this latter
 image by warping it by the average inverse deformation, thus yielding a
@@ -882,11 +891,11 @@ velocity field can then be used to describe the displacement between any
 two time points within this time-parameterized domain. Regularization of
 the sparse correspondence between point sets is performed using a
 generalized B-spline scattered data approximation
-technique,\textsuperscript{54} also developed by the ANTsX developers
+technique,\textsuperscript{45} also developed by the ANTsX developers
 and contributed to ITK.
 
 To apply this methodology to the developmental
-templates,\textsuperscript{47} we coalesced the manual parcellations of
+templates,\textsuperscript{15} we coalesced the manual parcellations of
 the developmental templates into 26 common anatomical regions (13 per
 hemisphere). We then used these regions to generate invertible
 transformations between successive time points. Specifically each label
@@ -918,13 +927,12 @@ as well as label images.
 \clearpage
 \newpage
 
-\textbf{Data availability.} All data used in this work are publicly
-available. The DevCCF atlas is available at
-\url{https://kimlab.io/brain-map/DevCCF/}. Additionally, all software
-discussed is publicly available. ANTsPy and ANTsR are available through
-GitHub at the ANTsX Ecosystem (\url{https://github.com/ANTsX}). A GitHub
-repository specific to the work discussed in the manuscript was created
-and is available at
+\textbf{Data availability.} All data and doftware used in this work are
+publicly available. The DevCCF atlas is available at
+\url{https://kimlab.io/brain-map/DevCCF/}. ANTsPy, ANTsR, ANTsPyNet, and
+ANTsRNet are available through GitHub at the ANTsX Ecosystem
+(\url{https://github.com/ANTsX}). A GitHub repository specific to the
+work discussed in the manuscript was created and is available at
 \url{https://github.com/ntustison/DevCCF-Velocity-Flow}.
 
 \clearpage
@@ -1015,187 +1023,206 @@ coordinate framework: A 3D reference atlas. \emph{Cell} \textbf{181},
 image-based reference for coordinating mouse brain research.
 \emph{Neuroimage} \textbf{53}, 365--72 (2010).}
 
-\leavevmode\vadjust pre{\hypertarget{ref-Oguz:2014aa}{}}%
+\leavevmode\vadjust pre{\hypertarget{ref-Kronman:2023aa}{}}%
 \CSLLeftMargin{15. }
+\CSLRightInline{Kronman, F. A. \emph{et al.} Developmental mouse brain
+common coordinate framework. \emph{bioRxiv} (2023)
+doi:\href{https://doi.org/10.1101/2023.09.14.557789}{10.1101/2023.09.14.557789}.}
+
+\leavevmode\vadjust pre{\hypertarget{ref-Oguz:2014aa}{}}%
+\CSLLeftMargin{16. }
 \CSLRightInline{Oguz, I., Zhang, H., Rumple, A. \& Sonka, M. RATS: Rapid
 automatic tissue segmentation in rodent brain MRI. \emph{J Neurosci
 Methods} \textbf{221}, 175--82 (2014).}
 
 \leavevmode\vadjust pre{\hypertarget{ref-Sawiak:2014aa}{}}%
-\CSLLeftMargin{16. }
+\CSLLeftMargin{17. }
 \CSLRightInline{Sawiak, S. J., Picq, J.-L. \& Dhenain, M. Voxel-based
 morphometry analyses of in vivo MRI in the aging mouse lemur primate.
 \emph{Front Aging Neurosci} \textbf{6}, 82 (2014).}
 
 \leavevmode\vadjust pre{\hypertarget{ref-Ashburner:2012aa}{}}%
-\CSLLeftMargin{17. }
+\CSLLeftMargin{18. }
 \CSLRightInline{Ashburner, J. {SPM}: A history. \emph{Neuroimage}
 \textbf{62}, 791--800 (2012).}
 
 \leavevmode\vadjust pre{\hypertarget{ref-Modat:2010aa}{}}%
-\CSLLeftMargin{18. }
+\CSLLeftMargin{19. }
 \CSLRightInline{Modat, M. \emph{et al.} Fast free-form deformation using
 graphics processing units. \emph{Comput Methods Programs Biomed}
 \textbf{98}, 278--84 (2010).}
 
 \leavevmode\vadjust pre{\hypertarget{ref-Tyson:2022aa}{}}%
-\CSLLeftMargin{19. }
+\CSLLeftMargin{20. }
 \CSLRightInline{Tyson, A. L. \emph{et al.} Accurate determination of
 marker location within whole-brain microscopy images. \emph{Sci Rep}
 \textbf{12}, 867 (2022).}
 
 \leavevmode\vadjust pre{\hypertarget{ref-Pallast:2019aa}{}}%
-\CSLLeftMargin{20. }
+\CSLLeftMargin{21. }
 \CSLRightInline{Pallast, N. \emph{et al.} Processing pipeline for
 atlas-based imaging data analysis of structural and functional mouse
 brain MRI (AIDAmri). \emph{Front Neuroinform} \textbf{13}, 42 (2019).}
 
 \leavevmode\vadjust pre{\hypertarget{ref-Jenkinson:2012wi}{}}%
-\CSLLeftMargin{21. }
+\CSLLeftMargin{22. }
 \CSLRightInline{Jenkinson, M., Beckmann, C. F., Behrens, T. E. J.,
 Woolrich, M. W. \& Smith, S. M. FSL. \emph{Neuroimage} \textbf{62},
 782--90 (2012).}
 
 \leavevmode\vadjust pre{\hypertarget{ref-Yeh:2010aa}{}}%
-\CSLLeftMargin{22. }
+\CSLLeftMargin{23. }
 \CSLRightInline{Yeh, F.-C., Wedeen, V. J. \& Tseng, W.-Y. I. Generalized
 q-sampling imaging. \emph{IEEE Trans Med Imaging} \textbf{29}, 1626--35
 (2010).}
 
 \leavevmode\vadjust pre{\hypertarget{ref-Jorge-Cardoso:2013aa}{}}%
-\CSLLeftMargin{23. }
+\CSLLeftMargin{24. }
 \CSLRightInline{Jorge Cardoso, M. \emph{et al.} STEPS: Similarity and
 truth estimation for propagated segmentations and its application to
 hippocampal segmentation and brain parcelation. \emph{Med Image Anal}
 \textbf{17}, 671--84 (2013).}
 
 \leavevmode\vadjust pre{\hypertarget{ref-Tustison:2010ac}{}}%
-\CSLLeftMargin{24. }
+\CSLLeftMargin{25. }
 \CSLRightInline{Tustison, N. J. \emph{et al.} {N4ITK}: Improved {N3}
 bias correction. \emph{IEEE Trans Med Imaging} \textbf{29}, 1310--20
 (2010).}
 
 \leavevmode\vadjust pre{\hypertarget{ref-Tustison:2021aa}{}}%
-\CSLLeftMargin{25. }
+\CSLLeftMargin{26. }
 \CSLRightInline{Tustison, N. J. \emph{et al.} The ANTsX ecosystem for
 quantitative biological and medical imaging. \emph{Sci Rep} \textbf{11},
 9068 (2021).}
 
 \leavevmode\vadjust pre{\hypertarget{ref-Goubran:2019aa}{}}%
-\CSLLeftMargin{26. }
+\CSLLeftMargin{27. }
 \CSLRightInline{Goubran, M. \emph{et al.} Multimodal image registration
 and connectivity analysis for integration of connectomic data from
 microscopy to MRI. \emph{Nat Commun} \textbf{10}, 5504 (2019).}
 
 \leavevmode\vadjust pre{\hypertarget{ref-Celestine:2020aa}{}}%
-\CSLLeftMargin{27. }
+\CSLLeftMargin{28. }
 \CSLRightInline{Celestine, M., Nadkarni, N. A., Garin, C. M., Bougacha,
 S. \& Dhenain, M. Sammba-MRI: A library for processing SmAll-MaMmal
 BrAin MRI data in python. \emph{Front Neuroinform} \textbf{14}, 24
 (2020).}
 
 \leavevmode\vadjust pre{\hypertarget{ref-Ioanas:2021aa}{}}%
-\CSLLeftMargin{28. }
+\CSLLeftMargin{29. }
 \CSLRightInline{Ioanas, H.-I., Marks, M., Zerbi, V., Yanik, M. F. \&
 Rudin, M. An optimized registration workflow and standard geometric
 space for small animal brain imaging. \emph{Neuroimage} \textbf{241},
 118386 (2021).}
 
 \leavevmode\vadjust pre{\hypertarget{ref-Cox:2012aa}{}}%
-\CSLLeftMargin{29. }
+\CSLLeftMargin{30. }
 \CSLRightInline{Cox, R. W. {AFNI}: What a long strange trip it's been.
 \emph{Neuroimage} \textbf{62}, 743--7 (2012).}
 
 \leavevmode\vadjust pre{\hypertarget{ref-Ni:2020aa}{}}%
-\CSLLeftMargin{30. }
+\CSLLeftMargin{31. }
 \CSLRightInline{Ni, H. \emph{et al.} A robust image registration
 interface for large volume brain atlas. \emph{Sci Rep} \textbf{10}, 2139
 (2020).}
 
 \leavevmode\vadjust pre{\hypertarget{ref-Jin:2022aa}{}}%
-\CSLLeftMargin{31. }
+\CSLLeftMargin{32. }
 \CSLRightInline{Jin, M. \emph{et al.} SMART: An open-source extension of
 WholeBrain for intact mouse brain registration and segmentation.
 \emph{eNeuro} \textbf{9}, (2022).}
 
 \leavevmode\vadjust pre{\hypertarget{ref-Furth:2018aa}{}}%
-\CSLLeftMargin{32. }
+\CSLLeftMargin{33. }
 \CSLRightInline{Fürth, D. \emph{et al.} An interactive framework for
 whole-brain maps at cellular resolution. \emph{Nat Neurosci}
 \textbf{21}, 139--149 (2018).}
 
 \leavevmode\vadjust pre{\hypertarget{ref-Negwer:2022aa}{}}%
-\CSLLeftMargin{33. }
+\CSLLeftMargin{34. }
 \CSLRightInline{Negwer, M. \emph{et al.} FriendlyClearMap: An optimized
 toolkit for mouse brain mapping and analysis. \emph{Gigascience}
 \textbf{12}, (2022).}
 
 \leavevmode\vadjust pre{\hypertarget{ref-Klein:2010aa}{}}%
-\CSLLeftMargin{34. }
+\CSLLeftMargin{35. }
 \CSLRightInline{Klein, S., Staring, M., Murphy, K., Viergever, M. A. \&
 Pluim, J. P. W. Elastix: A toolbox for intensity-based medical image
 registration. \emph{IEEE Trans Med Imaging} \textbf{29}, 196--205
 (2010).}
 
 \leavevmode\vadjust pre{\hypertarget{ref-Carey:2023aa}{}}%
-\CSLLeftMargin{35. }
+\CSLLeftMargin{36. }
 \CSLRightInline{Carey, H. \emph{et al.} DeepSlice: Rapid fully automatic
 registration of mouse brain imaging to a volumetric atlas. \emph{Nat
 Commun} \textbf{14}, 5884 (2023).}
 
 \leavevmode\vadjust pre{\hypertarget{ref-Bajcsy:1982aa}{}}%
-\CSLLeftMargin{36. }
+\CSLLeftMargin{37. }
 \CSLRightInline{Bajcsy, R. \& Broit, C. Matching of deformed images. in
 \emph{{S}ixth {I}nternational {C}onference on {P}attern {R}ecognition
 ({ICPR}'82)} 351--353 (1982).}
 
 \leavevmode\vadjust pre{\hypertarget{ref-Bajcsy:1989aa}{}}%
-\CSLLeftMargin{37. }
+\CSLLeftMargin{38. }
 \CSLRightInline{Bajcsy, R. \& Kovacic, S. Multiresolution elastic
 matching. \emph{Computer Vision, Graphics, and Image Processing}
 \textbf{46}, 1--21 (1989).}
 
 \leavevmode\vadjust pre{\hypertarget{ref-Gee:2003aa}{}}%
-\CSLLeftMargin{38. }
+\CSLLeftMargin{39. }
 \CSLRightInline{Gee, J., Sundaram, T., Hasegawa, I., Uematsu, H. \&
 Hatabu, H. Characterization of regional pulmonary mechanics from serial
 magnetic resonance imaging data. \emph{Acad Radiol} \textbf{10},
 1147--52 (2003).}
 
 \leavevmode\vadjust pre{\hypertarget{ref-Avants:2008aa}{}}%
-\CSLLeftMargin{39. }
+\CSLLeftMargin{40. }
 \CSLRightInline{Avants, B. B., Epstein, C. L., Grossman, M. \& Gee, J.
 C. Symmetric diffeomorphic image registration with cross-correlation:
 Evaluating automated labeling of elderly and neurodegenerative brain.
 \emph{Med Image Anal} \textbf{12}, 26--41 (2008).}
 
 \leavevmode\vadjust pre{\hypertarget{ref-Klein:2009aa}{}}%
-\CSLLeftMargin{40. }
+\CSLLeftMargin{41. }
 \CSLRightInline{Klein, A. \emph{et al.} Evaluation of 14 nonlinear
 deformation algorithms applied to human brain {MRI} registration.
 \emph{Neuroimage} \textbf{46}, 786--802 (2009).}
 
 \leavevmode\vadjust pre{\hypertarget{ref-Murphy:2011aa}{}}%
-\CSLLeftMargin{41. }
+\CSLLeftMargin{42. }
 \CSLRightInline{Murphy, K. \emph{et al.} Evaluation of registration
 methods on thoracic {CT}: The {EMPIRE10} challenge. \emph{IEEE Trans Med
 Imaging} \textbf{30}, 1901--20 (2011).}
 
 \leavevmode\vadjust pre{\hypertarget{ref-Baheti:2021aa}{}}%
-\CSLLeftMargin{42. }
+\CSLLeftMargin{43. }
 \CSLRightInline{Baheti, B. \emph{et al.} The brain tumor sequence
 registration challenge: Establishing correspondence between
 pre-operative and follow-up MRI scans of diffuse glioma patients.
 (2021).}
 
+\leavevmode\vadjust pre{\hypertarget{ref-Avants:2010aa}{}}%
+\CSLLeftMargin{44. }
+\CSLRightInline{Avants, B. B. \emph{et al.} The optimal template effect
+in hippocampus studies of diseased populations. \emph{Neuroimage}
+\textbf{49}, 2457--66 (2010).}
+
+\leavevmode\vadjust pre{\hypertarget{ref-Tustison:2006aa}{}}%
+\CSLLeftMargin{45. }
+\CSLRightInline{Tustison, N. J. \& Amini, A. A. Biventricular myocardial
+strains via nonrigid registration of anatomical {NURBS} model
+{[}corrected{]}. \emph{IEEE Trans Med Imaging} \textbf{25}, 94--112
+(2006).}
+
 \leavevmode\vadjust pre{\hypertarget{ref-Wang:2013ab}{}}%
-\CSLLeftMargin{43. }
+\CSLLeftMargin{46. }
 \CSLRightInline{Wang, H. \emph{et al.} Multi-atlas segmentation with
 joint label fusion. \emph{IEEE Trans Pattern Anal Mach Intell}
 \textbf{35}, 611--23 (2013).}
 
 \leavevmode\vadjust pre{\hypertarget{ref-Tustison:2014aa}{}}%
-\CSLLeftMargin{44. }
+\CSLLeftMargin{47. }
 \CSLRightInline{Tustison, N. J. \emph{et al.} Optimal symmetric
 multimodal templates and concatenated random forests for supervised
 brain tumor segmentation (simplified) with {\(ANTsR\)}.
@@ -1203,7 +1230,7 @@ brain tumor segmentation (simplified) with {\(ANTsR\)}.
 doi:\href{https://doi.org/10.1007/s12021-014-9245-2}{10.1007/s12021-014-9245-2}.}
 
 \leavevmode\vadjust pre{\hypertarget{ref-Tustison:2015ab}{}}%
-\CSLLeftMargin{45. }
+\CSLLeftMargin{48. }
 \CSLRightInline{Tustison, N. J., Yang, Y. \& Salerno, M. Advanced
 normalization tools for cardiac motion correction. in \emph{Statistical
 atlases and computational models of the heart - imaging and modelling
@@ -1211,62 +1238,43 @@ challenges} (eds. Camara, O. et al.) vol. 8896 3--12 (Springer
 International Publishing, 2015).}
 
 \leavevmode\vadjust pre{\hypertarget{ref-McCormick:2014aa}{}}%
-\CSLLeftMargin{46. }
+\CSLLeftMargin{49. }
 \CSLRightInline{McCormick, M., Liu, X., Jomier, J., Marion, C. \&
 Ibanez, L. ITK: Enabling reproducible research and open science.
 \emph{Front Neuroinform} \textbf{8}, 13 (2014).}
 
-\leavevmode\vadjust pre{\hypertarget{ref-Kronman:2023aa}{}}%
-\CSLLeftMargin{47. }
-\CSLRightInline{Kronman, F. A. \emph{et al.} Developmental mouse brain
-common coordinate framework. \emph{bioRxiv} (2023)
-doi:\href{https://doi.org/10.1101/2023.09.14.557789}{10.1101/2023.09.14.557789}.}
-
 \leavevmode\vadjust pre{\hypertarget{ref-Beg:2005aa}{}}%
-\CSLLeftMargin{48. }
+\CSLLeftMargin{50. }
 \CSLRightInline{Beg, M. F., Miller, M. I., Trouvé, A. \& Younes, L.
 Computing large deformation metric mappings via geodesic flows of
 diffeomorphisms. \emph{International Journal of Computer Vision}
 \textbf{61}, 139--157 (2005).}
 
 \leavevmode\vadjust pre{\hypertarget{ref-Tustison:2013ac}{}}%
-\CSLLeftMargin{49. }
+\CSLLeftMargin{51. }
 \CSLRightInline{Tustison, N. J. \& Avants, B. B. Explicit {B}-spline
 regularization in diffeomorphic image registration. \emph{Front
 Neuroinform} \textbf{7}, 39 (2013).}
 
-\leavevmode\vadjust pre{\hypertarget{ref-Avants:2010aa}{}}%
-\CSLLeftMargin{50. }
-\CSLRightInline{Avants, B. B. \emph{et al.} The optimal template effect
-in hippocampus studies of diseased populations. \emph{Neuroimage}
-\textbf{49}, 2457--66 (2010).}
-
 \leavevmode\vadjust pre{\hypertarget{ref-Tustison:2015vl}{}}%
-\CSLLeftMargin{51. }
+\CSLLeftMargin{52. }
 \CSLRightInline{Tustison, N. J. \emph{et al.} Optimal symmetric
 multimodal templates and concatenated random forests for supervised
 brain tumor segmentation (simplified) with ANTsR.
 \emph{Neuroinformatics} \textbf{13}, 209--25 (2015).}
 
 \leavevmode\vadjust pre{\hypertarget{ref-Manjon:2010aa}{}}%
-\CSLLeftMargin{52. }
+\CSLLeftMargin{53. }
 \CSLRightInline{Manjón, J. V., Coupé, P., Martí-Bonmatí, L., Collins, D.
 L. \& Robles, M. Adaptive non-local means denoising of {MR} images with
 spatially varying noise levels. \emph{J Magn Reson Imaging} \textbf{31},
 192--203 (2010).}
 
 \leavevmode\vadjust pre{\hypertarget{ref-Klein:2010ab}{}}%
-\CSLLeftMargin{53. }
+\CSLLeftMargin{54. }
 \CSLRightInline{Klein, A. \emph{et al.} Evaluation of volume-based and
 surface-based brain image registration methods. \emph{Neuroimage}
 \textbf{51}, 214--20 (2010).}
-
-\leavevmode\vadjust pre{\hypertarget{ref-Tustison:2006aa}{}}%
-\CSLLeftMargin{54. }
-\CSLRightInline{Tustison, N. J. \& Amini, A. A. Biventricular myocardial
-strains via nonrigid registration of anatomical {NURBS} model
-{[}corrected{]}. \emph{IEEE Trans Med Imaging} \textbf{25}, 94--112
-(2006).}
 
 \leavevmode\vadjust pre{\hypertarget{ref-Nyul:2000aa}{}}%
 \CSLLeftMargin{55. }

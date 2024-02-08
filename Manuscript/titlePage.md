@@ -11,7 +11,7 @@ $ $
 
 \LARGE
 
-{\bf The ANTsX Ecosystem for Spatiotemporal Mapping of the Developmental Mouse Brain Common Coordinate Framework}
+{\bf The ANTsX Ecosystem for Mapping the Mouse Brain}
 
 \vspace{1.0 cm}
 

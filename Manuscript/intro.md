@@ -18,19 +18,21 @@ data to anatomical reference frames
 [@MacKenzie-Graham:2004aa,@Mackenzie-Graham:2007aa] for inferring spatial
 relationships between structures, cells, and genetics. This has motivated the
 development of detailed structural image atlases of the mouse brain.  Notable
-examples include the Allen Brain Atlas and Coordinate Frameworks
-[@Dong:2008aa,@Wang:2020aa] and the Waxholm Space [@Johnson:2010aa]. Despite the
-significance of these contributions, challenges still exist in large part due to
-the wide heterogeneity in associated study-specific image data. For example,
-variance in the acquisition methods can introduce artifacts such as tissue
-distortion, holes, bubbles, folding, tears, and missing slices. These severely
-complicate assumed correspondence for conventional spatial mapping approaches.
+examples include the Allen Brain Atlas and Coordinate Frameworks (AllenCCFv3)
+[@Dong:2008aa,@Wang:2020aa], the Waxholm Space [@Johnson:2010aa], and more
+recently, the Developmental Common Coordinate Framework (DevCCF)
+[@Kronman:2023aa]. Despite the significance of these contributions, challenges
+still exist in large part due to the wide heterogeneity in associated
+study-specific image data. For example, variance in the acquisition methods can
+introduce artifacts such as tissue distortion, holes, bubbles, folding, tears,
+and missing slices. These severely complicate assumed correspondence for
+conventional spatial mapping approaches.
 
 To address such challenges, several software packages have been developed over
 the years comprising solutions of varying comprehensibility, sophistication, and
 availability.  An early contribution to the community was the Rapid Automatic
 Tissue Segmentation (RATS) package [@Oguz:2014aa] for brain extraction.
-Of the publicly available packages, most, if not all have well-established
+Of the many publicly available packages, most, if not all have well-established
 package dependencies originally developed on human brain data. SPMMouse
 [@Sawiak:2014aa], for example, is based on the well-known Statistical Parametric
 Mapping (SPM) software package [@Ashburner:2012aa]. The automated mouse atlas
