@@ -45,7 +45,7 @@ to be mutually aligned in the same image space prior to optimization.  After
 selecting the target image space for a particular specimen (e.g., T2-weighted MRI),
 this can be performed with a rigid transform registration call using 
 ``ants.registration(...)``.  It should be noted that for most applications, the 
-general hueristic of $\approx 10$ randomly sampled specimens is sufficient for
+general heuristic of $\approx 10$ randomly sampled specimens is sufficient for
 a satisfactory template.
 
 In the case of the DevCCF, bias correction was employed in generating the
