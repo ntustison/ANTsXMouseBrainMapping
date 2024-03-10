@@ -10,20 +10,21 @@
 
 ### Motivation
 
-To develop a sructural morphological processing pipeline for the mouse brain 
+To develop a structural morphological processing pipeline for the mouse brain 
 analogous to our [human-based tools](https://www.nature.com/articles/s41598-021-87564-6).
 
 <details>
-<summary>Details</summary>
+<summary>Elaboration</summary>
 
-Current obstacles:
-* No current tools to create training data (in contrast to [human data](https://pubmed.ncbi.nlm.nih.gov/24879923/)).
+Current obstacles in quantitative mouse brain imaging:
+* No current tools to create training data for deep learning (in contrast to e.g., [human data](https://pubmed.ncbi.nlm.nih.gov/24879923/)).
 * Low data quality.  Data is often:
     * extremely anisotropic and
-    * T2-w only.
+    * T2-w only, and
+    * limited applicability to high resolution resources (e.g., AllenCCFv3, DevCCF).
 
-However, in contrast to the human domain, the current availability of deep learning 
-and available templates (i.e., AllenCCFv3 and DevCCF) provides the means for building
+However, in historical contrast to the human domain, we can leverage these publicly 
+available templates (i.e., AllenCCFv3 and DevCCF) and deep learning to provide 
 tools for multiple modalities and varying degrees of isotropic sampling.
 
 </details>
