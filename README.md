@@ -18,7 +18,7 @@ analogous to our [human-based tools](https://www.nature.com/articles/s41598-021-
 
 * No current tools to create training data for deep learning (in contrast to e.g., [human data](https://pubmed.ncbi.nlm.nih.gov/24879923/)).
 * Low data quality.  Data is often:
-    * extremely anisotropic and
+    * sampling issues such as anisotropy, incomplete (i.e., missing boundary structures),
     * T2-w only, and
     * limited applicability to high resolution resources (e.g., AllenCCFv3, DevCCF).
 * However, in historical contrast to the human domain, we can leverage these publicly 
