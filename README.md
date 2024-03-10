@@ -19,9 +19,9 @@ Current obstacles:
     * extremely anisotropic and
     * T2-w only.
 
-However, in contrast to the human domain, we can leverage deep learning and novel 
-resources in the mouse domain (i.e., AllenCCFv3 and DevCCF) even though the template 
-labelings are too granular for many studies.
+However, in contrast to the human domain, the current availability of deep learning 
+and available templates (i.e., AllenCCFv3 and DevCCF) provides the means for building
+tools for multiple modalities and varying degrees of isotropic sampling.
 
 ### Contribution
 
