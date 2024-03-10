@@ -13,6 +13,9 @@
 To develop a sructural morphological processing pipeline for the mouse brain 
 analogous to our [human-based tools](https://www.nature.com/articles/s41598-021-87564-6).
 
+<details>
+<summary>Details</summary>
+
 Current obstacles:
 * No current tools to create training data (in contrast to [human data](https://pubmed.ncbi.nlm.nih.gov/24879923/)).
 * Low data quality.  Data is often:
@@ -23,7 +26,10 @@ However, in contrast to the human domain, the current availability of deep learn
 and available templates (i.e., AllenCCFv3 and DevCCF) provides the means for building
 tools for multiple modalities and varying degrees of isotropic sampling.
 
-### Contribution
+</details>
+
+<details>
+<summary>Results</summary>
 
 We developed a structural morphology pipeline for estimating mouse brain 
 cortical thickness currently available in 
@@ -31,6 +37,8 @@ cortical thickness currently available in
 This work also provides a more general framework for single-shot learning using 
 existing templates specifically tailored for both isotropic and anisotropic
 mouse data.
+
+</details>
 
 ### Innovations
 
