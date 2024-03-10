@@ -23,9 +23,12 @@ labelings are too granular for many studies.
 
 ### Contribution
 
-Structural morphology pipeline for estimating mouse brain cortical thickness
-available in [ANTsXNet](https://github.com/ANTsX/ANTsPyNet/blob/master/antspynet/utilities/mouse.py#L453-L457).
-This also provides a more general framework for 
+We developed a structural morphology pipeline for estimating mouse brain 
+cortical thickness currently available in 
+[ANTsXNet](https://github.com/ANTsX/ANTsPyNet/blob/master/antspynet/utilities/mouse.py#L453-L457).
+This work also provides a more general framework for single-shot learning using 
+existing templates specifically tailored for both isotropic and anisotropic
+mouse data.
 
 ### Innovations
 
@@ -42,11 +45,21 @@ This also provides a more general framework for
             * $n = 88$
             * [Combine three views using B-spline filter](https://github.com/ntustison/ANTsXMouseBrainMapping/blob/main/Scripts/synthesize_image_views_bspline.py)
  
-    * Data augmentation
+    * Data augmentation of CAMRI and high resolution B-spline template:
         * bias field simulation, 
         * histogram warping, 
         * added noise, 
-        * random translation and warping.
+        * random translation and warping, and
+        * random anisotropic resampling in the three canonical directions.
+
+    * [C57BI evaluation data](https://www.frdr-dfdr.ca/repo/dataset/9ea832ad-7f36-4e37-b7ac-47167c0001c1)
+        * 
+
+     
+<p align="middle">
+  <img src="https://github.com/ntustison/DevCCF-Velocity-Flow/blob/main/Manuscript/Figures/dice.png" width="400" />
+</p>
+        
 
 * Single-shot brain parcellation network
 
