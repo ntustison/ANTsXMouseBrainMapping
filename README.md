@@ -1,6 +1,6 @@
 # The ANTsX Ecosystem for Mapping the Mouse Brain
 
-## Single-shot learning for mouse cortical thickness
+## Single-shot learning for mouse brain cortical thickness measurements
 
 <p align="middle">
   <img src="https://github.com/ntustison/DevCCF-Velocity-Flow/blob/main/Manuscript/Figures/mousePipeline.png" width="700" />
