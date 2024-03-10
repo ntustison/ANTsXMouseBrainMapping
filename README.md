@@ -37,29 +37,29 @@ mouse data.
 <details>
 <summary>Two-shot brain extraction network</summary>
 
-    * Build two isotropic ANTsX templates from two publicly available datasets with different
-      "defacing" aesthetics:
-        * [CAMRI](https://camri.org/dissemination/mri-data/)
-            * resolution = 0.16 x 0.16 x 0.16 $mm^3$
-            * $n = 16$
-        * [High resolution](https://data.mendeley.com/datasets/dz9x23fttt/1)
-            * Three spatially aligned high-resolution orthogonal views
-            * resolution = 0.08 x 0.08 $mm^2$ in-plane, 0.5 mm slice thickness
-            * $n = 88$
-            * [Combine three views using B-spline filter](https://github.com/ntustison/ANTsXMouseBrainMapping/blob/main/Scripts/synthesize_image_views_bspline.py)
- 
-    * Data augmentation of CAMRI and high resolution B-spline template:
-        * bias field simulation, 
-        * histogram warping, 
-        * added noise, 
-        * random translation and warping, and
-        * random anisotropic resampling in the three canonical directions.
+* Build two isotropic ANTsX templates from two publicly available datasets with different
+  "defacing" aesthetics:
+    * [CAMRI](https://camri.org/dissemination/mri-data/)
+        * resolution = 0.16 x 0.16 x 0.16 $mm^3$
+        * $n = 16$
+    * [High resolution](https://data.mendeley.com/datasets/dz9x23fttt/1)
+        * Three spatially aligned high-resolution orthogonal views
+        * resolution = 0.08 x 0.08 $mm^2$ in-plane, 0.5 mm slice thickness
+        * $n = 88$
+        * [Combine three views using B-spline filter](https://github.com/ntustison/ANTsXMouseBrainMapping/blob/main/Scripts/synthesize_image_views_bspline.py)
 
-    * [C57BI evaluation data](https://www.frdr-dfdr.ca/repo/dataset/9ea832ad-7f36-4e37-b7ac-47167c0001c1)
-        * Completely *unseen* data  
-        * 12 specimens
-        * 7 time points (Day 0, Day 3, Week 1, Week 4, Week 8, Week 20)
-        * Whole brain masks are provided
+* Data augmentation of CAMRI and high resolution B-spline template:
+    * bias field simulation, 
+    * histogram warping, 
+    * added noise, 
+    * random translation and warping, and
+    * random anisotropic resampling in the three canonical directions.
+
+* [C57BI evaluation data](https://www.frdr-dfdr.ca/repo/dataset/9ea832ad-7f36-4e37-b7ac-47167c0001c1)
+    * Completely *unseen* data  
+    * 12 specimens
+    * 7 time points (Day 0, Day 3, Week 1, Week 4, Week 8, Week 20)
+    * Whole brain masks are provided
      
 <p align="middle">
   <img src="https://github.com/ntustison/DevCCF-Velocity-Flow/blob/main/Manuscript/Figures/dice.png" width="400" />
@@ -70,25 +70,25 @@ mouse data.
 <details>
 <summary>Single-shot brain parcellation network</summary>
 
-    * AllenCCFv3 with labels.
-    * Convert labels to a gross parcellation using allensdk
-      ([this](https://github.com/ntustison/ANTsXMouseBrainMapping/blob/main/Scripts/get_allen_parcellation.py) is just
-      one possibility that works for computing KK cortical thickness). 
-    * Register AllenCCFv3 and DevCCF P56 T2-w to map to the desired
-      template modality.  Note that given a similar resource for DevCCF
-      (i.e., allensdk), one can use DevCCF directly.
- 
-    * Data augmentation of CAMRI and high resolution B-spline template:
-        * bias field simulation, 
-        * histogram warping, 
-        * added noise, 
-        * random translation and warping, and
-        * random anisotropic resampling in the three canonical directions.
+* AllenCCFv3 with labels.
+* Convert labels to a gross parcellation using allensdk
+  ([this](https://github.com/ntustison/ANTsXMouseBrainMapping/blob/main/Scripts/get_allen_parcellation.py) is just
+  one possibility that works for computing KK cortical thickness). 
+* Register AllenCCFv3 and DevCCF P56 T2-w to map to the desired
+  template modality.  Note that given a similar resource for DevCCF
+  (i.e., allensdk), one can use DevCCF directly.
 
-    * [C57BI evaluation data](https://www.frdr-dfdr.ca/repo/dataset/9ea832ad-7f36-4e37-b7ac-47167c0001c1)
-        * Completely *unseen* data
-        * 12 specimens
-        * 7 time points (Day 0, Day 3, Week 1, Week 4, Week 8, Week 20)
+* Data augmentation of CAMRI and high resolution B-spline template:
+    * bias field simulation, 
+    * histogram warping, 
+    * added noise, 
+    * random translation and warping, and
+    * random anisotropic resampling in the three canonical directions.
+
+* [C57BI evaluation data](https://www.frdr-dfdr.ca/repo/dataset/9ea832ad-7f36-4e37-b7ac-47167c0001c1)
+    * Completely *unseen* data
+    * 12 specimens
+    * 7 time points (Day 0, Day 3, Week 1, Week 4, Week 8, Week 20)
      
 <p align="middle">
   <img src="https://github.com/ntustison/DevCCF-Velocity-Flow/blob/main/Manuscript/Figures/kk.png" width="400" />
