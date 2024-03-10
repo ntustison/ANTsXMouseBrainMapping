@@ -1,10 +1,18 @@
-# The DevCCF velocity flow transformation model
+# The ANTsX Ecosystem for Mapping the Mouse Brain
+
+## Single-shot learning for mouse cortical thickness
+
+<p align="middle">
+  <img src="https://github.com/ntustison/DevCCF-Velocity-Flow/blob/main/Manuscript/Figures/mousePipeline.png" width="700" />
+</p>
+
+## The DevCCF velocity flow transformation model 
 
 <p align="middle">
   <img src="https://github.com/ntustison/DevCCF-Velocity-Flow/blob/main/Manuscript/Figures/lowerLeftPanel.png" width="700" />
 </p>
 
-## Description
+### Description
 
 A multimodal 3D developmental common coordinate framework (DevCCF) spanning 
 mouse embryonic day (E) 11.5, E13.5, E15.5, E18.5, and postnatal day (P) 4, 
@@ -23,7 +31,7 @@ above cited work and using [ANTsX tools](https://github.com/ANTsX).  This
 repository provides the code and data to reproduce and utilize the velocity
 flow field.
 
-## Preliminaries
+### Preliminaries
 
 <details>
 <summary>Code</summary>
@@ -62,7 +70,7 @@ segmentations version 3.8.
 </p>
 </details>
 
-## Reproducing the DevCCF Velocity Flow Model
+### Reproducing the DevCCF Velocity Flow Model
 
 <details>
 <summary>Step 1:  Rigidly register all label images to P56</summary>
@@ -387,7 +395,7 @@ for i in range(20):
 </details>
 
 
-## Using the DevCCF Velocity Flow Model
+### Using the DevCCF Velocity Flow Model
 
 <details>
 <summary>Example:  Warp every template to every other template</summary>
