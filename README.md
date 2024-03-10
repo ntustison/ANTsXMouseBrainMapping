@@ -8,15 +8,24 @@
 
 ### Motivation
 
-AllenCCFv3 and DevCCF are phenomenal resources.  However, imo, they're often
-of limited value for typical mice studies.  In my experience, collaborator data are
-often:
+To develop a sructural morphological processing pipeline for the mouse brain 
+analogous to our [human-based tools](https://www.nature.com/articles/s41598-021-87564-6).
 
-* extremely anisotropic,
-* lower quality, and
-* T2-w only.
+Current obstacles:
+* No current tools to create training data (in contrast to [human data](https://pubmed.ncbi.nlm.nih.gov/24879923/).
+* Low data quality.  Data is often:
+    * extremely anisotropic and
+    * T2-w only.
 
-Thus making the extremely granular labelings of e.g., AllenCCFv3 and DevCCF inapplicable.
+However, in contrast to the human domain, we can leverage deep learning and novel 
+resources in the mouse domain (i.e., AllenCCFv3 and DevCCF) even though the template 
+labelings are too granular for many studies.
+
+### Contribution
+
+Structural morphology pipeline for estimating mouse brain cortical thickness
+available in [ANTsXNet](https://github.com/ANTsX/ANTsPyNet/blob/master/antspynet/utilities/mouse.py#L453-L457).
+This also provides a more general framework for 
 
 ### Innovations
 
