@@ -31,12 +31,14 @@ tools for multiple modalities and varying degrees of isotropic sampling.
 <details>
 <summary>Results</summary>
 
-We developed a structural morphology pipeline for estimating mouse brain 
-cortical thickness currently available in 
-[ANTsXNet](https://github.com/ANTsX/ANTsPyNet/blob/master/antspynet/utilities/mouse.py#L453-L457).
+Structural morphological tools for T2-w volumetric mouse brain images:
+* [Brain extraction](https://github.com/ANTsX/ANTsPyNet/blob/master/antspynet/utilities/mouse.py#L5-L10)
+* [Brain parcellation](https://github.com/ANTsX/ANTsPyNet/blob/master/antspynet/utilities/mouse.py#L301-L306)
+* [Cortical thickness](https://github.com/ANTsX/ANTsPyNet/blob/master/antspynet/utilities/mouse.py#L453-L457)
+
 This work also provides a more general framework for single-shot learning using 
 existing templates specifically tailored for both isotropic and anisotropic
-mouse data.
+mouse data.  See the training scripts in this repository.
 
 </details>
 
