@@ -1,5 +1,10 @@
 # The ANTsX Ecosystem for Mapping the Mouse Brain
 
+Two novel open-source contributions:
+
+* Structural mouse brain morphology from T2-w imaging
+* A general landmark-based velocity flow transformation model applied to DevCCF
+
 ---
 
 ## Single-shot learning for mouse brain cortical thickness measurements
