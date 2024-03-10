@@ -3,7 +3,7 @@
 Two novel open-source contributions:
 
 * [Structural mouse brain morphology from T2-w imaging](https://github.com/ntustison/ANTsXMouseBrainMapping/blob/main/README.md#single-shot-learning-for-mouse-brain-cortical-thickness-measurements)
-* [A general landmark-based velocity flow transformation model applied to DevCCF](https://github.com/ntustison/ANTsXMouseBrainMapping/edit/main/README.md#the-devccf-velocity-flow-transformation-model)
+* [A general landmark-based velocity flow transformation model applied to DevCCF](https://github.com/ntustison/ANTsXMouseBrainMapping/main/README.md#the-devccf-velocity-flow-transformation-model)
 
 ---
 
