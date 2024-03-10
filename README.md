@@ -1,5 +1,7 @@
 # The ANTsX Ecosystem for Mapping the Mouse Brain
 
+---
+
 ## Single-shot learning for mouse brain cortical thickness measurements
 
 <p align="middle">
@@ -32,7 +34,8 @@ mouse data.
 
 ### Innovations
 
-* Two-shot brain extraction network
+<details>
+<summary>Two-shot brain extraction network</summary>
 
     * Build two isotropic ANTsX templates from two publicly available datasets with different
       "defacing" aesthetics:
@@ -53,20 +56,48 @@ mouse data.
         * random anisotropic resampling in the three canonical directions.
 
     * [C57BI evaluation data](https://www.frdr-dfdr.ca/repo/dataset/9ea832ad-7f36-4e37-b7ac-47167c0001c1)
-        * 
-
+        * Completely *unseen* data  
+        * 12 specimens
+        * 7 time points (Day 0, Day 3, Week 1, Week 4, Week 8, Week 20)
+        * Whole brain masks are provided
      
 <p align="middle">
   <img src="https://github.com/ntustison/DevCCF-Velocity-Flow/blob/main/Manuscript/Figures/dice.png" width="400" />
 </p>
-        
 
-* Single-shot brain parcellation network
+</details>
 
+<details>
+<summary>Single-shot brain parcellation network</summary>
 
-
-
+    * AllenCCFv3 with labels.
+    * Convert labels to a gross parcellation using allensdk
+      ([this](https://github.com/ntustison/ANTsXMouseBrainMapping/blob/main/Scripts/get_allen_parcellation.py) is just
+      one possibility that works for computing KK cortical thickness). 
+    * Register AllenCCFv3 and DevCCF P56 T2-w to map to the desired
+      template modality.  Note that given a similar resource for DevCCF
+      (i.e., allensdk), one can use DevCCF directly.
  
+    * Data augmentation of CAMRI and high resolution B-spline template:
+        * bias field simulation, 
+        * histogram warping, 
+        * added noise, 
+        * random translation and warping, and
+        * random anisotropic resampling in the three canonical directions.
+
+    * [C57BI evaluation data](https://www.frdr-dfdr.ca/repo/dataset/9ea832ad-7f36-4e37-b7ac-47167c0001c1)
+        * Completely *unseen* data
+        * 12 specimens
+        * 7 time points (Day 0, Day 3, Week 1, Week 4, Week 8, Week 20)
+     
+<p align="middle">
+  <img src="https://github.com/ntustison/DevCCF-Velocity-Flow/blob/main/Manuscript/Figures/kk.png" width="400" />
+</p>
+
+</details>
+---
+---
+
 ## The DevCCF velocity flow transformation model 
 
 <p align="middle">
