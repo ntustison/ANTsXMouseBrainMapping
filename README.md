@@ -14,7 +14,7 @@ To develop a sructural morphological processing pipeline for the mouse brain
 analogous to our [human-based tools](https://www.nature.com/articles/s41598-021-87564-6).
 
 Current obstacles:
-* No current tools to create training data (in contrast to [human data](https://pubmed.ncbi.nlm.nih.gov/24879923/).
+* No current tools to create training data (in contrast to [human data](https://pubmed.ncbi.nlm.nih.gov/24879923/)).
 * Low data quality.  Data is often:
     * extremely anisotropic and
     * T2-w only.
