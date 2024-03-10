@@ -51,7 +51,7 @@ mouse data.  See the training scripts in this repository.
 <details>
 <summary>Two-shot brain extraction network</summary>
 
-* Build two isotropic ANTsX templates from two publicly available datasets with different
+* Build two symmetric isotropic ANTsX templates from two publicly available datasets with different
   "defacing" aesthetics:
     * [CAMRI](https://camri.org/dissemination/mri-data/)
         * resolution = 0.16 x 0.16 x 0.16 $mm^3$
