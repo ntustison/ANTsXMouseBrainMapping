@@ -6,6 +6,45 @@
   <img src="https://github.com/ntustison/DevCCF-Velocity-Flow/blob/main/Manuscript/Figures/mousePipeline.png" width="700" />
 </p>
 
+### Motivation
+
+AllenCCFv3 and DevCCF are phenomenal resources.  However, imo, they're often
+of limited value for typical mice studies.  In my experience, collaborator data are
+often:
+
+* extremely anisotropic,
+* lower quality, and
+* T2-w only.
+
+Thus making the extremely granular labelings of e.g., AllenCCFv3 and DevCCF inapplicable.
+
+### Innovations
+
+* Two-shot brain extraction network
+
+    * Build two isotropic ANTsX templates from two publicly available datasets with different
+      "defacing" aesthetics:
+        * [CAMRI](https://camri.org/dissemination/mri-data/)
+            * resolution = 0.16 x 0.16 x 0.16 $mm^3$
+            * $n = 16$
+        * [High resolution](https://data.mendeley.com/datasets/dz9x23fttt/1)
+            * Three spatially aligned high-resolution orthogonal views
+            * resolution = 0.08 x 0.08 $mm^2$ in-plane, 0.5 mm slice thickness
+            * $n = 88$
+            * [Combine three views using B-spline filter](https://github.com/ntustison/ANTsXMouseBrainMapping/blob/main/Scripts/synthesize_image_views_bspline.py)
+ 
+    * Data augmentation
+        * bias field simulation, 
+        * histogram warping, 
+        * added noise, 
+        * random translation and warping.
+
+* Single-shot brain parcellation network
+
+
+
+
+ 
 ## The DevCCF velocity flow transformation model 
 
 <p align="middle">
