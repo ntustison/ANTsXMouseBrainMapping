@@ -1,4 +1,4 @@
-# Introduction {-}
+# Introduction
 
 Over the past two decades there have been significant advancements in mesoscopic
 analysis of the mouse brain. It is now possible to track single cell neurons in
@@ -28,11 +28,13 @@ introduce artifacts such as tissue distortion, holes, bubbles, folding, tears,
 and missing slices. These severely complicate assumed correspondence for
 conventional spatial mapping approaches.
 
+## Mouse-specific brain mapping software
+
 To address such challenges, several software packages have been developed over
 the years comprising solutions of varying comprehensibility, sophistication, and
 availability.  An early contribution to the community was the Rapid Automatic
 Tissue Segmentation (RATS) package [@Oguz:2014aa] for brain extraction.
-Of the many publicly available packages, most, if not all have well-established
+More recently, several publicly available packages comprise well-established
 package dependencies originally developed on human brain data. SPMMouse
 [@Sawiak:2014aa], for example, is based on the well-known Statistical Parametric
 Mapping (SPM) software package [@Ashburner:2012aa]. The automated mouse atlas

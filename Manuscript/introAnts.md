@@ -1,5 +1,5 @@
 
-### The ANTsX Ecosystem  {-}
+## The ANTsX Ecosystem for mouse brain mapping 
 
 As noted previously, many of the existing packages designed for processing mouse
 brain image data use ANTsX tools for core processing steps in various workflows,
@@ -29,51 +29,74 @@ deriving benefit from the open-source community of scientists and programmers
 and providing an open-source venue for algorithmic development, evaluation, and
 improvement.
 
+<!-- 
+
 \begin{figure}[!htb]
 \centering
 \makebox[\textwidth][c]{\includegraphics[width=1.2\textwidth]{Figures/pipeline3.png}}%
-\caption{Illustration of a mouse brain template generation workflow and related
-template-based applications demonstrating the utility of different ANTsX tools.
-After imaging acquisition of the study population, various preprocessing steps
-are applied to the imaging data such as bias correction, denoising, and brain
-extraction as dictated by the needs of the study protocol.  
-Potential applications, such as in the case of the DevCCF, include gene
-expression mapping and the generation of the associated velocity flow model for
-continuous spatiotemporal mapping in the temporal domain.}
+\caption{
+Illustration of a mouse brain template generation workflow and related
+template-based applications demonstrating the utility of different ANTsX tools,
+specifically in the development of the DevCCF atlas. After imaging acquisition
+of the study population, various preprocessing steps are applied to the imaging
+data such as bias correction, denoising, and brain extraction for gene
+expression mapping.  Also illustrated is the generation of the associated
+velocity flow model for continuous spatiotemporal mapping interpolating the
+sampled time points of the DevCCF.
+}
 \label{fig:pipeline}
-\end{figure}
+\end{figure} 
 
-Recently, the developmental common coordinate framework (DevCCF) was introduced
-to the mouse brain research community as a public resource [@Kronman:2023aa].
-These symmetric atlases, comprising both multimodal image data and anatomical
-segmentations defined by developmental ontology, sample the mouse embryonic days
-(E) 11.5, E13.5, E15.5, E18.5 and postnatal day (P) 4, P14, and P56.  Modalities
-include light sheet flourescence miscroscopy (LSFM) and at least four MRI
-contrasts per developmental stage.  Anatomical parcellations are also available
-for each time point and were generated from ANTsX-based mappings of gene
-expression and other cell type data.  The P56 template was integrated with the
-Allen CCFv3 to further increase the practical utility of the DevCCF.  These
-processes, specifically template generation and multi-modal image mapping, were
-performed using ANTsX functionality in the presence of previously noted image
-mapping difficulties (e.g., missing slices, tissue distortion).
+-->
 
-Given the temporal gaps in the discrete set of developmental atlases with the
-potential for additional interpolative time points, we discuss the strategy of
-the current DevCCF template generation [@Kronman:2023aa] and
-provide additional information for the interested reader. Related, we also
+## ANTsX-based open-source contributions
+
+Consistent with previous ANTsX development, the newly introduced capabilities
+introduced below are available through ANTsX (specifically, via R and Python
+ANTsX packages) with a dedicated GitHub repository specific to this work
+(https://github.com/ntustison/ANTsXMouseBrainMapping).
+
+### The DevCCF velocity flow model
+
+Recently, the Developmental Common Coordinate Framework (DevCCF) was introduced
+to the mouse brain research community as a public resource [@Kronman:2023aa]
+comprising symmetric atlases of multimodal image data and anatomical
+segmentations defined by developmental ontology.  These templates sample the
+mouse embryonic days (E) 11.5, E13.5, E15.5, E18.5 and postnatal day (P) 4, P14,
+and P56.  Modalities include light sheet flourescence miscroscopy (LSFM) and at
+least four MRI contrasts per developmental stage.  Anatomical parcellations are
+also available for each time point and were generated from ANTsX-based mappings
+of gene expression and other cell type data.  The P56 template was integrated
+with the Allen CCFv3 to further increase the practical utility of the DevCCF.
+These processes, specifically template generation and multi-modal image mapping,
+were performed using ANTsX functionality in the presence of previously noted
+image mapping difficulties such as missing slices, tissue distortion.  
+
+Given the temporal gaps in the discrete set of developmental atlases, we also
 provide an open-source framework, through ANTsX, for inferring correspondence
 within the temporally continuous domain sampled by the existing set of embryonic
-and postnatal atlases of the DevCCF.  Although alternative approaches are
-possible for interpolating between time points, this recently developed ANTsX
+and postnatal atlases of the DevCCF.  This recently developed ANTsX
 functionality permits the generation of a diffeomorphic velocity flow
 transformation model [@Beg:2005aa], influenced by previous work
 [@Tustison:2013ac].  The resulting time-parameterized velocity field spans the
 stages of the DevCCF where mappings between any two continuous time points
 within the span bounded by the E11.5 and P56 atlases is determined by
-integration of the optimized velocity field. This functionality is available
-through ANTsX (via R and Python ANTsX packages) with a dedicated GitHub
-repository that contains all data, scripts, and other guidance necessary to both
-reproduce what is described below and to illustrate how future researchers can
-incorporate additional atlases into a more densely sampled model in a
-straightforward manner.
+integration of the optimized velocity field. 
+
+### Structural morphology and cortical thickness in the mouse brain
+
+We also describe a structural morphological pipeline for calculating image-based
+cortical thickness measurements [@Das:2009uv] analogous to the well-known and
+heavily utilized ANTsX cortical thickness pipeline  for cross-sectional and
+longitudinal human brain studies
+[@Tustison:2014ab;@Tustison:2019aa;@Tustison:2021aa].  Two integral pipeline
+components are brain extraction and brian parcellation derived from,
+respectively, two-shot and single-shot deep learning, leveraging only publicly
+available resources, including AllenCCFv3 and DevCCF.  Although we anticipate
+that this cortical thickness pipeline will be beneficial to the research
+community, this work demonstrates more generally how one can leverage ANTsX
+tools for developing tailored brain parcellation schemes.  Evaluation is
+performed on an independent open-source data set [@Rahman:2023aa] comprising
+longitudinal acquisitions of multiple specimens.  
+
 

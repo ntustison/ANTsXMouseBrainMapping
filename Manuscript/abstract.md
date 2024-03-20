@@ -12,14 +12,16 @@ comprehensive open-source software toolkit for generalized quantitative imaging,
 which includes template building and mapping functionality, with applicability
 to multiple organ systems, modalities, and animal species. Herein, we illustrate
 the utility of ANTsX for generating precision spatial mappings of the mouse
-brain.  First, we provide ANTsX-based protocols for mapping MERFISH, fMOST, and
-lightsheet datasets to AllenCCFv3 accounting for common artefacts and other
-confounds.  Additionally, recently developed ANTsX functionality permits the
-generation of velocity flow-based mappings for serial data. Using the recently
-introduced Developmental Common Coordinate Framework, we evaluate and describe
-the publicly available ANTsX-based protocols for generating a velocity
-flow-based mapping spanning the spatiotemporal domain of the developmental
-trajectory.   Possible future work includes the introduction of additional
-developmental time points and application to histological slice stacking.
+brain.  \textcolor{red}{First, we provide ANTsX-based protocols for mapping
+MERFISH, fMOST, and lightsheet datasets to AllenCCFv3 accounting for common
+artefacts and other confounds.}  Herein, novel contributions include recently
+developed ANTsX functionality for generating a velocity flow-based mapping
+spanning the spatiotemporal domain of a longitudinal trajectory which we
+apply to the Developmental Common Coordinate Framework (DevCCF).  Additionally,
+we present an automated structural morphological pipeline for determining
+volumetric and cortical thickness measurements analogous to the well-utilized
+ANTsX pipeline for human neuroanatomy.  This latter development also illustrates
+a more general open-source ANTsX framework for determining tailored brain
+parcellations using the AllenCCFv3 and DevCCF templates.
 
 \clearpage

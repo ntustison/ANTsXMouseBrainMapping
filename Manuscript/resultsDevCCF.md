@@ -1,9 +1,10 @@
 \clearpage
 \newpage
 
-# Results {-}
+# Results
 
-## Template building {-}
+<!--
+## Template building
 
 Template building using ANTsX tools was first described in the context of
 hippocampal studies [@Avants:2010aa].  Multi-modal and symmetrical variants were
@@ -13,7 +14,7 @@ capabilities are available in both ANTsPy (``ants.build_template(...)``) and
 ANTsR (``buildTemplate(...)``) as well as part of 
 the core ANTs package (e.g., ``antsMultivariateTemplateConstruction.sh``).
 
-### Data preparation {-}
+### Data preparation
 
 Multi-modal symmetric template construction is performed separately for each
 developmental stage. Prior to optimization, preprocessing can include several
@@ -77,6 +78,8 @@ the affinely warped specimen.  This average displacement field is then used to
 deform the voxelwise-averaged template.  Shape and intensity template
 convergence typically occurs in four deformable iterations.
 
+-->
+
 <!--
 ############################################
 ############################################
@@ -84,10 +87,17 @@ convergence typically occurs in four deformable iterations.
 ############################################
 -->
 
-## The DevCCF Velocity Flow Model {-}
+## The DevCCF Velocity Flow Model
+
+\begin{figure}
+\includegraphics[width=0.99\textwidth]{Figures/lowerLeftPanel.png}
+\caption{Using a velocity flow model, the transformation between any two
+temporal time points within the DevCCF is possible.}
+\label{fig:devccfvelocity}
+\end{figure}
 
 To continuously interpolate transformations between the different stages of the
-DevCCF atlases, a velocity flow model was constructed using Dev-CCF derived data
+DevCCF atlases, a velocity flow model was constructed using DevCCF derived data
 and ANTsX functionality recently introduced into both the ANTsR and ANTsPy
 packages.  Both platforms include a complete suite of functions for determining
 dense correspondence from sparse landmarks based on a variety of transformation
@@ -107,7 +117,7 @@ individual point weighting.  Both field regularization and integration of
 the velocity field are built on ITK functions contributed from ANTsX
 development.  
 
-### Data preparation {-}
+### Data preparation
 
 \begin{figure}[!htb]
 \centering
@@ -126,7 +136,7 @@ illustrated for the P4 and P14 stages in Figure \ref{fig:simplifiedannotations}.
 
 Prior to velocity field optimization, all data were rigidly transformed to a
 common space.  Using the centroids for the common label set of each DevCCF
-atlas, each atlas was rigidly aligned to the space of the P56 atlas In order to
+atlas, each atlas was rigidly aligned to the space of the P56 atlas. In order to
 determine the landmark correspondence across DevCCF stages, the multi-metric
 capabilities of ``ants.registration(...)`` were used. Instead of performing
 intensity-based pairwise registration directly on these multi-label images, each
@@ -142,9 +152,9 @@ propagated to each atlas using the transformations derived from the pairwise
 registrations.  We selected a sampling rate of 10\% for the contour points and
 1\% for the regional points for a total number of points being per atlas being
 $173303$ ($N_{contour} = 98151$ and $N_{region}=75152$). Regional boundary
-points were weighted twice as those of regional points during optimization.  
+points were weighted twice as those of non-boundary points during optimization.  
 
-### Optimization {-}
+### Optimization
 
 \begin{figure}[!htb]
 \centering
@@ -155,7 +165,7 @@ transformation through the developmental stages from E11.5 through P56.}
 \end{figure}
 
 ``ants.fit_time_varying_transform_to_point_sets(...)`` from the ANTsPy package
-was used to optimize the velocity field. Input comprised the seven corresponding
+was used to optimize the velocity field. Input is composed of the seven corresponding
 point sets and their associated weight values, the selected number of
 integration points for the velocity field ($N=11$), and the parameters defining
 the geometry of the spatial dimensions of the velocity field.  Thus, the optimized 
@@ -163,8 +173,8 @@ velocity field described here is of size $[256, 182, 360]$
 ($50 \mu$m isotropic) $\times 11$ integration points for a total compressed
 size of a little over 2 GB.  This choice represented weighing the trade-off 
 between tractability, portability, and accuracy.  However,  all
-data and code to reproduce the results described are available in a dedicated 
-GitHub repository (\url{https://github.com/ntustison/DevCCF-Velocity-Flow}).
+data and code to reproduce the results described are available in the dedicated 
+GitHub repository.
 
 The normalized time point scalar value for each atlas/point-set in the temporal
 domains $[0, 1]$ was also defined. Given the increasingly larger gaps in the
@@ -181,8 +191,14 @@ integration time point and determining the regularized displacement field
 between the two warped point sets.  As with any gradient-based descent
 algorithm, this field was multiplied by a small step size ($\delta = 0.2$)
 before adding to the current velocity field.  Using multithreading, each
-iteration took about six minutes.
+iteration took about six minutes. Convergence is determined by the average
+displacement error over each of the integration points. As can be seen in the
+left panel of Figure \ref{fig:convergence}, convergence occurred around 125
+iterations when the average displacement error over all integration points is
+minimized. The median displacement error at each of the integration points also
+trends towards zero but at different rates. 
 
+<!-- 
 \begin{figure}[!htb]
 \centering
 \includegraphics[width=0.75\textwidth]{Figures/warpedP56Volumes.pdf}
@@ -191,21 +207,20 @@ the simplified labels of the P56 atlas continuously over the interval
 $[0, 1]$ and plot the volumes of the atlas regions.  Note how they 
 compare with the volumes of the same regions in the other atlases.}
 \label{fig:warpedP56}
-\end{figure}
+\end{figure} 
+-->
 
-Convergence is determined by the average displacement error over each of the
-integration points. As can be seen in the left panel of Figure
-\ref{fig:convergence}, convergence occurred around 125 iterations when the
-average displacement error over all integration points is minimized. The median
-displacement error at each of the integration points also trends towards zero
-but at different rates. After optimization, we use the velocity field to warp
+
+<!-- 
+After optimization, we use the velocity field to warp
 the P56 set of labels to each of the other atlas time points to compare the
 volumes of the different simplified annotated regions.  This is shown in Figure
-\ref{fig:warpedP56}.
+\ref{fig:warpedP56}. 
+-->
 
 
 
-### The DevCCF transform model {-}
+### The DevCCF transform model
 
 \begin{figure}[!htb]
 \centering

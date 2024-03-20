@@ -17,5 +17,5 @@ available.  The DevCCF atlas is available at
 ANTsRNet are available through GitHub at the ANTsX Ecosystem
 (\url{https://github.com/ANTsX}).  A GitHub repository specific to the work
 discussed in the manuscript was created and is available at
-\url{https://github.com/ntustison/DevCCF-Velocity-Flow}.
+\url{https://github.com/ntustison/ANTsXMouseBrainMapping}.
 

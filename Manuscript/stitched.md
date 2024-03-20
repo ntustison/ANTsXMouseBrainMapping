@@ -110,17 +110,19 @@ comprehensive open-source software toolkit for generalized quantitative imaging,
 which includes template building and mapping functionality, with applicability
 to multiple organ systems, modalities, and animal species. Herein, we illustrate
 the utility of ANTsX for generating precision spatial mappings of the mouse
-brain.  First, we provide ANTsX-based protocols for mapping MERFISH, fMOST, and
-lightsheet datasets to AllenCCFv3 accounting for common artefacts and other
-confounds.  Additionally, recently developed ANTsX functionality permits the
-generation of velocity flow-based mappings for serial data. Using the recently
-introduced Developmental Common Coordinate Framework, we evaluate and describe
-the publicly available ANTsX-based protocols for generating a velocity
-flow-based mapping spanning the spatiotemporal domain of the developmental
-trajectory.   Possible future work includes the introduction of additional
-developmental time points and application to histological slice stacking.
+brain.  \textcolor{red}{First, we provide ANTsX-based protocols for mapping
+MERFISH, fMOST, and lightsheet datasets to AllenCCFv3 accounting for common
+artefacts and other confounds.}  Herein, novel contributions include recently
+developed ANTsX functionality for generating a velocity flow-based mapping
+spanning the spatiotemporal domain of a longitudinal trajectory which we
+apply to the Developmental Common Coordinate Framework (DevCCF).  Additionally,
+we present an automated structural morphological pipeline for determining
+volumetric and cortical thickness measurements analogous to the well-utilized
+ANTsX pipeline for human neuroanatomy.  This latter development also illustrates
+a more general open-source ANTsX framework for determining tailored brain
+parcellations using the AllenCCFv3 and DevCCF templates.
 
-\clearpage# Introduction {-}
+\clearpage# Introduction
 
 Over the past two decades there have been significant advancements in mesoscopic
 analysis of the mouse brain. It is now possible to track single cell neurons in
@@ -150,11 +152,13 @@ introduce artifacts such as tissue distortion, holes, bubbles, folding, tears,
 and missing slices. These severely complicate assumed correspondence for
 conventional spatial mapping approaches.
 
+## Mouse-specific brain mapping software
+
 To address such challenges, several software packages have been developed over
 the years comprising solutions of varying comprehensibility, sophistication, and
 availability.  An early contribution to the community was the Rapid Automatic
 Tissue Segmentation (RATS) package [@Oguz:2014aa] for brain extraction.
-Of the many publicly available packages, most, if not all have well-established
+More recently, several publicly available packages comprise well-established
 package dependencies originally developed on human brain data. SPMMouse
 [@Sawiak:2014aa], for example, is based on the well-known Statistical Parametric
 Mapping (SPM) software package [@Ashburner:2012aa]. The automated mouse atlas
@@ -184,7 +188,7 @@ deformations are not considered problematic for a particular dataset, DeepSlice
 can be used to determine affine mappings [@Carey:2023aa] with the optimal
 computational efficiency associated with neural networks.
 
-### The ANTsX Ecosystem  {-}
+## The ANTsX Ecosystem for mouse brain mapping 
 
 As noted previously, many of the existing packages designed for processing mouse
 brain image data use ANTsX tools for core processing steps in various workflows,
@@ -214,60 +218,84 @@ deriving benefit from the open-source community of scientists and programmers
 and providing an open-source venue for algorithmic development, evaluation, and
 improvement.
 
+<!-- 
+
 \begin{figure}[!htb]
 \centering
 \makebox[\textwidth][c]{\includegraphics[width=1.2\textwidth]{Figures/pipeline3.png}}%
-\caption{Illustration of a mouse brain template generation workflow and related
-template-based applications demonstrating the utility of different ANTsX tools.
-After imaging acquisition of the study population, various preprocessing steps
-are applied to the imaging data such as bias correction, denoising, and brain
-extraction as dictated by the needs of the study protocol.  
-Potential applications, such as in the case of the DevCCF, include gene
-expression mapping and the generation of the associated velocity flow model for
-continuous spatiotemporal mapping in the temporal domain.}
+\caption{
+Illustration of a mouse brain template generation workflow and related
+template-based applications demonstrating the utility of different ANTsX tools,
+specifically in the development of the DevCCF atlas. After imaging acquisition
+of the study population, various preprocessing steps are applied to the imaging
+data such as bias correction, denoising, and brain extraction for gene
+expression mapping.  Also illustrated is the generation of the associated
+velocity flow model for continuous spatiotemporal mapping interpolating the
+sampled time points of the DevCCF.
+}
 \label{fig:pipeline}
-\end{figure}
+\end{figure} 
 
-Recently, the developmental common coordinate framework (DevCCF) was introduced
-to the mouse brain research community as a public resource [@Kronman:2023aa].
-These symmetric atlases, comprising both multimodal image data and anatomical
-segmentations defined by developmental ontology, sample the mouse embryonic days
-(E) 11.5, E13.5, E15.5, E18.5 and postnatal day (P) 4, P14, and P56.  Modalities
-include light sheet flourescence miscroscopy (LSFM) and at least four MRI
-contrasts per developmental stage.  Anatomical parcellations are also available
-for each time point and were generated from ANTsX-based mappings of gene
-expression and other cell type data.  The P56 template was integrated with the
-Allen CCFv3 to further increase the practical utility of the DevCCF.  These
-processes, specifically template generation and multi-modal image mapping, were
-performed using ANTsX functionality in the presence of previously noted image
-mapping difficulties (e.g., missing slices, tissue distortion).
+-->
 
-Given the temporal gaps in the discrete set of developmental atlases with the
-potential for additional interpolative time points, we discuss the strategy of
-the current DevCCF template generation [@Kronman:2023aa] and
-provide additional information for the interested reader. Related, we also
+## ANTsX-based open-source contributions
+
+Consistent with previous ANTsX development, the newly introduced capabilities
+introduced below are available through ANTsX (specifically, via R and Python
+ANTsX packages) with a dedicated GitHub repository specific to this work
+(https://github.com/ntustison/ANTsXMouseBrainMapping).
+
+### The DevCCF velocity flow model
+
+Recently, the Developmental Common Coordinate Framework (DevCCF) was introduced
+to the mouse brain research community as a public resource [@Kronman:2023aa]
+comprising symmetric atlases of multimodal image data and anatomical
+segmentations defined by developmental ontology.  These templates sample the
+mouse embryonic days (E) 11.5, E13.5, E15.5, E18.5 and postnatal day (P) 4, P14,
+and P56.  Modalities include light sheet flourescence miscroscopy (LSFM) and at
+least four MRI contrasts per developmental stage.  Anatomical parcellations are
+also available for each time point and were generated from ANTsX-based mappings
+of gene expression and other cell type data.  The P56 template was integrated
+with the Allen CCFv3 to further increase the practical utility of the DevCCF.
+These processes, specifically template generation and multi-modal image mapping,
+were performed using ANTsX functionality in the presence of previously noted
+image mapping difficulties such as missing slices, tissue distortion.  
+
+Given the temporal gaps in the discrete set of developmental atlases, we also
 provide an open-source framework, through ANTsX, for inferring correspondence
 within the temporally continuous domain sampled by the existing set of embryonic
-and postnatal atlases of the DevCCF.  Although alternative approaches are
-possible for interpolating between time points, this recently developed ANTsX
+and postnatal atlases of the DevCCF.  This recently developed ANTsX
 functionality permits the generation of a diffeomorphic velocity flow
 transformation model [@Beg:2005aa], influenced by previous work
 [@Tustison:2013ac].  The resulting time-parameterized velocity field spans the
 stages of the DevCCF where mappings between any two continuous time points
 within the span bounded by the E11.5 and P56 atlases is determined by
-integration of the optimized velocity field. This functionality is available
-through ANTsX (via R and Python ANTsX packages) with a dedicated GitHub
-repository that contains all data, scripts, and other guidance necessary to both
-reproduce what is described below and to illustrate how future researchers can
-incorporate additional atlases into a more densely sampled model in a
-straightforward manner.
+integration of the optimized velocity field. 
+
+### Structural morphology and cortical thickness in the mouse brain
+
+We also describe a structural morphological pipeline for calculating image-based
+cortical thickness measurements [@Das:2009uv] analogous to the well-known and
+heavily utilized ANTsX cortical thickness pipeline  for cross-sectional and
+longitudinal human brain studies
+[@Tustison:2014ab;@Tustison:2019aa;@Tustison:2021aa].  Two integral pipeline
+components are brain extraction and brian parcellation derived from,
+respectively, two-shot and single-shot deep learning, leveraging only publicly
+available resources, including AllenCCFv3 and DevCCF.  Although we anticipate
+that this cortical thickness pipeline will be beneficial to the research
+community, this work demonstrates more generally how one can leverage ANTsX
+tools for developing tailored brain parcellation schemes.  Evaluation is
+performed on an independent open-source data set [@Rahman:2023aa] comprising
+longitudinal acquisitions of multiple specimens.  
+
 
 \clearpage
 \newpage
 
-# Results {-}
+# Results
 
-## Template building {-}
+<!--
+## Template building
 
 Template building using ANTsX tools was first described in the context of
 hippocampal studies [@Avants:2010aa].  Multi-modal and symmetrical variants were
@@ -277,7 +305,7 @@ capabilities are available in both ANTsPy (``ants.build_template(...)``) and
 ANTsR (``buildTemplate(...)``) as well as part of 
 the core ANTs package (e.g., ``antsMultivariateTemplateConstruction.sh``).
 
-### Data preparation {-}
+### Data preparation
 
 Multi-modal symmetric template construction is performed separately for each
 developmental stage. Prior to optimization, preprocessing can include several
@@ -341,6 +369,8 @@ the affinely warped specimen.  This average displacement field is then used to
 deform the voxelwise-averaged template.  Shape and intensity template
 convergence typically occurs in four deformable iterations.
 
+-->
+
 <!--
 ############################################
 ############################################
@@ -348,10 +378,17 @@ convergence typically occurs in four deformable iterations.
 ############################################
 -->
 
-## The DevCCF Velocity Flow Model {-}
+## The DevCCF Velocity Flow Model
+
+\begin{figure}
+\includegraphics[width=0.99\textwidth]{Figures/lowerLeftPanel.png}
+\caption{Using a velocity flow model, the transformation between any two
+temporal time points within the DevCCF is possible.}
+\label{fig:devccfvelocity}
+\end{figure}
 
 To continuously interpolate transformations between the different stages of the
-DevCCF atlases, a velocity flow model was constructed using Dev-CCF derived data
+DevCCF atlases, a velocity flow model was constructed using DevCCF derived data
 and ANTsX functionality recently introduced into both the ANTsR and ANTsPy
 packages.  Both platforms include a complete suite of functions for determining
 dense correspondence from sparse landmarks based on a variety of transformation
@@ -371,7 +408,7 @@ individual point weighting.  Both field regularization and integration of
 the velocity field are built on ITK functions contributed from ANTsX
 development.  
 
-### Data preparation {-}
+### Data preparation
 
 \begin{figure}[!htb]
 \centering
@@ -390,7 +427,7 @@ illustrated for the P4 and P14 stages in Figure \ref{fig:simplifiedannotations}.
 
 Prior to velocity field optimization, all data were rigidly transformed to a
 common space.  Using the centroids for the common label set of each DevCCF
-atlas, each atlas was rigidly aligned to the space of the P56 atlas In order to
+atlas, each atlas was rigidly aligned to the space of the P56 atlas. In order to
 determine the landmark correspondence across DevCCF stages, the multi-metric
 capabilities of ``ants.registration(...)`` were used. Instead of performing
 intensity-based pairwise registration directly on these multi-label images, each
@@ -406,9 +443,9 @@ propagated to each atlas using the transformations derived from the pairwise
 registrations.  We selected a sampling rate of 10\% for the contour points and
 1\% for the regional points for a total number of points being per atlas being
 $173303$ ($N_{contour} = 98151$ and $N_{region}=75152$). Regional boundary
-points were weighted twice as those of regional points during optimization.  
+points were weighted twice as those of non-boundary points during optimization.  
 
-### Optimization {-}
+### Optimization
 
 \begin{figure}[!htb]
 \centering
@@ -419,7 +456,7 @@ transformation through the developmental stages from E11.5 through P56.}
 \end{figure}
 
 ``ants.fit_time_varying_transform_to_point_sets(...)`` from the ANTsPy package
-was used to optimize the velocity field. Input comprised the seven corresponding
+was used to optimize the velocity field. Input is composed of the seven corresponding
 point sets and their associated weight values, the selected number of
 integration points for the velocity field ($N=11$), and the parameters defining
 the geometry of the spatial dimensions of the velocity field.  Thus, the optimized 
@@ -427,8 +464,8 @@ velocity field described here is of size $[256, 182, 360]$
 ($50 \mu$m isotropic) $\times 11$ integration points for a total compressed
 size of a little over 2 GB.  This choice represented weighing the trade-off 
 between tractability, portability, and accuracy.  However,  all
-data and code to reproduce the results described are available in a dedicated 
-GitHub repository (\url{https://github.com/ntustison/DevCCF-Velocity-Flow}).
+data and code to reproduce the results described are available in the dedicated 
+GitHub repository.
 
 The normalized time point scalar value for each atlas/point-set in the temporal
 domains $[0, 1]$ was also defined. Given the increasingly larger gaps in the
@@ -445,8 +482,14 @@ integration time point and determining the regularized displacement field
 between the two warped point sets.  As with any gradient-based descent
 algorithm, this field was multiplied by a small step size ($\delta = 0.2$)
 before adding to the current velocity field.  Using multithreading, each
-iteration took about six minutes.
+iteration took about six minutes. Convergence is determined by the average
+displacement error over each of the integration points. As can be seen in the
+left panel of Figure \ref{fig:convergence}, convergence occurred around 125
+iterations when the average displacement error over all integration points is
+minimized. The median displacement error at each of the integration points also
+trends towards zero but at different rates. 
 
+<!-- 
 \begin{figure}[!htb]
 \centering
 \includegraphics[width=0.75\textwidth]{Figures/warpedP56Volumes.pdf}
@@ -455,21 +498,20 @@ the simplified labels of the P56 atlas continuously over the interval
 $[0, 1]$ and plot the volumes of the atlas regions.  Note how they 
 compare with the volumes of the same regions in the other atlases.}
 \label{fig:warpedP56}
-\end{figure}
+\end{figure} 
+-->
 
-Convergence is determined by the average displacement error over each of the
-integration points. As can be seen in the left panel of Figure
-\ref{fig:convergence}, convergence occurred around 125 iterations when the
-average displacement error over all integration points is minimized. The median
-displacement error at each of the integration points also trends towards zero
-but at different rates. After optimization, we use the velocity field to warp
+
+<!-- 
+After optimization, we use the velocity field to warp
 the P56 set of labels to each of the other atlas time points to compare the
 volumes of the different simplified annotated regions.  This is shown in Figure
-\ref{fig:warpedP56}.
+\ref{fig:warpedP56}. 
+-->
 
 
 
-### The DevCCF transform model {-}
+### The DevCCF transform model
 
 \begin{figure}[!htb]
 \centering
@@ -507,6 +549,15 @@ existing temporally adjacent developmental templates to the target time point an
 those images in the ANTsX template building process.}
 \label{fig:virtual}
 \end{figure}
+
+## The Mouse Cortical Thickness Pipeline
+
+\begin{figure}
+\includegraphics[width=0.9\textwidth]{Figures/mousePipeline.png}
+\caption{}
+\label{fig:mouseKK}
+\end{figure}
+
 
 \clearpage
 \newpage
@@ -774,7 +825,7 @@ available.  The DevCCF atlas is available at
 ANTsRNet are available through GitHub at the ANTsX Ecosystem
 (\url{https://github.com/ANTsX}).  A GitHub repository specific to the work
 discussed in the manuscript was created and is available at
-\url{https://github.com/ntustison/DevCCF-Velocity-Flow}.
+\url{https://github.com/ntustison/ANTsXMouseBrainMapping}.
 
 
 \clearpage

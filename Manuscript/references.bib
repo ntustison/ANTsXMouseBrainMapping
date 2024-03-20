@@ -1,12 +1,52 @@
 %% This BibTeX bibliography file was created using BibDesk.
 %% https://bibdesk.sourceforge.io/
 
-%% Created for Nick Tustison at 2023-12-26 09:06:59 -0800 
+%% Created for Nick Tustison at 2024-03-19 18:27:02 -0700 
 
 
 %% Saved with string encoding Unicode (UTF-8) 
 
 
+
+@article{Rahman:2023aa,
+	abstract = {Multimodal microstructural MRI has shown increased sensitivity and specificity to changes in various brain disease and injury models in the preclinical setting. Here, we present an in vivo longitudinal dataset, including a subset of ex vivo data, acquired as control data and to investigate microstructural changes in the healthy mouse brain. The dataset consists of structural T2-weighted imaging, magnetization transfer ratio and saturation imaging, and advanced quantitative diffusion MRI (dMRI) methods. The dMRI methods include oscillating gradient spin echo (OGSE) dMRI and microscopic anisotropy (μA) dMRI, which provide additional insight by increasing sensitivity to smaller spatial scales and disentangling fiber orientation dispersion from true microstructural changes, respectively. The technical skills required to analyze microstructural MRI data are complex and include MRI sequence development, acquisition, and computational neuroimaging expertise. Here, we share unprocessed and preprocessed data, and scalar maps of quantitative MRI metrics. We envision utility of this dataset in the microstructural MRI field to develop and test biophysical models, methods that model temporal brain dynamics, and registration and preprocessing pipelines.},
+	author = {Rahman, Naila and Xu, Kathy and Budde, Matthew D and Brown, Arthur and Baron, Corey A},
+	date-added = {2024-03-19 18:26:30 -0700},
+	date-modified = {2024-03-19 18:26:30 -0700},
+	doi = {10.1038/s41597-023-01942-5},
+	journal = {Sci Data},
+	journal-full = {Scientific data},
+	mesh = {Animals; Mice; Brain; Diffusion Magnetic Resonance Imaging; Magnetic Resonance Imaging; Mice, Inbred C57BL; Neuroimaging; Sensitivity and Specificity},
+	month = {Feb},
+	number = {1},
+	pages = {94},
+	pmc = {PMC9929084},
+	pmid = {36788251},
+	pst = {epublish},
+	title = {A longitudinal microstructural MRI dataset in healthy C57Bl/6 mice at 9.4 Tesla},
+	volume = {10},
+	year = {2023},
+	bdsk-url-1 = {https://doi.org/10.1038/s41597-023-01942-5}}
+
+@article{Tustison:2019aa,
+	abstract = {Longitudinal studies of development and disease in the human brain have motivated the acquisition of large neuroimaging data sets and the concomitant development of robust methodological and statistical tools for quantifying neurostructural changes. Longitudinal-specific strategies for acquisition and processing have potentially significant benefits including more consistent estimates of intra-subject measurements while retaining predictive power. Using the first phase of the Alzheimer's Disease Neuroimaging Initiative (ADNI-1) data, comprising over 600 subjects with multiple time points from baseline to 36 months, we evaluate the utility of longitudinal FreeSurfer and Advanced Normalization Tools (ANTs) surrogate thickness values in the context of a linear mixed-effects (LME) modeling strategy. Specifically, we estimate the residual variability and between-subject variability associated with each processing stream as it is known from the statistical literature that minimizing the former while simultaneously maximizing the latter leads to greater scientific interpretability in terms of tighter confidence intervals in calculated mean trends, smaller prediction intervals, and narrower confidence intervals for determining cross-sectional effects. This strategy is evaluated over the entire cortex, as defined by the Desikan-Killiany-Tourville labeling protocol, where comparisons are made with the cross-sectional and longitudinal FreeSurfer processing streams. Subsequent linear mixed effects modeling for identifying diagnostic groupings within the ADNI cohort is provided as supporting evidence for the utility of the proposed ANTs longitudinal framework which provides unbiased structural neuroimage processing and competitive to superior power for longitudinal structural change detection.},
+	author = {Tustison, Nicholas J and Holbrook, Andrew J and Avants, Brian B and Roberts, Jared M and Cook, Philip A and Reagh, Zachariah M and Duda, Jeffrey T and Stone, James R and Gillen, Daniel L and Yassa, Michael A and {Alzheimer's Disease Neuroimaging Initiative}},
+	date-added = {2024-03-12 19:54:11 -0700},
+	date-modified = {2024-03-12 19:54:11 -0700},
+	doi = {10.3233/JAD-190283},
+	journal = {J Alzheimers Dis},
+	journal-full = {Journal of Alzheimer's disease : JAD},
+	keywords = {Advanced normalization tools; FreeSurfer; linear mixed effects models; longitudinal processing},
+	mesh = {Alzheimer Disease; Biomarkers; Brain; Cross-Sectional Studies; Disease Progression; Female; Humans; Linear Models; Longitudinal Studies; Male; Neuroimaging},
+	number = {1},
+	pages = {165-183},
+	pmc = {PMC10204115},
+	pmid = {31356207},
+	pst = {ppublish},
+	title = {Longitudinal Mapping of Cortical Thickness Measurements: An Alzheimer's Disease Neuroimaging Initiative-Based Evaluation Study},
+	volume = {71},
+	year = {2019},
+	bdsk-url-1 = {https://doi.org/10.3233/JAD-190283}}
 
 @article{Klein:2010ab,
 	abstract = {Establishing correspondences across brains for the purposes of comparison and group analysis is almost universally done by registering images to one another either directly or via a template. However, there are many registration algorithms to choose from. A recent evaluation of fully automated nonlinear deformation methods applied to brain image registration was restricted to volume-based methods. The present study is the first that directly compares some of the most accurate of these volume registration methods with surface registration methods, as well as the first study to compare registrations of whole-head and brain-only (de-skulled) images. We used permutation tests to compare the overlap or Hausdorff distance performance for more than 16,000 registrations between 80 manually labeled brain images. We compared every combination of volume-based and surface-based labels, registration, and evaluation. Our primary findings are the following: 1. de-skulling aids volume registration methods; 2. custom-made optimal average templates improve registration over direct pairwise registration; and 3. resampling volume labels on surfaces or converting surface labels to volumes introduces distortions that preclude a fair comparison between the highest ranking volume and surface registration methods using present resampling methods. From the results of this study, we recommend constructing a custom template from a limited sample drawn from the same or a similar representative population, using the same algorithm used for registering brains to the template.},
