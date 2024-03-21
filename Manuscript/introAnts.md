@@ -85,18 +85,31 @@ integration of the optimized velocity field.
 
 ### Structural morphology and cortical thickness in the mouse brain
 
-We also describe a structural morphological pipeline for calculating image-based
-cortical thickness measurements [@Das:2009uv] analogous to the well-known and
-heavily utilized ANTsX cortical thickness pipeline  for cross-sectional and
-longitudinal human brain studies
-[@Tustison:2014ab;@Tustison:2019aa;@Tustison:2021aa].  Two integral pipeline
-components are brain extraction and brian parcellation derived from,
-respectively, two-shot and single-shot deep learning, leveraging only publicly
-available resources, including AllenCCFv3 and DevCCF.  Although we anticipate
-that this cortical thickness pipeline will be beneficial to the research
-community, this work demonstrates more generally how one can leverage ANTsX
-tools for developing tailored brain parcellation schemes.  Evaluation is
-performed on an independent open-source data set [@Rahman:2023aa] comprising
-longitudinal acquisitions of multiple specimens.  
+One of the most frequently utilized pipelines in the ANTsX toolkit is that of
+determining cortical thickness in the human brain with original novel
+contribution being the Diffeomorphic Registration-based Cortical Thickness
+(DiReCT) algorithm [@Das:2009uv].  This expanded to a complete cortical
+thickness pipeline for the human braiņ, for both cross-sectional
+[@Tustison:2014ab] and longitudinal [@Tustison:2019aa] using T1-weighted MR
+image data which was later refactored using deep learning [@Tustison:2021aa].
+
+In contrast to the pipeline development in human data [@Tustison:2021aa], no
+current ANTsX tools exist to create adequate training data for the mouse brain.
+In addition, mouse brain data acquisition often has unique issues, such as lower
+data quality or sampling anisotropy which limits its applicability to high
+resolution resources (e.g., AllenCCFv3, DevCCF), specifically with respect to
+the corresponding granular brain parcellations derived from numerous hours of
+expert annotating leveraging multimodal imaging resources.
+
+Herein, we introduce a mouse brain cortical thickness pipeline comprising two
+novel deep learning components:  two-shot learning brain extraction from data
+augmentation of two ANTsX templates generated from two open datasets
+[@Hsu2021;@Reshetnikov2021] and single-shot brian parcellation derived from the
+AllenCCFv3 labelings mapped to the DevCCF.  Although we anticipate that this
+cortical thickness pipeline will be beneficial to the research community, this
+work demonstrates more generally how one can leverage ANTsX tools for developing
+tailored brain parcellation schemes.  Evaluation is performed on an independent
+open data set [@Rahman:2023aa] comprising longitudinal acquisitions of
+multiple specimens.  
 
 
