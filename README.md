@@ -61,7 +61,7 @@ mouse data.  See the training scripts in this repository.
         * Three spatially aligned high-resolution orthogonal views
         * resolution = 0.08 x 0.08 $mm^2$ in-plane, 0.5 mm slice thickness
         * $n = 88$
-        * [Combine three views using B-spline filter](https://github.com/ntustison/ANTsXMouseBrainMapping/blob/main/Scripts/synthesize_image_views_bspline.py)
+        * [Combine three views using B-spline filter](https://github.com/ntustison/ANTsXMouseBrainMapping/blob/main/Scripts/MiscScripts/synthesize_image_views_bspline.py)
         * [Template](https://figshare.com/ndownloader/files/44706247) and [brain mask](https://figshare.com/ndownloader/files/44869285)
 
 * Data augmentation of CAMRI and high resolution B-spline template:
