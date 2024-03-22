@@ -2,6 +2,17 @@
 \clearpage
 \newpage
 
+
+Field
+regularization is provided by a B-spline scattered data approximation technique
+[@Tustison:2006aa,@Tustison:2013ac] which permits individual point weighting.
+Both field regularization and integration of the velocity field are built on ITK
+functions contributed from ANTsX development.  
+
+
+
+
+
 # Methods {-} 
 
 The following methods are all available as part of the ANTsX ecosystem

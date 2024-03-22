@@ -53,8 +53,10 @@ sampled time points of the DevCCF.
 
 Consistent with previous ANTsX development, the newly introduced capabilities
 introduced below are available through ANTsX (specifically, via R and Python
-ANTsX packages) with a dedicated GitHub repository specific to this work
-(https://github.com/ntustison/ANTsXMouseBrainMapping).
+ANTsX packages), and illustrated through self-contained examples in the ANTsX
+tutorial (\url{https://tinyurl.com/antsxtutorial}) with a dedicated GitHub 
+repository specific to this work
+(\url{https://github.com/ntustison/ANTsXMouseBrainMapping}).
 
 ### The DevCCF velocity flow model
 
@@ -66,10 +68,10 @@ mouse embryonic days (E) 11.5, E13.5, E15.5, E18.5 and postnatal day (P) 4, P14,
 and P56.  Modalities include light sheet flourescence miscroscopy (LSFM) and at
 least four MRI contrasts per developmental stage.  Anatomical parcellations are
 also available for each time point and were generated from ANTsX-based mappings
-of gene expression and other cell type data.  The P56 template was integrated
-with the Allen CCFv3 to further increase the practical utility of the DevCCF.
-These processes, specifically template generation and multi-modal image mapping,
-were performed using ANTsX functionality in the presence of previously noted
+of gene expression and other cell type data.  Additionally, the P56 template was
+integrated with the Allen CCFv3 to further increase the practical utility of the
+DevCCF. These processes, specifically template generation and multi-modal image
+mapping, were performed using ANTsX functionality in the presence of 
 image mapping difficulties such as missing slices, tissue distortion.  
 
 Given the temporal gaps in the discrete set of developmental atlases, we also
@@ -86,12 +88,13 @@ integration of the optimized velocity field.
 ### Structural morphology and cortical thickness in the mouse brain
 
 One of the most frequently utilized pipelines in the ANTsX toolkit is that of
-determining cortical thickness in the human brain with original novel
-contribution being the Diffeomorphic Registration-based Cortical Thickness
-(DiReCT) algorithm [@Das:2009uv].  This expanded to a complete cortical
-thickness pipeline for the human braiņ, for both cross-sectional
+determining cortical thickness in the human brain originating with the the
+Diffeomorphic Registration-based Cortical Thickness (DiReCT) algorithm
+[@Das:2009uv].  This development was later expanded to constitute a complete
+cortical thickness pipeline for the human braiņ for both cross-sectional
 [@Tustison:2014ab] and longitudinal [@Tustison:2019aa] using T1-weighted MR
-image data which was later refactored using deep learning [@Tustison:2021aa].
+image data.  These pipelines were later significantly refactored using deep 
+learning innovations [@Tustison:2021aa].
 
 In contrast to the pipeline development in human data [@Tustison:2021aa], no
 current ANTsX tools exist to create adequate training data for the mouse brain.
@@ -99,17 +102,17 @@ In addition, mouse brain data acquisition often has unique issues, such as lower
 data quality or sampling anisotropy which limits its applicability to high
 resolution resources (e.g., AllenCCFv3, DevCCF), specifically with respect to
 the corresponding granular brain parcellations derived from numerous hours of
-expert annotating leveraging multimodal imaging resources.
+expert annotation leveraging multimodal imaging resources.
 
 Herein, we introduce a mouse brain cortical thickness pipeline comprising two
 novel deep learning components:  two-shot learning brain extraction from data
 augmentation of two ANTsX templates generated from two open datasets
 [@Hsu2021;@Reshetnikov2021] and single-shot brian parcellation derived from the
-AllenCCFv3 labelings mapped to the DevCCF.  Although we anticipate that this
-cortical thickness pipeline will be beneficial to the research community, this
-work demonstrates more generally how one can leverage ANTsX tools for developing
-tailored brain parcellation schemes.  Evaluation is performed on an independent
-open data set [@Rahman:2023aa] comprising longitudinal acquisitions of
-multiple specimens.  
+AllenCCFv3 labelings mapped to the corresponding DevCCF P56 time point.  Although we
+anticipate that this cortical thickness pipeline will be beneficial to the
+research community, this work demonstrates more generally how one can leverage
+ANTsX tools for developing tailored brain parcellation schemes.  Evaluation is
+performed on an independent open data set [@Rahman:2023aa] comprising
+longitudinal acquisitions of multiple specimens.  
 
 

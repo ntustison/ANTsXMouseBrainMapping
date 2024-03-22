@@ -190,16 +190,16 @@ illustrate the utility of ANTsX for generating precision spatial
 mappings of the mouse brain.
 \textcolor{red}{First, we provide ANTsX-based protocols for mapping
 MERFISH, fMOST, and lightsheet datasets to AllenCCFv3 accounting for common
-artefacts and other confounds.} Herein, novel contributions include
+artefacts and other confounds.} Novel ANTsX contributions include
 recently developed ANTsX functionality for generating a velocity
 flow-based mapping spanning the spatiotemporal domain of a longitudinal
 trajectory which we apply to the Developmental Common Coordinate
 Framework (DevCCF). Additionally, we present an automated structural
 morphological pipeline for determining volumetric and cortical thickness
 measurements analogous to the well-utilized ANTsX pipeline for human
-neuroanatomy. This latter development also illustrates a more general
-open-source ANTsX framework for determining tailored brain parcellations
-using the AllenCCFv3 and DevCCF templates.
+neuroanatomical structural morphology. This latter development also
+illustrates a more general open-source ANTsX framework for determining
+tailored brain parcellations using the AllenCCFv3 and DevCCF templates.
 
 \clearpage
 
@@ -322,8 +322,9 @@ contributions}\label{antsx-based-open-source-contributions}}
 
 Consistent with previous ANTsX development, the newly introduced
 capabilities introduced below are available through ANTsX (specifically,
-via R and Python ANTsX packages) with a dedicated GitHub repository
-specific to this work
+via R and Python ANTsX packages), and illustrated through self-contained
+examples in the ANTsX tutorial (\url{https://tinyurl.com/antsxtutorial})
+with a dedicated GitHub repository specific to this work
 (\url{https://github.com/ntustison/ANTsXMouseBrainMapping}).
 
 \hypertarget{the-devccf-velocity-flow-model}{%
@@ -339,11 +340,11 @@ E13.5, E15.5, E18.5 and postnatal day (P) 4, P14, and P56. Modalities
 include light sheet flourescence miscroscopy (LSFM) and at least four
 MRI contrasts per developmental stage. Anatomical parcellations are also
 available for each time point and were generated from ANTsX-based
-mappings of gene expression and other cell type data. The P56 template
-was integrated with the Allen CCFv3 to further increase the practical
-utility of the DevCCF. These processes, specifically template generation
-and multi-modal image mapping, were performed using ANTsX functionality
-in the presence of previously noted image mapping difficulties such as
+mappings of gene expression and other cell type data. Additionally, the
+P56 template was integrated with the Allen CCFv3 to further increase the
+practical utility of the DevCCF. These processes, specifically template
+generation and multi-modal image mapping, were performed using ANTsX
+functionality in the presence of image mapping difficulties such as
 missing slices, tissue distortion.
 
 Given the temporal gaps in the discrete set of developmental atlases, we
@@ -363,13 +364,14 @@ optimized velocity field.
 brain}\label{structural-morphology-and-cortical-thickness-in-the-mouse-brain}}
 
 One of the most frequently utilized pipelines in the ANTsX toolkit is
-that of determining cortical thickness in the human brain with original
-novel contribution being the Diffeomorphic Registration-based Cortical
-Thickness (DiReCT) algorithm.\textsuperscript{52} This expanded to a
-complete cortical thickness pipeline for the human braiņ, for both
-cross-sectional\textsuperscript{53} and longitudinal\textsuperscript{54}
-using T1-weighted MR image data which was later refactored using deep
-learning.\textsuperscript{26}
+that of determining cortical thickness in the human brain originating
+with the the Diffeomorphic Registration-based Cortical Thickness
+(DiReCT) algorithm.\textsuperscript{52} This development was later
+expanded to constitute a complete cortical thickness pipeline for the
+human braiņ for both cross-sectional\textsuperscript{53} and
+longitudinal\textsuperscript{54} using T1-weighted MR image data. These
+pipelines were later significantly refactored using deep learning
+innovations.\textsuperscript{26}
 
 In contrast to the pipeline development in human
 data,\textsuperscript{26} no current ANTsX tools exist to create
@@ -378,19 +380,20 @@ data acquisition often has unique issues, such as lower data quality or
 sampling anisotropy which limits its applicability to high resolution
 resources (e.g., AllenCCFv3, DevCCF), specifically with respect to the
 corresponding granular brain parcellations derived from numerous hours
-of expert annotating leveraging multimodal imaging resources.
+of expert annotation leveraging multimodal imaging resources.
 
 Herein, we introduce a mouse brain cortical thickness pipeline
 comprising two novel deep learning components: two-shot learning brain
 extraction from data augmentation of two ANTsX templates generated from
 two open datasets\textsuperscript{55,56} and single-shot brian
-parcellation derived from the AllenCCFv3 labelings mapped to the DevCCF.
-Although we anticipate that this cortical thickness pipeline will be
-beneficial to the research community, this work demonstrates more
-generally how one can leverage ANTsX tools for developing tailored brain
-parcellation schemes. Evaluation is performed on an independent open
-data set\textsuperscript{57} comprising longitudinal acquisitions of
-multiple specimens.
+parcellation derived from the AllenCCFv3 labelings mapped to the
+corresponding DevCCF P56 time point. Although we anticipate that this
+cortical thickness pipeline will be beneficial to the research
+community, this work demonstrates more generally how one can leverage
+ANTsX tools for developing tailored brain parcellation schemes.
+Evaluation is performed on an independent open data
+set\textsuperscript{57} comprising longitudinal acquisitions of multiple
+specimens.
 
 \clearpage
 \newpage
@@ -418,21 +421,11 @@ suite of functions for determining dense correspondence from sparse
 landmarks based on a variety of transformation models ranging from
 standard linear models (i.e., rigid, affine) to deformable diffeomorphic
 models (e.g, symmetric normalization).\textsuperscript{40} The latter
-set includes velocity flow models for both the pairwise scenario
-(\texttt{ants.fit\_transform\_to\_paired\_points(...)}) and for multiple
-sets
-(\texttt{ants.fit\_time\_varying\_transform\_to\_point\_sets(...)}), as
-in the case of the DevCCF. Several self-contained tutorials illustrating
-usage for these functions are available at
-\url{https://tinyurl.com/antsxtutorial}.
-
-ANTsX, being built on top of ITK, uses an ITK image data structure for
-the 4-D velocity field where each voxel contains the \(x\), \(y\), \(z\)
-components of the field at that point. Field regularization is provided
-by a B-spline scattered data approximation technique\textsuperscript{51}
-which permits individual point weighting. Both field regularization and
-integration of the velocity field are built on ITK functions contributed
-from ANTsX development.
+set includes transformation models for both the pairwise scenario and
+for multiple sets, as in the case of the DevCCF. ANTsX, being built on
+top of ITK, uses an ITK image data structure for the 4-D velocity field
+where each voxel contains the \(x\), \(y\), \(z\) components of the
+field at that point.
 
 \hypertarget{data-preparation}{%
 \subsubsection{Data preparation}\label{data-preparation}}
@@ -487,18 +480,16 @@ transformation through the developmental stages from E11.5 through P56.}
 \label{fig:convergence}
 \end{figure}
 
-\texttt{ants.fit\_time\_varying\_transform\_to\_point\_sets(...)} from
-the ANTsPy package was used to optimize the velocity field. Input is
-composed of the seven corresponding point sets and their associated
-weight values, the selected number of integration points for the
-velocity field (\(N=11\)), and the parameters defining the geometry of
-the spatial dimensions of the velocity field. Thus, the optimized
-velocity field described here is of size \([256, 182, 360]\)
-(\(50 \mu\)m isotropic) \(\times 11\) integration points for a total
-compressed size of a little over 2 GB. This choice represented weighing
-the trade-off between tractability, portability, and accuracy. However,
-all data and code to reproduce the results described are available in
-the dedicated GitHub repository.
+The velocity field was optimized using the input composed of the seven
+corresponding point sets and their associated weight values, the
+selected number of integration points for the velocity field (\(N=11\)),
+and the parameters defining the geometry of the spatial dimensions of
+the velocity field. Thus, the optimized velocity field described here is
+of size \([256, 182, 360]\) (\(50 \mu\)m isotropic) \(\times 11\)
+integration points for a total compressed size of a little over 2 GB.
+This choice represented weighing the trade-off between tractability,
+portability, and accuracy. However, all data and code to reproduce the
+results described are available in the dedicated GitHub repository.
 
 The normalized time point scalar value for each atlas/point-set in the
 temporal domains \([0, 1]\) was also defined. Given the increasingly
@@ -509,20 +500,20 @@ time points prior to normalization between 0 and 1 (see the right side
 of Figure \ref{fig:convergence}). This log transform, as part of the
 temporal normalization, significantly improved data spacing.
 
-The max number of iterations was set to 200. At each iteration we looped
-over the 11 integration points. At each integration point, the velocity
-field estimate was updated by warping the two immediately adjacent point
-sets to the integration time point and determining the regularized
-displacement field between the two warped point sets. As with any
-gradient-based descent algorithm, this field was multiplied by a small
-step size (\(\delta = 0.2\)) before adding to the current velocity
-field. Using multithreading, each iteration took about six minutes.
-Convergence is determined by the average displacement error over each of
-the integration points. As can be seen in the left panel of Figure
-\ref{fig:convergence}, convergence occurred around 125 iterations when
-the average displacement error over all integration points is minimized.
-The median displacement error at each of the integration points also
-trends towards zero but at different rates.
+The max number of iterations was set to 200 with each iteration taking
+six minutes. At each iteration we looped over the 11 integration points.
+At each integration point, the velocity field estimate was updated by
+warping the two immediately adjacent point sets to the integration time
+point and determining the regularized displacement field between the two
+warped point sets. As with any gradient-based descent algorithm, this
+field was multiplied by a small step size (\(\delta = 0.2\)) before
+adding to the current velocity field. Convergence is determined by the
+average displacement error over each of the integration points. As can
+be seen in the left panel of Figure \ref{fig:convergence}, convergence
+occurred around 125 iterations when the average displacement error over
+all integration points is minimized. The median displacement error at
+each of the integration points also trends towards zero but at different
+rates.
 
 \hypertarget{the-transformation-model}{%
 \subsubsection{The transformation
@@ -570,30 +561,6 @@ be found in the GitHub repository previously given.
 \subsection{The Mouse Cortical Thickness
 Pipeline}\label{the-mouse-cortical-thickness-pipeline}}
 
-One of the most popular pipelines in the ANTsX toolkit is that of
-determining cortical thickness in the human brain with original novel
-contribution being the Diffeomorphic Registration-based Cortical
-Thickness (DiReCT) algorithm.\textsuperscript{52} This expanded to a
-complete cortical thickness pipeline for the human braiņ, for both
-cross-sectional\textsuperscript{53} and longitudinal\textsuperscript{54}
-using T1-weighted MR image data which was later refactored using deep
-learning.\textsuperscript{26}
-
-Although no current ANTsX tools exist to create adequate training data
-for pipeline creation with mouse brain data (as is the case with human
-data), we can leverage publicly available d
-
-ANTsX tools and publicly available datasets permit the
-
-No current tools to create training data for deep learning (in contrast
-to e.g., human data). Low data quality. Data is often: sampling issues
-such as anisotropy, incomplete (i.e., missing boundary structures), T2-w
-only, and limited applicability to high resolution resources (e.g.,
-AllenCCFv3, DevCCF). However, in historical contrast to the human
-domain, we can leverage these publicly available templates (i.e.,
-AllenCCFv3 and DevCCF) and deep learning to provide tools for multiple
-modalities and varying degrees of isotropic sampling.
-
 \begin{figure}
 \centering
 \includegraphics[width=0.9\textwidth]{Figures/mousePipeline.png}
@@ -605,7 +572,70 @@ and data augmentation as well as open-science data availability.}
 \label{fig:mouseKK}
 \end{figure}
 
-Looking to expand \clearpage \newpage
+One of the most well-utilized pipelines in the ANTsX toolkit is the
+generation of cortical thickness in the human brain from T1-weighted
+MRI. Starting with the novel Diffeomorphic Registration-based Cortical
+Thickness (DiReCT) algorithm,\textsuperscript{52} a complete algorithmic
+workflow was developed for both cross-sectional\textsuperscript{53} and
+longitudinal\textsuperscript{54} using T1-weighted MR image data. This
+contribution was later refactored using deep
+learning\textsuperscript{26} which leveraged the earlier results for
+training data.
+
+In the case of the mouse brain, the lack of training data and/or tools
+to generate training data make a similar developmental trajectory
+difficult. In addition, mouse data is often characterized by unique
+issues such as frequent anisotropic sampling which are in sharp contrast
+to high resolution resources available within the community, e.g.,
+AllenCCFv3 and DevCCF.
+
+\hypertarget{two-shot-mouse-brain-extraction-network}{%
+\subsubsection{Two-shot mouse brain extraction
+network}\label{two-shot-mouse-brain-extraction-network}}
+
+In order to create a generalized mouse brain extraction network, we
+built whole-head templates from two publicly available datasets. The
+Center for Animal MRI (CAMRI) dataset\textsuperscript{55} from UNC
+consist of 16 T2-weighted MRI of voxel resolution
+\(0.16 \times 0.16 \times 0.16 mm^3\). The second high-resolution data
+set\textsuperscript{56} comprised 88 specimens each with three spatially
+aligned canonical views with in-plane resolution of
+\(0.08 \times 0.08 mm^2\) with a slice thickness of 0.5 mm. These three
+orthogonal views were used to reconstruct a single high-resolution
+volume per subject using a B-spline fitting algorithm developed in
+ANTsX.\textsuperscript{45} From these two datasets, two symmetric
+isotropic ANTsX templates\textsuperscript{44} were generated having
+different ``defacing'' aesthetics analogous to our publicly available
+ANTsX human brain templates.\textsuperscript{53} Bias field simulation,
+intensity histogram warping, noise simulation, random translation and
+warping, and random anisotropic resampling in the three canonical
+directions was used for data augmentation in creating a T2-weighted
+brain extraction network.
+
+\hypertarget{single-shot-mouse-brain-parcellation-network}{%
+\subsubsection{Single-shot mouse brain parcellation
+network}\label{single-shot-mouse-brain-parcellation-network}}
+
+To create a brain parcellation network conducive to cortical thickness
+map generation, we used the AllenCCFv3 and the associated allensdk
+Python utility. Using the allensdk, a gross parcellation labeling was
+generated which included the cerebral cortex, cerebral nuclei, brain
+stem, cerebellum, main olfactory bulb, and hippocampal formation. This
+labeling was mapped to the T2-weighted template component of the P56
+DevCCF was used to create a brain parcellation network in combination
+with the same data augmentation used for the brain extraction network.
+
+\hypertarget{evaluation}{%
+\subsubsection{Evaluation}\label{evaluation}}
+
+For evaluation, we used the another publicly available
+dataset\textsuperscript{57} which is completely independent from the
+data used in training the brain extraction and parcellation networks.
+Data included 12 specimens each imaged at seven time points (Day 0, Day
+3, Week 1, Week 4, Week 8, Week 20)
+
+\clearpage
+\newpage
 
 \hypertarget{discussion}{%
 \section*{Discussion}\label{discussion}}
@@ -669,6 +699,12 @@ the tools that we have created in both ANTsPyNet and ANTsRNet.
 
 \clearpage
 \newpage
+
+Field regularization is provided by a B-spline scattered data
+approximation technique\textsuperscript{51} which permits individual
+point weighting. Both field regularization and integration of the
+velocity field are built on ITK functions contributed from ANTsX
+development.
 
 \hypertarget{methods}{%
 \section*{Methods}\label{methods}}

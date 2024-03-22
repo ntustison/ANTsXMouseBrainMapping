@@ -104,19 +104,10 @@ packages.  Both platforms include a complete suite of functions for determining
 dense correspondence from sparse landmarks based on a variety of transformation
 models ranging from standard linear models (i.e., rigid, affine) to deformable
 diffeomorphic models (e.g, symmetric normalization [@Avants:2008aa]).  The
-latter set includes velocity flow models for both the pairwise scenario
-(``ants.fit_transform_to_paired_points(...)``) and for multiple sets
-(``ants.fit_time_varying_transform_to_point_sets(...)``), as in the case of the
-DevCCF. Several self-contained tutorials illustrating usage for these functions 
-are available at \url{https://tinyurl.com/antsxtutorial}.
-
-ANTsX, being built on top of ITK, uses an ITK image data structure for the 4-D
-velocity field where each voxel contains the $x$, $y$, $z$ components of the
-field at that point. Field regularization is provided by a B-spline scattered
-data approximation technique [@Tustison:2006aa,@Tustison:2013ac] which permits
-individual point weighting.  Both field regularization and integration of
-the velocity field are built on ITK functions contributed from ANTsX
-development.  
+latter set includes transformation models for both the pairwise scenario and for
+multiple sets, as in the case of the DevCCF. ANTsX, being built on top of ITK,
+uses an ITK image data structure for the 4-D velocity field where each voxel
+contains the $x$, $y$, $z$ components of the field at that point. 
 
 ### Data preparation
 
@@ -165,17 +156,16 @@ transformation through the developmental stages from E11.5 through P56.}
 \label{fig:convergence}
 \end{figure}
 
-``ants.fit_time_varying_transform_to_point_sets(...)`` from the ANTsPy package
-was used to optimize the velocity field. Input is composed of the seven corresponding
-point sets and their associated weight values, the selected number of
-integration points for the velocity field ($N=11$), and the parameters defining
-the geometry of the spatial dimensions of the velocity field.  Thus, the optimized 
-velocity field described here is of size $[256, 182, 360]$
-($50 \mu$m isotropic) $\times 11$ integration points for a total compressed
-size of a little over 2 GB.  This choice represented weighing the trade-off 
-between tractability, portability, and accuracy.  However,  all
-data and code to reproduce the results described are available in the dedicated 
-GitHub repository.
+The velocity field was optimized using the input composed of the seven
+corresponding point sets and their associated weight values, the selected number
+of integration points for the velocity field ($N=11$), and the parameters
+defining the geometry of the spatial dimensions of the velocity field.  Thus,
+the optimized velocity field described here is of size $[256, 182, 360]$ ($50
+\mu$m isotropic) $\times 11$ integration points for a total compressed size of a
+little over 2 GB.  This choice represented weighing the trade-off between
+tractability, portability, and accuracy.  However,  all data and code to
+reproduce the results described are available in the dedicated GitHub
+repository.
 
 The normalized time point scalar value for each atlas/point-set in the temporal
 domains $[0, 1]$ was also defined. Given the increasingly larger gaps in the
@@ -185,19 +175,18 @@ transform of the adjusted set of time points prior to normalization between 0
 and 1 (see the right side of Figure \ref{fig:convergence}).  This log transform,
 as part of the temporal normalization, significantly improved data spacing. 
 
-The max number of iterations was set to 200.  At each iteration we looped over
-the 11 integration points. At each integration point, the velocity field
-estimate was updated by warping the two immediately adjacent point sets to the
-integration time point and determining the regularized displacement field
-between the two warped point sets.  As with any gradient-based descent
-algorithm, this field was multiplied by a small step size ($\delta = 0.2$)
-before adding to the current velocity field.  Using multithreading, each
-iteration took about six minutes. Convergence is determined by the average
-displacement error over each of the integration points. As can be seen in the
-left panel of Figure \ref{fig:convergence}, convergence occurred around 125
-iterations when the average displacement error over all integration points is
-minimized. The median displacement error at each of the integration points also
-trends towards zero but at different rates. 
+The max number of iterations was set to 200 with each iteration taking six
+minutes.  At each iteration we looped over the 11 integration points. At each
+integration point, the velocity field estimate was updated by warping the two
+immediately adjacent point sets to the integration time point and determining
+the regularized displacement field between the two warped point sets.  As with
+any gradient-based descent algorithm, this field was multiplied by a small step
+size ($\delta = 0.2$) before adding to the current velocity field.  Convergence
+is determined by the average displacement error over each of the integration
+points. As can be seen in the left panel of Figure \ref{fig:convergence},
+convergence occurred around 125 iterations when the average displacement error
+over all integration points is minimized. The median displacement error at each
+of the integration points also trends towards zero but at different rates. 
 
 <!-- 
 \begin{figure}[!htb]

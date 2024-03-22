@@ -14,14 +14,15 @@ to multiple organ systems, modalities, and animal species. Herein, we illustrate
 the utility of ANTsX for generating precision spatial mappings of the mouse
 brain.  \textcolor{red}{First, we provide ANTsX-based protocols for mapping
 MERFISH, fMOST, and lightsheet datasets to AllenCCFv3 accounting for common
-artefacts and other confounds.}  Herein, novel contributions include recently
+artefacts and other confounds.}  Novel ANTsX contributions include recently
 developed ANTsX functionality for generating a velocity flow-based mapping
-spanning the spatiotemporal domain of a longitudinal trajectory which we
-apply to the Developmental Common Coordinate Framework (DevCCF).  Additionally,
-we present an automated structural morphological pipeline for determining
+spanning the spatiotemporal domain of a longitudinal trajectory which we apply
+to the Developmental Common Coordinate Framework (DevCCF).  Additionally, we
+present an automated structural morphological pipeline for determining
 volumetric and cortical thickness measurements analogous to the well-utilized
-ANTsX pipeline for human neuroanatomy.  This latter development also illustrates
-a more general open-source ANTsX framework for determining tailored brain
-parcellations using the AllenCCFv3 and DevCCF templates.
+ANTsX pipeline for human neuroanatomical structural morphology.  This latter
+development also illustrates a more general open-source ANTsX framework for
+determining tailored brain parcellations using the AllenCCFv3 and DevCCF
+templates.
 
 \clearpage
