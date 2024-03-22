@@ -583,7 +583,10 @@ In the case of the mouse brain, the lack of training data and/or tools to
 generate training data make a similar developmental trajectory difficult.
 In addition, mouse data is often characterized by unique issues such as frequent
 anisotropic sampling which are in sharp contrast to high resolution resources
-available within the community, e.g., AllenCCFv3 and DevCCF.  
+available within the community, e.g., AllenCCFv3 and DevCCF.
+Using ANTsX and other publicly available data resources, we developed a
+complete mouse brain structural morphology pipeline as illustrated in 
+Figure \ref{fig:mouseKK} and detailed below. 
 
 ### Two-shot mouse brain extraction network
 
@@ -606,8 +609,8 @@ data augmentation in creating a T2-weighted brain extraction network.
 ### Single-shot mouse brain parcellation network
 
 To create a brain parcellation network conducive to cortical thickness map
-generation, we used the AllenCCFv3 and the associated allensdk Python utility.
-Using the allensdk, a gross parcellation labeling was generated which included
+generation, we used the AllenCCFv3 and the associated ``allensdk`` Python utility.
+Using ``allensdk``, a gross parcellation labeling was generated which included
 the cerebral cortex, cerebral nuclei, brain stem, cerebellum, main olfactory
 bulb, and hippocampal formation.  This labeling was mapped to the T2-weighted
 template component of the P56 DevCCF was used to create a brain parcellation
@@ -618,8 +621,18 @@ extraction network.
 
 For evaluation, we used the another publicly available dataset [@Rahman:2023aa]
 which is completely independent from the data used in training the brain
-extraction and parcellation networks.  Data included 12 specimens each imaged at
-seven time points (Day 0, Day 3, Week 1, Week 4, Week 8, Week 20)
+extraction and parcellation networks.  Data includes 12 specimens each imaged at
+seven time points (Day 0, Day 3, Week 1, Week 4, Week 8, Week 20) with available
+brain masks.  In-plane resolution is $0.1 \times 0.1 mm^2$ with a slice thickness
+of $0.5 mm$.
+
+\begin{figure}
+\centering
+\includegraphics[width=0.5\textwidth]{Figures/dice.png}
+\caption{}
+\label{fig:brainExtraction}
+\end{figure}
+
 
 \clearpage
 \newpage
@@ -665,23 +678,17 @@ order Runge-Kutta. This velocity field model permits intra-template comparison
 and the construction of virtual templates where a template can be estimated at
 any continuous time point within the temporal domain.  This novel application
 can potentially enhance our understanding of intermediate developmental stages.
+
+We also presented a mouse brain pipeline for brain extraction, parcellation, and
+cortical thickness that did not necessitate the extensive quantity of data
+required for training our analogous human brain pipeline.  
+
+
+
 To increase its impact and reproduce the results shown previously, we have made 
-the data and code publicly available at \url{https://github.com/ntustison/DevCCF-Velocity-Flow}.
+the data and code publicly available at \url{https://github.com/ntustison/ANTsXMouseBrainMapping}.
 
-Although ANTsX is quite evolved in its development and functionality, there are
-several areas which are currently under active development or consideration for
-further expansion.  Most notably, as in our human applications, deep learning
-has had a significant impact in steering our attention.  Core functionality,
-such as brain extraction for mouse brain mapping, would benefit from increasing
-the number of available modalities.   Additionally, as with much deep learning development, 
-such work will require additional data but is significantly facilitated by the 
-tools that we have created in both ANTsPyNet and ANTsRNet.  
 
-<!--
-Related would be the 
-utility of the development of mouse brain parcellation tools such as our 
-``antspynet.desikan_killiany_tourville_labeling(...)`` tool.
--->
 \clearpage
 \newpage
 
@@ -871,6 +878,16 @@ a steady convergence based on the average Euclidean norm between transformed
 point sets.  Ten integration points were used and point sets were distributed
 along the temporal dimension using a log transform for a more evenly spaced
 sampling.  
+
+## Synthesizing isotropic image volumes from orthogonal views  {-}
+
+As we mentioned previously, the multi-plane, high resolution data
+[@Reshetnikov2021] was used to create single isotropic volumes using the
+B-spline fitting algorithm [@Tustison:2006aa].  This algorithm is encapsulated
+in ``ants.fit_bspline_object_to_scattered_data(...)`` where the input is the set
+of voxel intensity values and associated physical location.  Since each point
+can be assigned a confidence weight, we use the the normalized gradient value to
+more heavily weight edge regions.
 
 ## Visualization {-}
 

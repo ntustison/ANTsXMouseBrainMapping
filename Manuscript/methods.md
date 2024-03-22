@@ -189,6 +189,16 @@ point sets.  Ten integration points were used and point sets were distributed
 along the temporal dimension using a log transform for a more evenly spaced
 sampling.  
 
+## Synthesizing isotropic image volumes from orthogonal views  {-}
+
+As we mentioned previously, the multi-plane, high resolution data
+[@Reshetnikov2021] was used to create single isotropic volumes using the
+B-spline fitting algorithm [@Tustison:2006aa].  This algorithm is encapsulated
+in ``ants.fit_bspline_object_to_scattered_data(...)`` where the input is the set
+of voxel intensity values and associated physical location.  Since each point
+can be assigned a confidence weight, we use the the normalized gradient value to
+more heavily weight edge regions.
+
 ## Visualization {-}
 
 To complement the well-known visualization capabilities of R and Python, e.g.,

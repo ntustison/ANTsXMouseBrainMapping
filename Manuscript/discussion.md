@@ -43,20 +43,13 @@ order Runge-Kutta. This velocity field model permits intra-template comparison
 and the construction of virtual templates where a template can be estimated at
 any continuous time point within the temporal domain.  This novel application
 can potentially enhance our understanding of intermediate developmental stages.
+
+We also presented a mouse brain pipeline for brain extraction, parcellation, and
+cortical thickness that did not necessitate the extensive quantity of data
+required for training our analogous human brain pipeline.  
+
+
+
 To increase its impact and reproduce the results shown previously, we have made 
-the data and code publicly available at \url{https://github.com/ntustison/DevCCF-Velocity-Flow}.
+the data and code publicly available at \url{https://github.com/ntustison/ANTsXMouseBrainMapping}.
 
-Although ANTsX is quite evolved in its development and functionality, there are
-several areas which are currently under active development or consideration for
-further expansion.  Most notably, as in our human applications, deep learning
-has had a significant impact in steering our attention.  Core functionality,
-such as brain extraction for mouse brain mapping, would benefit from increasing
-the number of available modalities.   Additionally, as with much deep learning development, 
-such work will require additional data but is significantly facilitated by the 
-tools that we have created in both ANTsPyNet and ANTsRNet.  
-
-<!--
-Related would be the 
-utility of the development of mouse brain parcellation tools such as our 
-``antspynet.desikan_killiany_tourville_labeling(...)`` tool.
--->
