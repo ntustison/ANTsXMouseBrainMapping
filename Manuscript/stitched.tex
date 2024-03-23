@@ -573,23 +573,25 @@ and data augmentation as well as open-science data availability.}
 \end{figure}
 
 One of the most well-utilized pipelines in the ANTsX toolkit is the
-generation of cortical thickness in the human brain from T1-weighted
-MRI. Starting with the novel Diffeomorphic Registration-based Cortical
-Thickness (DiReCT) algorithm,\textsuperscript{52} a complete algorithmic
-workflow was developed for both cross-sectional\textsuperscript{53} and
-longitudinal\textsuperscript{54} using T1-weighted MR image data. This
+generation of cortical thickness maps in the human brain from
+T1-weighted MRI. Starting with the novel Diffeomorphic
+Registration-based Cortical Thickness (DiReCT)
+algorithm,\textsuperscript{52} a complete algorithmic workflow was
+developed for both cross-sectional\textsuperscript{53} and
+longitudinal\textsuperscript{54} T1-weighted MR image data. This
 contribution was later refactored using deep
-learning\textsuperscript{26} which leveraged the earlier results for
-training data.
+learning\textsuperscript{26} which leveraged the earlier
+results\textsuperscript{53} for training data.
 
 In the case of the mouse brain, the lack of training data and/or tools
 to generate training data make a similar developmental trajectory
 difficult. In addition, mouse data is often characterized by unique
-issues such as frequent anisotropic sampling which are in sharp contrast
-to high resolution resources available within the community, e.g.,
-AllenCCFv3 and DevCCF. Using ANTsX and other publicly available data
-resources, we developed a complete mouse brain structural morphology
-pipeline as illustrated in Figure \ref{fig:mouseKK} and detailed below.
+issues such as frequent anisotropic sampling which are often in sharp
+contrast to the high resolution resources available within the
+community, e.g., AllenCCFv3 and DevCCF. Using ANTsX and other publicly
+available data resources, we developed a complete mouse brain structural
+morphology pipeline as illustrated in Figure \ref{fig:mouseKK} and
+detailed below.
 
 \hypertarget{two-shot-mouse-brain-extraction-network}{%
 \subsubsection{Two-shot mouse brain extraction
@@ -611,40 +613,73 @@ different ``defacing'' aesthetics analogous to our publicly available
 ANTsX human brain templates.\textsuperscript{53} Bias field simulation,
 intensity histogram warping, noise simulation, random translation and
 warping, and random anisotropic resampling in the three canonical
-directions was used for data augmentation in creating a T2-weighted
+directions were used for data augmentation in creating a T2-weighted
 brain extraction network.
 
 \hypertarget{single-shot-mouse-brain-parcellation-network}{%
 \subsubsection{Single-shot mouse brain parcellation
 network}\label{single-shot-mouse-brain-parcellation-network}}
 
-To create a brain parcellation network conducive to cortical thickness
-map generation, we used the AllenCCFv3 and the associated
-\texttt{allensdk} Python utility. Using \texttt{allensdk}, a gross
-parcellation labeling was generated which included the cerebral cortex,
-cerebral nuclei, brain stem, cerebellum, main olfactory bulb, and
-hippocampal formation. This labeling was mapped to the T2-weighted
-template component of the P56 DevCCF was used to create a brain
-parcellation network in combination with the same data augmentation used
-for the brain extraction network.
+To create the network for generating a brain parcellation consistent
+with cortical thickness estimation, we used the AllenCCFv3 and the
+associated \texttt{allensdk} Python library. Using \texttt{allensdk}, a
+gross parcellation labeling was generated which included the cerebral
+cortex, cerebral nuclei, brain stem, cerebellum, main olfactory bulb,
+and hippocampal formation. This labeling was mapped to the T2-weighted
+template component of the P56 DevCCF. Both the T2-w P56 DevCCF and
+labelings, in conjunction with the data augmentation described
+previously, was used to create a brain parcellation network.
 
 \hypertarget{evaluation}{%
 \subsubsection{Evaluation}\label{evaluation}}
 
-For evaluation, we used the another publicly available
+\begin{figure}
+\centering
+\begin{subfigure}{0.5\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{Figures/diceWholeBrain.png}
+  \caption{}
+  \label{fig:suba}
+\end{subfigure}\\
+\begin{subfigure}{0.5\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{Figures/corticoPlot.png}
+  \caption{}
+  \label{fig:subb}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{Figures/kkPlot.png}
+  \caption{}
+  \label{fig:subc}
+\end{subfigure}
+\caption{Evaluation of the ANTsX mouse brain extraction, parcellation, and
+cortical thickness pipeline on an independent dataset 
+consisting of 12 specimens $\times$ 7 time points = 
+84 total images.  (a) Dice overlap comparisons with the provided brain
+masks provide generally good agreement with the brain extraction network.
+(b) Cortical volume measurements show similar average quantities over
+the developmental trajectory between the original anisotropic data and 
+interpolated isotropic data.  These results contrast with the cortical
+thickness measurements which show that cortical thickness estimation 
+in anisotropic space severely underestimates the actual values.}
+\label{fig:evaluation}
+\end{figure}
+
+For evaluation, we used an additional publicly available
 dataset\textsuperscript{57} which is completely independent from the
 data used in training the brain extraction and parcellation networks.
 Data includes 12 specimens each imaged at seven time points (Day 0, Day
 3, Week 1, Week 4, Week 8, Week 20) with available brain masks. In-plane
 resolution is \(0.1 \times 0.1 mm^2\) with a slice thickness of
-\(0.5 mm\).
-
-\begin{figure}
-\centering
-\includegraphics[width=0.5\textwidth]{Figures/dice.png}
-\caption{}
-\label{fig:brainExtraction}
-\end{figure}
+\(0.5 mm\). Since the training data is isotropic and data augmentation
+includes downsampling in the canonical directions, the networks learns
+mouse brain-specific interpolation such that one can perform prediction
+on thick-sliced images, such as these evaluation data, and return
+isotropic probability and thickness maps---a choice available to the
+user. Figure \ref{fig:evaluation} summarizes the results of the
+evaluation and comparison between isotropic and anisotropic cortical
+measurements in male and female specimens.
 
 \clearpage
 \newpage
@@ -688,7 +723,7 @@ model. This allows one to determine the diffeomorphic transformation
 from any one temporal location to any other temporal location within the
 time span defined by the E11.5 and P56 templates. This functionality is
 built on multiple components from the Insight Segmentation and
-Registraiton Toolkit including the B-spline scattered data approximation
+Registration Toolkit including the B-spline scattered data approximation
 technique for field regularization and velocity field integration using
 fourth order Runge-Kutta. This velocity field model permits
 intra-template comparison and the construction of virtual templates
@@ -697,22 +732,23 @@ the temporal domain. This novel application can potentially enhance our
 understanding of intermediate developmental stages.
 
 We also presented a mouse brain pipeline for brain extraction,
-parcellation, and cortical thickness that did not necessitate the
-extensive quantity of data required for training our analogous human
-brain pipeline.
-
-To increase its impact and reproduce the results shown previously, we
-have made the data and code publicly available at
-\url{https://github.com/ntustison/ANTsXMouseBrainMapping}.
+parcellation, and cortical thickness using single-shot and two-shot
+learning with data augmentation. This approach attempts to circumvent
+(or at least minimize) the typical requirement of large training
+datasets as with the human ANTsX pipeline analog. However, even given
+our initial success on independent data, we fully anticipate that
+failures will be encountered. In fact, a current parallel study with a
+separate collaborator using private data yielded three brain extraction
+failures (out of 89 specimens). Given that the ANTsX toolkit is a
+dynamic effort undergoing continual improvement, we manually correct
+such cases and use them for future training and refinement of network
+weights as we have done for our human-based networks. Generally, these
+approaches provide a way to bootstrap training data for manual
+refinement and future generation of more accurate deep learning networks
+in the absence of non deep learning-based tools.
 
 \clearpage
 \newpage
-
-Field regularization is provided by a B-spline scattered data
-approximation technique\textsuperscript{51} which permits individual
-point weighting. Both field regularization and integration of the
-velocity field are built on ITK functions contributed from ANTsX
-development.
 
 \hypertarget{methods}{%
 \section*{Methods}\label{methods}}
@@ -749,107 +785,15 @@ into the ITK toolkit. Similarly, ANTsX contains an implementation of a
 well-performing patch-based denoising technique\textsuperscript{58} and
 is also available as an image filter to the ITK community.
 
-\hypertarget{antsxnet-mouse-brain-applications}{%
-\subsection*{ANTsXNet mouse brain
-applications}\label{antsxnet-mouse-brain-applications}}
-\addcontentsline{toc}{subsection}{ANTsXNet mouse brain applications}
-
-\emph{General notes regarding deep learning training.}
-
-All network-based approaches described below were implemented and
-organized in the ANTsXNet libraries comprising Python (ANTsPyNet) and R
-(ANTsRNet) analogs using the Keras/Tensorflow libraries available as
-open-source in ANTsX GitHub repositories. For the various applications,
-both share the identically trained weights for mutual reproducibility.
-Training data was provided by manual labeling by various co-authors and
-expanded using both intensity-based and shape-based data augmentation
-techniques.
-
-Intensity-based data augmentation consisted of randomly added noise
-based on ITK functionality, simulated bias fields based on N4 bias field
-modeling, and histogram warping for mimicking well-known MRI intensity
-nonlinearities.\textsuperscript{26,59} These augmentation techniques are
-available in ANTsXNet (only ANTsPyNet versions are listed): simulated
-bias field: \texttt{antspynet.simulate\_bias\_field(...)}, image noise:
-\texttt{antspyhet.add\_noise\_to\_image(...)}, and MRI intensity
-nonlinear characterization:
-\texttt{antspynet.histogram\_warp\_image\_intensities(...)}. Shape-based
-data augmentation used both random linear and nonlinear deformations.
-This functionality is also instantiated within ANTsXNet in terms of
-random spatial warping:
-\texttt{antspynet.randomly\_transform\_image\_data(...)}.
-
-For all GPU training, we used Python scripts for creating custom batch
-generators. As such batch generators tend to be application-specific, we
-store them in a separate GitHub repository for public availability
-(\url{https://github.com/ntustison/ANTsXNetTraining}). In terms of GPU
-hardware, all training was done on a DGX (GPUs: 4X Tesla V100, system
-memory: 256 GB LRDIMM DDR4).
-
-\emph{Brain extraction.}
-
-Similar to human neuroimage processing, brain extraction is a crucial
-preprocessing step for accurate brain mapping. Within ANTsXNet, we have
-created several deep learning networks for brain extraction for several
-image modalities (e.g., T1, FLAIR, fractional anisotropy). Similarly,
-for the developmental brain atlas work\textsuperscript{15} we developed
-similar functionality for mouse brains of different modalities and
-developmental age. All networks use a conventional 2-D U-net
-architecture\textsuperscript{60} and perform prediction in a slice-wise
-fashion given the limitations of the acquisition protocols (e.g.,
-missing slices, slice thickness). Currently, coronal and sagittal
-networks are available for both E13.5 and E15.5 data and coronal network
-for T2-weighted MRI. In ANTsPyNet, this functionality is available in
-the program \texttt{antspynet.mouse\_brain\_extraction(...)}. Even when
-physical brain extraction is performed prior to image acquisition,
-artifacts, such as bubbles or debris, can complicate subsequent
-processing. Similar to the brain extraction networks, a 2-D U-net
-architecture\textsuperscript{60} was created to separate the background
-and foreground.
-
-\emph{Miscellaneous networks: Super-resolution, cerebellum, and
-hemispherical masking.}
-
-To further enhance the data prior to designing mapping protocols,
-additional networks were created. A well-performing deep back projection
-network\textsuperscript{61} was ported to ANTsXNet and expanded to 3-D
-for various super-resolution applications,\textsuperscript{62} including
-mouse data. Finally, features of anatomical significance, namely the
-cerebellum and hemispherical midline were captured in these data using
-deep learning networks.
-
-\hypertarget{intra-slice-image-registration-with-missing-slice-imputation}{%
-\subsection*{Intra-slice image registration with missing slice
-imputation}\label{intra-slice-image-registration-with-missing-slice-imputation}}
-\addcontentsline{toc}{subsection}{Intra-slice image registration with
-missing slice imputation}
-
-Volumetric gene expression slice data was collated into 3-D volumes.
-Prior to mapping this volume to the corresponding structural data and,
-potentially, to the appropriate template, alignment was improved using
-deformable registration on contiguous slices. However, one of the
-complications associated with these image data was the unknown number of
-missing slices, the number of consecutive missing slices, and the
-different locations of these missing slices. To handle this missing data
-problem, we found that data interpolation using the B-spline
-approximation algorithm cited earlier\textsuperscript{45} (ANTsPy
-function: \texttt{ants.fit\_bspline\_object\_to\_scattered\_data(...)}).
-This provided sufficient data interpolation fidelity to perform
-continuous slicewise registration. Other possible variants that were
-considered but deemed unnecessary was performing more than one iteration
-cycling through data interpolation and slicewise alignment. The other
-possibility was incorporating the super-resolution technique described
-earlier. But again, our data did not require these additional steps.
-
 \hypertarget{image-registration}{%
 \subsection*{Image registration}\label{image-registration}}
 \addcontentsline{toc}{subsection}{Image registration}
 
 The ANTs registration toolkit is a complex framework permitting highly
 tailored solutions to pairwise image registration
-scenarios.\textsuperscript{63} It includes innovative transformation
+scenarios.\textsuperscript{59} It includes innovative transformation
 models for biological modeling\textsuperscript{40,51} and has proven
-capable of excellent performance.\textsuperscript{41,64} Various
+capable of excellent performance.\textsuperscript{41,60} Various
 parameter sets targeting specific applications have been packaged with
 the different ANTsX platforms, specifically ANTs, ANTsPy, and
 ANTsR.\textsuperscript{26} In ANTsPy, the function
@@ -909,7 +853,7 @@ technique,\textsuperscript{45} also developed by the ANTsX developers
 and contributed to ITK.
 
 To apply this methodology to the developmental
-templates,\textsuperscript{15} we coalesced the manual parcellations of
+templates,\textsuperscript{15} we coalesced the manual annotations of
 the developmental templates into 26 common anatomical regions (13 per
 hemisphere). We then used these regions to generate invertible
 transformations between successive time points. Specifically each label
@@ -927,13 +871,155 @@ point sets. Ten integration points were used and point sets were
 distributed along the temporal dimension using a log transform for a
 more evenly spaced sampling.
 
+\hypertarget{antsxnet-mouse-brain-applications}{%
+\subsection*{ANTsXNet mouse brain
+applications}\label{antsxnet-mouse-brain-applications}}
+\addcontentsline{toc}{subsection}{ANTsXNet mouse brain applications}
+
+\emph{General notes regarding deep learning training.}
+
+All network-based approaches described below were implemented and
+organized in the ANTsXNet libraries comprising Python (ANTsPyNet) and R
+(ANTsRNet) analogs using the Keras/Tensorflow libraries available as
+open-source in ANTsX GitHub repositories. For the various applications,
+both share the identically trained weights for mutual reproducibility.
+For all GPU training, we used Python scripts for creating custom batch
+generators. As such batch generators tend to be application-specific, we
+store them in a separate GitHub repository for public availability
+(\url{https://github.com/ntustison/ANTsXNetTraining}). In terms of GPU
+hardware, all training was done on a DGX (GPUs: 4X Tesla V100, system
+memory: 256 GB LRDIMM DDR4).
+
+Data augmentation is crucial for generalizability and accuracy of the
+trained networks. Intensity-based data augmentation consisted of
+randomly added noise (i.e., Gaussian, shot, salt-and-pepper), simulated
+bias fields based on N4 bias field modeling, and histogram warping for
+mimicking well-known MRI intensity
+nonlinearities.\textsuperscript{26,61} These augmentation techniques are
+available in ANTsXNet (only ANTsPyNet versions are listed with ANTsRNet
+versions available) and include:
+
+\begin{itemize}
+\item
+  image noise: \texttt{ants.add\_noise\_to\_image(...)},
+\item
+  simulated bias field: \texttt{antspynet.simulate\_bias\_field(...)},
+  and
+\item
+  nonlinear intensity warping:
+  \texttt{antspynet.histogram\_warp\_image\_intensities(...)}.
+\end{itemize}
+
+Shape-based data augmentation used both random linear and nonlinear
+deformations in addition to anisotropic resampling in the three
+canonical orientations to mimic frequently used acquisition protocols
+for mice brains:
+
+\begin{itemize}
+\item
+  random spatial warping:
+  \texttt{antspynet.randomly\_transform\_image\_data(...)} and
+\item
+  anisotropic resampling: \texttt{ants.resample\_image(...)}.
+\end{itemize}
+
+\emph{Brain extraction.}
+
+Similar to human neuroimage processing, brain extraction is a crucial
+preprocessing step for accurate brain mapping. Within ANTsXNet, we have
+created several deep learning networks for brain extraction for several
+image modalities (e.g., T1, FLAIR, fractional anisotropy). Similarly,
+for the developmental brain atlas work\textsuperscript{15} we developed
+similar functionality for mouse brains of different modalities and
+developmental age. All networks use a conventional U-net
+architecture.\textsuperscript{62} Whereas T2-weighted brain extraction
+is volumetric-based for both isotropic and anisotropic data, coronal and
+sagittal networks are available for both E13.5 and E15.5 data. In
+ANTsPyNet, this functionality is available in the program
+\texttt{antspynet.mouse\_brain\_extraction(...)}. Even when physical
+brain extraction is performed prior to image acquisition, artifacts,
+such as bubbles or debris, can complicate subsequent processing. Similar
+to the brain extraction networks, a 2-D U-net
+architecture\textsuperscript{62} was created to separate the background
+and foreground. For the two-shot T2-weighted brain extraction network,
+two brain templates were generated along with their masks. Although both
+template/mask pairs are available in the GitHub repository associated
+with this work, the synthesize volumetric B-spline T2-weighted pair is
+available within ANTsXNet through the calls:
+
+\begin{itemize}
+\item
+  template:
+  \texttt{antspynet.get\_antsxnet\_data("bsplineT2MouseTemplate")} and
+\item
+  mask:
+  \texttt{antspynet.get\_antsxnet\_data("bsplineT2MouseTemplateBrainMask")}.
+\end{itemize}
+
+\emph{Brain parcellation.}
+
+The T2-weighted brain parcellation network is also based on a 3-D U-net
+architecture and the T2-w DevCCF P56 template component with extensive
+data augmentation, as described previously. Intensity differences
+between the template and any brain extracted input image are minimized
+through the use of the rank intensity transform
+(\texttt{ants.rank\_intensity(...)}). Shape differences are reduced by
+the additional preprocessing step of warping the brain extracted input
+image to the template. Additional input channels include the prior
+probability images created from the template parcellation.\\
+These images are also available through the ANTsXNet interface:
+
+\begin{itemize}
+\item
+  template:
+  \texttt{antspynet.get\_antsxnet\_data("DevCCF\_P56\_MRI-T2\_50um")}
+  and
+\item
+  parcellation:
+  \texttt{antspynet.get\_antsxnet\_data("DevCCF\_P56\_MRI-T2\_50um\_BrainParcellationNickMask")}.
+\end{itemize}
+
+\emph{Miscellaneous networks: Super-resolution, cerebellum, and
+hemispherical masking.}
+
+To further enhance the data prior to designing mapping protocols,
+additional networks were created. A well-performing deep back projection
+network\textsuperscript{63} was ported to ANTsXNet and expanded to 3-D
+for various super-resolution applications,\textsuperscript{64} including
+mouse data. Finally, features of anatomical significance, namely the
+cerebellum and hemispherical midline were captured in these data using
+deep learning networks.
+
+\hypertarget{intra-slice-image-registration-with-missing-slice-imputation}{%
+\subsection*{Intra-slice image registration with missing slice
+imputation}\label{intra-slice-image-registration-with-missing-slice-imputation}}
+\addcontentsline{toc}{subsection}{Intra-slice image registration with
+missing slice imputation}
+
+Volumetric gene expression slice data was collated into 3-D volumes.
+Prior to mapping this volume to the corresponding structural data and,
+potentially, to the appropriate template, alignment was improved using
+deformable registration on contiguous slices. However, one of the
+complications associated with these image data was the unknown number of
+missing slices, the number of consecutive missing slices, and the
+different locations of these missing slices. To handle this missing data
+problem, we found that data interpolation using the B-spline
+approximation algorithm cited earlier\textsuperscript{45} (ANTsPy
+function: \texttt{ants.fit\_bspline\_object\_to\_scattered\_data(...)}).
+This provided sufficient data interpolation fidelity to perform
+continuous slicewise registration. Other possible variants that were
+considered but deemed unnecessary was performing more than one iteration
+cycling through data interpolation and slicewise alignment. The other
+possibility was incorporating the super-resolution technique described
+earlier. But again, our data did not require these additional steps.
+
 \hypertarget{synthesizing-isotropic-image-volumes-from-orthogonal-views}{%
 \subsection*{Synthesizing isotropic image volumes from orthogonal
 views}\label{synthesizing-isotropic-image-volumes-from-orthogonal-views}}
 \addcontentsline{toc}{subsection}{Synthesizing isotropic image volumes
 from orthogonal views}
 
-As we mentioned previously, the multi-plane, high resolution
+Similar to the isotropic , the multi-plane, high resolution
 data\textsuperscript{56} was used to create single isotropic volumes
 using the B-spline fitting algorithm.\textsuperscript{45} This algorithm
 is encapsulated in
@@ -960,8 +1046,11 @@ as well as label images.
 publicly available. The DevCCF atlas is available at
 \url{https://kimlab.io/brain-map/DevCCF/}. ANTsPy, ANTsR, ANTsPyNet, and
 ANTsRNet are available through GitHub at the ANTsX Ecosystem
-(\url{https://github.com/ANTsX}). A GitHub repository specific to the
-work discussed in the manuscript was created and is available at
+(\url{https://github.com/ANTsX}). Training scripts for all deep learning
+functionality in ANTsXNet can also be found on GitHub
+(\url{https://github.com/ntustison/ANTsXNetTraining}). A GitHub
+repository specific to the work discussed in the manuscript was created
+and is available at
 \url{https://github.com/ntustison/ANTsXMouseBrainMapping}.
 
 \clearpage
@@ -1327,20 +1416,32 @@ L. \& Robles, M. Adaptive non-local means denoising of {MR} images with
 spatially varying noise levels. \emph{J Magn Reson Imaging} \textbf{31},
 192--203 (2010).}
 
-\leavevmode\vadjust pre{\hypertarget{ref-Nyul:2000aa}{}}%
+\leavevmode\vadjust pre{\hypertarget{ref-Avants:2014aa}{}}%
 \CSLLeftMargin{59. }
+\CSLRightInline{Avants, B. B. \emph{et al.} The {Insight} {ToolKit}
+image registration framework. \emph{Front Neuroinform} \textbf{8}, 44
+(2014).}
+
+\leavevmode\vadjust pre{\hypertarget{ref-Avants:2011wx}{}}%
+\CSLLeftMargin{60. }
+\CSLRightInline{Avants, B. B. \emph{et al.} A reproducible evaluation of
+ANTs similarity metric performance in brain image registration.
+\emph{Neuroimage} \textbf{54}, 2033--44 (2011).}
+
+\leavevmode\vadjust pre{\hypertarget{ref-Nyul:2000aa}{}}%
+\CSLLeftMargin{61. }
 \CSLRightInline{Nyúl, L. G., Udupa, J. K. \& Zhang, X. New variants of a
 method of MRI scale standardization. \emph{IEEE Trans Med Imaging}
 \textbf{19}, 143--50 (2000).}
 
 \leavevmode\vadjust pre{\hypertarget{ref-Falk:2019aa}{}}%
-\CSLLeftMargin{60. }
+\CSLLeftMargin{62. }
 \CSLRightInline{Falk, T. \emph{et al.} U-net: Deep learning for cell
 counting, detection, and morphometry. \emph{Nat Methods} \textbf{16},
 67--70 (2019).}
 
 \leavevmode\vadjust pre{\hypertarget{ref-Haris:2018aa}{}}%
-\CSLLeftMargin{61. }
+\CSLLeftMargin{63. }
 \CSLRightInline{Haris, M., Shakhnarovich, G. \& Ukita, N. Deep
 back-projection networks for super-resolution. in \emph{2018 {IEEE/CVF}
 {C}onference on {C}omputer {V}ision and {P}attern {R}ecognition}
@@ -1348,23 +1449,11 @@ back-projection networks for super-resolution. in \emph{2018 {IEEE/CVF}
 doi:\href{https://doi.org/10.1109/CVPR.2018.00179}{10.1109/CVPR.2018.00179}.}
 
 \leavevmode\vadjust pre{\hypertarget{ref-Avants:2023aa}{}}%
-\CSLLeftMargin{62. }
+\CSLLeftMargin{64. }
 \CSLRightInline{Avants, B. B. \emph{et al.} Concurrent 3D super
 resolution on intensity and segmentation maps improves detection of
 structural effects in neurodegenerative disease. \emph{medRxiv} (2023)
 doi:\href{https://doi.org/10.1101/2023.02.02.23285376}{10.1101/2023.02.02.23285376}.}
-
-\leavevmode\vadjust pre{\hypertarget{ref-Avants:2014aa}{}}%
-\CSLLeftMargin{63. }
-\CSLRightInline{Avants, B. B. \emph{et al.} The {Insight} {ToolKit}
-image registration framework. \emph{Front Neuroinform} \textbf{8}, 44
-(2014).}
-
-\leavevmode\vadjust pre{\hypertarget{ref-Avants:2011wx}{}}%
-\CSLLeftMargin{64. }
-\CSLRightInline{Avants, B. B. \emph{et al.} A reproducible evaluation of
-ANTs similarity metric performance in brain image registration.
-\emph{Neuroimage} \textbf{54}, 2033--44 (2011).}
 
 \end{CSLReferences}
 
