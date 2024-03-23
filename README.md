@@ -1,4 +1,4 @@
-# The ANTsX Ecosystem for Mapping the Mouse Brain
+# [The ANTsX Ecosystem for Mapping the Mouse Brain](https://github.com/ntustison/ANTsXMouseBrainMapping/blob/main/Manuscript/stitched.pdf)
 
 Two novel open-source contributions:
 
