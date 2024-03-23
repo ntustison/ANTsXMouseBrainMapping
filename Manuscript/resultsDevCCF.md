@@ -92,14 +92,16 @@ convergence typically occurs in four deformable iterations.
 \begin{figure}
 \centering
 \includegraphics[width=0.99\textwidth]{Figures/lowerLeftPanel.png}
-\caption{Using a velocity flow model, the transformation between any two
-temporal time points within the DevCCF is possible.}
+\caption{The spatial transformation between any two
+time points within the DevCCF longitudinal developmental trajectory
+is available through the use of ANTsX functionality for generating
+a velocity flow model.}
 \label{fig:devccfvelocity}
 \end{figure}
 
 To continuously interpolate transformations between the different stages of the
 DevCCF atlases, a velocity flow model was constructed using DevCCF derived data
-and ANTsX functionality recently introduced into both the ANTsR and ANTsPy
+and functionality recently introduced into both the ANTsR and ANTsPy
 packages.  Both platforms include a complete suite of functions for determining
 dense correspondence from sparse landmarks based on a variety of transformation
 models ranging from standard linear models (i.e., rigid, affine) to deformable
@@ -164,8 +166,8 @@ the optimized velocity field described here is of size $[256, 182, 360]$ ($50
 \mu$m isotropic) $\times 11$ integration points for a total compressed size of a
 little over 2 GB.  This choice represented weighing the trade-off between
 tractability, portability, and accuracy.  However,  all data and code to
-reproduce the results described are available in the dedicated GitHub
-repository.
+reproduce the results described (with possible variation in the input parameters) 
+are available in the dedicated GitHub repository.
 
 The normalized time point scalar value for each atlas/point-set in the temporal
 domains $[0, 1]$ was also defined. Given the increasingly larger gaps in the

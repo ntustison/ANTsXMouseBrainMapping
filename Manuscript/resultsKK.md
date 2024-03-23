@@ -6,9 +6,10 @@
 \includegraphics[width=0.9\textwidth]{Figures/mousePipeline.png}
 \caption{The mouse brain cortical thickness pipeline integrating two 
 deep learning components for brain extraction and brain parcellation 
-prior to estimating cortical thickness.  Both brain extraction and
-parcellation pipelines rely heavily on ANTsX tools for template building
-and data augmentation as well as open-science data availability.}
+prior to estimating cortical thickness. Both deep learning networks
+rely heavily on data augmentation on templates built from open 
+data and provide an outline for further refinement and creating 
+alternative parcellations for tailored research objectives.}
 \label{fig:mouseKK}
 \end{figure}
 
@@ -18,7 +19,7 @@ with the novel Diffeomorphic Registration-based Cortical Thickness (DiReCT)
 algorithm [@Das:2009uv], a complete algorithmic workflow was developed for both
 cross-sectional [@Tustison:2014ab] and longitudinal [@Tustison:2019aa]
 T1-weighted MR image data.  This contribution was later refactored using deep
-learning [@Tustison:2021aa] which leveraged the earlier results [@Tustison:2014ab] 
+learning [@Tustison:2021aa] leveraging the earlier results [@Tustison:2014ab] 
 for training data.  
 
 In the case of the mouse brain, the lack of training data and/or tools to
@@ -34,30 +35,32 @@ and detailed below.
 
 In order to create a generalized mouse brain extraction network, we built
 whole-head templates from two publicly available datasets.  The Center for
-Animal MRI (CAMRI) dataset [@Hsu2021] from UNC consist of 16 T2-weighted MRI of
+Animal MRI (CAMRI) dataset [@Hsu2021] from UNC consists of 16 T2-weighted MRI of
 voxel resolution $0.16 \times 0.16 \times 0.16 mm^3$.  The second
-high-resolution data set [@Reshetnikov2021] comprised 88 specimens each with
+high-resolution data set [@Reshetnikov2021] comprises 88 specimens each with
 three spatially aligned canonical views with in-plane resolution of $0.08 \times
 0.08 mm^2$ with a slice thickness of 0.5 mm.  These three orthogonal views were
 used to reconstruct a single high-resolution volume per subject using a B-spline
 fitting algorithm developed in ANTsX [@Tustison:2006aa].  From these two
 datasets, two symmetric isotropic ANTsX templates [@Avants:2010aa] were
-generated having different "defacing" aesthetics analogous to our publicly
-available ANTsX human brain templates [@Tustison:2014ab]. Bias field simulation,
-intensity histogram warping, noise simulation, random translation and warping,
-and random anisotropic resampling in the three canonical directions were used for
-data augmentation in creating a T2-weighted brain extraction network.
+generated having different defacing aesthetics analogous to the publicly
+available ANTsX human brain templates used in previous research
+[@Tustison:2014ab]. Bias field simulation, intensity histogram warping, noise
+simulation, random translation and warping, and random anisotropic resampling in
+the three canonical directions were used for data augmentation in creating a
+T2-weighted brain extraction network.
 
 ### Single-shot mouse brain parcellation network
 
 To create the network for generating a brain parcellation consistent with
 cortical thickness estimation, we used the AllenCCFv3 and the associated
 ``allensdk`` Python library. Using ``allensdk``, a gross parcellation labeling
-was generated which included the cerebral cortex, cerebral nuclei, brain stem,
-cerebellum, main olfactory bulb, and hippocampal formation.  This labeling was
-mapped to the T2-weighted template component of the P56 DevCCF. Both the 
-T2-w P56 DevCCF and labelings, in conjunction with the data augmentation 
-described previously, was used to create a brain parcellation network.
+was generated from the fine Allen CCFv3 labeling which includes the cerebral
+cortex, cerebral nuclei, brain stem, cerebellum, main olfactory bulb, and
+hippocampal formation.  This labeling was mapped to the P56
+component of the DevCCF. Both the T2-w P56 DevCCF and labelings, in
+conjunction with the data augmentation described previously for brain 
+extraction, was used to create a brain parcellation network.
 
 ### Evaluation
 
@@ -100,10 +103,10 @@ the brain extraction and parcellation networks.  Data includes 12 specimens each
 imaged at seven time points (Day 0, Day 3, Week 1, Week 4, Week 8, Week 20) with
 available brain masks.  In-plane resolution is $0.1 \times 0.1 mm^2$ with a
 slice thickness of $0.5 mm$.  Since the training data is isotropic and data
-augmentation includes downsampling in the canonical directions, the networks 
-learns mouse brain-specific interpolation such that one can perform prediction
+augmentation includes downsampling in the canonical directions, each of the two 
+networks learns mouse brain-specific interpolation such that one can perform prediction
 on thick-sliced images, such as these evaluation data, and return isotropic
-probability and thickness maps---a choice available to the user.  Figure 
+probability and thickness maps (a choice available to the user).  Figure 
 \ref{fig:evaluation} summarizes the results of the evaluation and comparison between
 isotropic and anisotropic cortical measurements in male and female specimens.
 

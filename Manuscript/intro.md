@@ -1,7 +1,7 @@
 # Introduction
 
 Over the past two decades there have been significant advancements in mesoscopic
-analysis of the mouse brain. It is now possible to track single cell neurons in
+analysis of the mouse brain. It is currently possible to track single cell neurons in
 mouse brains [@Keller:2015aa], observe whole brain developmental changes on a
 cellular level [@La-Manno:2021aa], associate brain regions and tissues with
 their genetic composition [@Wen:2022aa], and locally characterize neural
@@ -25,7 +25,7 @@ recently, the Developmental Common Coordinate Framework (DevCCF)
 still exist in large part due to the wide heterogeneity in associated
 study-specific image data. For example, variance in the acquisition methods can
 introduce artifacts such as tissue distortion, holes, bubbles, folding, tears,
-and missing slices. These severely complicate assumed correspondence for
+and missing slices. These complicate assumed correspondence for
 conventional spatial mapping approaches.
 
 ## Mouse-specific brain mapping software
@@ -37,7 +37,7 @@ Tissue Segmentation (RATS) package [@Oguz:2014aa] for brain extraction.
 More recently, several publicly available packages comprise well-established
 package dependencies originally developed on human brain data. SPMMouse
 [@Sawiak:2014aa], for example, is based on the well-known Statistical Parametric
-Mapping (SPM) software package [@Ashburner:2012aa]. The automated mouse atlas
+Mapping (SPM) Matlab-based toolset [@Ashburner:2012aa]. The automated mouse atlas
 propagation (aMAP) tool is largely a front-end for the NiftyReg image
 registration package [@Modat:2010aa] applied to mouse data which is currently
 available as a Python module [@Tyson:2022aa]. NiftyReg is also used by the

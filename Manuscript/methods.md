@@ -13,21 +13,22 @@ For equivalent calls in ANTsR, please see the ANTsX tutorial at
 
 ## Preprocessing: bias field correction and denoising {-}
 
-As in human studies, bias field correction and image denoising are standard
-preprocessing steps in improving overall image quality in mouse brain images.
-The bias field, a gradual spatial intensity variation in images, can arise from
-various sources such as magnetic field inhomogeneity or acquisition artifacts,
-leading to distortions that can compromise the quality of brain images.
-Correcting for bias fields ensures a more uniform and consistent representation
-of brain structures, enabling accurate quantitative analysis. Additionally,
-brain images are often susceptible to various forms of noise, which can obscure
-subtle features and affect the precision of measurements. Denoising techniques
-help mitigate the impact of noise, enhancing the signal-to-noise ratio and
-improving the overall image quality.  The well-known N4 bias field correction
-algorithm [@Tustison:2010ac] has its origins in the ANTs toolkit which was
-implemented and introduced into the ITK toolkit.  Similarly, ANTsX contains an
-implementation of a well-performing patch-based denoising technique
-[@Manjon:2010aa] and is also available as an image filter to the ITK community.
+Bias field correction and image denoising are standard preprocessing steps in
+improving overall image quality in mouse brain images. The bias field, a gradual
+spatial intensity variation in images, can arise from various sources such as
+magnetic field inhomogeneity or acquisition artifacts, leading to distortions
+that can compromise the quality of brain images. Correcting for bias fields
+ensures a more uniform and consistent representation of brain structures,
+enabling more accurate quantitative analysis. Additionally, brain images are
+often susceptible to various forms of noise, which can obscure subtle features
+and affect the precision of measurements. Denoising techniques help mitigate the
+impact of noise, enhancing the signal-to-noise ratio and improving the overall
+image quality.  The well-known N4 bias field correction algorithm
+[@Tustison:2010ac] has its origins in the ANTs toolkit which was implemented and
+introduced into the ITK toolkit, i.e. ``ants.n4_bias_field_correction(...)``.
+Similarly, ANTsX contains an implementation of a well-performing patch-based
+denoising technique [@Manjon:2010aa] and is also available as an image filter to
+the ITK community, ``ants.denoise_image(...)``.
 
 ## Image registration {-}
 
@@ -41,8 +42,11 @@ specifically ANTs, ANTsPy, and ANTsR [@Tustison:2021aa]. In ANTsPy, the function
 ``ants.registration(...)`` is used to register a pair of images or a pair of
 image sets where ``type_of_transform`` is a user-specified option that invokes a
 specific parameter set.  For example
-``type_of_transform='antsRegistrationSyNQuick[s]'`` is an oft-used parameter
-set.
+``type_of_transform='antsRegistrationSyNQuick[s]'`` encapsulates an oft-used
+parameter set for quick registration whereas
+``type_of_transform='antsRegistrationSyN[s]'`` is a more detailed alternative.
+Transforming images using the derived transforms is performed via the
+``ants.apply_transforms(...)`` function.
 
 Initially, linear optimization is initialized with center of (intensity) mass
 alignment typically followed by optimization of both rigid and affine transforms
@@ -69,7 +73,7 @@ The template estimate is updated by warping all subjects to the space of the
 template, performing a voxelwise average, and then performing a "shape update"
 of this latter image by warping it by the average inverse deformation, thus
 yielding a mean image of the population in terms of both intensity and 
-shape.  
+shape.  The corresponding ANTsPy function is ``ants.build_template(...)``.
 
 ## Continuous developmental velocity flow transformation model {-}
 
@@ -99,7 +103,8 @@ constructing the velocity flow model.  Approximately 125 iterations resulted in
 a steady convergence based on the average Euclidean norm between transformed
 point sets.  Ten integration points were used and point sets were distributed
 along the temporal dimension using a log transform for a more evenly spaced
-sampling.  
+sampling.  For additional information see the help menu for the ANTsPy function 
+``ants.fit_time_varying_transform_to_point_sets(...)``.
 
 ## ANTsXNet mouse brain applications {-}
 
@@ -174,7 +179,7 @@ are minimized through the use of the rank intensity transform
 (``ants.rank_intensity(...)``).  Shape differences are reduced 
 by the additional preprocessing step of warping the brain extracted
 input image to the template.  Additional input channels include the 
-prior probability images created from the template parcellation.  
+prior probability images created from the template parcellation.
 These images are also available through the ANTsXNet interface:
 
 * template: ``antspynet.get_antsxnet_data("DevCCF_P56_MRI-T2_50um")`` and
