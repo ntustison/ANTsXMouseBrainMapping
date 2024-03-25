@@ -23,6 +23,10 @@ Fae N. Kronman$^{3}$,
 Jeffrey T. Duda$^{2}$,
 Clare Gamlin$^{4}$,
 Mia G. Tustison,
+Michael Kunst$^{4}$,
+Rachel Dalley$^{4}$,
+Staci Sorenson$^{4}$,
+Quanxi Wang$^{4}$,
 Lydia Ng$^{4}$,
 Yongsoo Kim$^{3}$, and
 James C. Gee$^{2}$

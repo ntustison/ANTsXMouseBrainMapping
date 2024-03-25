@@ -1,7 +1,3 @@
-\clearpage
-\newpage
-
-# Results
 
 <!--
 ## Template building
