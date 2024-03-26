@@ -83,17 +83,18 @@ convergence typically occurs in four deformable iterations.
 ############################################
 -->
 
-## The DevCCF Velocity Flow Model
+## The DevCCF velocity flow model
 
+<!-- 
 \begin{figure}
 \centering
 \includegraphics[width=0.99\textwidth]{Figures/lowerLeftPanel.png}
-\caption{The spatial transformation between any two
-time points within the DevCCF longitudinal developmental trajectory
-is available through the use of ANTsX functionality for generating
-a velocity flow model.}
+\caption{The spatial transformation between any two time points within the
+DevCCF longitudinal developmental trajectory is available through the use of
+ANTsX functionality for generating a velocity flow model.}
 \label{fig:devccfvelocity}
-\end{figure}
+\end{figure} 
+-->
 
 To continuously interpolate transformations between the different stages of the
 DevCCF atlases, a velocity flow model was constructed using DevCCF derived data
@@ -107,26 +108,27 @@ multiple sets, as in the case of the DevCCF. ANTsX, being built on top of ITK,
 uses an ITK image data structure for the 4-D velocity field where each voxel
 contains the $x$, $y$, $z$ components of the field at that point. 
 
-### Data preparation
+### Data
 
-\begin{figure}[!htb]
+<!-- \begin{figure}[!htb]
 \centering
 \includegraphics[width=0.75\textwidth]{Figures/SimplifiedAnnotations.pdf}
 \caption{Annotated regions representing common labels across developmental stages which
 are illustrated for both P4 and P14.}
 \label{fig:simplifiedannotations}
-\end{figure}
+\end{figure} -->
 
 Labeled annotations are available as part of the original DevCCF and reside
 in the space of each developmental template which range in resolution from 
 $31.5-50 \mu$m.  Across all atlases, the total number of labeled regions exceeds 
 2500.  From these labels, a common set of 26 labels (13 per hemisphere) across 
-all atlases were used for optimization and evaluation.  These regions are 
-illustrated for the P4 and P14 stages in Figure \ref{fig:simplifiedannotations}.
+all atlases were used for optimization and evaluation.  These simplified regions
+include: terminal hypothalamus, subpallium, pallium, peduncular hypothalamus,
+prosomere, prosomere, prosomere, midbrain, prepontine hindbrain, pontine 
+hindbrain, pontomedullary hindbrain, medullary hindbrain, and tracts.
 
-Prior to velocity field optimization, all data were rigidly transformed to a
-common space.  Using the centroids for the common label set of each DevCCF
-atlas, each atlas was rigidly aligned to the space of the P56 atlas. In order to
+Prior to velocity field optimization, all data were rigidly transformed to 
+DevCCF P56 using the centroids of the common label sets. In order to
 determine the landmark correspondence across DevCCF stages, the multi-metric
 capabilities of ``ants.registration(...)`` were used. Instead of performing
 intensity-based pairwise registration directly on these multi-label images, each
@@ -198,7 +200,6 @@ compare with the volumes of the same regions in the other atlases.}
 \end{figure} 
 -->
 
-
 <!-- 
 After optimization, we use the velocity field to warp
 the P56 set of labels to each of the other atlas time points to compare the
@@ -220,6 +221,7 @@ each image is warped.}
 \label{fig:crosswarp}
 \end{figure}
 
+<!--
 \begin{figure}[!htb]
 \centering
 \includegraphics[width=0.8\textwidth]{Figures/pseudo_template.pdf}
@@ -231,18 +233,17 @@ those images in the ANTsX template building process.}
 \label{fig:virtual}
 \end{figure}
 
+-->
+
 Once optimized, the resulting velocity field can be used to generate the
 deformable transform between any two continuous points within the time interval
 bounded by E11.5 and P56.  In Figure \ref{fig:crosswarp}, we transform each
 atlas to the space of every other atlas using the DevCCF transform model.
 Additionally, one can use this transformation model to construct virtual
-templates in the temporal gaps of the DevCCF.  This is illustrated in Figure
-\ref{fig:virtual} where we used the optimized velocity field to construct
-virtual templates at time point P10.3 and P20---arbitrarily chosen simply to
-demonstrate the concept.  After situating these time points within the
-normalized time point interval, the existing adjacent DevCCF atlases on either
-chronological side can be warped to the desired time point. A subsequent call to
-one of the ANTsX template building functions then permits the construction of
-the template at that time point.  Note that both of these usage examples can be
-found in the GitHub repository previously given.
+templates in the temporal gaps of the DevCCF.  Given an arbitrarily chosen time
+point within the normalized time point interval, the existing adjacent DevCCF
+atlases on either chronological side can be warped to the desired time point. A
+subsequent call to one of the ANTsX template building functions then permits the
+construction of the template at that time point.  Note that both of these usage
+examples can be found in the GitHub repository previously given.
 

@@ -2,7 +2,7 @@
 \clearpage
 \newpage
 
-# Discussion {-}
+# Discussion
 
 The ANTsX ecosystem is a powerful framework that has demonstrated applicability
 to multiple species and organ systems, including the mouse brain. This is

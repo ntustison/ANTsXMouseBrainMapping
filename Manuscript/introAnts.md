@@ -1,6 +1,8 @@
 
 ## The ANTsX Ecosystem for mouse brain mapping 
 
+\input{antsx_functionality_table}
+
 As noted previously, many of the existing packages designed for processing mouse
 brain image data use ANTsX tools for core processing steps in various workflows,
 particularly its pairwise, intensity-based image registration capabilities and
@@ -15,25 +17,25 @@ which include multi-site brain MRI data [@Klein:2009aa], pulmonary CT data
 [@Murphy:2011aa], and most recently, multi-modal brain registration in the
 presence of tumors [@Baheti:2021aa]. 
 
-\input{antsx_functionality_table}
-
 Apart from its registration capabilities, ANTsX comprises additional
 functionality such as template generation [@Avants:2010aa], intensity-based
 segmentation [@Avants:2011uf], preprocessing [@Manjon:2010aa;@Tustison:2010ac],
-deep learning networks [@Tustison:2021aa], and other miscelleneous utilties
-(see Table \ref{table:methods}). The comprehensive
-use of the toolkit has demonstrated superb performance in multiple application
-areas (e.g., consensus labeling [@Wang:2013ab], brain tumor segmentation
-[@Tustison:2014aa], and cardiac motion estimation [@Tustison:2015ab] ).
-Importantly, ANTs is built on the Insight Toolkit (ITK) [@McCormick:2014aa]
-deriving benefit from the open-source community of scientists and programmers
-and providing an important resource for algorithmic development, evaluation, and
-improvement.  We use this functionality to demonstrate recently developed
-frameworks for mapping fluorescence micro-optical sectioning tomography (fMOST)
-and multiplexed error-robust fluorescence in situ hybridization (MERFISH) image
-data to the AllenCCFv3 atlas space.  In addition to standard preprocessing steps
-(e.g., bias correction), additional considerations are accommodated within the
-ANTsX ecosystem, such as section reconstruction and landmark-based alignment.  
+deep learning networks [@Tustison:2021aa], and other miscelleneous utilties (see
+Table \ref{table:methods}). The comprehensive use of the toolkit has
+demonstrated superb performance in multiple application areas (e.g., consensus
+labeling [@Wang:2013ab], brain tumor segmentation [@Tustison:2014aa], and
+cardiac motion estimation [@Tustison:2015ab] ). Importantly, ANTs is built on
+the Insight Toolkit (ITK) [@McCormick:2014aa] deriving benefit from the
+open-source community of scientists and programmers and providing an important
+resource for algorithmic development, evaluation, and improvement.  We use this
+functionality to demonstrate recently developed frameworks for mapping
+fluorescence micro-optical sectioning tomography (fMOST) and multiplexed
+error-robust fluorescence in situ hybridization (MERFISH) image data to the
+AllenCCFv3 atlas space.  In addition to standard preprocessing steps (e.g., bias
+correction), additional considerations are accommodated within the ANTsX
+ecosystem, such as section reconstruction and landmark-based alignment with
+corresponding processing scripts available at
+\url{https://github.com/dontminchenit/CCFAlignmentToolkit}.  
 
 
 <!-- 
@@ -122,5 +124,3 @@ one can leverage ANTsX tools for developing tailored brain parcellation schemes
 using these publicly available resources.  Evaluation is performed on an
 independent open data set [@Rahman:2023aa] comprising longitudinal acquisitions
 of multiple specimens.  
-
-
