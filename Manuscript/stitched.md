@@ -956,7 +956,7 @@ are available in the ``ants.plot(...)`` (Python).
 These are capable of illustrating multiple slices in different orientations with
 both other image overlays as well as label images.  
 
-## Continuous developmental velocity flow transformation model 
+## DevCCF velocity flow transformation model 
 
 Given multiple, linearly or non-linearly ordered point sets where individual
 points across are in one-to-one correspondence, we developed an approach for
