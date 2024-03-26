@@ -39,7 +39,7 @@ Animal MRI (CAMRI) dataset [@Hsu2021] from UNC consists of 16 T2-weighted MRI of
 voxel resolution $0.16 \times 0.16 \times 0.16 mm^3$.  The second
 high-resolution data set [@Reshetnikov2021] comprises 88 specimens each with
 three spatially aligned canonical views with in-plane resolution of $0.08 \times
-0.08 mm^2$ with a slice thickness of 0.5 mm.  These three orthogonal views were
+0.08 mm^2$ with a slice thickness of $0.5 mm$.  These three orthogonal views were
 used to reconstruct a single high-resolution volume per subject using a B-spline
 fitting algorithm developed in ANTsX [@Tustison:2006aa].  From these two
 datasets, two symmetric isotropic ANTsX templates [@Avants:2010aa] were

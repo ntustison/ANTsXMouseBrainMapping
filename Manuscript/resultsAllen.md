@@ -16,7 +16,9 @@
 \includegraphics[width=0.99\textwidth]{Figures/merfishPipeline.pdf}
 \caption{}
 \end{subfigure}
-\caption{XXXX.}
+\caption{Diagrammatic illustration of the two ANTsX-based pipelines for mapping (a) 
+         fMOST and (b) MERFISH data into the space of AllenCCFv3.  Each generates
+         the requisite transforms, $\mathcal{T}$, to map individual images.}
 \label{fig:allenpipelines}
 \end{figure*}
 
@@ -26,21 +28,21 @@
 ### Mapping fluorescence micro-optical sectioning tomography (fMOST) data
 
 __Overview.__  A framework for mapping fluorescence micro-optical sectioning
-tomography (fMOST) mouse brain images into the AllenCCFv3 was developed. 
-An intensity- and shape-based average fMOST atlas serves as an intermediate 
-registration target for mapping fMOST images from individual specimens into 
-the AllenCCFv3. Preprocessing steps include 1) downsampling to match the 
-$25 \mu m$ isotropic AllenCCVv3, acquisition-based stripe artefact removal, 
-and inhomogeneity correction [@Tustison:2010ac]. Preprocessing also includes
-a single annotation-driven registration to establish a canonical mapping between
-the fMOST atlas and the AllenCCFv3. This step allows us to align expert
-determined landmarks to accurately map structures with large morphological
-differences between the modalities, which are difficult to address using
-standard approaches. Once this canonical mapping is established, standard
+tomography (fMOST) mouse brain images into the AllenCCFv3 was developed (see
+Figure \ref{fig:allenpipelines}(a)). An intensity- and shape-based average fMOST
+atlas serves as an intermediate registration target for mapping fMOST images
+from individual specimens into the AllenCCFv3. Preprocessing steps include
+downsampling to match the $25 \mu m$ isotropic AllenCCFv3, acquisition-based
+stripe artefact removal, and inhomogeneity correction [@Tustison:2010ac].
+Preprocessing also includes a single annotation-driven registration to establish
+a canonical mapping between the fMOST atlas and the AllenCCFv3. This step allows
+us to align expert determined landmarks to accurately map structures with large
+morphological differences between the modalities, which are difficult to address
+using standard approaches. Once this canonical mapping is established, standard
 intensity-based registration is used to align each new fMOST image to the fMOST
 specific atlas. This mapping is concatenated with the canonical fMOST atlas-to-
-AllenCCFv3 mapping to further map each individual brain into the latter without the
-need to generate additional landmarks. Transformations learned through this
+AllenCCFv3 mapping to further map each individual brain into the latter without
+the need to generate additional landmarks. Transformations learned through this
 mapping can be applied to single neuron reconstructions from the fMOST images to
 evaluate neuronal distributions across different specimens into the AllenCCFv3
 for the purpose of cell census analyses.
@@ -103,18 +105,19 @@ the corresponding neuron reconstruction data.
 __Overview.__ The unique aspects of mapping multiplexed error-robust
 fluorescence in situ hybridization (MERFISH) spatial transcriptomic data onto
 AllenCCFv3 [@Yao:2023aa] required the development of a separate ANTsX-based
-pipeline. Mappings are performed by matching gene expression derived region
-labels from the MERFISH data to corresponding anatomical parcellations of the
-AllenCCFv3. The pipeline consists of MERFISH data specific preprocessing which
-includes section reconstruction, mapping corresponding anatomical labels between
-AllenCCFv3 and the spatial transcriptomic maps of the MERFISH data, and matching
-MERFISH sections to the atlas space. Following pre-processing, two main
-alignment steps were performed: 1) 3D global affine mapping and section matching
-of the AllenCCFv3 into the MERFISH data and 2) 2D global and deformable mapping
-between each MERFISH section and matched AllenCCFv3 section. Mappings learned
-via each step in the pipeline are preserved and concatenated to provide
-point-to-point correspondence between the original MERFISH data and AllenCCFv3,
-thus allowing individual gene expressions to be transferred into the AllenCCFv3. 
+pipeline (see Figure \ref{fig:allenpipelines}(b)). Mappings are performed by
+matching gene expression derived region labels from the MERFISH data to
+corresponding anatomical parcellations of the AllenCCFv3. The pipeline consists
+of MERFISH data specific preprocessing which includes section reconstruction,
+mapping corresponding anatomical labels between AllenCCFv3 and the spatial
+transcriptomic maps of the MERFISH data, and matching MERFISH sections to the
+atlas space. Following pre-processing, two main alignment steps were performed:
+1) 3D global affine mapping and section matching of the AllenCCFv3 into the
+MERFISH data and 2) 2D global and deformable mapping between each MERFISH
+section and matched AllenCCFv3 section. Mappings learned via each step in the
+pipeline are preserved and concatenated to provide point-to-point correspondence
+between the original MERFISH data and AllenCCFv3, thus allowing individual gene
+expressions to be transferred into the AllenCCFv3. 
 
 __Data.__ MERFISH mouse brain data was acquired using the detailed procedure
 [@Yao:2023aa]. Briefly, a brain of C57BL/6 mouse was dissected according to

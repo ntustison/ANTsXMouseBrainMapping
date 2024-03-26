@@ -334,7 +334,9 @@ of multiple specimens.
 \includegraphics[width=0.99\textwidth]{Figures/merfishPipeline.pdf}
 \caption{}
 \end{subfigure}
-\caption{XXXX.}
+\caption{Diagrammatic illustration of the two ANTsX-based pipelines for mapping (a) 
+         fMOST and (b) MERFISH data into the space of AllenCCFv3.  Each generates
+         the requisite transforms, $\mathcal{T}$, to map individual images.}
 \label{fig:allenpipelines}
 \end{figure*}
 
@@ -344,21 +346,21 @@ of multiple specimens.
 ### Mapping fluorescence micro-optical sectioning tomography (fMOST) data
 
 __Overview.__  A framework for mapping fluorescence micro-optical sectioning
-tomography (fMOST) mouse brain images into the AllenCCFv3 was developed. 
-An intensity- and shape-based average fMOST atlas serves as an intermediate 
-registration target for mapping fMOST images from individual specimens into 
-the AllenCCFv3. Preprocessing steps include 1) downsampling to match the 
-$25 \mu m$ isotropic AllenCCVv3, acquisition-based stripe artefact removal, 
-and inhomogeneity correction [@Tustison:2010ac]. Preprocessing also includes
-a single annotation-driven registration to establish a canonical mapping between
-the fMOST atlas and the AllenCCFv3. This step allows us to align expert
-determined landmarks to accurately map structures with large morphological
-differences between the modalities, which are difficult to address using
-standard approaches. Once this canonical mapping is established, standard
+tomography (fMOST) mouse brain images into the AllenCCFv3 was developed (see
+Figure \ref{fig:allenpipelines}(a)). An intensity- and shape-based average fMOST
+atlas serves as an intermediate registration target for mapping fMOST images
+from individual specimens into the AllenCCFv3. Preprocessing steps include
+downsampling to match the $25 \mu m$ isotropic AllenCCFv3, acquisition-based
+stripe artefact removal, and inhomogeneity correction [@Tustison:2010ac].
+Preprocessing also includes a single annotation-driven registration to establish
+a canonical mapping between the fMOST atlas and the AllenCCFv3. This step allows
+us to align expert determined landmarks to accurately map structures with large
+morphological differences between the modalities, which are difficult to address
+using standard approaches. Once this canonical mapping is established, standard
 intensity-based registration is used to align each new fMOST image to the fMOST
 specific atlas. This mapping is concatenated with the canonical fMOST atlas-to-
-AllenCCFv3 mapping to further map each individual brain into the latter without the
-need to generate additional landmarks. Transformations learned through this
+AllenCCFv3 mapping to further map each individual brain into the latter without
+the need to generate additional landmarks. Transformations learned through this
 mapping can be applied to single neuron reconstructions from the fMOST images to
 evaluate neuronal distributions across different specimens into the AllenCCFv3
 for the purpose of cell census analyses.
@@ -421,18 +423,19 @@ the corresponding neuron reconstruction data.
 __Overview.__ The unique aspects of mapping multiplexed error-robust
 fluorescence in situ hybridization (MERFISH) spatial transcriptomic data onto
 AllenCCFv3 [@Yao:2023aa] required the development of a separate ANTsX-based
-pipeline. Mappings are performed by matching gene expression derived region
-labels from the MERFISH data to corresponding anatomical parcellations of the
-AllenCCFv3. The pipeline consists of MERFISH data specific preprocessing which
-includes section reconstruction, mapping corresponding anatomical labels between
-AllenCCFv3 and the spatial transcriptomic maps of the MERFISH data, and matching
-MERFISH sections to the atlas space. Following pre-processing, two main
-alignment steps were performed: 1) 3D global affine mapping and section matching
-of the AllenCCFv3 into the MERFISH data and 2) 2D global and deformable mapping
-between each MERFISH section and matched AllenCCFv3 section. Mappings learned
-via each step in the pipeline are preserved and concatenated to provide
-point-to-point correspondence between the original MERFISH data and AllenCCFv3,
-thus allowing individual gene expressions to be transferred into the AllenCCFv3. 
+pipeline (see Figure \ref{fig:allenpipelines}(b)). Mappings are performed by
+matching gene expression derived region labels from the MERFISH data to
+corresponding anatomical parcellations of the AllenCCFv3. The pipeline consists
+of MERFISH data specific preprocessing which includes section reconstruction,
+mapping corresponding anatomical labels between AllenCCFv3 and the spatial
+transcriptomic maps of the MERFISH data, and matching MERFISH sections to the
+atlas space. Following pre-processing, two main alignment steps were performed:
+1) 3D global affine mapping and section matching of the AllenCCFv3 into the
+MERFISH data and 2) 2D global and deformable mapping between each MERFISH
+section and matched AllenCCFv3 section. Mappings learned via each step in the
+pipeline are preserved and concatenated to provide point-to-point correspondence
+between the original MERFISH data and AllenCCFv3, thus allowing individual gene
+expressions to be transferred into the AllenCCFv3. 
 
 __Data.__ MERFISH mouse brain data was acquired using the detailed procedure
 [@Yao:2023aa]. Briefly, a brain of C57BL/6 mouse was dissected according to
@@ -749,7 +752,7 @@ Animal MRI (CAMRI) dataset [@Hsu2021] from UNC consists of 16 T2-weighted MRI of
 voxel resolution $0.16 \times 0.16 \times 0.16 mm^3$.  The second
 high-resolution data set [@Reshetnikov2021] comprises 88 specimens each with
 three spatially aligned canonical views with in-plane resolution of $0.08 \times
-0.08 mm^2$ with a slice thickness of 0.5 mm.  These three orthogonal views were
+0.08 mm^2$ with a slice thickness of $0.5 mm$.  These three orthogonal views were
 used to reconstruct a single high-resolution volume per subject using a B-spline
 fitting algorithm developed in ANTsX [@Tustison:2006aa].  From these two
 datasets, two symmetric isotropic ANTsX templates [@Avants:2010aa] were
@@ -973,153 +976,6 @@ are available in the ``ants.plot(...)`` (Python).
 These are capable of illustrating multiple slices in different orientations with
 both other image overlays as well as label images.  
 
-## DevCCF velocity flow transformation model 
-
-Given multiple, linearly or non-linearly ordered point sets where individual
-points across are in one-to-one correspondence, we developed an approach for
-generating a velocity flow transformation model to describe a time-varying
-diffeomorphic mapping as a variant of the inexact landmark matching solution.
-Integration of the resulting velocity field can then be used to describe the
-displacement between any two time points within this time-parameterized domain.
-Regularization of the sparse correspondence between point sets is performed
-using a generalized B-spline scattered data approximation technique
-[@Tustison:2006aa], also developed by the ANTsX developers and contributed to
-ITK. 
-
-### Velocity field optimization
-
-To apply this methodology to the developmental templates [@Kronman:2023aa], we
-coalesced the manual annotations of the developmental templates into 26 common
-anatomical regions (13 per hemisphere).  We then used these regions to generate
-invertible transformations between successive time points. Specifically each
-label was used to create a pair of single region images resulting in 26 pairs of
-"source" and "target" images.  The multiple image pairs were used to iteratively
-estimate a diffeomorphic pairwise transform. Given the seven atlases E11.5,
-E13.5, E15.5, E18.5, P4, P14, and P56, this resulted in 6 sets of transforms
-between successive time points. Given the relative sizes between atlases, on the
-order of 10$^6$ points were randomly sampled labelwise in the P56 template space
-and propagated to each successive atlas providing the point sets for
-constructing the velocity flow model.  Approximately 125 iterations resulted in
-a steady convergence based on the average Euclidean norm between transformed
-point sets.  Ten integration points were used and point sets were distributed
-along the temporal dimension using a log transform for a more evenly spaced
-sampling.  For additional information see the help menu for the ANTsPy function 
-``ants.fit_time_varying_transform_to_point_sets(...)``.
-
-## ANTsXNet mouse brain applications 
-
-### General notes regarding deep learning training
-
-All network-based approaches described below were implemented and organized in
-the ANTsXNet libraries comprising Python (ANTsPyNet) and R (ANTsRNet) analogs
-using the Keras/Tensorflow libraries available as open-source in ANTsX GitHub
-repositories. For the various applications, both share the identically trained
-weights for mutual reproducibility.  For all GPU training, we used Python
-scripts for creating custom batch generators. As such batch generators tend to
-be application-specific, we store them in a separate GitHub repository for
-public availability (\url{https://github.com/ntustison/ANTsXNetTraining}). In
-terms of GPU hardware, all training was done on a DGX (GPUs: 4X Tesla V100,
-system memory: 256 GB LRDIMM DDR4).
-
-Data augmentation is crucial for generalizability and accuracy of the trained 
-networks.  Intensity-based data augmentation consisted of randomly added noise 
-(i.e., Gaussian, shot, salt-and-pepper), simulated bias fields based on N4 bias 
-field modeling, and histogram warping for mimicking well-known MRI intensity nonlinearities
-[@Nyul:2000aa;@Tustison:2021aa]. These augmentation techniques are available in
-ANTsXNet (only ANTsPyNet versions are listed with ANTsRNet versions available)
-and include:
-
-* image noise:  ``ants.add_noise_to_image(...)``,
-
-* simulated bias field: ``antspynet.simulate_bias_field(...)``, and
-
-* nonlinear intensity warping: ``antspynet.histogram_warp_image_intensities(...)``.
-
-Shape-based data augmentation used both random linear and nonlinear
-deformations in addition to anisotropic resampling in the three canonical 
-orientations to mimic frequently used acquisition protocols for mice brains:
-
-* random spatial warping: ``antspynet.randomly_transform_image_data(...)`` and
-
-* anisotropic resampling: ``ants.resample_image(...)``.
-
-### Brain extraction
-
-Similar to human neuroimage processing, brain extraction is a crucial
-preprocessing step for accurate brain mapping.  Within ANTsXNet, we have created
-several deep learning networks for brain extraction for several image modalities
-(e.g., T1, FLAIR, fractional anisotropy).  Similarly, for the developmental
-brain atlas work [@Kronman:2023aa] we developed similar functionality for mouse
-brains of different modalities and developmental age.  All networks use a
-conventional U-net architecture [@Falk:2019aa].  Whereas T2-weighted brain
-extraction is volumetric-based for both isotropic and anisotropic data, coronal
-and sagittal networks are available for both E13.5 and E15.5 data. In ANTsPyNet,
-this functionality is available in the program
-``antspynet.mouse_brain_extraction(...)``.  
-
-For the two-shot T2-weighted brain extraction network, two brain templates were
-generated along with their masks.  One of the templates was generated from
-orthogonal multi-plane, high resolution data [@Reshetnikov2021] synthesized
-isotropic volumetric data using the B-spline fitting algorithm
-[@Tustison:2006aa].  This algorithm is encapsulated in
-``ants.fit_bspline_object_to_scattered_data(...)`` where the input is the set of
-voxel intensity values and associated physical location.  Since each point can
-be assigned a confidence weight, we use the the normalized gradient value to
-more heavily weight edge regions.  Although both template/mask pairs
-are available in the GitHub repository associated with this work, the synthesize
-volumetric B-spline T2-weighted pair is available within ANTsXNet through the
-calls:
-
-* template: ``antspynet.get_antsxnet_data("bsplineT2MouseTemplate")`` and
-
-* mask: ``antspynet.get_antsxnet_data("bsplineT2MouseTemplateBrainMask")``.
-
-### Brain parcellation
-
-The T2-weighted brain parcellation network is also based on a 3-D U-net
-architecture and the T2-w DevCCF P56 template component with 
-extensive data augmentation, as described previously.  Intensity
-differences between the template and any brain extracted input image
-are minimized through the use of the rank intensity transform 
-(``ants.rank_intensity(...)``).  Shape differences are reduced 
-by the additional preprocessing step of warping the brain extracted
-input image to the template.  Additional input channels include the 
-prior probability images created from the template parcellation.
-These images are also available through the ANTsXNet interface:
-
-* template: ``antspynet.get_antsxnet_data("DevCCF_P56_MRI-T2_50um")`` and
-
-* parcellation: ``antspynet.get_antsxnet_data("DevCCF_P56_MRI-T2_50um_BrainParcellationNickMask")``.
-
-<!-- 
-_Miscellaneous networks:  Super-resolution, cerebellum, and hemispherical masking._
-
-To further enhance the data prior to designing mapping protocols, additional
-networks were created.  A well-performing deep back projection network
-[@Haris:2018aa] was ported to ANTsXNet and expanded to 3-D for various
-super-resolution applications [@Avants:2023aa], including mouse data.  Finally,
-features of anatomical significance, namely the cerebellum and hemispherical
-midline were captured in these data using deep learning networks.   
--->
-
-<!-- ## Intra-slice image registration with missing slice imputation 
-
-Volumetric gene expression slice data was collated into 3-D volumes. Prior to
-mapping this volume to the corresponding structural data and, potentially, to
-the appropriate template, alignment was improved using deformable registration
-on contiguous slices.  However, one of the complications associated with these
-image data was the unknown number of missing slices, the number of consecutive
-missing slices, and the different locations of these missing slices.  To handle
-this missing data problem, we found that data interpolation using the B-spline
-approximation algorithm cited earlier [@Tustison:2006aa] (ANTsPy function:
-``ants.fit_bspline_object_to_scattered_data(...)``).  This provided sufficient
-data interpolation fidelity to perform continuous slicewise registration.  Other
-possible variants that were considered but deemed unnecessary was performing
-more than one iteration cycling through data interpolation and slicewise
-alignment.  The other possibility was incorporating the super-resolution
-technique described earlier.  But again, our data did not require these
-additional steps.  -->
-
 ## Mapping fMOST data to AllenCCFv3
 
 ### Preprocessing
@@ -1289,13 +1145,152 @@ correspondence between the original MERFISH coordinate space and the AllenCCFv3
 space, thus allowing mapping of individual genes and cell types located in the
 MERFISH data to be directly mapped into the AllenCCFv3.
 
+## DevCCF velocity flow transformation model 
 
+Given multiple, linearly or non-linearly ordered point sets where individual
+points across are in one-to-one correspondence, we developed an approach for
+generating a velocity flow transformation model to describe a time-varying
+diffeomorphic mapping as a variant of the inexact landmark matching solution.
+Integration of the resulting velocity field can then be used to describe the
+displacement between any two time points within this time-parameterized domain.
+Regularization of the sparse correspondence between point sets is performed
+using a generalized B-spline scattered data approximation technique
+[@Tustison:2006aa], also developed by the ANTsX developers and contributed to
+ITK. 
 
+### Velocity field optimization
 
+To apply this methodology to the developmental templates [@Kronman:2023aa], we
+coalesced the manual annotations of the developmental templates into 26 common
+anatomical regions (13 per hemisphere).  We then used these regions to generate
+invertible transformations between successive time points. Specifically each
+label was used to create a pair of single region images resulting in 26 pairs of
+"source" and "target" images.  The multiple image pairs were used to iteratively
+estimate a diffeomorphic pairwise transform. Given the seven atlases E11.5,
+E13.5, E15.5, E18.5, P4, P14, and P56, this resulted in 6 sets of transforms
+between successive time points. Given the relative sizes between atlases, on the
+order of 10$^6$ points were randomly sampled labelwise in the P56 template space
+and propagated to each successive atlas providing the point sets for
+constructing the velocity flow model.  Approximately 125 iterations resulted in
+a steady convergence based on the average Euclidean norm between transformed
+point sets.  Ten integration points were used and point sets were distributed
+along the temporal dimension using a log transform for a more evenly spaced
+sampling.  For additional information see the help menu for the ANTsPy function 
+``ants.fit_time_varying_transform_to_point_sets(...)``.
 
+## ANTsXNet mouse brain applications 
 
+### General notes regarding deep learning training
 
+All network-based approaches described below were implemented and organized in
+the ANTsXNet libraries comprising Python (ANTsPyNet) and R (ANTsRNet) analogs
+using the Keras/Tensorflow libraries available as open-source in ANTsX GitHub
+repositories. For the various applications, both share the identically trained
+weights for mutual reproducibility.  For all GPU training, we used Python
+scripts for creating custom batch generators. As such batch generators tend to
+be application-specific, we store them in a separate GitHub repository for
+public availability (\url{https://github.com/ntustison/ANTsXNetTraining}). In
+terms of GPU hardware, all training was done on a DGX (GPUs: 4X Tesla V100,
+system memory: 256 GB LRDIMM DDR4).
 
+Data augmentation is crucial for generalizability and accuracy of the trained 
+networks.  Intensity-based data augmentation consisted of randomly added noise 
+(i.e., Gaussian, shot, salt-and-pepper), simulated bias fields based on N4 bias 
+field modeling, and histogram warping for mimicking well-known MRI intensity nonlinearities
+[@Nyul:2000aa;@Tustison:2021aa]. These augmentation techniques are available in
+ANTsXNet (only ANTsPyNet versions are listed with ANTsRNet versions available)
+and include:
+
+* image noise:  ``ants.add_noise_to_image(...)``,
+
+* simulated bias field: ``antspynet.simulate_bias_field(...)``, and
+
+* nonlinear intensity warping: ``antspynet.histogram_warp_image_intensities(...)``.
+
+Shape-based data augmentation used both random linear and nonlinear
+deformations in addition to anisotropic resampling in the three canonical 
+orientations to mimic frequently used acquisition protocols for mice brains:
+
+* random spatial warping: ``antspynet.randomly_transform_image_data(...)`` and
+
+* anisotropic resampling: ``ants.resample_image(...)``.
+
+### Brain extraction
+
+Similar to human neuroimage processing, brain extraction is a crucial
+preprocessing step for accurate brain mapping.  Within ANTsXNet, we have created
+several deep learning networks for brain extraction for several image modalities
+(e.g., T1, FLAIR, fractional anisotropy).  Similarly, for the developmental
+brain atlas work [@Kronman:2023aa] we developed similar functionality for mouse
+brains of different modalities and developmental age.  All networks use a
+conventional U-net architecture [@Falk:2019aa].  Whereas T2-weighted brain
+extraction is volumetric-based for both isotropic and anisotropic data, coronal
+and sagittal networks are available for both E13.5 and E15.5 data. In ANTsPyNet,
+this functionality is available in the program
+``antspynet.mouse_brain_extraction(...)``.  
+
+For the two-shot T2-weighted brain extraction network, two brain templates were
+generated along with their masks.  One of the templates was generated from
+orthogonal multi-plane, high resolution data [@Reshetnikov2021] synthesized
+isotropic volumetric data using the B-spline fitting algorithm
+[@Tustison:2006aa].  This algorithm is encapsulated in
+``ants.fit_bspline_object_to_scattered_data(...)`` where the input is the set of
+voxel intensity values and associated physical location.  Since each point can
+be assigned a confidence weight, we use the the normalized gradient value to
+more heavily weight edge regions.  Although both template/mask pairs
+are available in the GitHub repository associated with this work, the synthesize
+volumetric B-spline T2-weighted pair is available within ANTsXNet through the
+calls:
+
+* template: ``antspynet.get_antsxnet_data("bsplineT2MouseTemplate")`` and
+
+* mask: ``antspynet.get_antsxnet_data("bsplineT2MouseTemplateBrainMask")``.
+
+### Brain parcellation
+
+The T2-weighted brain parcellation network is also based on a 3-D U-net
+architecture and the T2-w DevCCF P56 template component with 
+extensive data augmentation, as described previously.  Intensity
+differences between the template and any brain extracted input image
+are minimized through the use of the rank intensity transform 
+(``ants.rank_intensity(...)``).  Shape differences are reduced 
+by the additional preprocessing step of warping the brain extracted
+input image to the template.  Additional input channels include the 
+prior probability images created from the template parcellation.
+These images are also available through the ANTsXNet interface:
+
+* template: ``antspynet.get_antsxnet_data("DevCCF_P56_MRI-T2_50um")`` and
+
+* parcellation: ``antspynet.get_antsxnet_data("DevCCF_P56_MRI-T2_50um_BrainParcellationNickMask")``.
+
+<!-- 
+_Miscellaneous networks:  Super-resolution, cerebellum, and hemispherical masking._
+
+To further enhance the data prior to designing mapping protocols, additional
+networks were created.  A well-performing deep back projection network
+[@Haris:2018aa] was ported to ANTsXNet and expanded to 3-D for various
+super-resolution applications [@Avants:2023aa], including mouse data.  Finally,
+features of anatomical significance, namely the cerebellum and hemispherical
+midline were captured in these data using deep learning networks.   
+-->
+
+<!-- ## Intra-slice image registration with missing slice imputation 
+
+Volumetric gene expression slice data was collated into 3-D volumes. Prior to
+mapping this volume to the corresponding structural data and, potentially, to
+the appropriate template, alignment was improved using deformable registration
+on contiguous slices.  However, one of the complications associated with these
+image data was the unknown number of missing slices, the number of consecutive
+missing slices, and the different locations of these missing slices.  To handle
+this missing data problem, we found that data interpolation using the B-spline
+approximation algorithm cited earlier [@Tustison:2006aa] (ANTsPy function:
+``ants.fit_bspline_object_to_scattered_data(...)``).  This provided sufficient
+data interpolation fidelity to perform continuous slicewise registration.  Other
+possible variants that were considered but deemed unnecessary was performing
+more than one iteration cycling through data interpolation and slicewise
+alignment.  The other possibility was incorporating the super-resolution
+technique described earlier.  But again, our data did not require these
+additional steps.  -->
 
 
 \clearpage
