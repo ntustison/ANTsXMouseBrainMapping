@@ -322,6 +322,23 @@ of multiple specimens.
 
 # Results
 
+\begin{figure*}
+\centering
+\begin{subfigure}[t]{0.49\textwidth}
+\centering
+\includegraphics[width=0.99\textwidth]{Figures/fmostPipeline.pdf}
+\caption{}
+\end{subfigure} 
+\begin{subfigure}[t]{0.49\textwidth}
+\centering
+\includegraphics[width=0.99\textwidth]{Figures/merfishPipeline.pdf}
+\caption{}
+\end{subfigure}
+\caption{XXXX.}
+\label{fig:allenpipelines}
+\end{figure*}
+
+
 ## AllenCCFv3 brain image mapping
 
 ### Mapping fluorescence micro-optical sectioning tomography (fMOST) data
@@ -529,16 +546,16 @@ convergence typically occurs in four deformable iterations.
 
 ## The DevCCF velocity flow model
 
-<!-- 
+
 \begin{figure}
 \centering
-\includegraphics[width=0.99\textwidth]{Figures/lowerLeftPanel.png}
+\includegraphics[width=0.99\textwidth]{Figures/lowerLeftPanel.pdf}
 \caption{The spatial transformation between any two time points within the
 DevCCF longitudinal developmental trajectory is available through the use of
 ANTsX functionality for generating a velocity flow model.}
 \label{fig:devccfvelocity}
 \end{figure} 
--->
+
 
 To continuously interpolate transformations between the different stages of the
 DevCCF atlases, a velocity flow model was constructed using DevCCF derived data
@@ -696,7 +713,7 @@ examples can be found in the GitHub repository previously given.
 
 \begin{figure}
 \centering
-\includegraphics[width=0.9\textwidth]{Figures/mousePipeline.png}
+\includegraphics[width=0.95\textwidth]{Figures/mousePipeline.pdf}
 \caption{The mouse brain cortical thickness pipeline integrating two 
 deep learning components for brain extraction and brain parcellation 
 prior to estimating cortical thickness. Both deep learning networks

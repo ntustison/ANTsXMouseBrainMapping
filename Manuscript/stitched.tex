@@ -410,6 +410,22 @@ acquisitions of multiple specimens.
 \hypertarget{results}{%
 \section{Results}\label{results}}
 
+\begin{figure*}
+\centering
+\begin{subfigure}[t]{0.49\textwidth}
+\centering
+\includegraphics[width=0.99\textwidth]{Figures/fmostPipeline.pdf}
+\caption{}
+\end{subfigure} 
+\begin{subfigure}[t]{0.49\textwidth}
+\centering
+\includegraphics[width=0.99\textwidth]{Figures/merfishPipeline.pdf}
+\caption{}
+\end{subfigure}
+\caption{XXXX.}
+\label{fig:allenpipelines}
+\end{figure*}
+
 \hypertarget{allenccfv3-brain-image-mapping}{%
 \subsection{AllenCCFv3 brain image
 mapping}\label{allenccfv3-brain-image-mapping}}
@@ -522,6 +538,15 @@ olfactory bulb, mitral layer (AOBmi) and accessory supraoptic group
 \hypertarget{the-devccf-velocity-flow-model-1}{%
 \subsection{The DevCCF velocity flow
 model}\label{the-devccf-velocity-flow-model-1}}
+
+\begin{figure}
+\centering
+\includegraphics[width=0.99\textwidth]{Figures/lowerLeftPanel.pdf}
+\caption{The spatial transformation between any two time points within the
+DevCCF longitudinal developmental trajectory is available through the use of
+ANTsX functionality for generating a velocity flow model.}
+\label{fig:devccfvelocity}
+\end{figure}
 
 To continuously interpolate transformations between the different stages
 of the DevCCF atlases, a velocity flow model was constructed using
@@ -653,7 +678,7 @@ Pipeline}\label{the-mouse-cortical-thickness-pipeline}}
 
 \begin{figure}
 \centering
-\includegraphics[width=0.9\textwidth]{Figures/mousePipeline.png}
+\includegraphics[width=0.95\textwidth]{Figures/mousePipeline.pdf}
 \caption{The mouse brain cortical thickness pipeline integrating two 
 deep learning components for brain extraction and brain parcellation 
 prior to estimating cortical thickness. Both deep learning networks
@@ -939,9 +964,9 @@ capabilities are available in the \texttt{ants.plot(...)} (Python).
 These are capable of illustrating multiple slices in different
 orientations with both other image overlays as well as label images.
 
-\hypertarget{continuous-developmental-velocity-flow-transformation-model}{%
-\subsection{Continuous developmental velocity flow transformation
-model}\label{continuous-developmental-velocity-flow-transformation-model}}
+\hypertarget{devccf-velocity-flow-transformation-model}{%
+\subsection{DevCCF velocity flow transformation
+model}\label{devccf-velocity-flow-transformation-model}}
 
 Given multiple, linearly or non-linearly ordered point sets where
 individual points across are in one-to-one correspondence, we developed

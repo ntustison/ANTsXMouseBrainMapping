@@ -4,6 +4,23 @@
 
 # Results
 
+\begin{figure*}
+\centering
+\begin{subfigure}[t]{0.49\textwidth}
+\centering
+\includegraphics[width=0.99\textwidth]{Figures/fmostPipeline.pdf}
+\caption{}
+\end{subfigure} 
+\begin{subfigure}[t]{0.49\textwidth}
+\centering
+\includegraphics[width=0.99\textwidth]{Figures/merfishPipeline.pdf}
+\caption{}
+\end{subfigure}
+\caption{XXXX.}
+\label{fig:allenpipelines}
+\end{figure*}
+
+
 ## AllenCCFv3 brain image mapping
 
 ### Mapping fluorescence micro-optical sectioning tomography (fMOST) data

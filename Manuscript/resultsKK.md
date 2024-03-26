@@ -3,7 +3,7 @@
 
 \begin{figure}
 \centering
-\includegraphics[width=0.9\textwidth]{Figures/mousePipeline.png}
+\includegraphics[width=0.95\textwidth]{Figures/mousePipeline.pdf}
 \caption{The mouse brain cortical thickness pipeline integrating two 
 deep learning components for brain extraction and brain parcellation 
 prior to estimating cortical thickness. Both deep learning networks
