@@ -62,7 +62,7 @@ including multi-channel registration.
 __Evaluation.__  Evaluation of the canonical fMOST atlas to Allen CCFv3 mapping
 was performed via quantitative comparison at each step of the registration and
 qualitative assessment of structural correspondence after alignment by an expert
-anatomist. Dive values were generated for the following structures whole brain:
+anatomist. Dice values were generated for the following structures whole brain:
 0.99, fimbria: 0.91, habenular commisure: 0.63, posterior choroid plexus: 0.93,
 anterior choroid plexus:  0.96, optic chiasm: 0.77, caudate putamen: 0.97.
 Similar qualitative assessment was performed for each fMOST specimen including
