@@ -42,16 +42,22 @@ $^{4}$Allen Institute for Brain Science, Seattle, WA \\
 
 \end{centering}
 
-\vspace{5.5 cm}
+\vspace{3.5 cm}
 
 \noindent\rule{4cm}{0.4pt}
 
 \scriptsize
-Corresponding author: \
+Corresponding authors: \
+
 Nicholas J. Tustison, DSc \
 Department of Radiology and Medical Imaging \
 University of Virginia \
-ntustison@virginia.edu
+ntustison@virginia.edu \
+
+James C. Gee, PhD \
+Department of Radiology \
+University of Pennsylvania \
+gee@upenn.edu 
 
 \normalsize
 

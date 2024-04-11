@@ -24,10 +24,10 @@ for template generation which have been thoroughly vetted, including being used
 in several studies over the years, and which continue to be under active
 refinement.  At its core, computationally efficient and quality template
 generation requires the use of precision pairwise image mapping functionality
-which, historically, is at the origins of the ANTsX ecosystem. And these mapping
-capabilities extend beyond template generation to the mapping of other image
-data (e.g., gene expression maps) to a selected template for providing further
-insight into the mouse brain.  
+which, historically, is at the origins of the ANTsX ecosystem. Moreover, these
+mapping capabilities extend beyond template generation to the mapping of other
+image data (e.g., gene expression maps) to a selected template for providing
+further insight into the mouse brain.  
 
 With respect to the DevCCF, despite the significant expansion of available
 developmental age templates beyond what existed previously, there are still
@@ -37,23 +37,20 @@ transformations allow us to continuously situate the existing templates within a
 velocity flow model.  This allows one to determine the diffeomorphic
 transformation from any one temporal location to any other temporal location
 within the time span defined by the temporal limits of the DevCCF. This
-functionality is built on multiple components from the Insight Segmentation and
-Registration Toolkit including the B-spline scattered data approximation
-technique for field regularization and velocity field integration. This velocity
-field model permits intra-template comparison and the construction of virtual
-templates where a template can be estimated at any continuous time point within
-the temporal domain.  This novel application can potentially enhance our
-understanding of intermediate developmental stages.
+functionality is built on multiple ITK components including the B-spline
+scattered data approximation technique for field regularization and velocity
+field integration. This velocity field model permits intra-template comparison
+and the construction of virtual templates where a template can be estimated at
+any continuous time point within the temporal domain.  This novel application
+can potentially enhance our understanding of intermediate developmental stages.
 
 We also presented a mouse brain pipeline for brain extraction, parcellation, and
 cortical thickness using single-shot and two-shot learning with data
 augmentation.  This approach attempts to circumvent (or at least minimize) the
 typical requirement of large training datasets as with the human ANTsX pipeline
 analog. However, even given our initial success on independent data, we fully
-anticipate that refinements will be necessary.  In fact, a current parallel
-study with a separate collaborator using private data yielded three brain
-extraction failures (out of 89 specimens). Given that the ANTsX toolkit is a
-dynamic effort undergoing continual improvement, we manually correct such cases
+anticipate that refinements will be necessary.  Given that the ANTsX toolkit is a
+dynamic effort undergoing continual improvement, we manually correct cases that fail
 and use them for future training and refinement of network weights as we have
 done for our human-based networks.  Generally, these approaches provide a way to
 bootstrap training data for manual refinement and future generation of more

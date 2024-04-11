@@ -110,13 +110,13 @@ contains the $x$, $y$, $z$ components of the field at that point.
 
 ### Data
 
-<!-- \begin{figure}[!htb]
+\begin{figure}[!htb]
 \centering
 \includegraphics[width=0.75\textwidth]{Figures/SimplifiedAnnotations.pdf}
 \caption{Annotated regions representing common labels across developmental stages which
 are illustrated for both P4 and P14.}
 \label{fig:simplifiedannotations}
-\end{figure} -->
+\end{figure}
 
 Labeled annotations are available as part of the original DevCCF and reside
 in the space of each developmental template which range in resolution from 
@@ -125,7 +125,8 @@ $31.5-50 \mu$m.  Across all atlases, the total number of labeled regions exceeds
 all atlases were used for optimization and evaluation.  These simplified regions
 include: terminal hypothalamus, subpallium, pallium, peduncular hypothalamus,
 prosomere, prosomere, prosomere, midbrain, prepontine hindbrain, pontine 
-hindbrain, pontomedullary hindbrain, medullary hindbrain, and tracts.
+hindbrain, pontomedullary hindbrain, medullary hindbrain, and tracts 
+(see Figure \ref{fig:simplifiedannotations}).
 
 Prior to velocity field optimization, all data were rigidly transformed to 
 DevCCF P56 using the centroids of the common label sets. In order to
@@ -175,9 +176,11 @@ transform of the adjusted set of time points prior to normalization between 0
 and 1 (see the right side of Figure \ref{fig:convergence}).  This log transform,
 as part of the temporal normalization, significantly improved data spacing. 
 
-The max number of iterations was set to 200 with each iteration taking six
-minutes.  At each iteration we looped over the 11 integration points. At each
-integration point, the velocity field estimate was updated by warping the two
+The maximum number of iterations was set to 200 with each iteration taking
+approximately six minutes on a 2020 iMac (processor, 3.6 GHz 10-Core Intel Core
+i9; memory, 64 GB 2667 MHz DDR4) At each iteration we looped over the 11
+integration points. At each integration point, the velocity field estimate was
+updated by warping the two
 immediately adjacent point sets to the integration time point and determining
 the regularized displacement field between the two warped point sets.  As with
 any gradient-based descent algorithm, this field was multiplied by a small step
@@ -221,7 +224,6 @@ each image is warped.}
 \label{fig:crosswarp}
 \end{figure}
 
-<!--
 \begin{figure}[!htb]
 \centering
 \includegraphics[width=0.8\textwidth]{Figures/pseudo_template.pdf}
@@ -233,7 +235,6 @@ those images in the ANTsX template building process.}
 \label{fig:virtual}
 \end{figure}
 
--->
 
 Once optimized, the resulting velocity field can be used to generate the
 deformable transform between any two continuous points within the time interval
@@ -244,6 +245,8 @@ templates in the temporal gaps of the DevCCF.  Given an arbitrarily chosen time
 point within the normalized time point interval, the existing adjacent DevCCF
 atlases on either chronological side can be warped to the desired time point. A
 subsequent call to one of the ANTsX template building functions then permits the
-construction of the template at that time point.  Note that both of these usage
+construction of the template at that time point. In Figure \ref{fig:virtual}, we
+illustrate the use of the DevCCF velocity flow model for generating two such virtual
+templates for two arbitrary time points.  Note that both of these usage
 examples can be found in the GitHub repository previously given.
 

@@ -18,7 +18,7 @@ data to anatomical reference frames
 [@MacKenzie-Graham:2004aa,@Mackenzie-Graham:2007aa] for inferring spatial
 relationships between structures, cells, and genetics. This has motivated the
 development of detailed structural image atlases of the mouse brain.  Notable
-examples include the Allen Brain Atlas and Coordinate Frameworks (AllenCCFv3)
+examples include the Allen Brain Atlas and Common Coordinate Frameworks (AllenCCFv3)
 [@Dong:2008aa,@Wang:2020aa], the Waxholm Space [@Johnson:2010aa], and more
 recently, the Developmental Common Coordinate Framework (DevCCF)
 [@Kronman:2023aa]. Despite the significance of these contributions, challenges

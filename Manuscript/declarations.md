@@ -11,7 +11,7 @@ the Nature Research Reporting Summary linked to this article.
 __Software availability.__ 
 -->
 
-__Data availability.__ All data and doftware used in this work are publicly
+__Data availability.__ All data and software used in this work are publicly
 available.  The DevCCF atlas is available at
 \url{https://kimlab.io/brain-map/DevCCF/}. ANTsPy, ANTsR, ANTsPyNet, and
 ANTsRNet are available through GitHub at the ANTsX Ecosystem

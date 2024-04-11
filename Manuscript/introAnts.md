@@ -81,7 +81,7 @@ of gene expression and other cell type data.  Additionally, the P56 template was
 integrated with the AllenCCFv3 to further increase the practical utility of the
 DevCCF. These processes, specifically template generation and multi-modal image
 mapping, were performed using ANTsX functionality in the presence of 
-image mapping difficulties such as missing data and tissue distortion.  
+image mapping difficulties such as missing data and tissue distortion.[@Kronman:2023aa]  
 
 Given the temporal gaps in the discrete set of developmental atlases, we also
 provide an open-source framework for inferring correspondence
@@ -113,14 +113,14 @@ resolution resources (e.g., AllenCCFv3, DevCCF), specifically with respect to
 the corresponding granular brain parcellations derived from numerous hours of
 expert annotation leveraging multimodal imaging resources.
 
-Herein, we introduce a mouse brain cortical thickness pipeline for T2-weighted
+Herein, we introduce a mouse brain cortical thickness pipeline for T2-weighted (T2-w)
 MRI comprising two novel deep learning components:  two-shot learning brain
 extraction from data augmentation of two ANTsX templates generated from two open
-datasets [@Hsu2021;@Reshetnikov2021] and single-shot brian parcellation derived
+datasets [@Hsu2021;@Reshetnikov2021] and single-shot brain parcellation derived
 from the AllenCCFv3 labelings mapped to the corresponding DevCCF P56 T2-w
 component.  Although we anticipate that this cortical thickness pipeline will be
 beneficial to the research community, this work demonstrates more generally how
 one can leverage ANTsX tools for developing tailored brain parcellation schemes
 using these publicly available resources.  Evaluation is performed on an
-independent open data set [@Rahman:2023aa] comprising longitudinal acquisitions
+independent open dataset [@Rahman:2023aa] comprising longitudinal acquisitions
 of multiple specimens.  

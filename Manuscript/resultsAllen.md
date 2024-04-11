@@ -25,7 +25,7 @@
 
 ## AllenCCFv3 brain image mapping
 
-### Mapping fluorescence micro-optical sectioning tomography (fMOST) data
+### Mapping fluorescence micro-optical sectioning tomography data
 
 __Overview.__  A framework for mapping fluorescence micro-optical sectioning
 tomography (fMOST) mouse brain images into the AllenCCFv3 was developed (see
@@ -33,7 +33,7 @@ Figure \ref{fig:allenpipelines}(a)). An intensity- and shape-based average fMOST
 atlas serves as an intermediate registration target for mapping fMOST images
 from individual specimens into the AllenCCFv3. Preprocessing steps include
 downsampling to match the $25 \mu m$ isotropic AllenCCFv3, acquisition-based
-stripe artefact removal, and inhomogeneity correction [@Tustison:2010ac].
+stripe artifact removal, and inhomogeneity correction [@Tustison:2010ac].
 Preprocessing also includes a single annotation-driven registration to establish
 a canonical mapping between the fMOST atlas and the AllenCCFv3. This step allows
 us to align expert determined landmarks to accurately map structures with large
@@ -53,18 +53,19 @@ image 55 mouse brains containing gene-defined neuron populations, with sparse
 transgenic expression [@Rotolo:2008aa;@Peng:2021aa]. In short, the fMOST imaging
 platform results in 3D images with voxel sizes of $0.35 \times 0.35 \times 1.0
 \mu m^3$ and is a two-channel imaging system where the green channel displays
-the GFP labeled neuron morphology and the red channel is used to visualize the
-counterstained propidium iodide cytoarchitecture. The spatial normalizations
-described in this work were performed using the red channel, which offered
-higher tissue contrast for alignment, although other approaches are possible
-including multi-channel registration.
+the green fluorescent protein (GFP) labeled neuron morphology and the red
+channel is used to visualize the counterstained propidium iodide
+cytoarchitecture. The spatial normalizations described in this work were
+performed using the red channel, which offered higher tissue contrast for
+alignment, although other approaches are possible including multi-channel
+registration.
 
 __Evaluation.__  Evaluation of the canonical fMOST atlas to Allen CCFv3 mapping
 was performed via quantitative comparison at each step of the registration and
 qualitative assessment of structural correspondence after alignment by an expert
-anatomist. Dice values were generated for the following structures whole brain:
-0.99, fimbria: 0.91, habenular commisure: 0.63, posterior choroid plexus: 0.93,
-anterior choroid plexus:  0.96, optic chiasm: 0.77, caudate putamen: 0.97.
+anatomist. Dice values were generated for the following structures: whole brain,
+0.99; fimbria, 0.91; habenular commissure, 0.63; posterior choroid plexus, 0.93;
+anterior choroid plexus,  0.96; optic chiasm, 0.77; caudate putamen, 0.97.
 Similar qualitative assessment was performed for each fMOST specimen including
 the corresponding neuron reconstruction data.
 
@@ -119,11 +120,11 @@ pipeline are preserved and concatenated to provide point-to-point correspondence
 between the original MERFISH data and AllenCCFv3, thus allowing individual gene
 expressions to be transferred into the AllenCCFv3. 
 
-__Data.__ MERFISH mouse brain data was acquired using the detailed procedure
+__Data.__ MERFISH mouse brain data was acquired using a previously detailed procedure
 [@Yao:2023aa]. Briefly, a brain of C57BL/6 mouse was dissected according to
 standard procedures and placed into an optimal cutting temperature (OCT)
 compound (Sakura FineTek 4583) in which it was stored at -80°C. The fresh frozen
-brain was sectioned at $10 \mu m$ on Leica 3050 S cryostats at interval of 
+brain was sectioned at $10 \mu m$ on Leica 3050 S cryostats at intervals of 
 $200 \mu m$ to evenly cover the brain. A set of 500 genes were imaged that had been
 carefully chosen to distinguish the $\sim5200$ clusters of our existing RNAseq
 taxonomy. For staining the tissue with MERFISH probes, a modified version of
@@ -139,8 +140,8 @@ __Evaluation.__ Alignment of the MERFISH data into the AllenCCFv3 was
 qualitatively assessed by an expert anatomist at each iteration of the
 registration using known correspondence of gene markers and their associations
 with the AllenCCFv3. As previously reported [@Yao:2023aa], further assessment of
-the alignment showed that of the 554 terminal regions (GM only) in the
+the alignment showed that of the 554 terminal regions (gray matter only) in the
 AllenCCFv3, only seven small subregions were missed from the MERFISH dataset:
-frontal pole, layer 1 (FRP1), FRP2/3, FRP5, accessory olfactory bulb, glomerular
-layer (AOBgl), accessory olfactory bulb, granular layer (AOBgr), accessory
-olfactory bulb, mitral layer (AOBmi) and accessory supraoptic group (ASO).
+frontal pole, layer 1 (FRP1), FRP2/3, FRP5; accessory olfactory bulb, glomerular
+layer (AOBgl); accessory olfactory bulb, granular layer (AOBgr); accessory
+olfactory bulb, mitral layer (AOBmi); and accessory supraoptic group (ASO).

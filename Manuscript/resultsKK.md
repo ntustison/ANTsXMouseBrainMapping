@@ -23,7 +23,7 @@ learning [@Tustison:2021aa] leveraging the earlier results [@Tustison:2014ab]
 for training data.  
 
 In the case of the mouse brain, the lack of training data and/or tools to
-generate training data make a similar developmental trajectory difficult. In
+generate training data making analogous algorithmic development difficult. In
 addition, mouse data is often characterized by unique issues such as frequent
 anisotropic sampling which are often in sharp contrast to the high resolution
 resources available within the community, e.g., AllenCCFv3 and DevCCF. Using
@@ -35,20 +35,20 @@ and detailed below.
 
 In order to create a generalized mouse brain extraction network, we built
 whole-head templates from two publicly available datasets.  The Center for
-Animal MRI (CAMRI) dataset [@Hsu2021] from UNC consists of 16 T2-weighted MRI of
+Animal MRI (CAMRI) dataset [@Hsu2021] from the University of North Carolina
+at Chapel Hill consists of 16 T2-weighted MRI volumes of
 voxel resolution $0.16 \times 0.16 \times 0.16 mm^3$.  The second
-high-resolution data set [@Reshetnikov2021] comprises 88 specimens each with
+high-resolution dataset [@Reshetnikov2021] comprises 88 specimens each with
 three spatially aligned canonical views with in-plane resolution of $0.08 \times
-0.08 mm^2$ with a slice thickness of $0.5 mm$.  These three orthogonal views were
-used to reconstruct a single high-resolution volume per subject using a B-spline
-fitting algorithm developed in ANTsX [@Tustison:2006aa].  From these two
-datasets, two symmetric isotropic ANTsX templates [@Avants:2010aa] were
-generated having different defacing aesthetics analogous to the publicly
-available ANTsX human brain templates used in previous research
-[@Tustison:2014ab]. Bias field simulation, intensity histogram warping, noise
-simulation, random translation and warping, and random anisotropic resampling in
-the three canonical directions were used for data augmentation in creating a
-T2-weighted brain extraction network.
+0.08 mm^2$ with a slice thickness of $0.5 mm$.  These three orthogonal views
+were used to reconstruct a single high-resolution volume per subject using a
+B-spline fitting algorithm developed in ANTsX [@Tustison:2006aa].  From these
+two datasets, two symmetric isotropic ANTsX templates [@Avants:2010aa] were
+generated analogous to the publicly available ANTsX human brain templates used
+in previous research [@Tustison:2014ab]. Bias field simulation, intensity
+histogram warping, noise simulation, random translation and warping, and random
+anisotropic resampling in the three canonical directions were used for data
+augmentation in creating a T2-weighted brain extraction network.
 
 ### Single-shot mouse brain parcellation network
 
@@ -91,7 +91,7 @@ consisting of 12 specimens $\times$ 7 time points =
 masks provide generally good agreement with the brain extraction network.
 (b) Cortical volume measurements show similar average quantities over
 the developmental trajectory between the original anisotropic data and 
-interpolated isotropic data.  These results contrast with the cortical
+interpolated isotropic data.  (c) These results contrast with the cortical
 thickness measurements which show that cortical thickness estimation 
 in anisotropic space severely underestimates the actual values.}
 \label{fig:evaluation}
@@ -105,7 +105,7 @@ available brain masks.  In-plane resolution is $0.1 \times 0.1 mm^2$ with a
 slice thickness of $0.5 mm$.  Since the training data is isotropic and data
 augmentation includes downsampling in the canonical directions, each of the two 
 networks learns mouse brain-specific interpolation such that one can perform prediction
-on thick-sliced images, such as these evaluation data, and return isotropic
+on thick-sliced images, as, for example, in these evaluation data, and return isotropic
 probability and thickness maps (a choice available to the user).  Figure 
 \ref{fig:evaluation} summarizes the results of the evaluation and comparison between
 isotropic and anisotropic cortical measurements in male and female specimens.
