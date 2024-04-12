@@ -48,7 +48,7 @@ generated analogous to the publicly available ANTsX human brain templates used
 in previous research [@Tustison:2014ab]. Bias field simulation, intensity
 histogram warping, noise simulation, random translation and warping, and random
 anisotropic resampling in the three canonical directions were used for data
-augmentation in creating a T2-weighted brain extraction network.
+augmentation in training a T2-weighted brain extraction network.
 
 ### Single-shot mouse brain parcellation network
 
@@ -60,7 +60,7 @@ cortex, cerebral nuclei, brain stem, cerebellum, main olfactory bulb, and
 hippocampal formation.  This labeling was mapped to the P56
 component of the DevCCF. Both the T2-w P56 DevCCF and labelings, in
 conjunction with the data augmentation described previously for brain 
-extraction, was used to create a brain parcellation network.
+extraction, was used to train a brain parcellation network.
 
 ### Evaluation
 
@@ -90,7 +90,7 @@ consisting of 12 specimens $\times$ 7 time points =
 84 total images.  (a) Dice overlap comparisons with the provided brain
 masks provide generally good agreement with the brain extraction network.
 (b) Cortical volume measurements show similar average quantities over
-the developmental trajectory between the original anisotropic data and 
+growth and development between the original anisotropic data and 
 interpolated isotropic data.  (c) These results contrast with the cortical
 thickness measurements which show that cortical thickness estimation 
 in anisotropic space severely underestimates the actual values.}

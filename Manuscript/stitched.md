@@ -206,7 +206,7 @@ brain image data use ANTsX tools for core processing steps in various workflows,
 particularly its pairwise, intensity-based image registration capabilities and
 bias field correction. Historically, ANTsX development is originally based on
 fundamental approaches to image mapping
-[@Bajcsy:1982aa;@Bajcsy:1989aa;@Gee:2003aa], particularly in the human brain,
+[@Bajcsy:1982aa;@Bajcsy:1989aa;@Gee:1993aa], particularly in the human brain,
 which has resulted in core contributions to the field such as the well-known
 Symmetric Normalization (SyN) algorithm [@Avants:2008aa].  Since
 its development, various independent platforms have been used to evaluate ANTsX
@@ -218,13 +218,13 @@ presence of tumors [@Baheti:2021aa].
 Apart from its registration capabilities, ANTsX comprises additional
 functionality such as template generation [@Avants:2010aa], intensity-based
 segmentation [@Avants:2011uf], preprocessing [@Manjon:2010aa;@Tustison:2010ac],
-deep learning networks [@Tustison:2021aa], and other miscelleneous utilties (see
+deep learning networks [@Tustison:2021aa], and other miscelleneous utilities (see
 Table \ref{table:methods}). The comprehensive use of the toolkit has
 demonstrated superb performance in multiple application areas (e.g., consensus
 labeling [@Wang:2013ab], brain tumor segmentation [@Tustison:2014aa], and
 cardiac motion estimation [@Tustison:2015ab] ). Importantly, ANTs is built on
 the Insight Toolkit (ITK) [@McCormick:2014aa] deriving benefit from the
-open-source community of scientists and programmers and providing an important
+open-source community of scientists and programmers as well as providing an important
 resource for algorithmic development, evaluation, and improvement.  We use this
 functionality to demonstrate recently developed frameworks for mapping
 fluorescence micro-optical sectioning tomography (fMOST) and multiplexed
@@ -276,7 +276,7 @@ and P56.  Modalities include light sheet flourescence miscroscopy (LSFM) and at
 least four MRI contrasts per developmental stage.  Anatomical parcellations are
 also available for each time point and were generated from ANTsX-based mappings
 of gene expression and other cell type data.  Additionally, the P56 template was
-integrated with the AllenCCFv3 to further increase the practical utility of the
+integrated with the AllenCCFv3 to further enhance the practical utility of the
 DevCCF. These processes, specifically template generation and multi-modal image
 mapping, were performed using ANTsX functionality in the presence of 
 image mapping difficulties such as missing data and tissue distortion.[@Kronman:2023aa]  
@@ -364,8 +364,8 @@ us to align expert determined landmarks to accurately map structures with large
 morphological differences between the modalities, which are difficult to address
 using standard approaches. Once this canonical mapping is established, standard
 intensity-based registration is used to align each new fMOST image to the fMOST
-specific atlas. This mapping is concatenated with the canonical fMOST atlas-to-
-AllenCCFv3 mapping to further map each individual brain into the latter without
+specific atlas. This mapping is concatenated with the canonical fMOST 
+atlas-to-AllenCCFv3 mapping to further map each individual brain into the latter without
 the need to generate additional landmarks. Transformations learned through this
 mapping can be applied to single neuron reconstructions from the fMOST images to
 evaluate neuronal distributions across different specimens into the AllenCCFv3
@@ -464,7 +464,7 @@ __Evaluation.__ Alignment of the MERFISH data into the AllenCCFv3 was
 qualitatively assessed by an expert anatomist at each iteration of the
 registration using known correspondence of gene markers and their associations
 with the AllenCCFv3. As previously reported [@Yao:2023aa], further assessment of
-the alignment showed that of the 554 terminal regions (gray matter only) in the
+the alignment showed that, of the 554 terminal regions (gray matter only) in the
 AllenCCFv3, only seven small subregions were missed from the MERFISH dataset:
 frontal pole, layer 1 (FRP1), FRP2/3, FRP5; accessory olfactory bulb, glomerular
 layer (AOBgl); accessory olfactory bulb, granular layer (AOBgr); accessory
@@ -608,7 +608,7 @@ label was used to construct a separate fixed and moving image pair resulting in
 a multi-metric registration optimization scenario involving 24 binary image
 pairs (each label weighted equally) for optimizing diffeomorphic correspondence
 between neighboring time point atlases using the mean squares metric and the
-symmetric normalization transform.
+symmetric normalization transform [@Avants:2008aa].
 
 To generate the set of common point sets across all seven developmental atlases,
 the label boundaries and whole regions were sampled in the P56 atlas and then
@@ -771,7 +771,7 @@ generated analogous to the publicly available ANTsX human brain templates used
 in previous research [@Tustison:2014ab]. Bias field simulation, intensity
 histogram warping, noise simulation, random translation and warping, and random
 anisotropic resampling in the three canonical directions were used for data
-augmentation in creating a T2-weighted brain extraction network.
+augmentation in training a T2-weighted brain extraction network.
 
 ### Single-shot mouse brain parcellation network
 
@@ -783,7 +783,7 @@ cortex, cerebral nuclei, brain stem, cerebellum, main olfactory bulb, and
 hippocampal formation.  This labeling was mapped to the P56
 component of the DevCCF. Both the T2-w P56 DevCCF and labelings, in
 conjunction with the data augmentation described previously for brain 
-extraction, was used to create a brain parcellation network.
+extraction, was used to train a brain parcellation network.
 
 ### Evaluation
 
@@ -813,7 +813,7 @@ consisting of 12 specimens $\times$ 7 time points =
 84 total images.  (a) Dice overlap comparisons with the provided brain
 masks provide generally good agreement with the brain extraction network.
 (b) Cortical volume measurements show similar average quantities over
-the developmental trajectory between the original anisotropic data and 
+growth and development between the original anisotropic data and 
 interpolated isotropic data.  (c) These results contrast with the cortical
 thickness measurements which show that cortical thickness estimation 
 in anisotropic space severely underestimates the actual values.}
@@ -844,7 +844,7 @@ isotropic and anisotropic cortical measurements in male and female specimens.
 
 The ANTsX ecosystem is a powerful framework that has demonstrated applicability
 to multiple species and organ systems, including the mouse brain. This is
-further evidenced by the many other software packages that use various ANTsX
+further evidenced by the many  software packages that use various ANTsX
 components in their own mouse-specific workflows.  In and of itself, the
 extensive functionality of ANTsX makes it possible to create complete processing
 pipelines without requiring the integration of multiple packages. These
@@ -892,8 +892,7 @@ dynamic effort undergoing continual improvement, we manually correct cases that 
 and use them for future training and refinement of network weights as we have
 done for our human-based networks.  Generally, these approaches provide a way to
 bootstrap training data for manual refinement and future generation of more
-accurate deep learning networks in the absence of corresponding non deep
-learning-based tools.
+accurate deep learning networks in the absence of other applicable tools.
 
 
 
@@ -937,7 +936,7 @@ solutions to pairwise image registration scenarios [@Avants:2014aa].  It
 includes innovative transformation models for biological modeling
 [@Avants:2008aa;@Tustison:2013ac] and has proven capable of excellent
 performance [@Klein:2009aa;@Avants:2011wx].  Various parameter sets targeting
-specific applications have been packaged with the different ANTsX platforms,
+specific applications have been packaged with the different ANTsX packages,
 specifically ANTs, ANTsPy, and ANTsR [@Tustison:2021aa]. In ANTsPy, the function
 ``ants.registration(...)`` is used to register a pair of images or a pair of
 image sets where ``type_of_transform`` is a user-specified option that invokes a
@@ -1096,7 +1095,7 @@ addresses these intensity inhomogeneities using N4 bias field correction
 
 ### Preprocessing
 
-* _Initial volume reconstruction_. Alignment of MERFISH data into a 3D atlas space
+* _Initial volume reconstruction_. Alignment of MERFISH data into a 3-D atlas space
   requires an estimation of anatomical structure within the data. For each
   section, this anatomic reference image was created by aggregating the number
   of detected genetic markers (across all probes) within each pixel of a $10 
@@ -1187,7 +1186,7 @@ for constructing the velocity flow model. Approximately 125 iterations resulted
 in a steady convergence based on the average Euclidean norm between transformed
 point sets.  Ten integration points were used and point sets were distributed
 along the temporal dimension using a log transform for a more evenly spaced
-sampling.  For additional information see the help menu for the ANTsPy function
+sampling.  For additional information a help menu is available for the ANTsPy function
 ``ants.fit_time_varying_transform_to_point_sets(...)``.
 
 ## ANTsXNet mouse brain applications 
@@ -1234,14 +1233,14 @@ Similar to human neuroimage processing, brain extraction is a crucial
 preprocessing step for accurate brain mapping.  We developed similar
 functionality for T2-weighted mouse brains.  This network uses a conventional
 U-net architecture [@Falk:2019aa] and, in ANTsPyNet, this functionality is
-available in the program ``antspynet.mouse_brain_extraction(...)``.  
+available in the program ``antspynet.mouse_brain_extraction(...)``.
 For the two-shot T2-weighted brain extraction network, two brain templates were
 generated along with their masks.  One of the templates was generated from
 orthogonal multi-plane, high resolution data [@Reshetnikov2021] which were 
 combined to synthesize isotropic volumetric data using the B-spline fitting algorithm
 [@Tustison:2006aa].  This algorithm is encapsulated in
 ``ants.fit_bspline_object_to_scattered_data(...)`` where the input is the set of
-voxel intensity values and associated physical location.  Since each point can
+voxel intensity values and each associated physical location.  Since each point can
 be assigned a confidence weight, we use the normalized gradient value to
 more heavily weight edge regions.  Although both template/mask pairs
 are available in the GitHub repository associated with this work, the synthesized

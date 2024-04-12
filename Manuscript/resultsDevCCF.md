@@ -137,7 +137,7 @@ label was used to construct a separate fixed and moving image pair resulting in
 a multi-metric registration optimization scenario involving 24 binary image
 pairs (each label weighted equally) for optimizing diffeomorphic correspondence
 between neighboring time point atlases using the mean squares metric and the
-symmetric normalization transform.
+symmetric normalization transform [@Avants:2008aa].
 
 To generate the set of common point sets across all seven developmental atlases,
 the label boundaries and whole regions were sampled in the P56 atlas and then

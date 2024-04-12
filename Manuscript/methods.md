@@ -39,7 +39,7 @@ solutions to pairwise image registration scenarios [@Avants:2014aa].  It
 includes innovative transformation models for biological modeling
 [@Avants:2008aa;@Tustison:2013ac] and has proven capable of excellent
 performance [@Klein:2009aa;@Avants:2011wx].  Various parameter sets targeting
-specific applications have been packaged with the different ANTsX platforms,
+specific applications have been packaged with the different ANTsX packages,
 specifically ANTs, ANTsPy, and ANTsR [@Tustison:2021aa]. In ANTsPy, the function
 ``ants.registration(...)`` is used to register a pair of images or a pair of
 image sets where ``type_of_transform`` is a user-specified option that invokes a
@@ -198,7 +198,7 @@ addresses these intensity inhomogeneities using N4 bias field correction
 
 ### Preprocessing
 
-* _Initial volume reconstruction_. Alignment of MERFISH data into a 3D atlas space
+* _Initial volume reconstruction_. Alignment of MERFISH data into a 3-D atlas space
   requires an estimation of anatomical structure within the data. For each
   section, this anatomic reference image was created by aggregating the number
   of detected genetic markers (across all probes) within each pixel of a $10 
@@ -289,7 +289,7 @@ for constructing the velocity flow model. Approximately 125 iterations resulted
 in a steady convergence based on the average Euclidean norm between transformed
 point sets.  Ten integration points were used and point sets were distributed
 along the temporal dimension using a log transform for a more evenly spaced
-sampling.  For additional information see the help menu for the ANTsPy function
+sampling.  For additional information a help menu is available for the ANTsPy function
 ``ants.fit_time_varying_transform_to_point_sets(...)``.
 
 ## ANTsXNet mouse brain applications 
@@ -336,14 +336,14 @@ Similar to human neuroimage processing, brain extraction is a crucial
 preprocessing step for accurate brain mapping.  We developed similar
 functionality for T2-weighted mouse brains.  This network uses a conventional
 U-net architecture [@Falk:2019aa] and, in ANTsPyNet, this functionality is
-available in the program ``antspynet.mouse_brain_extraction(...)``.  
+available in the program ``antspynet.mouse_brain_extraction(...)``.
 For the two-shot T2-weighted brain extraction network, two brain templates were
 generated along with their masks.  One of the templates was generated from
 orthogonal multi-plane, high resolution data [@Reshetnikov2021] which were 
 combined to synthesize isotropic volumetric data using the B-spline fitting algorithm
 [@Tustison:2006aa].  This algorithm is encapsulated in
 ``ants.fit_bspline_object_to_scattered_data(...)`` where the input is the set of
-voxel intensity values and associated physical location.  Since each point can
+voxel intensity values and each associated physical location.  Since each point can
 be assigned a confidence weight, we use the normalized gradient value to
 more heavily weight edge regions.  Although both template/mask pairs
 are available in the GitHub repository associated with this work, the synthesized

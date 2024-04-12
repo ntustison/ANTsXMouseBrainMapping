@@ -40,8 +40,8 @@ us to align expert determined landmarks to accurately map structures with large
 morphological differences between the modalities, which are difficult to address
 using standard approaches. Once this canonical mapping is established, standard
 intensity-based registration is used to align each new fMOST image to the fMOST
-specific atlas. This mapping is concatenated with the canonical fMOST atlas-to-
-AllenCCFv3 mapping to further map each individual brain into the latter without
+specific atlas. This mapping is concatenated with the canonical fMOST 
+atlas-to-AllenCCFv3 mapping to further map each individual brain into the latter without
 the need to generate additional landmarks. Transformations learned through this
 mapping can be applied to single neuron reconstructions from the fMOST images to
 evaluate neuronal distributions across different specimens into the AllenCCFv3
@@ -140,7 +140,7 @@ __Evaluation.__ Alignment of the MERFISH data into the AllenCCFv3 was
 qualitatively assessed by an expert anatomist at each iteration of the
 registration using known correspondence of gene markers and their associations
 with the AllenCCFv3. As previously reported [@Yao:2023aa], further assessment of
-the alignment showed that of the 554 terminal regions (gray matter only) in the
+the alignment showed that, of the 554 terminal regions (gray matter only) in the
 AllenCCFv3, only seven small subregions were missed from the MERFISH dataset:
 frontal pole, layer 1 (FRP1), FRP2/3, FRP5; accessory olfactory bulb, glomerular
 layer (AOBgl); accessory olfactory bulb, granular layer (AOBgr); accessory

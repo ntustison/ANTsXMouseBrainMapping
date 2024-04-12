@@ -8,7 +8,7 @@ brain image data use ANTsX tools for core processing steps in various workflows,
 particularly its pairwise, intensity-based image registration capabilities and
 bias field correction. Historically, ANTsX development is originally based on
 fundamental approaches to image mapping
-[@Bajcsy:1982aa;@Bajcsy:1989aa;@Gee:2003aa], particularly in the human brain,
+[@Bajcsy:1982aa;@Bajcsy:1989aa;@Gee:1993aa], particularly in the human brain,
 which has resulted in core contributions to the field such as the well-known
 Symmetric Normalization (SyN) algorithm [@Avants:2008aa].  Since
 its development, various independent platforms have been used to evaluate ANTsX
@@ -20,13 +20,13 @@ presence of tumors [@Baheti:2021aa].
 Apart from its registration capabilities, ANTsX comprises additional
 functionality such as template generation [@Avants:2010aa], intensity-based
 segmentation [@Avants:2011uf], preprocessing [@Manjon:2010aa;@Tustison:2010ac],
-deep learning networks [@Tustison:2021aa], and other miscelleneous utilties (see
+deep learning networks [@Tustison:2021aa], and other miscelleneous utilities (see
 Table \ref{table:methods}). The comprehensive use of the toolkit has
 demonstrated superb performance in multiple application areas (e.g., consensus
 labeling [@Wang:2013ab], brain tumor segmentation [@Tustison:2014aa], and
 cardiac motion estimation [@Tustison:2015ab] ). Importantly, ANTs is built on
 the Insight Toolkit (ITK) [@McCormick:2014aa] deriving benefit from the
-open-source community of scientists and programmers and providing an important
+open-source community of scientists and programmers as well as providing an important
 resource for algorithmic development, evaluation, and improvement.  We use this
 functionality to demonstrate recently developed frameworks for mapping
 fluorescence micro-optical sectioning tomography (fMOST) and multiplexed
@@ -78,7 +78,7 @@ and P56.  Modalities include light sheet flourescence miscroscopy (LSFM) and at
 least four MRI contrasts per developmental stage.  Anatomical parcellations are
 also available for each time point and were generated from ANTsX-based mappings
 of gene expression and other cell type data.  Additionally, the P56 template was
-integrated with the AllenCCFv3 to further increase the practical utility of the
+integrated with the AllenCCFv3 to further enhance the practical utility of the
 DevCCF. These processes, specifically template generation and multi-modal image
 mapping, were performed using ANTsX functionality in the presence of 
 image mapping difficulties such as missing data and tissue distortion.[@Kronman:2023aa]  

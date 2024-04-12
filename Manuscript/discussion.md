@@ -6,7 +6,7 @@
 
 The ANTsX ecosystem is a powerful framework that has demonstrated applicability
 to multiple species and organ systems, including the mouse brain. This is
-further evidenced by the many other software packages that use various ANTsX
+further evidenced by the many  software packages that use various ANTsX
 components in their own mouse-specific workflows.  In and of itself, the
 extensive functionality of ANTsX makes it possible to create complete processing
 pipelines without requiring the integration of multiple packages. These
@@ -54,7 +54,6 @@ dynamic effort undergoing continual improvement, we manually correct cases that 
 and use them for future training and refinement of network weights as we have
 done for our human-based networks.  Generally, these approaches provide a way to
 bootstrap training data for manual refinement and future generation of more
-accurate deep learning networks in the absence of corresponding non deep
-learning-based tools.
+accurate deep learning networks in the absence of other applicable tools.
 
 
