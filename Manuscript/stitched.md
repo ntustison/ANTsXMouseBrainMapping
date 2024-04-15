@@ -375,7 +375,7 @@ __Data.__ The high-throughput and high-resolution fluorescence micro-optical
 sectioning tomography (fMOST) [@Gong:2016aa;@Wang:2021aa] platform was used to
 image 55 mouse brains containing gene-defined neuron populations, with sparse
 transgenic expression [@Rotolo:2008aa;@Peng:2021aa]. In short, the fMOST imaging
-platform results in 3D images with voxel sizes of $0.35 \times 0.35 \times 1.0
+platform results in 3-D images with voxel sizes of $0.35 \times 0.35 \times 1.0
 \mu m^3$ and is a two-channel imaging system where the green channel displays
 the green fluorescent protein (GFP) labeled neuron morphology and the red
 channel is used to visualize the counterstained propidium iodide
@@ -437,7 +437,7 @@ of MERFISH data specific preprocessing which includes section reconstruction,
 mapping corresponding anatomical labels between AllenCCFv3 and the spatial
 transcriptomic maps of the MERFISH data, and matching MERFISH sections to the
 atlas space. Following pre-processing, two main alignment steps were performed:
-1) 3D global affine mapping and section matching of the AllenCCFv3 into the
+1) 3-D global affine mapping and section matching of the AllenCCFv3 into the
 MERFISH data and 2) 2D global and deformable mapping between each MERFISH
 section and matched AllenCCFv3 section. Mappings learned via each step in the
 pipeline are preserved and concatenated to provide point-to-point correspondence
@@ -1011,7 +1011,7 @@ in fMOST imaging where inhomogeneity during the cutting and imaging of different
 sections can leave stripes of hyper- and hypo-intensity across the image. These
 stripe artifacts can be latched onto by the registration algorithm as unintended
 features that are then misregistered to non-analogous structures in the
-AllenCCFv3. We address these artifacts by fitting a 3D bandstop (notch) filter
+AllenCCFv3. We address these artifacts by fitting a 3-D bandstop (notch) filter
 to target the frequency of the stripe patterns and removing them prior to the
 image registration.
 
@@ -1124,7 +1124,7 @@ addresses these intensity inhomogeneities using N4 bias field correction
   Once cells in the MERFISH data are labeled, morphological dilation is used to
   provide full regional labels for alignment into the AllenCCFv3. 
 
-* _Section matching_.  Since the MERFISH data is acquired as sections, its 3D
+* _Section matching_.  Since the MERFISH data is acquired as sections, its 3-D
   orientation may not be fully accounted for during the volume reconstruction
   step, due to the particular cutting angle. This can lead to obliqueness
   artifacts in the section where certain structures can appear to be larger or

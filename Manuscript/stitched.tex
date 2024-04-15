@@ -470,7 +470,7 @@ micro-optical sectioning tomography (fMOST)\textsuperscript{60,61}
 platform was used to image 55 mouse brains containing gene-defined
 neuron populations, with sparse transgenic
 expression.\textsuperscript{62,63} In short, the fMOST imaging platform
-results in 3D images with voxel sizes of
+results in 3-D images with voxel sizes of
 \(0.35 \times 0.35 \times 1.0 \mu m^3\) and is a two-channel imaging
 system where the green channel displays the green fluorescent protein
 (GFP) labeled neuron morphology and the red channel is used to visualize
@@ -505,8 +505,8 @@ MERFISH data specific preprocessing which includes section
 reconstruction, mapping corresponding anatomical labels between
 AllenCCFv3 and the spatial transcriptomic maps of the MERFISH data, and
 matching MERFISH sections to the atlas space. Following pre-processing,
-two main alignment steps were performed: 1) 3D global affine mapping and
-section matching of the AllenCCFv3 into the MERFISH data and 2) 2D
+two main alignment steps were performed: 1) 3-D global affine mapping
+and section matching of the AllenCCFv3 into the MERFISH data and 2) 2D
 global and deformable mapping between each MERFISH section and matched
 AllenCCFv3 section. Mappings learned via each step in the pipeline are
 preserved and concatenated to provide point-to-point correspondence
@@ -1031,7 +1031,7 @@ AllenCCFv3}\label{mapping-fmost-data-to-allenccfv3}}
   and hypo-intensity across the image. These stripe artifacts can be
   latched onto by the registration algorithm as unintended features that
   are then misregistered to non-analogous structures in the AllenCCFv3.
-  We address these artifacts by fitting a 3D bandstop (notch) filter to
+  We address these artifacts by fitting a 3-D bandstop (notch) filter to
   target the frequency of the stripe patterns and removing them prior to
   the image registration.
 \item
@@ -1169,9 +1169,9 @@ AllenCCFv3}\label{mapping-merfish-data-to-allenccfv3}}
   the AllenCCFv3.
 \item
   \emph{Section matching}. Since the MERFISH data is acquired as
-  sections, its 3D orientation may not be fully accounted for during the
-  volume reconstruction step, due to the particular cutting angle. This
-  can lead to obliqueness artifacts in the section where certain
+  sections, its 3-D orientation may not be fully accounted for during
+  the volume reconstruction step, due to the particular cutting angle.
+  This can lead to obliqueness artifacts in the section where certain
   structures can appear to be larger or smaller, or missing outright
   from the section. To address this, we first use a global alignment to
   match the orientations of the MERFISH sections to the atlas space. In

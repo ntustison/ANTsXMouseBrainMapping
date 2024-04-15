@@ -114,7 +114,7 @@ in fMOST imaging where inhomogeneity during the cutting and imaging of different
 sections can leave stripes of hyper- and hypo-intensity across the image. These
 stripe artifacts can be latched onto by the registration algorithm as unintended
 features that are then misregistered to non-analogous structures in the
-AllenCCFv3. We address these artifacts by fitting a 3D bandstop (notch) filter
+AllenCCFv3. We address these artifacts by fitting a 3-D bandstop (notch) filter
 to target the frequency of the stripe patterns and removing them prior to the
 image registration.
 
@@ -227,7 +227,7 @@ addresses these intensity inhomogeneities using N4 bias field correction
   Once cells in the MERFISH data are labeled, morphological dilation is used to
   provide full regional labels for alignment into the AllenCCFv3. 
 
-* _Section matching_.  Since the MERFISH data is acquired as sections, its 3D
+* _Section matching_.  Since the MERFISH data is acquired as sections, its 3-D
   orientation may not be fully accounted for during the volume reconstruction
   step, due to the particular cutting angle. This can lead to obliqueness
   artifacts in the section where certain structures can appear to be larger or
