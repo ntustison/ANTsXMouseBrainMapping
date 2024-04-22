@@ -152,8 +152,11 @@ points were weighted twice as those of non-boundary points during optimization.
 \begin{figure}[!htb]
 \centering
 \includegraphics[width=0.99\textwidth]{Figures/convergence.pdf}
-\caption{Convergence of the optimization of the velocity field for describing the 
-transformation through the developmental stages from E11.5 through P56.}
+\caption{Convergence of the optimization of the velocity field for describing
+the transformation through the developmental stages from E11.5 through P56.
+Integration points in diagram on the right are color-coordinated with the center
+plot and placed in relation to the logarithmically situated temporal placement
+of the individual DevCCF atlases.}
 \label{fig:convergence}
 \end{figure}
 

@@ -2,7 +2,7 @@
 # Abstract {-}
 
 Precision mapping techniques coupled with high resolution image acquisition of
-the mouse brain permit the study of the spatial organization of gene activity
+the mouse brain permit the study of the spatial organization of gene expression
 and their mutual interaction for a comprehensive view of salient
 structural/functional relationships. Such research is facilitated by
 standardized anatomical coordinate systems, such as the well-known Allen Common

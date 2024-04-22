@@ -13,7 +13,9 @@ rmdFiles <- c( "format.md",
                "resultsKK.md",
                "discussion.md",
                "methods.md",
-               "declarations.md",
+               "data_availability.md",
+               "acknowledgments.md",
+               "author_contributions.md",
                "references.md"
              )
 

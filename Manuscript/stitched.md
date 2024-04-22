@@ -110,7 +110,7 @@ gee@upenn.edu
 # Abstract {-}
 
 Precision mapping techniques coupled with high resolution image acquisition of
-the mouse brain permit the study of the spatial organization of gene activity
+the mouse brain permit the study of the spatial organization of gene expression
 and their mutual interaction for a comprehensive view of salient
 structural/functional relationships. Such research is facilitated by
 standardized anatomical coordinate systems, such as the well-known Allen Common
@@ -623,8 +623,11 @@ points were weighted twice as those of non-boundary points during optimization.
 \begin{figure}[!htb]
 \centering
 \includegraphics[width=0.99\textwidth]{Figures/convergence.pdf}
-\caption{Convergence of the optimization of the velocity field for describing the 
-transformation through the developmental stages from E11.5 through P56.}
+\caption{Convergence of the optimization of the velocity field for describing
+the transformation through the developmental stages from E11.5 through P56.
+Integration points in diagram on the right are color-coordinated with the center
+plot and placed in relation to the logarithmically situated temporal placement
+of the individual DevCCF atlases.}
 \label{fig:convergence}
 \end{figure}
 
@@ -1302,31 +1305,41 @@ additional steps.  -->
 
 
 \clearpage
-\newpage
 
-<!--
-__Ethical compliance.__ We complied with all relevant ethical regulations. 
+# Data availability {-}
 
-__Reporting Summary.__ Further information on research design is available in
-the Nature Research Reporting Summary linked to this article.
-
-__Software availability.__ 
--->
-
-__Data availability.__ All data and software used in this work are publicly
-available.  The DevCCF atlas is available at
-\url{https://kimlab.io/brain-map/DevCCF/}. ANTsPy, ANTsR, ANTsPyNet, and
-ANTsRNet are available through GitHub at the ANTsX Ecosystem
+ All data and software used in this work are publicly available.  The DevCCF
+atlas is available at \url{https://kimlab.io/brain-map/DevCCF/}. ANTsPy, ANTsR,
+ANTsPyNet, and ANTsRNet are available through GitHub at the ANTsX Ecosystem
 (\url{https://github.com/ANTsX}).  Training scripts for all deep learning
-functionality in ANTsXNet can also be found on GitHub 
-(\url{https://github.com/ntustison/ANTsXNetTraining}).
-A GitHub repository specifically pertaining to the AllenCCFv3 mapping 
-is available at \url{https://github.com/dontminchenit/CCFAlignmentToolkit}.
-For the other two contributions contained in this work, the longitudinal DevCCF 
-mapping and mouse cortical thickness pipeline, we refer the interested reader
-to \url{https://github.com/ntustison/ANTsXMouseBrainMapping}. 
+functionality in ANTsXNet can also be found on GitHub
+(\url{https://github.com/ntustison/ANTsXNetTraining}). A GitHub repository
+specifically pertaining to the AllenCCFv3 mapping is available at
+\url{https://github.com/dontminchenit/CCFAlignmentToolkit}. For the other two
+contributions contained in this work, the longitudinal DevCCF mapping and mouse
+cortical thickness pipeline, we refer the interested reader to
+\url{https://github.com/ntustison/ANTsXMouseBrainMapping}. 
 
 
+\clearpage
+
+# Acknowledgments {-}
+
+Support for the research reported in this work includes funding from the
+National Institute of Biomedical Imaging and Bioengineering (R01-EB031722)
+and National Institute of Mental Health (RF1-MH124605 and U24-MH114827).
+
+
+\clearpage
+
+# Author contributions {-}
+
+N.T., M.C., and J.G. wrote the main manuscript text and figures.  M.C.,
+M.K., R.D., S.S., Q.W., L.G., J.D., C.G., and J.G. developed the Allen 
+registration pipelines.  N.T. and F.K. developed the time-varying velocity
+transformation model for the DevCCF.  N.T. and M.T. developed the brain 
+parcellation and cortical thickness methodology.  All authors reviewed 
+the manuscript.
 \clearpage
 
 # References {-}
