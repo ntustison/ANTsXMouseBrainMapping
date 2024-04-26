@@ -189,13 +189,15 @@ AFNI [@Cox:2012aa] for image registration; MIRACL, SAMRI, SAMBA
 tools. Other packages use landmark-based approaches to image registration
 including SMART [@Jin:2022aa]---an R package for semi-automated landmark-based
 registration and segmentation of mouse brain based on WholeBrain
-[@Furth:2018aa].  FriendlyClearMap [@Negwer:2022aa] uses the landmark-based
-registration functionality of Elastix [@Klein:2010aa]. Finally, the widespread
-adoption of deep learning techniques has also influenced development in mouse
-brain imaging methodologies.  For example, if tissue deformations are not
-considered problematic for a particular dataset, DeepSlice can be used to
-determine affine mappings [@Carey:2023aa] with the optimal computational
-efficiency associated with neural networks.
+[@Furth:2018aa].  Relatedly, FriendlyClearMap [@Negwer:2022aa] and mBrainAligner
+[@Qu:2022aa] are both landmark-based approaches to mapping of the mouse brain.
+Whereas the former employs Elastix [@Klein:2010aa] functionality, the latter is
+based on developed methodology referred to as _coherent landmark
+mapping_. Finally, the widespread adoption of deep learning techniques has also
+influenced development in mouse brain imaging methodologies.  For example, if
+tissue deformations are not considered problematic for a particular dataset,
+DeepSlice can be used to determine affine mappings [@Carey:2023aa] with the
+optimal computational efficiency associated with neural networks.
 
 ## The ANTsX Ecosystem for mouse brain mapping 
 
