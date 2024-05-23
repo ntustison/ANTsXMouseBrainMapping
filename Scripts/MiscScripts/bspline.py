@@ -11,63 +11,51 @@ def bspline_approximate_volume(image_list,
     scattered_data = None
     parametric_values = None
     weight_values = None
-    
-    order = (1, 0, 2) 
-
     for i in range(len(image_list)):     
-        indices = np.meshgrid(list(range(image_list[i].shape[1])), 
-                              list(range(image_list[i].shape[0])), 
+        indices = np.meshgrid(list(range(image_list[i].shape[0])), 
+                              list(range(image_list[i].shape[1])), 
                               list(range(image_list[i].shape[2])))
         indices_array = np.stack((indices[1].flatten(), 
                                   indices[0].flatten(), 
                                   indices[2].flatten()), axis=0)
 
         scaling = np.eye(3)
-        for d in range(len(order)):
-            scaling[order[d], order[d]] = image_list[i].spacing[order[d]]
+        for d in range(3):
+            scaling[d, d] = image_list[i].spacing[d]
         direction = np.matmul(image_list[i].direction, scaling)
 
         image_parametric_values = np.matmul(direction, indices_array).transpose()
-        for d in range(len(order)):
-            image_parametric_values[:, order[d]] += image_list[i].origin[order[d]]
+        for d in range(3):
+            image_parametric_values[:, d] += image_list[i].origin[d]
 
         weight_array = np.ones(image_list[i].shape)
         if compute_weights:
-            for d in range(len(order)):
-                weight_array += np.power(np.gradient(image_list[i].numpy(), axis=order[d]), 2)
+            for d in range(3):
+                weight_array += np.power(np.gradient(image_list[i].numpy(), axis=d), 2)
             weight_array = np.sqrt(weight_array)
 
         if i == 0:
             parametric_values = image_parametric_values
             scattered_data = np.atleast_2d(image_list[i].numpy().flatten()).transpose()
-            weight_values = np.atleast_2d(weight_array.flatten()).transpose()
+            weight_values = weight_array.flatten()
         else:
             parametric_values = np.concatenate((parametric_values, image_parametric_values))
             scattered_data = np.concatenate((scattered_data, np.atleast_2d(image_list[i].numpy().flatten()).transpose()))
-            weight_values = np.concatenate((weight_values, np.atleast_2d(weight_array.flatten()).transpose()))
+            weight_values = np.concatenate((weight_values, weight_array.flatten()))
 
     min_parametric_values = np.min(parametric_values, axis=0)
     max_parametric_values = np.max(parametric_values, axis=0)
-    if verbose:
-        print("Min: ", min_parametric_values)
-        print("Max: ", max_parametric_values)
     spacing = np.zeros((3,))
-    for d in range(len(order)):
-        spacing[order[d]] = ((max_parametric_values[order[d]] - min_parametric_values[order[d]]) / 
-                             (output_size[order[d]] - 1) + bspline_epsilon)
-    if verbose:
-        print("Spacing: ", spacing)
-        print("Output size: ", output_size)
+    for d in range(3):
+        spacing[d] = (max_parametric_values[d] - min_parametric_values[d]) / (output_size[d] - 1) + bspline_epsilon
 
-    mean_value = np.mean(scattered_data)
-    bspline_image = ants.fit_bspline_object_to_scattered_data(scattered_data - mean_value, parametric_values, 
+    bspline_image = ants.fit_bspline_object_to_scattered_data(scattered_data, parametric_values, 
                                                               parametric_domain_origin=min_parametric_values - bspline_epsilon,
                                                               parametric_domain_spacing=spacing,
                                                               parametric_domain_size=output_size,
                                                               data_weights=weight_values,
                                                               number_of_fitting_levels=number_of_fitting_levels,
-                                                              mesh_size=4)   
-    bspline_image += mean_value
+                                                              mesh_size=1)   
     return bspline_image
 
 def bspline_randomize_segmentation(segmentation_array, number_of_fitting_levels=5):
