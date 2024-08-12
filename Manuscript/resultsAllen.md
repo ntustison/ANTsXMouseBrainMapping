@@ -25,7 +25,7 @@
 
 ## AllenCCFv3 brain image mapping
 
-### Mapping fluorescence micro-optical sectioning tomography data
+### Mapping fluorescence micro-optical sectioning tomography (fMOST) data
 
 __Overview.__  A framework for mapping fluorescence micro-optical sectioning
 tomography (fMOST) mouse brain images into the AllenCCFv3 was developed (see

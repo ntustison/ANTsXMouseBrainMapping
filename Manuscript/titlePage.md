@@ -11,7 +11,7 @@ $ $
 
 \LARGE
 
-{\bf The ANTsX Ecosystem for Mapping the Mouse Brain}
+{\bf Modular atlases mapping strategies for diverse cell type data of the mouse brain}
 
 \vspace{1.0 cm}
 
@@ -37,8 +37,6 @@ $^{1}$Department of Radiology and Medical Imaging, University of Virginia, Charl
 $^{2}$Department of Radiology, University of Pennsylvania, Philadelphia, PA \\
 $^{3}$Department of Neural and Behavioral Sciences, Penn State University, Hershey, PA \\
 $^{4}$Allen Institute for Brain Science, Seattle, WA \\
-
-\vspace{1.2 cm}
 
 \end{centering}
 

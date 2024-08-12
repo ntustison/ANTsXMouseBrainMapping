@@ -1,25 +1,6 @@
 
 # Abstract {-}
 
-Precision mapping techniques coupled with high resolution image acquisition of
-the mouse brain permit the study of the spatial organization of gene expression
-and their mutual interaction for a comprehensive view of salient
-structural/functional relationships. Such research is facilitated by
-standardized anatomical coordinate systems, such as the well-known Allen Common
-Coordinate Framework (AllenCCFv3), and the ability to spatially map to such standardized
-spaces.  The Advanced Normalization Tools Ecosystem is a comprehensive
-open-source software toolkit for generalized quantitative imaging with
-applicability to multiple organ systems, modalities, and animal species. Herein,
-we illustrate the utility of ANTsX for generating precision spatial mappings of
-the mouse brain and potential subsequent quantitation.  We describe ANTsX-based
-workflows for mapping domain-specific image data to AllenCCFv3 accounting for
-common artefacts and other confounds.  Novel contributions include ANTsX
-functionality for velocity flow-based mapping spanning the spatiotemporal domain
-of a longitudinal trajectory which we apply to the Developmental Common
-Coordinate Framework.  Additionally, we present an automated structural
-morphological pipeline for determining volumetric and cortical thickness
-measurements analogous to the well-utilized ANTsX pipeline for human
-neuroanatomical structural morphology which illustrates a general open-source
-framework for tailored brain parcellations.
+Large-scale, international collaborative efforts by members of the BRAIN Initiative Cell Census Network (BICCN) consortium have recently begun aggregating the most comprehensive reference database to date for diverse cell type profiling of the mouse brain, which encompasses over 40 different multi-modal profiling techniques from more than 30 research groups. One central challenge for this integrative effort across different investigators and laboratories has been the need to map these unique datasets into common reference spaces such that the spatial, structural, and functional information from different cell types can be jointly analyzed across modalities. However, significant variations in the acquisition, tissue processing, and imaging techniques across data types makes mapping such diverse data a multifarious problem. Different data types exhibit unique tissue distortion and signal characteristics that precludes a single mapping strategy from being generally applicable across all cell type data. Diverse, modular, and often specialized, mapping approaches are needed to address the particular barriers present in each modality. This work highlights atlas mapping strategies developed across three separate BICCN studies using the ANTsX framework to map longitudinal (LSFM), spatial transcriptomic (MERFISH) and high-resolution morphology (fMOST) mouse brain data into the Allen Common Coordinate Framework (AllenCCFv3). We discuss both common mapping strategies that can be shared across modalities, and targeted strategies driven by specific challenges from each data type. Novel contributions include velocity flow-based approaches for mapping longitudinal trajectory in the Developmental Common Coordinate Framework, and automated structural morphological approaches for determining cortical parcellations. Finally, we provide general guidance and open source tools to aid investigators in this effort to tailor these strategies to address unique challenges in their data without the need to develop additional specialized software.  
 
 \clearpage

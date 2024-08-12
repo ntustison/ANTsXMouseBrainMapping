@@ -1,12 +1,12 @@
 
-## The Mouse Cortical Thickness Pipeline
+## The Mouse Brain Parcellation Pipeline
 
 \begin{figure}
 \centering
 \includegraphics[width=0.95\textwidth]{Figures/mousePipeline.pdf}
-\caption{The mouse brain cortical thickness pipeline integrating two 
+\caption{The mouse brain cortical parcellation pipeline integrating two 
 deep learning components for brain extraction and brain parcellation 
-prior to estimating cortical thickness. Both deep learning networks
+prior to estimating cortical labels. Both deep learning networks
 rely heavily on data augmentation on templates built from open 
 data and provide an outline for further refinement and creating 
 alternative parcellations for tailored research objectives.}

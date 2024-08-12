@@ -53,7 +53,7 @@ $ $
 
 \LARGE
 
-{\bf The ANTsX Ecosystem for Mapping the Mouse Brain}
+{\bf Modular atlases mapping strategies for diverse cell type data of the mouse brain}
 
 \vspace{1.0 cm}
 
@@ -79,8 +79,6 @@ $^{1}$Department of Radiology and Medical Imaging, University of Virginia, Charl
 $^{2}$Department of Radiology, University of Pennsylvania, Philadelphia, PA \\
 $^{3}$Department of Neural and Behavioral Sciences, Penn State University, Hershey, PA \\
 $^{4}$Allen Institute for Brain Science, Seattle, WA \\
-
-\vspace{1.2 cm}
 
 \end{centering}
 
@@ -109,63 +107,33 @@ gee@upenn.edu
 
 # Abstract {-}
 
-Precision mapping techniques coupled with high resolution image acquisition of
-the mouse brain permit the study of the spatial organization of gene expression
-and their mutual interaction for a comprehensive view of salient
-structural/functional relationships. Such research is facilitated by
-standardized anatomical coordinate systems, such as the well-known Allen Common
-Coordinate Framework (AllenCCFv3), and the ability to spatially map to such standardized
-spaces.  The Advanced Normalization Tools Ecosystem is a comprehensive
-open-source software toolkit for generalized quantitative imaging with
-applicability to multiple organ systems, modalities, and animal species. Herein,
-we illustrate the utility of ANTsX for generating precision spatial mappings of
-the mouse brain and potential subsequent quantitation.  We describe ANTsX-based
-workflows for mapping domain-specific image data to AllenCCFv3 accounting for
-common artefacts and other confounds.  Novel contributions include ANTsX
-functionality for velocity flow-based mapping spanning the spatiotemporal domain
-of a longitudinal trajectory which we apply to the Developmental Common
-Coordinate Framework.  Additionally, we present an automated structural
-morphological pipeline for determining volumetric and cortical thickness
-measurements analogous to the well-utilized ANTsX pipeline for human
-neuroanatomical structural morphology which illustrates a general open-source
-framework for tailored brain parcellations.
+Large-scale, international collaborative efforts by members of the BRAIN Initiative Cell Census Network (BICCN) consortium have recently begun aggregating the most comprehensive reference database to date for diverse cell type profiling of the mouse brain, which encompasses over 40 different multi-modal profiling techniques from more than 30 research groups. One central challenge for this integrative effort across different investigators and laboratories has been the need to map these unique datasets into common reference spaces such that the spatial, structural, and functional information from different cell types can be jointly analyzed across modalities. However, significant variations in the acquisition, tissue processing, and imaging techniques across data types makes mapping such diverse data a multifarious problem. Different data types exhibit unique tissue distortion and signal characteristics that precludes a single mapping strategy from being generally applicable across all cell type data. Diverse, modular, and often specialized, mapping approaches are needed to address the particular barriers present in each modality. This work highlights atlas mapping strategies developed across three separate BICCN studies using the ANTsX framework to map longitudinal (LSFM), spatial transcriptomic (MERFISH) and high-resolution morphology (fMOST) mouse brain data into the Allen Common Coordinate Framework (AllenCCFv3). We discuss both common mapping strategies that can be shared across modalities, and targeted strategies driven by specific challenges from each data type. Novel contributions include velocity flow-based approaches for mapping longitudinal trajectory in the Developmental Common Coordinate Framework, and automated structural morphological approaches for determining cortical parcellations. Finally, we provide general guidance and open source tools to aid investigators in this effort to tailor these strategies to address unique challenges in their data without the need to develop additional specialized software.  
 
 \clearpage# Introduction
 
-Over the past two decades there have been significant advancements in mesoscopic
-analysis of the mouse brain. It is currently possible to track single cell neurons in
+Over the past decade there have been significant advancements in mesoscopic single-cell analysis of the mouse brain. It is now possible to track single neurons in
 mouse brains [@Keller:2015aa], observe whole brain developmental changes on a
 cellular level [@La-Manno:2021aa], associate brain regions and tissues with
 their genetic composition [@Wen:2022aa], and locally characterize neural
-connectivity [@Oh:2014aa]. Much of this scientific achievement has been made
-possible due to breakthroughs in high resolution imaging techniques that permit
-submicron, 3-D imaging of whole mouse brains. Associated research techniques
-such as micro-optical sectioning tomography [@Gong:2013aa,@Li:2010aa], tissue
+connectivity [@Oh:2014aa]. Much of these scientific achievements have been made
+possible due to breakthroughs in high resolution cell profiling and imaging techniques that permit submicron, multi-modal, 3D characterizations of whole mouse brains. Among these include advanced techniques such as micro-optical sectioning tomography [@Gong:2013aa,@Li:2010aa], tissue
 clearing [@Keller:2015aa;@Ueda:2020aa], spatial transcriptomics
-[@Stahl:2016aa,@Burgess:2019aa] are all well-utilized in the course of
-scientific investigations of mesoscale relationships in the mouse brain. 
+[@Stahl:2016aa,@Burgess:2019aa], and single-cell genomic profiling[ref], which have greatly expanded the resolution and specificity of single-cell measurements in the brain. 
 
-An important component of this research is the ability to map the various image
-data to anatomical reference frames
-[@MacKenzie-Graham:2004aa,@Mackenzie-Graham:2007aa] for inferring spatial
-relationships between structures, cells, and genetics. This has motivated the
-development of detailed structural image atlases of the mouse brain.  Notable
-examples include the Allen Brain Atlas and Common Coordinate Frameworks (AllenCCFv3)
-[@Dong:2008aa,@Wang:2020aa], the Waxholm Space [@Johnson:2010aa], and more
-recently, the Developmental Common Coordinate Framework (DevCCF)
-[@Kronman:2023aa]. Despite the significance of these contributions, challenges
-still exist in large part due to the wide heterogeneity in associated
-study-specific image data. For example, variance in the acquisition methods can
-introduce artifacts such as tissue distortion, holes, bubbles, folding, tears,
-and missing slices. These complicate assumed correspondence for
-conventional spatial mapping approaches.
+Recent efforts by the National Institutes of Health's Brain Research Through Advancing Innovative Neurotechnologies (BRAIN) Initiative has pushed for large-scale, international collaborative efforts to utilize these advanced single cell techniques to create a comprehensive reference database for high-resolution transcriptomic, epigenomic, structural and imaging data of the mouse brain. This consortium of laboratories and data centers, known as the BRAIN Initiative Cell Census Network (BICCN), has to date archived datasets encompassing over 40 different multi-modal profiling techniques from more than 30 research groups, each providing unique characterizations of distinct cell types in the brain.[ref] Several of these modalities have been further developed into reference atlases to facilitate spatial alignment of individual brains and different data types into a common coordinate framework (CCF), thus allowing diverse single-cell information to be integrated and analyzed in tandem. The most notable of these atlases is the Allen Mouse Brain Common Coordinate Framework (AllenCCFv3)[@Wang:2020aa], which serves as the primary target coordinate space that the majority of BICCN mouse data are mapped to. Other atlases include modality specific atlases[ref] to help improve mapping accuracy, and the Developmental Common Coordinate Framework (DevCCF)[@Kronman:2023aa] that includes spatiotemporal information for the developing mouse brain. 
 
-## Mouse-specific brain mapping software
+## Mouse brain mapping
 
-To address such challenges, several software packages have been developed over
-the years comprising solutions of varying comprehensibility, sophistication, and
-availability.  An early contribution to the community was the Rapid Automatic
-Tissue Segmentation (RATS) package [@Oguz:2014aa] for brain extraction. More
+The cross-modality associations that can be learned from mapping different cell type data into a CCF is critical for improving our understanding of the complex relationships between cellular structure, morphology, and genetics in the brain. However, finding an accurate mapping between each individual mouse brain and the CCF is a challenging and heterogeneous task. There is significant variance in the acquisition, fixation and imaging protocols across different cell type data, and different tissue processing and imaging methods can potentially introduce modality specific tissue distortion and signal differences.[ref] Certain modalities can have poor intensity correspondence with the CCF, making image alignment less robust. Studies targeting specific regions or cell types can lead to missing anatomical correspondences. Other considerations include artifacts such as tissue distortion, holes, bubbles, folding, tears, and missing sections in the data that need to be addressed on a per-case basis. Given the diversity of these challenges, it is unlikely any single mapping approach can be generally applicable across all cell type data. Modular, and often specialized, strategies are needed to address the unique barriers present for mapping each modality.
+
+Existing solutions to address mapping cell type data into the AllenCCFv3 falls broadly into three main categories. The first consists of integrated processing platforms that directly provide mapped data to the users. These include the Allen Brain Explorer[ref] for the Allen Reference Atlas (ARA) and associated data, the Brain Architecture Portal[ref] for combined ex vivo radiology and histology data, and the Image and Multi-Morphology Pipeline[ref] for high resolution morphology data. These platforms provide users online access to pre-processed, multi-modal cell type data that are already mapped to the AllenCCFv3. The platforms are designed such that the data is interactable by users through integrated visualization software that allow users to spatially manipulate and explore each dataset within the mapped space. While highly convenient for investigators who are interested in studying the specific modalities provided by these platforms, these system are limited in flexibility and general applicability. The mapping software and pipeline are typically developed specifically with the data type and platform in mind, and the software are rarely openly accessible to the public. Investigators will find it difficult to apply the same mapping to their own data without direct collaboration with platform owners.
+
+The second category are specialized approaches specifically designed for mapping one or more modalities into a CCF. These approaches use combinations of manual and automated processes that address specific challenges in each modality. Examples include approaches for mapping magnetic resonance imaging (MRI)[ref], micro-computed tomography (microCT)[ref], light-sheet fluorescence microscopy (LSFM)[ref] , for fluorescence micro-optical sectioning tomography (fMOST)[ref], and volumetric imaging with synchronous on-the-fly-scan and readout (VISoR)[ref] data. As specialized approaches, these techniques tend to boast higher mapping accuracy, robustness, and ease of use when ran with applicable modalities. Conversely, their specialized designs often rely on base assumptions regarding the data that can make them rigid and difficult to adapt for new modalities or unexpected artifacts and distortions in the data. Retooling these specialize software to use with new data can require significant development and validation time and engineering expertise that may not be readily available for all investigators. 
+
+The last category are modular mapping approaches constructed using general image analysis toolkits, which are software packages that include varied collections of image processing, segmentation and registration tools that have been previously developed, and validated for general use. Examples of such toolkits include elastix[ref], slicer3D[ref], and ANTsX[ref], which have all been applied towards mapping mouse cell type data. The main challenge for using these approaches is that the individual tools in the toolbox are not data type specific. Thus, investigators must construct pipelines that link together a variety of tools to address data specific problem, and certain tools may still require specialized input data such as landmarks or annotations to operate. Investigator need to be familiar with the toolkits and supply effort to build such pipelines for new data type. However, unlike previously listed specialized mapping approaches, which often require additional software development to address new data types, toolbox driven pipelines are easier to create, making them more accessible for the general user, and individual pieces of the pipeline have already been validated for other efforts. Using a general toolkit allows for modular mapping strategies that can handle a wide array of different data types by piecing together distinct solutions for modality specific problems. In this work, we highlight such mapping strategies designed using ANTsX to map three distinct mouse cell-type data with different characteristics into the ALLENCCFv3. 
+
+<!--
+More
 recently, several publicly available packages comprise well-established package
 dependencies originally developed on human brain data. SPMMouse
 [@Sawiak:2014aa], for example, is based on the well-known Statistical Parametric
@@ -198,18 +166,15 @@ influenced development in mouse brain imaging methodologies.  For example, if
 tissue deformations are not considered problematic for a particular dataset,
 DeepSlice can be used to determine affine mappings [@Carey:2023aa] with the
 optimal computational efficiency associated with neural networks.
+-->
+## Advanced Normalization Tools (ANTsX)
 
-## The ANTsX Ecosystem for mouse brain mapping 
-
-\input{antsx_functionality_table}
-
-As noted previously, many of the existing packages designed for processing mouse
-brain image data use ANTsX tools for core processing steps in various workflows,
-particularly its pairwise, intensity-based image registration capabilities and
+<!--%\input{antsx_functionality_table} -->
+The Advanced Normalization Tools (ANTsX) package have been used in a number of applications for mapping mouse brain data as part of core processing steps in various workflows[ref], particularly its pairwise, intensity-based image registration capabilities and
 bias field correction. Historically, ANTsX development is originally based on
 fundamental approaches to image mapping
 [@Bajcsy:1982aa;@Bajcsy:1989aa;@Gee:1993aa], particularly in the human brain,
-which has resulted in core contributions to the field such as the well-known
+which has resulted in core contributions to the field such as the widely-used
 Symmetric Normalization (SyN) algorithm [@Avants:2008aa].  Since
 its development, various independent platforms have been used to evaluate ANTsX
 image registration capabilities in the context of different application foci
@@ -258,9 +223,9 @@ sampled time points of the DevCCF.
 
 -->
 
-## ANTsX-based open-source contributions
+## Novel ANTsX-based open-source contributions
 
-Consistent with previous ANTsX development, the newly introduced capabilities
+We introduce two novel inclusions to the ANTsX toolset that were developed as part of the MRI mapping and analysis pipeline for the Developmental Common Coordinate Framework (DevCCF).  Consistent with previous ANTsX development, newly introduced capabilities
 introduced below are available through ANTsX (specifically, via R and Python
 ANTsX packages), and illustrated through self-contained examples in the ANTsX
 tutorial (\url{https://tinyurl.com/antsxtutorial}) with a dedicated GitHub 
@@ -294,8 +259,9 @@ stages of the DevCCF where mappings between any two continuous time points
 within the span bounded by the E11.5 and P56 atlases is determined by
 integration of the optimized velocity field. 
 
-### Structural morphology and cortical thickness in the mouse brain
+### Structural morphology and parcellations of the mouse brain
 
+<!--
 One of the most frequently utilized pipelines in the ANTsX toolkit is that of
 estimating cortical thickness maps in the human brain.   Beginning with the
 Diffeomorphic Registration-based Cortical Thickness (DiReCT) algorithm
@@ -304,24 +270,25 @@ framework for human brain cortical thickness estimation for both cross-sectional
 [@Tustison:2014ab] and longitudinal [@Tustison:2019aa] data using T1-weighted
 MRI.  These pipelines were later significantly refactored using deep learning
 innovations [@Tustison:2021aa].
+-->
 
 In contrast to the pipeline development in human data [@Tustison:2021aa], no
-current ANTsX tools exist to create adequate training data for the mouse brain.
+current ANTsX tools exist yet to create adequate training data for automated parcellations of the mouse brain.
 In addition, mouse brain data acquisition often has unique issues, such as lower
 data quality or sampling anisotropy which limits its applicability to high
 resolution resources (e.g., AllenCCFv3, DevCCF), specifically with respect to
 the corresponding granular brain parcellations derived from numerous hours of
 expert annotation leveraging multimodal imaging resources.
 
-Herein, we introduce a mouse brain cortical thickness pipeline for T2-weighted (T2-w)
+Herein, we introduce a mouse brain parcellation pipeline for T2-weighted (T2-w)
 MRI comprising two novel deep learning components:  two-shot learning brain
 extraction from data augmentation of two ANTsX templates generated from two open
 datasets [@Hsu2021;@Reshetnikov2021] and single-shot brain parcellation derived
 from the AllenCCFv3 labelings mapped to the corresponding DevCCF P56 T2-w
-component.  Although we anticipate that this cortical thickness pipeline will be
+component.  Although we anticipate that this pipeline will be
 beneficial to the research community, this work demonstrates more generally how
 one can leverage ANTsX tools for developing tailored brain parcellation schemes
-using these publicly available resources.  Evaluation is performed on an
+using publicly available resources.  Evaluation is performed on an
 independent open dataset [@Rahman:2023aa] comprising longitudinal acquisitions
 of multiple specimens.  
 
@@ -351,7 +318,7 @@ of multiple specimens.
 
 ## AllenCCFv3 brain image mapping
 
-### Mapping fluorescence micro-optical sectioning tomography data
+### Mapping fluorescence micro-optical sectioning tomography (fMOST) data
 
 __Overview.__  A framework for mapping fluorescence micro-optical sectioning
 tomography (fMOST) mouse brain images into the AllenCCFv3 was developed (see
@@ -727,14 +694,14 @@ templates for two arbitrary time points.  Note that both of these usage
 examples can be found in the GitHub repository previously given.
 
 
-## The Mouse Cortical Thickness Pipeline
+## The Mouse Brain Parcellation Pipeline
 
 \begin{figure}
 \centering
 \includegraphics[width=0.95\textwidth]{Figures/mousePipeline.pdf}
-\caption{The mouse brain cortical thickness pipeline integrating two 
+\caption{The mouse brain cortical parcellation pipeline integrating two 
 deep learning components for brain extraction and brain parcellation 
-prior to estimating cortical thickness. Both deep learning networks
+prior to estimating cortical labels. Both deep learning networks
 rely heavily on data augmentation on templates built from open 
 data and provide an outline for further refinement and creating 
 alternative parcellations for tailored research objectives.}
