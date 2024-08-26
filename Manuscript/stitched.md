@@ -53,7 +53,7 @@ $ $
 
 \LARGE
 
-{\bf Modular atlases mapping strategies for diverse cell type data of the mouse brain}
+{\bf Modular strategies for spatial mapping of diverse cell type data of the mouse brain}
 
 \vspace{1.0 cm}
 
@@ -107,7 +107,7 @@ gee@upenn.edu
 
 # Abstract {-}
 
-Large-scale, international collaborative efforts by members of the BRAIN Initiative Cell Census Network (BICCN) consortium have recently begun aggregating the most comprehensive reference database to date for diverse cell type profiling of the mouse brain, which encompasses over 40 different multi-modal profiling techniques from more than 30 research groups. One central challenge for this integrative effort across different investigators and laboratories has been the need to map these unique datasets into common reference spaces such that the spatial, structural, and functional information from different cell types can be jointly analyzed across modalities. However, significant variations in the acquisition, tissue processing, and imaging techniques across data types makes mapping such diverse data a multifarious problem. Different data types exhibit unique tissue distortion and signal characteristics that precludes a single mapping strategy from being generally applicable across all cell type data. Diverse, modular, and often specialized, mapping approaches are needed to address the particular barriers present in each modality. This work highlights atlas mapping strategies developed across three separate BICCN studies using the ANTsX framework to map longitudinal (LSFM), spatial transcriptomic (MERFISH) and high-resolution morphology (fMOST) mouse brain data into the Allen Common Coordinate Framework (AllenCCFv3). We discuss both common mapping strategies that can be shared across modalities, and targeted strategies driven by specific challenges from each data type. Novel contributions include velocity flow-based approaches for mapping longitudinal trajectory in the Developmental Common Coordinate Framework, and automated structural morphological approaches for determining cortical parcellations. Finally, we provide general guidance and open source tools to aid investigators in this effort to tailor these strategies to address unique challenges in their data without the need to develop additional specialized software.  
+Large-scale, international collaborative efforts by members of the BRAIN Initiative Cell Census Network (BICCN) consortium have recently begun aggregating the most comprehensive reference database to date for diverse cell type profiling of the mouse brain, which encompasses over 40 different multi-modal profiling techniques from more than 30 research groups. One central challenge for this integrative effort across different investigators and laboratories has been the need to map these unique datasets into common reference spaces such that the spatial, structural, and functional information from different cell types can be jointly analyzed across modalities. However, significant variations in the acquisition, tissue processing, and imaging techniques across data types makes mapping such diverse data a multifarious problem. Different data types exhibit unique tissue distortion and signal characteristics that precludes a single mapping strategy from being generally applicable across all cell type data. Diverse, and often specialized, mapping approaches are needed to address the unique barriers present in each modality. This work highlights modular atlas mapping strategies developed across three separate BICCN studies using the ANTsX framework to map spatial transcriptomic (MERFISH) and high-resolution morphology (fMOST) mouse brain data into the Allen Common Coordinate Framework (AllenCCFv3), and developmental (MRI and LSFM) data into the Developmental Common Coordinate Framework (DevCCF). We discuss both common mapping strategies that can be shared across modalities, and targeted strategies driven by specific challenges from each data type. Novel contributions include velocity flow-based approaches for mapping longitudinal trajectory in the DevCCF, and automated structural morphological approaches for determining cortical parcellations. Finally, we provide general guidance and open source tools to aid investigators in this effort to tailor these strategies to address unique challenges in their data without the need to develop additional specialized software.  
 
 \clearpage# Introduction
 
@@ -118,19 +118,19 @@ their genetic composition [@Wen:2022aa], and locally characterize neural
 connectivity [@Oh:2014aa]. Much of these scientific achievements have been made
 possible due to breakthroughs in high resolution cell profiling and imaging techniques that permit submicron, multi-modal, 3D characterizations of whole mouse brains. Among these include advanced techniques such as micro-optical sectioning tomography [@Gong:2013aa,@Li:2010aa], tissue
 clearing [@Keller:2015aa;@Ueda:2020aa], spatial transcriptomics
-[@Stahl:2016aa,@Burgess:2019aa], and single-cell genomic profiling[ref], which have greatly expanded the resolution and specificity of single-cell measurements in the brain. 
+[@Stahl:2016aa,@Burgess:2019aa], and single-cell genomic profiling[@hardwick:2022aa], which have greatly expanded the resolution and specificity of single-cell measurements in the brain. 
 
-Recent efforts by the National Institutes of Health's Brain Research Through Advancing Innovative Neurotechnologies (BRAIN) Initiative has pushed for large-scale, international collaborative efforts to utilize these advanced single cell techniques to create a comprehensive reference database for high-resolution transcriptomic, epigenomic, structural and imaging data of the mouse brain. This consortium of laboratories and data centers, known as the BRAIN Initiative Cell Census Network (BICCN), has to date archived datasets encompassing over 40 different multi-modal profiling techniques from more than 30 research groups, each providing unique characterizations of distinct cell types in the brain.[ref] Several of these modalities have been further developed into reference atlases to facilitate spatial alignment of individual brains and different data types into a common coordinate framework (CCF), thus allowing diverse single-cell information to be integrated and analyzed in tandem. The most notable of these atlases is the Allen Mouse Brain Common Coordinate Framework (AllenCCFv3)[@Wang:2020aa], which serves as the primary target coordinate space that the majority of BICCN mouse data are mapped to. Other atlases include modality specific atlases[ref] to help improve mapping accuracy, and the Developmental Common Coordinate Framework (DevCCF)[@Kronman:2023aa] that includes spatiotemporal information for the developing mouse brain. 
+Recent efforts by the National Institutes of Health's Brain Research Through Advancing Innovative Neurotechnologies (BRAIN) Initiative has pushed for large-scale, international collaborative efforts to utilize these advanced single cell techniques to create a comprehensive reference database for high-resolution transcriptomic, epigenomic, structural and imaging data of the mouse brain. This consortium of laboratories and data centers, known as the BRAIN Initiative Cell Census Network (BICCN), has to date archived datasets encompassing over 40 different multi-modal profiling techniques from more than 30 research groups, each providing unique characterizations of distinct cell types in the brain.[@hawrylycz:2023aa] Several of these modalities have been further developed into reference atlases to facilitate spatial alignment of individual brains and different data types into a common coordinate framework (CCF), thus allowing diverse single-cell information to be integrated and analyzed in tandem. The most notable of these atlases is the Allen Mouse Brain Common Coordinate Framework (AllenCCFv3)[@Wang:2020aa], which serves as the primary target coordinate space that the majority of BICCN mouse data are mapped to. Other atlases include modality specific atlases[@perens:2021aa;@ma:2005aa;@qu:2022aa], and spatiotemporal atlases [@Kronman:2023aa;@chuang:2011aa] for the developing mouse brain. 
 
 ## Mouse brain mapping
 
-The cross-modality associations that can be learned from mapping different cell type data into a CCF is critical for improving our understanding of the complex relationships between cellular structure, morphology, and genetics in the brain. However, finding an accurate mapping between each individual mouse brain and the CCF is a challenging and heterogeneous task. There is significant variance in the acquisition, fixation and imaging protocols across different cell type data, and different tissue processing and imaging methods can potentially introduce modality specific tissue distortion and signal differences.[ref] Certain modalities can have poor intensity correspondence with the CCF, making image alignment less robust. Studies targeting specific regions or cell types can lead to missing anatomical correspondences. Other considerations include artifacts such as tissue distortion, holes, bubbles, folding, tears, and missing sections in the data that need to be addressed on a per-case basis. Given the diversity of these challenges, it is unlikely any single mapping approach can be generally applicable across all cell type data. Modular, and often specialized, strategies are needed to address the unique barriers present for mapping each modality.
+The cross-modality associations that can be learned from mapping different cell type data into a CCF is critical for improving our understanding of the complex relationships between cellular structure, morphology, and genetics in the brain. However, finding an accurate mapping between each individual mouse brain and a CCF is a challenging and heterogeneous task. There is significant variance in the acquisition, fixation and imaging protocols across different cell type data, and different tissue processing and imaging methods can potentially introduce modality specific tissue distortion and signal differences.[@dries:2021aa;@ricci:2022aa] Certain modalities can have poor intensity correspondence with the CCF, making image alignment less robust. Studies targeting specific regions or cell types can lead to missing anatomical correspondences. Other considerations include artifacts such as tissue distortion, holes, bubbles, folding, tears, and missing sections in the data that need to be addressed on a per-case basis.[@agarwal:2016aa;@agarwal:2017aa;@tward:2019aa;@cahill:2012aa] Given the diversity of these challenges, it is unlikely any single mapping approach can be generally applicable across all cell type data. Diverse, and often specialized, strategies are needed to address the unique barriers present for mapping each modality.
 
-Existing solutions to address mapping cell type data into the AllenCCFv3 falls broadly into three main categories. The first consists of integrated processing platforms that directly provide mapped data to the users. These include the Allen Brain Explorer[ref] for the Allen Reference Atlas (ARA) and associated data, the Brain Architecture Portal[ref] for combined ex vivo radiology and histology data, and the Image and Multi-Morphology Pipeline[ref] for high resolution morphology data. These platforms provide users online access to pre-processed, multi-modal cell type data that are already mapped to the AllenCCFv3. The platforms are designed such that the data is interactable by users through integrated visualization software that allow users to spatially manipulate and explore each dataset within the mapped space. While highly convenient for investigators who are interested in studying the specific modalities provided by these platforms, these system are limited in flexibility and general applicability. The mapping software and pipeline are typically developed specifically with the data type and platform in mind, and the software are rarely openly accessible to the public. Investigators will find it difficult to apply the same mapping to their own data without direct collaboration with platform owners.
+Existing solutions to address mapping cell type data into the AllenCCFv3 falls broadly into three main categories. The first consists of integrated processing platforms that directly provide mapped data to the users. These include the Allen Brain Cell Atlas[@sunkin:2012] for the Allen Reference Atlas (ARA) and associated data, the Brain Architecture Portal[@kim:2017aa] for combined ex vivo radiology and histology data, Openbraimap[@Furth:2018aa] for connectivity data, and the Image and Multi-Morphology Pipeline[@li:2022aa] for high resolution morphology data. These platforms provide users online access to pre-processed, multi-modal cell type data that are already mapped to the AllenCCFv3. The platforms are designed such that the data is interactable by users through integrated visualization software that allow users to spatially manipulate and explore each dataset within the mapped space. While highly convenient for investigators who are interested in studying the specific modalities provided by these platforms, these system are limited in flexibility and general applicability. The mapping software and pipeline are typically developed specifically with the data type and platform in mind, and the software are often not openly accessible to the public. Investigators will find it difficult to apply the same mapping to their own data without direct collaboration with the platform owners.
 
-The second category are specialized approaches specifically designed for mapping one or more modalities into a CCF. These approaches use combinations of manual and automated processes that address specific challenges in each modality. Examples include approaches for mapping magnetic resonance imaging (MRI)[ref], micro-computed tomography (microCT)[ref], light-sheet fluorescence microscopy (LSFM)[ref] , for fluorescence micro-optical sectioning tomography (fMOST)[ref], and volumetric imaging with synchronous on-the-fly-scan and readout (VISoR)[ref] data. As specialized approaches, these techniques tend to boast higher mapping accuracy, robustness, and ease of use when ran with applicable modalities. Conversely, their specialized designs often rely on base assumptions regarding the data that can make them rigid and difficult to adapt for new modalities or unexpected artifacts and distortions in the data. Retooling these specialize software to use with new data can require significant development and validation time and engineering expertise that may not be readily available for all investigators. 
+The second category are specialized approaches specifically designed for mapping one or more modalities into a CCF. These approaches use combinations of manual and automated processes that address specific challenges in each modality. Examples include approaches for mapping histology[@puchades:2019aa;@eastwood:2019aa;@Ni:2020aa], magnetic resonance imaging (MRI)[@Pallast:2019aa;@Celestine:2020aa;@Ioanas:2021aa;@perens:2023aa;@aggarwal:2009aa;@Goubran:2019aa;@chandrashekhar:2021aa;@Ni:2020aa], micro-computed tomography (microCT)[@aggarwal:2009aa;@chandrashekhar:2021aa], light-sheet fluorescence microscopy (LSFM)[@Jin:2022aa;@Negwer:2022aa;@perens:2023aa;@Goubran:2019aa;@chandrashekhar:2021aa], fluorescence micro-optical sectioning tomography (fMOST)[@qu:2022aa;@lin:2023aa] and transcriptomics[@zhang:2021aa;@shi:2023aa;@zhang:2023aa]. As specialized approaches, these techniques tend to boast higher mapping accuracy, robustness, and ease of use when ran with applicable modalities. Conversely, their specialized designs often rely on base assumptions regarding the data that can make them rigid and difficult to adapt for new modalities or unexpected artifacts and distortions in the data. Retooling these specialize software to use with new data can require significant development, validation time, and engineering expertise that may not be readily available for all investigators. 
 
-The last category are modular mapping approaches constructed using general image analysis toolkits, which are software packages that include varied collections of image processing, segmentation and registration tools that have been previously developed, and validated for general use. Examples of such toolkits include elastix[ref], slicer3D[ref], and ANTsX[ref], which have all been applied towards mapping mouse cell type data. The main challenge for using these approaches is that the individual tools in the toolbox are not data type specific. Thus, investigators must construct pipelines that link together a variety of tools to address data specific problem, and certain tools may still require specialized input data such as landmarks or annotations to operate. Investigator need to be familiar with the toolkits and supply effort to build such pipelines for new data type. However, unlike previously listed specialized mapping approaches, which often require additional software development to address new data types, toolbox driven pipelines are easier to create, making them more accessible for the general user, and individual pieces of the pipeline have already been validated for other efforts. Using a general toolkit allows for modular mapping strategies that can handle a wide array of different data types by piecing together distinct solutions for modality specific problems. In this work, we highlight such mapping strategies designed using ANTsX to map three distinct mouse cell-type data with different characteristics into the ALLENCCFv3. 
+The last category are modular mapping approaches constructed using general image analysis toolkits, which are software packages that include varied collections of image processing, segmentation and registration tools that have been previously developed, and validated for general use. Examples of such toolkits include elastix[@Klein:2010aa], slicer3D[@fedorov:2012aa], and ANTsX[@Tustison:2021aa], which have all been applied towards mapping mouse cell type data. The main challenge for using these approaches is that the individual tools in the toolbox are not data type specific. Thus, investigators must construct pipelines that link together a variety of tools to address data specific problem, and certain tools may still require specialized input data such as landmarks or annotations to operate. Investigator need to be familiar with the toolkits and using them to build pipelines for new data type. However, in comparison to previously described specialized mapping approaches, toolbox driven pipelines are often easier to create, making them more accessible for the general investigator, and individual pieces of the pipeline have already been validated from other efforts. Using a general toolkit allows for modular mapping strategies that can handle a wide array of different data types by piecing together distinct solutions for modality specific problems. In this work, we highlight such mapping strategies designed using the ANTsX framework to map three distinct mouse cell type data with different characteristics into CCFs. 
 
 <!--
 More
@@ -170,7 +170,7 @@ optimal computational efficiency associated with neural networks.
 ## Advanced Normalization Tools (ANTsX)
 
 <!--%\input{antsx_functionality_table} -->
-The Advanced Normalization Tools (ANTsX) package have been used in a number of applications for mapping mouse brain data as part of core processing steps in various workflows[ref], particularly its pairwise, intensity-based image registration capabilities and
+The Advanced Normalization Tools (ANTsX) framework has been used in a number of applications for mapping mouse brain data as part of core processing steps in various workflows[@pagani:2016aa;@Anderson:2019aa;@Ni:2020aa;@allan:2019aa;@Yao:2023aa], particularly its pairwise, intensity-based image registration capabilities and
 bias field correction. Historically, ANTsX development is originally based on
 fundamental approaches to image mapping
 [@Bajcsy:1982aa;@Bajcsy:1989aa;@Gee:1993aa], particularly in the human brain,
@@ -185,22 +185,15 @@ presence of tumors [@Baheti:2021aa].
 Apart from its registration capabilities, ANTsX comprises additional
 functionality such as template generation [@Avants:2010aa], intensity-based
 segmentation [@Avants:2011uf], preprocessing [@Manjon:2010aa;@Tustison:2010ac],
-deep learning networks [@Tustison:2021aa], and other miscelleneous utilities (see
-Table \ref{table:methods}). The comprehensive use of the toolkit has
-demonstrated superb performance in multiple application areas (e.g., consensus
+deep learning networks [@Tustison:2021aa], and other utilities relevant to brain mapping (see Methods - Table \ref{table:methods}). The use of the toolkit has
+demonstrated high performance in multiple application areas (e.g., consensus
 labeling [@Wang:2013ab], brain tumor segmentation [@Tustison:2014aa], and
 cardiac motion estimation [@Tustison:2015ab] ). Importantly, ANTs is built on
 the Insight Toolkit (ITK) [@McCormick:2014aa] deriving benefit from the
 open-source community of scientists and programmers as well as providing an important
-resource for algorithmic development, evaluation, and improvement.  We use this
-functionality to demonstrate recently developed frameworks for mapping
-fluorescence micro-optical sectioning tomography (fMOST) and multiplexed
-error-robust fluorescence in situ hybridization (MERFISH) image data to the
-AllenCCFv3 atlas space.  In addition to standard preprocessing steps (e.g., bias
-correction), additional considerations are accommodated within the ANTsX
-ecosystem, such as section reconstruction and landmark-based alignment with
-corresponding processing scripts available at
-\url{https://github.com/dontminchenit/CCFAlignmentToolkit}.  
+resource for algorithmic development, evaluation, and improvement. In this paper we demonstrate how ANTs' comprehensive toolset provides the basis to develop modular frameworks for mapping diverse mouse cell type data into common coordinate frameworks (CCFs). 
+Specifically, we highlight its application for mapping data from three separate BICCN projects focused on distinct data types: morphology data using
+fluorescence micro-optical sectioning tomography (fMOST), spatial transcriptomics from multiplexed error-robust fluorescence in situ hybridization (MERFISH) data, and time-series developmental data using light sheet fluorescence microscopy (LSFM) and magnetic resonance imaging (MRI). We describe both shared and targeted strategies developed to address the specific challenges of these modalities.  
 
 
 <!-- 
@@ -230,7 +223,10 @@ introduced below are available through ANTsX (specifically, via R and Python
 ANTsX packages), and illustrated through self-contained examples in the ANTsX
 tutorial (\url{https://tinyurl.com/antsxtutorial}) with a dedicated GitHub 
 repository specific to this work
-(\url{https://github.com/ntustison/ANTsXMouseBrainMapping}).
+(\url{https://github.com/ntustison/ANTsXMouseBrainMapping}). To complement standard preprocessing steps (e.g., bias
+correction, brain masking), additional mouse brain specific tools have also been introduced to the ANTsX ecosystem, such as section reconstruction and landmark-based alignment with
+corresponding processing scripts available at
+\url{https://github.com/dontminchenit/CCFAlignmentToolkit}.  
 
 ### The DevCCF velocity flow model
 
@@ -272,8 +268,7 @@ MRI.  These pipelines were later significantly refactored using deep learning
 innovations [@Tustison:2021aa].
 -->
 
-In contrast to the pipeline development in human data [@Tustison:2021aa], no
-current ANTsX tools exist yet to create adequate training data for automated parcellations of the mouse brain.
+In contrast to the pipeline development in human data [@Tustison:2021aa], limited tools exist yet to create adequate training data for automated parcellations of the mouse brain.
 In addition, mouse brain data acquisition often has unique issues, such as lower
 data quality or sampling anisotropy which limits its applicability to high
 resolution resources (e.g., AllenCCFv3, DevCCF), specifically with respect to
@@ -301,66 +296,22 @@ of multiple specimens.
 \centering
 \begin{subfigure}[t]{0.49\textwidth}
 \centering
-\includegraphics[width=0.99\textwidth]{Figures/fmostPipeline.pdf}
+\includegraphics[width=0.99\textwidth]{Figures/merfishPipeline.pdf}
 \caption{}
 \end{subfigure} 
 \begin{subfigure}[t]{0.49\textwidth}
 \centering
-\includegraphics[width=0.99\textwidth]{Figures/merfishPipeline.pdf}
+\includegraphics[width=0.99\textwidth]{Figures/fmostPipeline.pdf}
 \caption{}
 \end{subfigure}
-\caption{Diagrammatic illustration of the two ANTsX-based pipelines for mapping (a) 
-         fMOST and (b) MERFISH data into the space of AllenCCFv3.  Each generates
+\caption{Diagram of the two ANTsX-based pipelines for mapping (a) MERFISH
+          and (b)fMOST data into the space of AllenCCFv3.  Each generates
          the requisite transforms, $\mathcal{T}$, to map individual images.}
 \label{fig:allenpipelines}
 \end{figure*}
 
 
 ## AllenCCFv3 brain image mapping
-
-### Mapping fluorescence micro-optical sectioning tomography (fMOST) data
-
-__Overview.__  A framework for mapping fluorescence micro-optical sectioning
-tomography (fMOST) mouse brain images into the AllenCCFv3 was developed (see
-Figure \ref{fig:allenpipelines}(a)). An intensity- and shape-based average fMOST
-atlas serves as an intermediate registration target for mapping fMOST images
-from individual specimens into the AllenCCFv3. Preprocessing steps include
-downsampling to match the $25 \mu m$ isotropic AllenCCFv3, acquisition-based
-stripe artifact removal, and inhomogeneity correction [@Tustison:2010ac].
-Preprocessing also includes a single annotation-driven registration to establish
-a canonical mapping between the fMOST atlas and the AllenCCFv3. This step allows
-us to align expert determined landmarks to accurately map structures with large
-morphological differences between the modalities, which are difficult to address
-using standard approaches. Once this canonical mapping is established, standard
-intensity-based registration is used to align each new fMOST image to the fMOST
-specific atlas. This mapping is concatenated with the canonical fMOST 
-atlas-to-AllenCCFv3 mapping to further map each individual brain into the latter without
-the need to generate additional landmarks. Transformations learned through this
-mapping can be applied to single neuron reconstructions from the fMOST images to
-evaluate neuronal distributions across different specimens into the AllenCCFv3
-for the purpose of cell census analyses.
-
-__Data.__ The high-throughput and high-resolution fluorescence micro-optical
-sectioning tomography (fMOST) [@Gong:2016aa;@Wang:2021aa] platform was used to
-image 55 mouse brains containing gene-defined neuron populations, with sparse
-transgenic expression [@Rotolo:2008aa;@Peng:2021aa]. In short, the fMOST imaging
-platform results in 3-D images with voxel sizes of $0.35 \times 0.35 \times 1.0
-\mu m^3$ and is a two-channel imaging system where the green channel displays
-the green fluorescent protein (GFP) labeled neuron morphology and the red
-channel is used to visualize the counterstained propidium iodide
-cytoarchitecture. The spatial normalizations described in this work were
-performed using the red channel, which offered higher tissue contrast for
-alignment, although other approaches are possible including multi-channel
-registration.
-
-__Evaluation.__  Evaluation of the canonical fMOST atlas to Allen CCFv3 mapping
-was performed via quantitative comparison at each step of the registration and
-qualitative assessment of structural correspondence after alignment by an expert
-anatomist. Dice values were generated for the following structures: whole brain,
-0.99; fimbria, 0.91; habenular commissure, 0.63; posterior choroid plexus, 0.93;
-anterior choroid plexus,  0.96; optic chiasm, 0.77; caudate putamen, 0.97.
-Similar qualitative assessment was performed for each fMOST specimen including
-the corresponding neuron reconstruction data.
 
 <!--
 \newcommand{\ROT}[1]{\rotatebox{60}{\parbox{1.875cm}{\scriptsize #1}}}
@@ -396,12 +347,7 @@ the corresponding neuron reconstruction data.
 
 ### Mapping multiplexed error-robust fluorescence in situ hybridization (MERFISH) data
 
-__Overview.__ The unique aspects of mapping multiplexed error-robust
-fluorescence in situ hybridization (MERFISH) spatial transcriptomic data onto
-AllenCCFv3 [@Yao:2023aa] required the development of a separate ANTsX-based
-pipeline (see Figure \ref{fig:allenpipelines}(b)). Mappings are performed by
-matching gene expression derived region labels from the MERFISH data to
-corresponding anatomical parcellations of the AllenCCFv3. The pipeline consists
+__Overview.__ The ANTsX framework was used to develop a pipeline for mapping multiplexed error-robust fluorescence in situ hybridization (MERFISH) spatial transcriptomic mouse data onto the AllenCCFv3 (see Figure \ref{fig:allenpipelines}(a)). This pipeline, used recently in creating a high-resolution transcriptomic atlas of the mouse brain[@Yao:2023aa], performs mappings by first generating anatomical labels from tissue related gene expressions in the MERFISH data, and then spatially matching these labels to corresponding anatomical tissue parcellations in the AllenCCFv3. The pipeline consists
 of MERFISH data specific preprocessing which includes section reconstruction,
 mapping corresponding anatomical labels between AllenCCFv3 and the spatial
 transcriptomic maps of the MERFISH data, and matching MERFISH sections to the
@@ -439,6 +385,50 @@ frontal pole, layer 1 (FRP1), FRP2/3, FRP5; accessory olfactory bulb, glomerular
 layer (AOBgl); accessory olfactory bulb, granular layer (AOBgr); accessory
 olfactory bulb, mitral layer (AOBmi); and accessory supraoptic group (ASO).
 
+
+### Mapping fluorescence micro-optical sectioning tomography (fMOST) data
+
+__Overview.__  We developed a pipeline for mapping fluorescence micro-optical sectioning
+tomography (fMOST) mouse brain images into the AllenCCFv3 (see
+Figure \ref{fig:allenpipelines}(b)). The pipeline is adapted from previously developed frameworks for human brain mapping[@Avants:2010aa], and uses a modality specific (fMOST) average atlas to assist in the image registration and mapping. This approach has been well validated in human studies[@jia:2011aa;@tang:2009aa;@dewey:2017aa], and successfully used in other mouse data[@perens:2023aa;@Wang:2020aa;@qu:2022aa].
+Briefly, we construct an intensity- and shape-based average fMOST
+atlas using 30 fMOST images to serve as an intermediate registration target for mapping fMOST images from individual specimens into the AllenCCFv3. Preprocessing steps include
+downsampling to match the $25 \mu m$ isotropic AllenCCFv3, acquisition-based
+stripe artifact removal, and inhomogeneity correction [@Tustison:2010ac].
+Preprocessing also includes a single annotation-driven registration to establish
+a canonical mapping between the fMOST atlas and the AllenCCFv3. This step allows
+us to align expert determined landmarks to accurately map structures with large
+morphological differences between the modalities, which are difficult to address
+using standard approaches. Once this canonical mapping is established, standard
+intensity-based registration is used to align each new fMOST image to the fMOST
+specific atlas. This mapping is concatenated with the canonical fMOST 
+atlas-to-AllenCCFv3 mapping to further map each individual brain into the latter without
+the need to generate additional landmarks. Transformations learned through this
+mapping can be applied to single neuron reconstructions from the fMOST images to
+evaluate neuronal distributions across different specimens into the AllenCCFv3
+for the purpose of cell census analyses.
+
+__Data.__ The high-throughput and high-resolution fluorescence micro-optical
+sectioning tomography (fMOST) [@Gong:2016aa;@Wang:2021aa] platform was used to
+image 55 mouse brains containing gene-defined neuron populations, with sparse
+transgenic expression [@Rotolo:2008aa;@Peng:2021aa]. In short, the fMOST imaging
+platform results in 3-D images with voxel sizes of $0.35 \times 0.35 \times 1.0
+\mu m^3$ and is a two-channel imaging system where the green channel displays
+the green fluorescent protein (GFP) labeled neuron morphology and the red
+channel is used to visualize the counterstained propidium iodide
+cytoarchitecture. The spatial normalizations described in this work were
+performed using the red channel, which offered higher tissue contrast for
+alignment, although other approaches are possible including multi-channel
+registration.
+
+__Evaluation.__  Evaluation of the canonical fMOST atlas to Allen CCFv3 mapping
+was performed via quantitative comparison at each step of the registration and
+qualitative assessment of structural correspondence after alignment by an expert
+anatomist. Dice values were generated for the following structures: whole brain,
+0.99; fimbria, 0.91; habenular commissure, 0.63; posterior choroid plexus, 0.93;
+anterior choroid plexus,  0.96; optic chiasm, 0.77; caudate putamen, 0.97.
+Similar qualitative assessment was performed for each fMOST specimen including
+the corresponding neuron reconstruction data.
 <!--
 ## Template building
 
@@ -814,19 +804,15 @@ isotropic and anisotropic cortical measurements in male and female specimens.
 
 # Discussion
 
-The ANTsX ecosystem is a powerful framework that has demonstrated applicability
-to multiple species and organ systems, including the mouse brain. This is
-further evidenced by the many  software packages that use various ANTsX
-components in their own mouse-specific workflows.  In and of itself, the
-extensive functionality of ANTsX makes it possible to create complete processing
-pipelines without requiring the integration of multiple packages. These
-open-source components not only perform well but are available across multiple
-platforms which facilitates the construction of tailored pipelines for
-individual study solutions. These components are also supported by years of
-development not only by the ANTsX development team but by the larger ITK
-community.  
+The diverse mouse brain cell type profiles gathered through BICCN and associated efforts provides a rich multi-modal resource to the community. However, despite significant progress, full integration of these valuable resources is not yet complete. Central to the data integration is a continued need to accurately map each unique dataset into common coordinate frameworks (CCFs) so that they can be accessed in connection with each other. Additionally, the ability to map novel cell type data in the future to these existing BICCN resources is vital for effective utilization of this endeavor and the continuation of its goals. To meet these needs, tools for mapping mouse cell type data must be both generally accessible to a wide audience of investigators, and still capable of handling distinct challenges unique to each data type.
 
-In the case of the development of the DevCCF, ANTsX was crucial in providing
+In this work, we describe modular ANTsX-based pipelines developed to address the needs of three BICCN projects that cover distinct cell type data, including spatial transcriptomic, morphology, and developmental data. We highlight how a modular toolbox like ANTsX can be tailored to address problems unique to each modality while still leveraging a variety of ready-to-use powerful tools that have been externally validated.
+
+Our MERFISH pipeline provides an example of how to map high-resolution spatial transcriptomic data into the AllenCCFv3. Since full brain large-scale transcriptomics is still rare and difficult to collect, the pipeline focuses on achieving the best possible anatomical alignment and fully utilizing the available data. While the techniques employed for mapping the sectioned data can be generally applicable to map other serial histology images, many parts of the pipeline were designed to address very specific known alignment challenges in the MERFISH data using a series of iterative registration steps. The pipeline shows how general tools available in ANTsX can be adapted to target highly specialized problems in mouse cell type data.
+
+In contrast to the MERFISH pipeline, our fMOST pipeline was designed to be a more general solution that can be employed in other modalities. The pipeline primarily uses previously developed ANTsX preprocessing and atlasing tools to map fMOST data into the AllenCCFv3. The key component of the pipeline is the use of a fMOST specific average atlas to greatly simplify the image registration problem. This average atlas, also constructed using pre-existing ANTsX tools, allows for a one-time canonical alignment from the fMOST atlas to the AllenCCFv3 to be transferred and used for mapping new fMOST images. Lastly, ANTsX provides point set transformation tools to allow the mappings found through the pipeline to be directly applied to associated single-cell reconstructions from the fMOST data to study neuronal morphology. 
+
+Our DevCCF pipeline shows the application of the toolkit for temporospatial developmental data. ANTsX was crucial in providing
 necessary functionality for yielding high quality output.  For the generation of
 the individual developmental stage multi-modal, symmetric templates, ANTsX is
 unique amongst image analysis software packages in providing existing solutions
@@ -866,7 +852,16 @@ done for our human-based networks.  Generally, these approaches provide a way to
 bootstrap training data for manual refinement and future generation of more
 accurate deep learning networks in the absence of other applicable tools.
 
-
+The ANTsX ecosystem is a powerful framework that has demonstrated applicability
+to diverse cell type data in the mouse brain. This is
+further evidenced by the many software packages that use various ANTsX
+components in their own mouse-specific workflows. In and of itself, the extensive functionality of ANTsX makes it possible to create complete processing
+pipelines without requiring the integration of multiple packages or lengthy software development. These
+open-source components not only perform well but are available across multiple
+platforms which facilitates the construction of tailored pipelines for
+individual study solutions. These components are also supported by years of
+development not only by the ANTsX development team but by the larger ITK
+community.
 
 \clearpage
 \newpage
@@ -881,6 +876,11 @@ For equivalent calls in ANTsR, please see the ANTsX tutorial at
 \url{https://tinyurl.com/antsxtutorial}.
 
 ## General ANTsX utilities
+
+Although they focus on distinct data types, the three pipelines presented share common components that are generally applicable when mapping mouse cell type data. These include, addressing intensity biases and noise in the data, image registration to solve the mapping, creating custom templates and atlases from the data, and visualization of the results. 
+Table \ref{table:methods} provides a brief summary of key general functionalities in ANTsX for addressing these challenges.
+
+\input{antsx_functionality_table}
 
 ### Preprocessing: bias field correction and denoising 
 
@@ -1061,7 +1061,7 @@ addresses these intensity inhomogeneities using N4 bias field correction
   types within the same space and characterize their morphology with respect to
   their transcriptomics. Mappings found between the fMOST image and the
   AllenCCFv3 using our pipeline can be applied in this way to fMOST neuron
-  reconstruction data. 
+  reconstruction point set data using ``ants.apply_transforms_to_points(..)``.
 
 ## Mapping MERFISH data to AllenCCFv3
 

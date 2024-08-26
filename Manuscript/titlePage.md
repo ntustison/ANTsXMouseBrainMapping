@@ -11,7 +11,7 @@ $ $
 
 \LARGE
 
-{\bf Modular atlases mapping strategies for diverse cell type data of the mouse brain}
+{\bf Modular strategies for spatial mapping of diverse cell type data of the mouse brain}
 
 \vspace{1.0 cm}
 

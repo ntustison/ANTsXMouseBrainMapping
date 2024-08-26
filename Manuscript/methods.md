@@ -13,6 +13,11 @@ For equivalent calls in ANTsR, please see the ANTsX tutorial at
 
 ## General ANTsX utilities
 
+Although they focus on distinct data types, the three pipelines presented share common components that are generally applicable when mapping mouse cell type data. These include, addressing intensity biases and noise in the data, image registration to solve the mapping, creating custom templates and atlases from the data, and visualization of the results. 
+Table \ref{table:methods} provides a brief summary of key general functionalities in ANTsX for addressing these challenges.
+
+\input{antsx_functionality_table}
+
 ### Preprocessing: bias field correction and denoising 
 
 Bias field correction and image denoising are standard preprocessing steps in
@@ -192,7 +197,7 @@ addresses these intensity inhomogeneities using N4 bias field correction
   types within the same space and characterize their morphology with respect to
   their transcriptomics. Mappings found between the fMOST image and the
   AllenCCFv3 using our pipeline can be applied in this way to fMOST neuron
-  reconstruction data. 
+  reconstruction point set data using ``ants.apply_transforms_to_points(..)``.
 
 ## Mapping MERFISH data to AllenCCFv3
 
