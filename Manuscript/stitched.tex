@@ -301,7 +301,7 @@ integrated processing platforms that directly provide mapped data to the
 users. These include the Allen Brain Cell Atlas\textsuperscript{24} for
 the Allen Reference Atlas (ARA) and associated data, the Brain
 Architecture Portal\textsuperscript{25} for combined ex vivo radiology
-and histology data, Openbraimap\textsuperscript{26} for connectivity
+and histology data, Openbrainmap\textsuperscript{26} for connectivity
 data, and the Image and Multi-Morphology Pipeline\textsuperscript{27}
 for high resolution morphology data. These platforms provide users
 online access to pre-processed, multi-modal cell type data that are
@@ -319,19 +319,19 @@ without direct collaboration with the platform owners.
 
 The second category are specialized approaches specifically designed for
 mapping one or more modalities into a CCF. These approaches use
-combinations of manual and automated processes that address specific
-challenges in each modality. Examples include approaches for mapping
-histology\textsuperscript{28--30}, magnetic resonance imaging
+combinations of specialized manual and automated processes that address
+specific challenges in each modality. Examples include approaches for
+mapping histology\textsuperscript{28--30}, magnetic resonance imaging
 (MRI)\textsuperscript{30--37}, micro-computed tomography
 (microCT)\textsuperscript{35,37}, light-sheet fluorescence microscopy
 (LSFM)\textsuperscript{34,36--39}, fluorescence micro-optical sectioning
 tomography (fMOST)\textsuperscript{15,40} and
-transcriptomics\textsuperscript{41--43}. As specialized approaches,
+transcriptomic\textsuperscript{41--43} data. As specialized approaches,
 these techniques tend to boast higher mapping accuracy, robustness, and
 ease of use when ran with applicable modalities. Conversely, their
 specialized designs often rely on base assumptions regarding the data
-that can make them rigid and difficult to adapt for new modalities or
-unexpected artifacts and distortions in the data. Retooling these
+type that can make them rigid and difficult to adapt for new modalities
+or unexpected artifacts and distortions in the data. Retooling these
 specialize software to use with new data can require significant
 development, validation time, and engineering expertise that may not be
 readily available for all investigators.
@@ -348,17 +348,17 @@ that the individual tools in the toolbox are not data type specific.
 Thus, investigators must construct pipelines that link together a
 variety of tools to address data specific problem, and certain tools may
 still require specialized input data such as landmarks or annotations to
-operate. Investigator need to be familiar with the toolkits and using
-them to build pipelines for new data type. However, in comparison to
-previously described specialized mapping approaches, toolbox driven
-pipelines are often easier to create, making them more accessible for
-the general investigator, and individual pieces of the pipeline have
-already been validated from other efforts. Using a general toolkit
-allows for modular mapping strategies that can handle a wide array of
-different data types by piecing together distinct solutions for modality
-specific problems. In this work, we highlight such mapping strategies
-designed using the ANTsX framework to map three distinct mouse cell type
-data with different characteristics into CCFs.
+operate. Investigators must be familiar with the toolkits and how to use
+them to build or adapt pipelines for new data types. However, in
+comparison to previously described specialized mapping approaches,
+toolbox driven pipelines are often easier to create, making them more
+accessible for the general investigator, and individual pieces of the
+pipeline have already been validated from other efforts. Using a general
+toolkit allows for modular mapping strategies that can handle a wide
+array of different data types by piecing together distinct solutions for
+modality specific problems. In this work, we highlight such mapping
+strategies designed using the ANTsX framework to map three distinct
+mouse cell type data with different characteristics into CCFs.
 
 \subsection{Advanced Normalization Tools
 (ANTsX)}\label{advanced-normalization-tools-antsx}
