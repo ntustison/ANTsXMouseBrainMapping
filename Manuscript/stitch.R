@@ -24,11 +24,11 @@ for( i in 1:length( rmdFiles ) )
   cat( rmdFiles[i] )
   if( i == 1 )
     {
-    cmd <- paste( "type", rmdFiles[i], ">", stitchedFile )
+    cmd <- paste( "cat", rmdFiles[i], ">", stitchedFile )
     } else {
-    cmd <- paste( "type", rmdFiles[i], ">>", stitchedFile )
+    cmd <- paste( "cat", rmdFiles[i], ">>", stitchedFile )
     }
-  shell( cmd )
+  system( cmd )
   }
 
 cat( '\n Pandoc rendering', stitchedFile, '\n' )
