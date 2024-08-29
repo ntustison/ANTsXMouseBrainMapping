@@ -21,7 +21,7 @@
 \usepackage{lmodern}
 \ifPDFTeX\else
   % xetex/luatex font selection
-  \setmainfont[]{Georgia}
+    \setmainfont[]{Georgia}
 \fi
 % Use upquote if available, for straight quotes in verbatim environments
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
@@ -43,15 +43,17 @@
 \usepackage[margin=1.0in]{geometry}
 \usepackage{graphicx}
 \makeatletter
-\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
-\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
-\makeatother
-% Scale images if necessary, so that they will not overflow the page
-% margins by default, and it is still possible to overwrite the defaults
-% using explicit options in \includegraphics[width, height, ...]{}
-\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\newsavebox\pandoc@box
+\newcommand*\pandocbounded[1]{% scales image to fit in text height/width
+  \sbox\pandoc@box{#1}%
+  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
+  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
+  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi% select the smaller of both
+  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
+  \else\usebox{\pandoc@box}%
+  \fi%
+}
 % Set default figure placement to htbp
-\makeatletter
 \def\fps@figure{htbp}
 \makeatother
 \setlength{\emergencystretch}{3em} % prevent overfull lines
@@ -107,9 +109,6 @@
 \definecolor{listnumbers}{gray}{0.65}
 \definecolor{listlightgray}{gray}{0.955}
 \definecolor{listwhite}{gray}{1.0}
-\ifLuaTeX
-  \usepackage{selnolig}  % disable illegal ligatures
-\fi
 \usepackage{bookmark}
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
 \urlstyle{same}
@@ -140,7 +139,7 @@ $ $
 
 \LARGE
 
-{\bf Modular strategies for spatial mapping of diverse cell type data of the mouse brain}
+{\bf Strategies for spatial mapping of diverse cell type data of the mouse brain}
 
 \vspace{1.0 cm}
 
@@ -215,20 +214,22 @@ that precludes a single mapping strategy from being generally applicable
 across all cell type data. Diverse, and often specialized, mapping
 approaches are needed to address the unique barriers present in each
 modality. This work highlights modular atlas mapping strategies
-developed across three separate BICCN studies using the ANTsX framework
-to map spatial transcriptomic (MERFISH) and high-resolution morphology
-(fMOST) mouse brain data into the Allen Common Coordinate Framework
-(AllenCCFv3), and developmental (MRI and LSFM) data into the
-Developmental Common Coordinate Framework (DevCCF). We discuss both
-common mapping strategies that can be shared across modalities, and
-targeted strategies driven by specific challenges from each data type.
-Novel contributions include velocity flow-based approaches for mapping
-longitudinal trajectory in the DevCCF, and automated structural
-morphological approaches for determining cortical parcellations.
-Finally, we provide general guidance and open source tools to aid
-investigators in this effort to tailor these strategies to address
-unique challenges in their data without the need to develop additional
-specialized software.
+developed across three separate BICCN studies using the Advanced
+Normalization Tools Ecosystem (ANTsX) to map spatial transcriptomic
+(MERFISH) and high-resolution morphology (fMOST) mouse brain data into
+the Allen Common Coordinate Framework (AllenCCFv3), and developmental
+(MRI and LSFM) data into the Developmental Common Coordinate Framework
+(DevCCF). We discuss both common mapping strategies that can be shared
+across modalities, and targeted strategies driven by specific challenges
+from each data type. Novel open-source contributions, made publicly
+available through ANTSX, include a generic velocity flow-based approach
+for continuously mapping developmental trajectories such as that
+characterizing the DevCCF as well as an automated framework for
+determining structural morphology made possible through the leveraging
+of public resources such as the AllenCCFv3 and the DevCCF. Finally, we
+provide general guidance to aid investigators in their efforts to tailor
+these strategies to address unique challenges in their data without the
+need to develop additional specialized software.
 
 \clearpage
 
@@ -260,15 +261,15 @@ laboratories and data centers, known as the BRAIN Initiative Cell Census
 Network (BICCN), has to date archived datasets encompassing over 40
 different multi-modal profiling techniques from more than 30 research
 groups, each providing unique characterizations of distinct cell types
-in the brain.\textsuperscript{11} Several of these modalities have been
+in the brain\textsuperscript{11}. Several of these modalities have been
 further developed into reference atlases to facilitate spatial alignment
 of individual brains and different data types into a common coordinate
 framework (CCF), thus allowing diverse single-cell information to be
 integrated and analyzed in tandem. The most notable of these atlases is
 the Allen Mouse Brain Common Coordinate Framework
 (AllenCCFv3)\textsuperscript{12}, which serves as the primary target
-coordinate space that the majority of BICCN mouse data are mapped to.
-Other atlases include modality specific atlases\textsuperscript{13--15},
+coordinate space to which the majority of BICCN mouse data are mapped.
+Other atlases include modality-specific atlases\textsuperscript{13--15},
 and spatiotemporal atlases\textsuperscript{16,17} for the developing
 mouse brain.
 
@@ -283,17 +284,17 @@ and heterogeneous task. There is significant variance in the
 acquisition, fixation and imaging protocols across different cell type
 data, and different tissue processing and imaging methods can
 potentially introduce modality specific tissue distortion and signal
-differences.\textsuperscript{18,19} Certain modalities can have poor
+differences\textsuperscript{18,19}. Certain modalities can have poor
 intensity correspondence with the CCF, making image alignment less
 robust. Studies targeting specific regions or cell types can lead to
 missing anatomical correspondences. Other considerations include
 artifacts such as tissue distortion, holes, bubbles, folding, tears, and
-missing sections in the data that need to be addressed on a per-case
-basis.\textsuperscript{20--23} Given the diversity of these challenges,
-it is unlikely any single mapping approach can be generally applicable
-across all cell type data. Diverse, and often specialized, strategies
-are needed to address the unique barriers present for mapping each
-modality.
+missing sections in the data that often require manual
+correction\textsuperscript{20--23}. Given the diversity of these
+challenges, it is unlikely any single mapping approach can be generally
+applicable across all cell type data. Diverse, and often specialized,
+strategies are needed to address the unique barriers present for mapping
+each modality.
 
 Existing solutions to address mapping cell type data into the AllenCCFv3
 falls broadly into three main categories. The first consists of
@@ -301,19 +302,19 @@ integrated processing platforms that directly provide mapped data to the
 users. These include the Allen Brain Cell Atlas\textsuperscript{24} for
 the Allen Reference Atlas (ARA) and associated data, the Brain
 Architecture Portal\textsuperscript{25} for combined ex vivo radiology
-and histology data, Openbrainmap\textsuperscript{26} for connectivity
+and histology data, OpenBrainMap\textsuperscript{26} for connectivity
 data, and the Image and Multi-Morphology Pipeline\textsuperscript{27}
 for high resolution morphology data. These platforms provide users
 online access to pre-processed, multi-modal cell type data that are
 already mapped to the AllenCCFv3. The platforms are designed such that
-the data is interactable by users through integrated visualization
-software that allow users to spatially manipulate and explore each
-dataset within the mapped space. While highly convenient for
-investigators who are interested in studying the specific modalities
-provided by these platforms, these system are limited in flexibility and
-general applicability. The mapping software and pipeline are typically
-developed specifically with the data type and platform in mind, and the
-software are often not openly accessible to the public. Investigators
+the data is interactively manipulated by users through integrated
+visualization software that allow users to spatially manipulate and
+explore each dataset within the mapped space. While highly convenient
+for investigators who are interested in studying the specific modalities
+provided by these platforms, these systems can be limited in flexibility
+and more general applicability. The mapping software and pipelines are
+typically developed specifically with the data type and platform in
+mind, and the software is limited public availability. Investigators
 will find it difficult to apply the same mapping to their own data
 without direct collaboration with the platform owners.
 
@@ -322,13 +323,13 @@ mapping one or more modalities into a CCF. These approaches use
 combinations of specialized manual and automated processes that address
 specific challenges in each modality. Examples include approaches for
 mapping histology\textsuperscript{28--30}, magnetic resonance imaging
-(MRI)\textsuperscript{30--37}, micro-computed tomography
+(MRI)\textsuperscript{37}, micro-computed tomography
 (microCT)\textsuperscript{35,37}, light-sheet fluorescence microscopy
 (LSFM)\textsuperscript{34,36--39}, fluorescence micro-optical sectioning
-tomography (fMOST)\textsuperscript{15,40} and
-transcriptomic\textsuperscript{41--43} data. As specialized approaches,
-these techniques tend to boast higher mapping accuracy, robustness, and
-ease of use when ran with applicable modalities. Conversely, their
+tomography (fMOST)\textsuperscript{15,40} and transcriptomic
+data\textsuperscript{41--43}. As specialized approaches, these
+techniques tend to boast higher mapping accuracy, robustness, and ease
+of use when ran with applicable modalities. Conversely, their
 specialized designs often rely on base assumptions regarding the data
 type that can make them rigid and difficult to adapt for new modalities
 or unexpected artifacts and distortions in the data. Retooling these
@@ -340,25 +341,20 @@ The last category are modular mapping approaches constructed using
 general image analysis toolkits, which are software packages that
 include varied collections of image processing, segmentation and
 registration tools that have been previously developed, and validated
-for general use. Examples of such toolkits include
-elastix\textsuperscript{44}, slicer3D\textsuperscript{45}, and
-ANTsX\textsuperscript{46}, which have all been applied towards mapping
-mouse cell type data. The main challenge for using these approaches is
-that the individual tools in the toolbox are not data type specific.
-Thus, investigators must construct pipelines that link together a
-variety of tools to address data specific problem, and certain tools may
-still require specialized input data such as landmarks or annotations to
-operate. Investigators must be familiar with the toolkits and how to use
-them to build or adapt pipelines for new data types. However, in
-comparison to previously described specialized mapping approaches,
-toolbox driven pipelines are often easier to create, making them more
-accessible for the general investigator, and individual pieces of the
-pipeline have already been validated from other efforts. Using a general
-toolkit allows for modular mapping strategies that can handle a wide
-array of different data types by piecing together distinct solutions for
-modality specific problems. In this work, we highlight such mapping
-strategies designed using the ANTsX framework to map three distinct
-mouse cell type data with different characteristics into CCFs.
+for multiple application areas. Examples of such toolkits include
+elastix\textsuperscript{44}, Slicer3D\textsuperscript{45},
+ANTsX\textsuperscript{46}, and several others which have all been
+applied towards mouse brain spatial mapping. The main challenge, in
+these mouse-specific study scenarios, is that tailored pipelines often
+need be constructed from available software components. Investigators
+must therefore be familiar with the these tools for formulating new or
+adapting existing pipelines. However, in comparison to previously
+described specialized mapping approaches, these approaches are often
+easier to create and prone to robustness, being typically constructed
+from pipelin components which have been previously vetted in other
+contexts. In this work, we highlight such mapping strategies designed
+using the ANTsX framework to map three distinct mouse cell type data
+with different characteristics into existing CCFs.
 
 \subsection{Advanced Normalization Tools
 (ANTsX)}\label{advanced-normalization-tools-antsx}
