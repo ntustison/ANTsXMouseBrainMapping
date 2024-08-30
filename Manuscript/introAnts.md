@@ -78,7 +78,7 @@ such as section reconstruction and landmark-based alignment with corresponding
 processing scripts 
 (\url{https://github.com/dontminchenit/CCFAlignmentToolkit}).  
 
-### The DevCCF velocity flow model
+### Continuously mapping the DevCCF trojectory with a velocity flow model
 
 Recently, the Developmental Common Coordinate Framework (DevCCF) was introduced
 to the mouse brain research community as a public resource [@Kronman:2023aa]
