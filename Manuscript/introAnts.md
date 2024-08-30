@@ -78,13 +78,13 @@ such as section reconstruction and landmark-based alignment with corresponding
 processing scripts 
 (\url{https://github.com/dontminchenit/CCFAlignmentToolkit}).  
 
-### Continuously mapping the DevCCF trojectory with a velocity flow model
+### Continuously mapping the DevCCF detrojectory with a velocity flow model
 
 Recently, the Developmental Common Coordinate Framework (DevCCF) was introduced
 to the mouse brain research community as a public resource [@Kronman:2023aa]
 comprising symmetric atlases of multimodal image data and anatomical
 segmentations defined by developmental ontology.  These templates sample the
-mouse embryonic days (E) 11.5, E13.5, E15.5, E18.5 and postnatal day (P) 4, P14,
+mouse embryonic days E11.5, E13.5, E15.5, E18.5 and postnatal days P4, P14,
 and P56.  Modalities include light sheet flourescence miscroscopy (LSFM) and at
 least four MRI contrasts per developmental stage.  Anatomical parcellations are
 also available for each time point and were generated from ANTsX-based mappings
@@ -92,8 +92,7 @@ of gene expression and other cell type data.  Additionally, the P56 template was
 integrated with the AllenCCFv3 to further enhance the practical utility of the
 DevCCF. These processes, specifically template generation and multi-modal image
 mapping, were performed using ANTsX functionality in the presence of 
-image mapping difficulties such as missing data and tissue distortion 
-[@Kronman:2023aa].  
+image mapping difficulties such as missing data and tissue distortion. 
 
 Given the temporal gaps in the discrete set of developmental atlases, we also
 provide an open-source framework for inferring correspondence within the

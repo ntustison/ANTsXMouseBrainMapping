@@ -368,13 +368,13 @@ such as section reconstruction and landmark-based alignment with corresponding
 processing scripts 
 (\url{https://github.com/dontminchenit/CCFAlignmentToolkit}).  
 
-### The DevCCF velocity flow model
+### Continuously mapping the DevCCF detrojectory with a velocity flow model
 
 Recently, the Developmental Common Coordinate Framework (DevCCF) was introduced
 to the mouse brain research community as a public resource [@Kronman:2023aa]
 comprising symmetric atlases of multimodal image data and anatomical
 segmentations defined by developmental ontology.  These templates sample the
-mouse embryonic days (E) 11.5, E13.5, E15.5, E18.5 and postnatal day (P) 4, P14,
+mouse embryonic days E11.5, E13.5, E15.5, E18.5 and postnatal days P4, P14,
 and P56.  Modalities include light sheet flourescence miscroscopy (LSFM) and at
 least four MRI contrasts per developmental stage.  Anatomical parcellations are
 also available for each time point and were generated from ANTsX-based mappings
@@ -382,8 +382,7 @@ of gene expression and other cell type data.  Additionally, the P56 template was
 integrated with the AllenCCFv3 to further enhance the practical utility of the
 DevCCF. These processes, specifically template generation and multi-modal image
 mapping, were performed using ANTsX functionality in the presence of 
-image mapping difficulties such as missing data and tissue distortion 
-[@Kronman:2023aa].  
+image mapping difficulties such as missing data and tissue distortion. 
 
 Given the temporal gaps in the discrete set of developmental atlases, we also
 provide an open-source framework for inferring correspondence within the
@@ -489,33 +488,40 @@ specimens.
 
 ### Mapping multiplexed error-robust fluorescence in situ hybridization (MERFISH) data
 
-__Overview.__ The ANTsX framework was used to develop a pipeline for mapping multiplexed error-robust fluorescence in situ hybridization (MERFISH) spatial transcriptomic mouse data onto the AllenCCFv3 (see Figure \ref{fig:allenpipelines}(a)). This pipeline, used recently in creating a high-resolution transcriptomic atlas of the mouse brain[@Yao:2023aa], performs mappings by first generating anatomical labels from tissue related gene expressions in the MERFISH data, and then spatially matching these labels to corresponding anatomical tissue parcellations in the AllenCCFv3. The pipeline consists
-of MERFISH data specific preprocessing which includes section reconstruction,
-mapping corresponding anatomical labels between AllenCCFv3 and the spatial
-transcriptomic maps of the MERFISH data, and matching MERFISH sections to the
-atlas space. Following pre-processing, two main alignment steps were performed:
-1) 3-D global affine mapping and section matching of the AllenCCFv3 into the
-MERFISH data and 2) 2D global and deformable mapping between each MERFISH
-section and matched AllenCCFv3 section. Mappings learned via each step in the
-pipeline are preserved and concatenated to provide point-to-point correspondence
-between the original MERFISH data and AllenCCFv3, thus allowing individual gene
-expressions to be transferred into the AllenCCFv3. 
+__Overview.__ The ANTsX framework was used to develop a pipeline for mapping
+multiplexed error-robust fluorescence in situ hybridization (MERFISH) spatial
+transcriptomic mouse data onto the AllenCCFv3 (see Figure
+\ref{fig:allenpipelines}(a)). This pipeline, used recently in creating a
+high-resolution transcriptomic atlas of the mouse brain [@Yao:2023aa], performs
+mappings by first generating anatomical labels from tissue related gene
+expressions in the MERFISH data, and then spatially matching these labels to
+corresponding anatomical tissue parcellations in the AllenCCFv3. The pipeline
+consists of MERFISH data specific preprocessing which includes section
+reconstruction, mapping corresponding anatomical labels between AllenCCFv3 and
+the spatial transcriptomic maps of the MERFISH data, and matching MERFISH
+sections to the atlas space. Following pre-processing, two main alignment steps
+were performed: 1) 3-D global affine mapping and section matching of the
+AllenCCFv3 into the MERFISH data and 2) 2D global and deformable mapping between
+each MERFISH section and matched AllenCCFv3 section. Mappings learned via each
+step in the pipeline are preserved and concatenated to provide point-to-point
+correspondence between the original MERFISH data and AllenCCFv3, thus allowing
+individual gene expressions to be transferred into the AllenCCFv3. 
 
 __Data.__ MERFISH mouse brain data was acquired using a previously detailed procedure
 [@Yao:2023aa]. Briefly, a brain of C57BL/6 mouse was dissected according to
 standard procedures and placed into an optimal cutting temperature (OCT)
-compound (Sakura FineTek 4583) in which it was stored at -80°C. The fresh frozen
+compound (Sakura FineTek 4583) in which it was stored at -80$^\circ$C. The fresh frozen
 brain was sectioned at $10 \mu m$ on Leica 3050 S cryostats at intervals of 
 $200 \mu m$ to evenly cover the brain. A set of 500 genes were imaged that had been
-carefully chosen to distinguish the $\sim5200$ clusters of our existing RNAseq
+carefully chosen to distinguish the ${\sim}5200$ clusters of our existing RNAseq
 taxonomy. For staining the tissue with MERFISH probes, a modified version of
 instructions provided by the manufacturer was used [@Yao:2023aa]. Raw MERSCOPE
-data were decoded using Vizgen software (v231). Cell segmentation was performed
-[@Liu:2023aa]. In brief, cells were segmented based on DAPI and PolyT staining
-using Cellpose [@Stringer:2021aa]. Segmentation was performed on a median
-z-plane (fourth out of seven) and cell borders were propagated to z-planes above and
-below. To assign cluster identity to each cell in the MERFISH dataset, we mapped
-the MERFISH cells to the scRNA-seq reference taxonomy. 
+data were decoded using Vizgen software (v231).  Cells were segmented based on
+DAPI and PolyT staining using Cellpose [@Liu:2023aa;@Stringer:2021aa].
+Segmentation was performed on a median z-plane (fourth out of seven) and cell
+borders were propagated to z-planes above and below. To assign cluster identity
+to each cell in the MERFISH dataset, we mapped the MERFISH cells to the
+scRNA-seq reference taxonomy. 
 
 __Evaluation.__ Alignment of the MERFISH data into the AllenCCFv3 was
 qualitatively assessed by an expert anatomist at each iteration of the
@@ -530,25 +536,31 @@ olfactory bulb, mitral layer (AOBmi); and accessory supraoptic group (ASO).
 
 ### Mapping fluorescence micro-optical sectioning tomography (fMOST) data
 
-__Overview.__  We developed a pipeline for mapping fluorescence micro-optical sectioning
-tomography (fMOST) mouse brain images into the AllenCCFv3 (see
-Figure \ref{fig:allenpipelines}(b)). The pipeline is adapted from previously developed frameworks for human brain mapping[@Avants:2010aa], and uses a modality specific (fMOST) average atlas to assist in the image registration and mapping. This approach has been well validated in human studies[@jia:2011aa;@tang:2009aa;@dewey:2017aa], and successfully used in other mouse data[@perens:2023aa;@Wang:2020aa;@qu:2022aa].
-Briefly, we construct an intensity- and shape-based average fMOST
-atlas using 30 fMOST images to serve as an intermediate registration target for mapping fMOST images from individual specimens into the AllenCCFv3. Preprocessing steps include
-downsampling to match the $25 \mu m$ isotropic AllenCCFv3, acquisition-based
-stripe artifact removal, and inhomogeneity correction [@Tustison:2010ac].
-Preprocessing also includes a single annotation-driven registration to establish
-a canonical mapping between the fMOST atlas and the AllenCCFv3. This step allows
-us to align expert determined landmarks to accurately map structures with large
-morphological differences between the modalities, which are difficult to address
-using standard approaches. Once this canonical mapping is established, standard
+__Overview.__  We developed a pipeline for mapping fluorescence micro-optical
+sectioning tomography (fMOST) mouse brain images into the AllenCCFv3 (see Figure
+\ref{fig:allenpipelines}(b)). The pipeline is adapted from previously developed
+frameworks for human brain mapping[@Avants:2010aa], and uses a modality specific
+(fMOST) average atlas to assist in the image registration and mapping. This
+approach has been well validated in human studies
+[@jia:2011aa;@tang:2009aa;@dewey:2017aa], and successfully used in other mouse
+data [@perens:2023aa;@Wang:2020aa;@qu:2022aa]. Briefly, we construct an
+intensity- and shape-based average fMOST atlas using 30 fMOST images to serve as
+an intermediate registration target for mapping fMOST images from individual
+specimens into the AllenCCFv3. Preprocessing steps include downsampling to match
+the $25 \mu m$ isotropic AllenCCFv3, acquisition-based stripe artifact removal,
+and inhomogeneity correction [@Tustison:2010ac]. Preprocessing also includes a
+single annotation-driven registration to establish a canonical mapping between
+the fMOST atlas and the AllenCCFv3. This step allows us to align expert
+determined landmarks to accurately map structures with large morphological
+differences between the modalities, which are difficult to address using
+standard approaches. Once this canonical mapping is established, standard
 intensity-based registration is used to align each new fMOST image to the fMOST
-specific atlas. This mapping is concatenated with the canonical fMOST 
-atlas-to-AllenCCFv3 mapping to further map each individual brain into the latter without
-the need to generate additional landmarks. Transformations learned through this
-mapping can be applied to single neuron reconstructions from the fMOST images to
-evaluate neuronal distributions across different specimens into the AllenCCFv3
-for the purpose of cell census analyses.
+specific atlas. This mapping is concatenated with the canonical fMOST
+atlas-to-AllenCCFv3 mapping to further map each individual brain into the latter
+without the need to generate additional landmarks. Transformations learned
+through this mapping can be applied to single neuron reconstructions from the
+fMOST images to evaluate neuronal distributions across different specimens into
+the AllenCCFv3 for the purpose of cell census analyses.
 
 __Data.__ The high-throughput and high-resolution fluorescence micro-optical
 sectioning tomography (fMOST) [@Gong:2016aa;@Wang:2021aa] platform was used to
@@ -655,30 +667,46 @@ convergence typically occurs in four deformable iterations.
 ############################################
 -->
 
-## The DevCCF velocity flow model
-
+## Continuously mapping the DevCCF trojectory with a velocity flow model
 
 \begin{figure}
 \centering
 \includegraphics[width=0.99\textwidth]{Figures/lowerLeftPanel.pdf}
 \caption{The spatial transformation between any two time points within the
-DevCCF longitudinal developmental trajectory is available through the use of
-ANTsX functionality for generating a velocity flow model.}
+continuous DevCCF longitudinal developmental trajectory is available through the
+use of ANTsX functionality for generating a velocity flow model.}
 \label{fig:devccfvelocity}
 \end{figure} 
 
+The DevCCF is an openly accessible resource for the mouse brain research
+community [@Kronman:2023aa] .  It consists of multi-modal MRI and LSFM symmetric
+ANTsX-generated templates [@Avants:2010aa] sampling the mouse brain
+developmental trajectory, specifically the embryonic (E) and postnatal (P) days
+E11.5, E13.5, E15.5, E18.5 P4, P14, and P56.  Each template space includes
+structural labels defined by a developmental ontology. Its utility is also
+enhanced by a coordinated construction with AllenCCFv3. Although this work
+represents a signficant contribution, the gaps between timepoints potentially
+limit its applicability which could be addressed through the development of the
+ability to map not only between timepoints but also within and across
+timepoints.
 
-To continuously interpolate transformations between the different stages of the
-DevCCF atlases, a velocity flow model was constructed using DevCCF derived data
-and functionality recently introduced into both the ANTsR and ANTsPy
-packages.  Both platforms include a complete suite of functions for determining
-dense correspondence from sparse landmarks based on a variety of transformation
-models ranging from standard linear models (i.e., rigid, affine) to deformable
-diffeomorphic models (e.g, symmetric normalization [@Avants:2008aa]).  The
-latter set includes transformation models for both the pairwise scenario and for
-multiple sets, as in the case of the DevCCF. ANTsX, being built on top of ITK,
-uses an ITK image data structure for the 4-D velocity field where each voxel
-contains the $x$, $y$, $z$ components of the field at that point. 
+To continuously generate transformations between the different stages of the
+DevCCF atlases, we developed a general velocity flow model approach which we
+apply to DevCCF-derived data.  We also introduce this functionality into both
+the ANTsR and ANTsPy packages (for the latter, see
+``ants.fit_time_varying_transform_to_point_sets(...)``) for potential
+application to this and other analagous scenarios (e.g., modeling the cardiac
+and respiratory cycles).  ANTsX, being built on top of ITK, uses an ITK image
+data structure for the 4-D velocity field where each voxel contains the $x$,
+$y$, $z$ components of the field at that point. 
+
+<!-- Both ANTsX platforms include a complete suite of functions
+for determining dense correspondence from sparse landmarks based on a variety of
+transformation models ranging from standard linear models (i.e., rigid, affine)
+to deformable diffeomorphic models (e.g., symmetric normalization
+[@Avants:2008aa]).  The latter set includes transformation models for both the
+pairwise scenario and for multiple sets, as in the case of the DevCCF.
+ -->
 
 ### Data
 
@@ -755,16 +783,16 @@ The maximum number of iterations was set to 200 with each iteration taking
 approximately six minutes on a 2020 iMac (processor, 3.6 GHz 10-Core Intel Core
 i9; memory, 64 GB 2667 MHz DDR4) At each iteration we looped over the 11
 integration points. At each integration point, the velocity field estimate was
-updated by warping the two
-immediately adjacent point sets to the integration time point and determining
-the regularized displacement field between the two warped point sets.  As with
-any gradient-based descent algorithm, this field was multiplied by a small step
-size ($\delta = 0.2$) before adding to the current velocity field.  Convergence
-is determined by the average displacement error over each of the integration
-points. As can be seen in the left panel of Figure \ref{fig:convergence},
-convergence occurred around 125 iterations when the average displacement error
-over all integration points is minimized. The median displacement error at each
-of the integration points also trends towards zero but at different rates. 
+updated by warping the two immediately adjacent point sets to the integration
+time point and determining the regularized displacement field between the two
+warped point sets.  As with any gradient-based descent algorithm, this field was
+multiplied by a small step size ($\delta = 0.2$) before adding to the current
+velocity field.  Convergence is determined by the average displacement error
+over each of the integration points. As can be seen in the left panel of Figure
+\ref{fig:convergence}, convergence occurred around 125 iterations when the
+average displacement error over all integration points is minimized. The median
+displacement error at each of the integration points also trends towards zero
+but at different rates. 
 
 <!-- 
 \begin{figure}[!htb]
@@ -810,72 +838,84 @@ those images in the ANTsX template building process.}
 \label{fig:virtual}
 \end{figure}
 
-
 Once optimized, the resulting velocity field can be used to generate the
 deformable transform between any two continuous points within the time interval
-bounded by E11.5 and P56.  In Figure \ref{fig:crosswarp}, we transform each
-atlas to the space of every other atlas using the DevCCF transform model.
-Additionally, one can use this transformation model to construct virtual
-templates in the temporal gaps of the DevCCF.  Given an arbitrarily chosen time
-point within the normalized time point interval, the existing adjacent DevCCF
-atlases on either chronological side can be warped to the desired time point. A
-subsequent call to one of the ANTsX template building functions then permits the
-construction of the template at that time point. In Figure \ref{fig:virtual}, we
-illustrate the use of the DevCCF velocity flow model for generating two such virtual
-templates for two arbitrary time points.  Note that both of these usage
-examples can be found in the GitHub repository previously given.
+bounded by E11.5 and P56.  As a demonstration, in Figure \ref{fig:crosswarp}, we
+transform each atlas to the space of every other atlas using the DevCCF
+transform model. Additionally, one can use this transformation model to
+construct virtual templates in the temporal gaps of the DevCCF.  Given an
+arbitrarily chosen time point within the normalized time point interval, the
+existing adjacent DevCCF atlases on either chronological side can be warped to
+the desired time point. A subsequent call to one of the ANTsX template building
+functions then permits the construction of the template at that time point. In
+Figure \ref{fig:virtual}, we illustrate the use of the DevCCF velocity flow
+model for generating two such virtual templates for two arbitrary time points.
+Note that both of these usage examples can be found in the GitHub repository
+previously given.
 
 
-## The Mouse Brain Parcellation Pipeline
+## Automated structural parcellations of the mouse brain
 
-\begin{figure}
-\centering
-\includegraphics[width=0.95\textwidth]{Figures/mousePipeline.pdf}
-\caption{The mouse brain cortical parcellation pipeline integrating two 
-deep learning components for brain extraction and brain parcellation 
-prior to estimating cortical labels. Both deep learning networks
-rely heavily on data augmentation on templates built from open 
-data and provide an outline for further refinement and creating 
-alternative parcellations for tailored research objectives.}
-\label{fig:mouseKK}
-\end{figure}
-
-One of the most well-utilized pipelines in the ANTsX toolkit is the generation
+<!-- One of the most well-utilized pipelines in the ANTsX toolkit is the generation
 of cortical thickness maps in the human brain from T1-weighted MRI.  Starting
 with the novel Diffeomorphic Registration-based Cortical Thickness (DiReCT)
 algorithm [@Das:2009uv], a complete algorithmic workflow was developed for both
 cross-sectional [@Tustison:2014ab] and longitudinal [@Tustison:2019aa]
 T1-weighted MR image data.  This contribution was later refactored using deep
 learning [@Tustison:2021aa] leveraging the earlier results [@Tustison:2014ab] 
-for training data.  
+for training data.   -->
 
-In the case of the mouse brain, the lack of training data and/or tools to
-generate training data making analogous algorithmic development difficult. In
-addition, mouse data is often characterized by unique issues such as frequent
-anisotropic sampling which are often in sharp contrast to the high resolution
-resources available within the community, e.g., AllenCCFv3 and DevCCF. Using
-ANTsX and other publicly available data resources, we developed a complete mouse
-brain structural morphology pipeline as illustrated in Figure \ref{fig:mouseKK}
-and detailed below. 
+
+\begin{figure}
+\centering
+\includegraphics[width=0.95\textwidth]{Figures/mousePipeline.pdf}
+\caption{The mouse brain cortical parcellation pipeline integrating two deep
+learning components for brain extraction and brain parcellation prior to
+estimating cortical labels. Both deep learning networks rely heavily on
+aggressive data augmentation on templates built from open data and provide an
+outline for further refinement and creating alternative parcellations for
+tailored research objectives.  Possible applications include measurement
+of voxelwise cortical thickness measurements.}
+\label{fig:mouseKK}
+\end{figure}
+
+Brain parcellation strategies for the mouse brain are pivotal for understanding
+the complex organization and function of murine nervous system [@Chon:2019aa].
+By dividing the brain into distinct regions based on anatomical, physiological,
+or functional characteristics, researchers can investigate specific areas in
+isolation and identify their roles in various behaviors and processes. For
+example, such parcellation schemes can help elucidate the spatial distribution
+of gene expression patterns [@Tasic:2016aa] as well as identify functional
+regions involved in specific cognitive tasks [@Bergmann:2020aa]. 
+
+Although deep learning techniques have been used to develop useful parcellation
+tools for human brain research (e.g., SynthSeg [@Billot:2023aa], ANTsXNet
+[@Tustison:2021aa]), development for the mouse brain is not as extensive.  In
+addition, mouse data is often characterized by unique imaging issues such as
+extreme anisotropic sampling which are often in sharp contrast to the high
+resolution template-based resources available within the community, e.g.,
+AllenCCFv3 and DevCCF. We demonstrate how one can use the ANTsX tools to develop
+a complete mouse brain structural morphology pipeline as illustrated in Figure
+\ref{fig:mouseKK} and detailed below. 
 
 ### Two-shot mouse brain extraction network
 
 In order to create a generalized mouse brain extraction network, we built
 whole-head templates from two publicly available datasets.  The Center for
-Animal MRI (CAMRI) dataset [@Hsu2021] from the University of North Carolina
-at Chapel Hill consists of 16 T2-weighted MRI volumes of
-voxel resolution $0.16 \times 0.16 \times 0.16 mm^3$.  The second
-high-resolution dataset [@Reshetnikov2021] comprises 88 specimens each with
-three spatially aligned canonical views with in-plane resolution of $0.08 \times
-0.08 mm^2$ with a slice thickness of $0.5 mm$.  These three orthogonal views
-were used to reconstruct a single high-resolution volume per subject using a
-B-spline fitting algorithm developed in ANTsX [@Tustison:2006aa].  From these
-two datasets, two symmetric isotropic ANTsX templates [@Avants:2010aa] were
-generated analogous to the publicly available ANTsX human brain templates used
-in previous research [@Tustison:2014ab]. Bias field simulation, intensity
-histogram warping, noise simulation, random translation and warping, and random
-anisotropic resampling in the three canonical directions were used for data
-augmentation in training a T2-weighted brain extraction network.
+Animal MRI (CAMRI) dataset [@Hsu2021] from the University of North Carolina at
+Chapel Hill consists of 16 T2-weighted MRI volumes of voxel resolution $0.16
+\times 0.16 \times 0.16 mm^3$.  The second high-resolution dataset
+[@Reshetnikov2021] comprises 88 specimens each with three spatially aligned
+canonical views with in-plane resolution of $0.08 \times 0.08 mm^2$ with a slice
+thickness of $0.5 mm$.  These three orthogonal views were used to reconstruct a
+single high-resolution volume per subject using a B-spline fitting algorithm
+developed in ANTsX [@Tustison:2006aa].  From these two datasets, two symmetric
+isotropic ANTsX templates [@Avants:2010aa] were generated analogous to the
+publicly available ANTsX human brain templates used in previous research
+[@Tustison:2014ab]. Bias field simulation, intensity histogram warping, noise
+simulation, random translation and warping, and random anisotropic resampling in
+the three canonical directions were used for data augmentation in training a
+T2-weighted brain extraction network.
 
 ### Single-shot mouse brain parcellation network
 
@@ -884,10 +924,10 @@ cortical thickness estimation, we used the AllenCCFv3 and the associated
 ``allensdk`` Python library. Using ``allensdk``, a gross parcellation labeling
 was generated from the fine Allen CCFv3 labeling which includes the cerebral
 cortex, cerebral nuclei, brain stem, cerebellum, main olfactory bulb, and
-hippocampal formation.  This labeling was mapped to the P56
-component of the DevCCF. Both the T2-w P56 DevCCF and labelings, in
-conjunction with the data augmentation described previously for brain 
-extraction, was used to train a brain parcellation network.
+hippocampal formation.  This labeling was mapped to the P56 component of the
+DevCCF. Both the T2-w P56 DevCCF and labelings, in conjunction with the data
+augmentation described previously for brain extraction, was used to train a
+brain parcellation network.
 
 ### Evaluation
 
@@ -930,12 +970,13 @@ the brain extraction and parcellation networks.  Data includes 12 specimens each
 imaged at seven time points (Day 0, Day 3, Week 1, Week 4, Week 8, Week 20) with
 available brain masks.  In-plane resolution is $0.1 \times 0.1 mm^2$ with a
 slice thickness of $0.5 mm$.  Since the training data is isotropic and data
-augmentation includes downsampling in the canonical directions, each of the two 
-networks learns mouse brain-specific interpolation such that one can perform prediction
-on thick-sliced images, as, for example, in these evaluation data, and return isotropic
-probability and thickness maps (a choice available to the user).  Figure 
-\ref{fig:evaluation} summarizes the results of the evaluation and comparison between
-isotropic and anisotropic cortical measurements in male and female specimens.
+augmentation includes downsampling in the canonical directions, each of the two
+networks learns mouse brain-specific interpolation such that one can perform
+prediction on thick-sliced images, as, for example, in these evaluation data,
+and return isotropic probability and thickness maps (a choice available to the
+user).  Figure \ref{fig:evaluation} summarizes the results of the evaluation and
+comparison between isotropic and anisotropic cortical measurements in male and
+female specimens.
 
 
 
