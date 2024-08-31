@@ -48,19 +48,19 @@ a complete mouse brain structural morphology pipeline as illustrated in Figure
 In order to create a generalized mouse brain extraction network, we built
 whole-head templates from two publicly available datasets.  The Center for
 Animal MRI (CAMRI) dataset [@Hsu2021] from the University of North Carolina at
-Chapel Hill consists of 16 T2-weighted MRI volumes of voxel resolution $0.16
+Chapel Hill consists of 16 T2-w MRI volumes of voxel resolution $0.16
 \times 0.16 \times 0.16 mm^3$.  The second high-resolution dataset
 [@Reshetnikov2021] comprises 88 specimens each with three spatially aligned
 canonical views with in-plane resolution of $0.08 \times 0.08 mm^2$ with a slice
 thickness of $0.5 mm$.  These three orthogonal views were used to reconstruct a
 single high-resolution volume per subject using a B-spline fitting algorithm
-developed in ANTsX [@Tustison:2006aa].  From these two datasets, two symmetric
+available in ANTsX [@Tustison:2006aa].  From these two datasets, two symmetric
 isotropic ANTsX templates [@Avants:2010aa] were generated analogous to the
 publicly available ANTsX human brain templates used in previous research
 [@Tustison:2014ab]. Bias field simulation, intensity histogram warping, noise
 simulation, random translation and warping, and random anisotropic resampling in
 the three canonical directions were used for data augmentation in training a
-T2-weighted brain extraction network.
+T2-w brain extraction network.
 
 ### Single-shot mouse brain parcellation network
 
@@ -69,10 +69,10 @@ cortical thickness estimation, we used the AllenCCFv3 and the associated
 ``allensdk`` Python library. Using ``allensdk``, a gross parcellation labeling
 was generated from the fine Allen CCFv3 labeling which includes the cerebral
 cortex, cerebral nuclei, brain stem, cerebellum, main olfactory bulb, and
-hippocampal formation.  This labeling was mapped to the P56 component of the
-DevCCF. Both the T2-w P56 DevCCF and labelings, in conjunction with the data
-augmentation described previously for brain extraction, was used to train a
-brain parcellation network.
+hippocampal formation.  Given coordination with the AllenCCFv3, this labeling 
+was mapped to the P56 component of the DevCCF. Both the T2-w P56 DevCCF and 
+labelings, in conjunction with the data augmentation described previously for 
+brain extraction, were used to train a brain parcellation network.
 
 ### Evaluation
 
@@ -97,15 +97,15 @@ brain parcellation network.
   \label{fig:subc}
 \end{subfigure}
 \caption{Evaluation of the ANTsX mouse brain extraction, parcellation, and
-cortical thickness pipeline on an independent dataset 
-consisting of 12 specimens $\times$ 7 time points = 
-84 total images.  (a) Dice overlap comparisons with the provided brain
-masks provide generally good agreement with the brain extraction network.
-(b) Cortical volume measurements show similar average quantities over
-growth and development between the original anisotropic data and 
-interpolated isotropic data.  (c) These results contrast with the cortical
-thickness measurements which show that cortical thickness estimation 
-in anisotropic space severely underestimates the actual values.}
+cortical thickness pipeline on an independent dataset consisting of 12 specimens
+$\times$ 7 time points = 84 total images.  (a) Dice overlap comparisons with the
+provided brain masks provide generally good agreement with the brain extraction
+network. (b) Cortical volume measurements show similar average quantities over
+growth and development between the original anisotropic data and interpolated
+isotropic data.  (c) These results contrast with the cortical thickness
+measurements which show that cortical thickness estimation in anisotropic space
+severely underestimates the actual values in comparison with the isotropic
+prediction.}
 \label{fig:evaluation}
 \end{figure}
 
