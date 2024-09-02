@@ -64,15 +64,18 @@ T2-w brain extraction network.
 
 ### Single-shot mouse brain parcellation network
 
-To create the network for generating a brain parcellation consistent with
-cortical thickness estimation, we used the AllenCCFv3 and the associated
-``allensdk`` Python library. Using ``allensdk``, a gross parcellation labeling
-was generated from the fine Allen CCFv3 labeling which includes the cerebral
-cortex, cerebral nuclei, brain stem, cerebellum, main olfactory bulb, and
-hippocampal formation.  Given coordination with the AllenCCFv3, this labeling 
-was mapped to the P56 component of the DevCCF. Both the T2-w P56 DevCCF and 
-labelings, in conjunction with the data augmentation described previously for 
-brain extraction, were used to train a brain parcellation network.
+AllenCCFv3 and its hierarchical ontological labeling, along with the DevCCF,
+provides the necessary data for developing a tailored structural parcellation
+network for multimodal imaging.  The ``allensdk`` Python library permits the
+creation of any gross parcellation based on the AllenCCFv3 ontology.  For
+example, using ``allensdk`` we coalesced the labels to the following six major
+structures:  cerebral cortex, cerebral nuclei, brain stem, cerebellum, main
+olfactory bulb, and hippocampal formation.  This labeling was mapped to the P56
+component of the DevCCF for use with the T2-w template component. Both the T2-w
+P56 DevCCF and labelings, in conjunction with the data augmentation described
+previously for brain extraction, were used to train the proposed brain parcellation
+network.  Note that other brain parcellation networks have also been made 
+available in the same ANTsXNet functionality using other regions and modalities.
 
 ### Evaluation
 
@@ -99,29 +102,39 @@ brain extraction, were used to train a brain parcellation network.
 \caption{Evaluation of the ANTsX mouse brain extraction, parcellation, and
 cortical thickness pipeline on an independent dataset consisting of 12 specimens
 $\times$ 7 time points = 84 total images.  (a) Dice overlap comparisons with the
-provided brain masks provide generally good agreement with the brain extraction
-network. (b) Cortical volume measurements show similar average quantities over
-growth and development between the original anisotropic data and interpolated
-isotropic data.  (c) These results contrast with the cortical thickness
-measurements which show that cortical thickness estimation in anisotropic space
-severely underestimates the actual values in comparison with the isotropic
-prediction.}
+user-generated brain masks provide good agreement with the automated results
+from the brain extraction network. (b) Cortical volume measurements show similar
+average quantities over growth and development between the original anisotropic
+data and interpolated isotropic data.  (c) The volumetric comparative results
+contrast with the cortical thickness measurements which illustrate estimation in
+anisotropic space severely underestimates the actual values in comparison with
+the isotropic prediction.}
 \label{fig:evaluation}
 \end{figure}
+
+Although the utility of the proposed brain parcellation framework is highly
+dependent on the specific application, we demonstrate the utility through the
+generation of cortical thickness maps [@Das:2009uv] which leverages both brain
+parcellation and the capabilities of mouse brain-based isotropic interpolation
+for anisotropic data.  Cortical thickness has demonstrated utility in both human
+(e.g., [@Tustison:2014ab;@Tustison:2019aa]) and non-human data (e.g., canines
+[@Grewal:2020aa], dolphins [@Avelino-de-Souza:2024aa], non-human primates
+[@Demirci:2023aa;@]) including the mouse brain
+[@Lerch:2008aa;@Lee:2011aa;@Zoller:2018aa;@zhang:2021aa].
 
 For evaluation, we used an additional publicly available dataset
 [@Rahman:2023aa] which is completely independent from the data used in training
 the brain extraction and parcellation networks.  Data includes 12 specimens each
 imaged at seven time points (Day 0, Day 3, Week 1, Week 4, Week 8, Week 20) with
-available brain masks.  In-plane resolution is $0.1 \times 0.1 mm^2$ with a
-slice thickness of $0.5 mm$.  Since the training data is isotropic and data
-augmentation includes downsampling in the canonical directions, each of the two
-networks learns mouse brain-specific interpolation such that one can perform
-prediction on thick-sliced images, as, for example, in these evaluation data,
-and return isotropic probability and thickness maps (a choice available to the
-user).  Figure \ref{fig:evaluation} summarizes the results of the evaluation and
-comparison between isotropic and anisotropic cortical measurements in male and
-female specimens.
+in-house-generated brain masks.  Spacing is anistropic with an in-plane
+resolution of $0.1 \times 0.1 mm^2$ and a slice thickness of $0.5 mm$.  Since
+the training data is isotropic and data augmentation includes downsampling in
+the canonical directions, each of the two networks learns mouse brain-specific
+interpolation such that one can perform prediction on thick-sliced images, as,
+for example, in these evaluation data, and return isotropic probability and
+thickness maps (a choice available to the user).  Figure \ref{fig:evaluation}
+summarizes the results of the evaluation and comparison between isotropic and
+anisotropic cortical measurements in male and female specimens.
 
 
 

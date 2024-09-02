@@ -847,16 +847,20 @@ data augmentation in training a T2-w brain extraction network.
 \subsubsection{Single-shot mouse brain parcellation
 network}\label{single-shot-mouse-brain-parcellation-network}
 
-To create the network for generating a brain parcellation consistent
-with cortical thickness estimation, we used the AllenCCFv3 and the
-associated \texttt{allensdk} Python library. Using \texttt{allensdk}, a
-gross parcellation labeling was generated from the fine Allen CCFv3
-labeling which includes the cerebral cortex, cerebral nuclei, brain
-stem, cerebellum, main olfactory bulb, and hippocampal formation. Given
-coordination with the AllenCCFv3, this labeling was mapped to the P56
-component of the DevCCF. Both the T2-w P56 DevCCF and labelings, in
-conjunction with the data augmentation described previously for brain
-extraction, were used to train a brain parcellation network.
+AllenCCFv3 and its hierarchical ontological labeling, along with the
+DevCCF, provides the necessary data for developing a tailored structural
+parcellation network for multimodal imaging. The \texttt{allensdk}
+Python library permits the creation of any gross parcellation based on
+the AllenCCFv3 ontology. For example, using \texttt{allensdk} we
+coalesced the labels to the following six major structures: cerebral
+cortex, cerebral nuclei, brain stem, cerebellum, main olfactory bulb,
+and hippocampal formation. This labeling was mapped to the P56 component
+of the DevCCF for use with the T2-w template component. Both the T2-w
+P56 DevCCF and labelings, in conjunction with the data augmentation
+described previously for brain extraction, were used to train the
+proposed brain parcellation network. Note that other brain parcellation
+networks have also been made available in the same ANTsXNet
+functionality using other regions and modalities.
 
 \subsubsection{Evaluation}\label{evaluation}
 
@@ -883,30 +887,42 @@ extraction, were used to train a brain parcellation network.
 \caption{Evaluation of the ANTsX mouse brain extraction, parcellation, and
 cortical thickness pipeline on an independent dataset consisting of 12 specimens
 $\times$ 7 time points = 84 total images.  (a) Dice overlap comparisons with the
-provided brain masks provide generally good agreement with the brain extraction
-network. (b) Cortical volume measurements show similar average quantities over
-growth and development between the original anisotropic data and interpolated
-isotropic data.  (c) These results contrast with the cortical thickness
-measurements which show that cortical thickness estimation in anisotropic space
-severely underestimates the actual values in comparison with the isotropic
-prediction.}
+user-generated brain masks provide good agreement with the automated results
+from the brain extraction network. (b) Cortical volume measurements show similar
+average quantities over growth and development between the original anisotropic
+data and interpolated isotropic data.  (c) The volumetric comparative results
+contrast with the cortical thickness measurements which illustrate estimation in
+anisotropic space severely underestimates the actual values in comparison with
+the isotropic prediction.}
 \label{fig:evaluation}
 \end{figure}
+
+Although the utility of the proposed brain parcellation framework is
+highly dependent on the specific application, we demonstrate the utility
+through the generation of cortical thickness maps\textsuperscript{86}
+which leverages both brain parcellation and the capabilities of mouse
+brain-based isotropic interpolation for anisotropic data. Cortical
+thickness has demonstrated utility in both human
+(e.g.,\textsuperscript{85,87}) and non-human data (e.g.,
+canines\textsuperscript{88}, dolphins\textsuperscript{89}, non-human
+primates {[}\textsuperscript{90};@{]}) including the mouse
+brain\textsuperscript{41,91--93}.
 
 For evaluation, we used an additional publicly available
 dataset\textsuperscript{70} which is completely independent from the
 data used in training the brain extraction and parcellation networks.
 Data includes 12 specimens each imaged at seven time points (Day 0, Day
-3, Week 1, Week 4, Week 8, Week 20) with available brain masks. In-plane
-resolution is \(0.1 \times 0.1 mm^2\) with a slice thickness of
-\(0.5 mm\). Since the training data is isotropic and data augmentation
-includes downsampling in the canonical directions, each of the two
-networks learns mouse brain-specific interpolation such that one can
-perform prediction on thick-sliced images, as, for example, in these
-evaluation data, and return isotropic probability and thickness maps (a
-choice available to the user). Figure \ref{fig:evaluation} summarizes
-the results of the evaluation and comparison between isotropic and
-anisotropic cortical measurements in male and female specimens.
+3, Week 1, Week 4, Week 8, Week 20) with in-house-generated brain masks.
+Spacing is anistropic with an in-plane resolution of
+\(0.1 \times 0.1 mm^2\) and a slice thickness of \(0.5 mm\). Since the
+training data is isotropic and data augmentation includes downsampling
+in the canonical directions, each of the two networks learns mouse
+brain-specific interpolation such that one can perform prediction on
+thick-sliced images, as, for example, in these evaluation data, and
+return isotropic probability and thickness maps (a choice available to
+the user). Figure \ref{fig:evaluation} summarizes the results of the
+evaluation and comparison between isotropic and anisotropic cortical
+measurements in male and female specimens.
 
 \clearpage
 \newpage
@@ -1067,9 +1083,9 @@ to the ITK community, \texttt{ants.denoise\_image(...)}.
 
 The ANTs registration toolkit is a complex framework permitting highly
 tailored solutions to pairwise image registration
-scenarios\textsuperscript{86}. It includes innovative transformation
+scenarios\textsuperscript{94}. It includes innovative transformation
 models for biological modeling\textsuperscript{54,67} and has proven
-capable of excellent performance\textsuperscript{55,87}. Various
+capable of excellent performance\textsuperscript{55,95}. Various
 parameter sets targeting specific applications have been packaged with
 the different ANTsX packages, specifically ANTs, ANTsPy, and
 ANTsR\textsuperscript{46}. In ANTsPy, the function
@@ -1234,7 +1250,7 @@ AllenCCFv3}\label{steps-for-spatial-normalization-to-allenccfv3}
   the AllenCCFv3. Each new image is first registered into the fMOST
   average atlas, which shares intensity, modality, and morphological
   characteristics. This allows us to leverage standard, intensity-based
-  registration functionality\textsuperscript{86} available in ANTsX to
+  registration functionality\textsuperscript{94} available in ANTsX to
   perform this alignment. Transformations are then concatenated to the
   original fMOST image to move it into the AllenCCFv3 space using
   \texttt{ants.apply\_transforms(...)}.
@@ -1392,7 +1408,7 @@ trained networks. Intensity-based data augmentation consisted of
 randomly added noise (i.e., Gaussian, shot, salt-and-pepper), simulated
 bias fields based on N4 bias field modeling, and histogram warping for
 mimicking well-known MRI intensity
-nonlinearities\textsuperscript{46,88}. These augmentation techniques are
+nonlinearities\textsuperscript{46,96}. These augmentation techniques are
 available in ANTsXNet (only ANTsPyNet versions are listed with ANTsRNet
 versions available) and include:
 
@@ -1425,7 +1441,7 @@ for mice brains:
 Similar to human neuroimage processing, brain extraction is a crucial
 preprocessing step for accurate brain mapping. We developed similar
 functionality for T2-weighted mouse brains. This network uses a
-conventional U-net architecture\textsuperscript{89} and, in ANTsPyNet,
+conventional U-net architecture\textsuperscript{97} and, in ANTsPyNet,
 this functionality is available in the program
 \texttt{antspynet.mouse\_brain\_extraction(...)}. For the two-shot
 T2-weighted brain extraction network, two brain templates were generated
@@ -2091,29 +2107,88 @@ strains via nonrigid registration of anatomical {NURBS} model
 evaluation of {ANTs} and {FreeSurfer} cortical thickness measurements}.
 \emph{Neuroimage} \textbf{99}, 166--79 (2014).}
 
-\bibitem[\citeproctext]{ref-Avants:2014aa}
+\bibitem[\citeproctext]{ref-Das:2009uv}
 \CSLLeftMargin{86. }%
+\CSLRightInline{Das, S. R., Avants, B. B., Grossman, M. \& Gee, J. C.
+\href{https://doi.org/10.1016/j.neuroimage.2008.12.016}{Registration
+based cortical thickness measurement}. \emph{Neuroimage} \textbf{45},
+867--79 (2009).}
+
+\bibitem[\citeproctext]{ref-Tustison:2019aa}
+\CSLLeftMargin{87. }%
+\CSLRightInline{Tustison, N. J. \emph{et al.} Longitudinal mapping of
+cortical thickness measurements: An {A}lzheimer's {D}isease
+{N}euroimaging {I}nitiative-based evaluation study. \emph{J Alzheimers
+Dis} (2019)
+doi:\href{https://doi.org/10.3233/JAD-190283}{10.3233/JAD-190283}.}
+
+\bibitem[\citeproctext]{ref-Grewal:2020aa}
+\CSLLeftMargin{88. }%
+\CSLRightInline{Grewal, J. S. \emph{et al.}
+\href{https://doi.org/10.1002/cne.24972}{Brain gyrification in wild and
+domestic canids: Has domestication changed the gyrification index in
+domestic dogs?} \emph{J Comp Neurol} \textbf{528}, 3209--3228 (2020).}
+
+\bibitem[\citeproctext]{ref-Avelino-de-Souza:2024aa}
+\CSLLeftMargin{89. }%
+\CSLRightInline{Avelino-de-Souza, K. \emph{et al.} Anatomical and
+volumetric description of the guiana dolphin (sotalia guianensis) brain
+from an ultra-high-field magnetic resonance imaging. \emph{Brain Struct
+Funct} (2024)
+doi:\href{https://doi.org/10.1007/s00429-024-02789-1}{10.1007/s00429-024-02789-1}.}
+
+\bibitem[\citeproctext]{ref-Demirci:2023aa}
+\CSLLeftMargin{90. }%
+\CSLRightInline{Demirci, N., Hoffman, M. E. \& Holland, M. A.
+\href{https://doi.org/10.1016/j.neuroimage.2023.120283}{Systematic
+cortical thickness and curvature patterns in primates}.
+\emph{Neuroimage} \textbf{278}, 120283 (2023).}
+
+\bibitem[\citeproctext]{ref-Lerch:2008aa}
+\CSLLeftMargin{91. }%
+\CSLRightInline{Lerch, J. P. \emph{et al.}
+\href{https://doi.org/10.1016/j.neuroimage.2008.02.019}{Cortical
+thickness measured from MRI in the YAC128 mouse model of huntington's
+disease}. \emph{Neuroimage} \textbf{41}, 243--51 (2008).}
+
+\bibitem[\citeproctext]{ref-Lee:2011aa}
+\CSLLeftMargin{92. }%
+\CSLRightInline{Lee, J. \emph{et al.}
+\href{https://doi.org/10.1117/12.878305}{Automatic cortical thickness
+analysis on rodent brain}. \emph{Proc SPIE Int Soc Opt Eng}
+\textbf{7962}, 7962481--79624811 (2011).}
+
+\bibitem[\citeproctext]{ref-Zoller:2018aa}
+\CSLLeftMargin{93. }%
+\CSLRightInline{Zöller, T., Attaai, A., Potru, P. S., Ruß, T. \&
+Spittau, B. \href{https://doi.org/10.3390/ijms19030706}{Aged mouse
+cortical microglia display an activation profile suggesting
+immunotolerogenic functions}. \emph{Int J Mol Sci} \textbf{19}, 706
+(2018).}
+
+\bibitem[\citeproctext]{ref-Avants:2014aa}
+\CSLLeftMargin{94. }%
 \CSLRightInline{Avants, B. B. \emph{et al.}
 \href{https://doi.org/10.3389/fninf.2014.00044}{The {Insight} {ToolKit}
 image registration framework}. \emph{Front Neuroinform} \textbf{8}, 44
 (2014).}
 
 \bibitem[\citeproctext]{ref-Avants:2011wx}
-\CSLLeftMargin{87. }%
+\CSLLeftMargin{95. }%
 \CSLRightInline{Avants, B. B. \emph{et al.}
 \href{https://doi.org/10.1016/j.neuroimage.2010.09.025}{A reproducible
 evaluation of ANTs similarity metric performance in brain image
 registration}. \emph{Neuroimage} \textbf{54}, 2033--44 (2011).}
 
 \bibitem[\citeproctext]{ref-Nyul:2000aa}
-\CSLLeftMargin{88. }%
+\CSLLeftMargin{96. }%
 \CSLRightInline{Nyúl, L. G., Udupa, J. K. \& Zhang, X.
 \href{https://doi.org/10.1109/42.836373}{New variants of a method of MRI
 scale standardization}. \emph{IEEE Trans Med Imaging} \textbf{19},
 143--50 (2000).}
 
 \bibitem[\citeproctext]{ref-Falk:2019aa}
-\CSLLeftMargin{89. }%
+\CSLLeftMargin{97. }%
 \CSLRightInline{Falk, T. \emph{et al.}
 \href{https://doi.org/10.1038/s41592-018-0261-2}{U-net: Deep learning
 for cell counting, detection, and morphometry}. \emph{Nat Methods}
