@@ -83,30 +83,46 @@ convergence typically occurs in four deformable iterations.
 ############################################
 -->
 
-## The DevCCF velocity flow model
-
+## Continuously mapping the DevCCF trojectory with a velocity flow model
 
 \begin{figure}
 \centering
 \includegraphics[width=0.99\textwidth]{Figures/lowerLeftPanel.pdf}
 \caption{The spatial transformation between any two time points within the
-DevCCF longitudinal developmental trajectory is available through the use of
-ANTsX functionality for generating a velocity flow model.}
+continuous DevCCF longitudinal developmental trajectory is available through the
+use of ANTsX functionality for generating a velocity flow model.}
 \label{fig:devccfvelocity}
 \end{figure} 
 
+The DevCCF is an openly accessible resource for the mouse brain research
+community [@Kronman:2023aa] .  It consists of multi-modal MRI and LSFM symmetric
+ANTsX-generated templates [@Avants:2010aa] sampling the mouse brain
+developmental trajectory, specifically the embryonic (E) and postnatal (P) days
+E11.5, E13.5, E15.5, E18.5 P4, P14, and P56.  Each template space includes
+structural labels defined by a developmental ontology. Its utility is also
+enhanced by a coordinated construction with AllenCCFv3. Although this work
+represents a signficant contribution, the gaps between timepoints potentially
+limit its applicability which could be addressed through the development of the
+ability to map not only between timepoints but also within and across
+timepoints.
 
-To continuously interpolate transformations between the different stages of the
-DevCCF atlases, a velocity flow model was constructed using DevCCF derived data
-and functionality recently introduced into both the ANTsR and ANTsPy
-packages.  Both platforms include a complete suite of functions for determining
-dense correspondence from sparse landmarks based on a variety of transformation
-models ranging from standard linear models (i.e., rigid, affine) to deformable
-diffeomorphic models (e.g, symmetric normalization [@Avants:2008aa]).  The
-latter set includes transformation models for both the pairwise scenario and for
-multiple sets, as in the case of the DevCCF. ANTsX, being built on top of ITK,
-uses an ITK image data structure for the 4-D velocity field where each voxel
-contains the $x$, $y$, $z$ components of the field at that point. 
+To continuously generate transformations between the different stages of the
+DevCCF atlases, we developed a general velocity flow model approach which we
+apply to DevCCF-derived data.  We also introduce this functionality into both
+the ANTsR and ANTsPy packages (for the latter, see
+``ants.fit_time_varying_transform_to_point_sets(...)``) for potential
+application to this and other analagous scenarios (e.g., modeling the cardiac
+and respiratory cycles).  ANTsX, being built on top of ITK, uses an ITK image
+data structure for the 4-D velocity field where each voxel contains the $x$,
+$y$, $z$ components of the field at that point. 
+
+<!-- Both ANTsX platforms include a complete suite of functions
+for determining dense correspondence from sparse landmarks based on a variety of
+transformation models ranging from standard linear models (i.e., rigid, affine)
+to deformable diffeomorphic models (e.g., symmetric normalization
+[@Avants:2008aa]).  The latter set includes transformation models for both the
+pairwise scenario and for multiple sets, as in the case of the DevCCF.
+ -->
 
 ### Data
 
@@ -183,16 +199,16 @@ The maximum number of iterations was set to 200 with each iteration taking
 approximately six minutes on a 2020 iMac (processor, 3.6 GHz 10-Core Intel Core
 i9; memory, 64 GB 2667 MHz DDR4) At each iteration we looped over the 11
 integration points. At each integration point, the velocity field estimate was
-updated by warping the two
-immediately adjacent point sets to the integration time point and determining
-the regularized displacement field between the two warped point sets.  As with
-any gradient-based descent algorithm, this field was multiplied by a small step
-size ($\delta = 0.2$) before adding to the current velocity field.  Convergence
-is determined by the average displacement error over each of the integration
-points. As can be seen in the left panel of Figure \ref{fig:convergence},
-convergence occurred around 125 iterations when the average displacement error
-over all integration points is minimized. The median displacement error at each
-of the integration points also trends towards zero but at different rates. 
+updated by warping the two immediately adjacent point sets to the integration
+time point and determining the regularized displacement field between the two
+warped point sets.  As with any gradient-based descent algorithm, this field was
+multiplied by a small step size ($\delta = 0.2$) before adding to the current
+velocity field.  Convergence is determined by the average displacement error
+over each of the integration points. As can be seen in the left panel of Figure
+\ref{fig:convergence}, convergence occurred around 125 iterations when the
+average displacement error over all integration points is minimized. The median
+displacement error at each of the integration points also trends towards zero
+but at different rates. 
 
 <!-- 
 \begin{figure}[!htb]
@@ -238,18 +254,18 @@ those images in the ANTsX template building process.}
 \label{fig:virtual}
 \end{figure}
 
-
 Once optimized, the resulting velocity field can be used to generate the
 deformable transform between any two continuous points within the time interval
-bounded by E11.5 and P56.  In Figure \ref{fig:crosswarp}, we transform each
-atlas to the space of every other atlas using the DevCCF transform model.
-Additionally, one can use this transformation model to construct virtual
-templates in the temporal gaps of the DevCCF.  Given an arbitrarily chosen time
-point within the normalized time point interval, the existing adjacent DevCCF
-atlases on either chronological side can be warped to the desired time point. A
-subsequent call to one of the ANTsX template building functions then permits the
-construction of the template at that time point. In Figure \ref{fig:virtual}, we
-illustrate the use of the DevCCF velocity flow model for generating two such virtual
-templates for two arbitrary time points.  Note that both of these usage
-examples can be found in the GitHub repository previously given.
+bounded by E11.5 and P56.  As a demonstration, in Figure \ref{fig:crosswarp}, we
+transform each atlas to the space of every other atlas using the DevCCF
+transform model. Additionally, one can use this transformation model to
+construct virtual templates in the temporal gaps of the DevCCF.  Given an
+arbitrarily chosen time point within the normalized time point interval, the
+existing adjacent DevCCF atlases on either chronological side can be warped to
+the desired time point. A subsequent call to one of the ANTsX template building
+functions then permits the construction of the template at that time point. In
+Figure \ref{fig:virtual}, we illustrate the use of the DevCCF velocity flow
+model for generating two such virtual templates for two arbitrary time points.
+Note that both of these usage examples can be found in the GitHub repository
+previously given.
 
