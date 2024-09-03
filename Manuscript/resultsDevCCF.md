@@ -83,7 +83,7 @@ convergence typically occurs in four deformable iterations.
 ############################################
 -->
 
-## Continuously mapping the DevCCF trojectory with a velocity flow model
+## Continuously mapping the DevCCF developmental trajectory with a velocity flow model
 
 \begin{figure}
 \centering
@@ -95,16 +95,16 @@ use of ANTsX functionality for generating a velocity flow model.}
 \end{figure} 
 
 The DevCCF is an openly accessible resource for the mouse brain research
-community [@Kronman:2023aa] .  It consists of multi-modal MRI and LSFM symmetric
+community [@Kronman:2023aa].  It consists of multi-modal MRI and LSFM symmetric
 ANTsX-generated templates [@Avants:2010aa] sampling the mouse brain
 developmental trajectory, specifically the embryonic (E) and postnatal (P) days
 E11.5, E13.5, E15.5, E18.5 P4, P14, and P56.  Each template space includes
 structural labels defined by a developmental ontology. Its utility is also
 enhanced by a coordinated construction with AllenCCFv3. Although this work
-represents a signficant contribution, the gaps between timepoints potentially
+represents a significant contribution, the gaps between time points potentially
 limit its applicability which could be addressed through the development of the
-ability to map not only between timepoints but also within and across
-timepoints.
+ability to map not only between time points but also within and across
+time points.
 
 To continuously generate transformations between the different stages of the
 DevCCF atlases, we developed a general velocity flow model approach which we
@@ -134,15 +134,15 @@ are illustrated for both P4 and P14.}
 \label{fig:simplifiedannotations}
 \end{figure}
 
-Labeled annotations are available as part of the original DevCCF and reside
-in the space of each developmental template which range in resolution from 
-$31.5-50 \mu$m.  Across all atlases, the total number of labeled regions exceeds 
-2500.  From these labels, a common set of 26 labels (13 per hemisphere) across 
+Labeled annotations are available as part of the original DevCCF and reside in
+the space of each developmental template which range in resolution from $31.5-50
+\mu$m.  Across all atlases, the total number of labeled regions exceeds 
+2500.  From these labels, a common set of 26 labels (13 per hemisphere) across
 all atlases were used for optimization and evaluation.  These simplified regions
 include: terminal hypothalamus, subpallium, pallium, peduncular hypothalamus,
-prosomere, prosomere, prosomere, midbrain, prepontine hindbrain, pontine 
-hindbrain, pontomedullary hindbrain, medullary hindbrain, and tracts 
-(see Figure \ref{fig:simplifiedannotations}).
+prosomere, prosomere, prosomere, midbrain, prepontine hindbrain, pontine
+hindbrain, pontomedullary hindbrain, medullary hindbrain, and tracts (see Figure
+\ref{fig:simplifiedannotations}).
 
 Prior to velocity field optimization, all data were rigidly transformed to 
 DevCCF P56 using the centroids of the common label sets. In order to
@@ -163,7 +163,7 @@ registrations.  We selected a sampling rate of 10\% for the contour points and
 $173303$ ($N_{contour} = 98151$ and $N_{region}=75152$). Regional boundary
 points were weighted twice as those of non-boundary points during optimization.  
 
-### Optimization
+### Velocity field optimization
 
 \begin{figure}[!htb]
 \centering
@@ -184,16 +184,17 @@ the optimized velocity field described here is of size $[256, 182, 360]$ ($50
 \mu$m isotropic) $\times 11$ integration points for a total compressed size of a
 little over 2 GB.  This choice represented weighing the trade-off between
 tractability, portability, and accuracy.  However,  all data and code to
-reproduce the results described (with possible variation in the input parameters) 
-are available in the dedicated GitHub repository.
+reproduce the results described are available in the dedicated GitHub 
+repository.
 
 The normalized time point scalar value for each atlas/point-set in the temporal
 domains $[0, 1]$ was also defined. Given the increasingly larger gaps in the
-postnatal timepoint sampling, we made two adjustments.  Based on known mouse
+postnatal time point sampling, we made two adjustments.  Based on known mouse
 brain development, we used 28 days for the P56 data.  We then computed the log
 transform of the adjusted set of time points prior to normalization between 0
 and 1 (see the right side of Figure \ref{fig:convergence}).  This log transform,
-as part of the temporal normalization, significantly improved data spacing. 
+as part of the temporal normalization, significantly improves the temporal spacing
+of data. 
 
 The maximum number of iterations was set to 200 with each iteration taking
 approximately six minutes on a 2020 iMac (processor, 3.6 GHz 10-Core Intel Core
@@ -230,7 +231,7 @@ volumes of the different simplified annotated regions.  This is shown in Figure
 -->
 
 
-### The transformation model
+### The velocity flow transformation model
 
 \begin{figure}[!htb]
 \centering

@@ -1,14 +1,13 @@
 
 ## Advanced Normalization Tools (ANTsX)
 
-<!--%\input{antsx_functionality_table} -->
 The Advanced Normalization Tools Ecosystem (ANTsX) has been used in a number of
 applications for mapping mouse brain data as part of core processing steps in
 various workflows
 [@pagani:2016aa;@Anderson:2019aa;@Ni:2020aa;@allan:2019aa;@Yao:2023aa],
-particularly its pairwise, intensity-based image registration capabilities and
-bias field correction. Historically, ANTsX development is originally based on
-fundamental approaches to image mapping
+particularly its pairwise, intensity-based image registration capabilities
+[@Avants:2008aa] and bias field correction[@Tustison:2010ac]. Historically,
+ANTsX development is originally based on fundamental approaches to image mapping
 [@Bajcsy:1982aa;@Bajcsy:1989aa;@Gee:1993aa], particularly in the human brain,
 which has resulted in core contributions to the field such as the widely-used
 Symmetric Normalization (SyN) algorithm [@Avants:2008aa].  Since its
@@ -28,17 +27,18 @@ labeling [@Wang:2013ab], brain tumor segmentation [@Tustison:2014aa], and
 cardiac motion estimation [@Tustison:2015ab]). Importantly, ANTsX is built on the
 Insight Toolkit (ITK) [@McCormick:2014aa] deriving benefit from the open-source
 community of scientists and programmers as well as providing an important
-resource for algorithmic development, evaluation, and improvement. In this paper
-we demonstrate how ANTsX provides a comprehensive toolset provides the basis to
-develop modular frameworks for mapping diverse mouse cell type data into common
-coordinate frameworks (CCFs). Specifically, we highlight its application for
-mapping data from three separate BICCN projects focused on distinct data types:
-morphology data using fluorescence micro-optical sectioning tomography (fMOST),
-spatial transcriptomics from multiplexed error-robust fluorescence in situ
-hybridization (MERFISH) data, and time-series developmental data using light
-sheet fluorescence microscopy (LSFM) and magnetic resonance imaging (MRI). We
-describe both shared and targeted strategies developed to address the specific
-challenges of these modalities.  
+resource for algorithmic development, evaluation, and improvement. 
+
+With respect to mouse cell type data, ANTsX provides a comprehensive toolset
+which serves as a basis for developing modular frameworks for mapping diverse
+image data into common coordinate frameworks (CCFs). Herein, we highlight its
+application for mapping data from separate BICCN projects focused on distinct
+data types: morphology data using fluorescence micro-optical sectioning
+tomography (fMOST), spatial transcriptomics from multiplexed error-robust
+fluorescence in situ hybridization (MERFISH) data, and time-series developmental
+data using light sheet fluorescence microscopy (LSFM) and magnetic resonance
+imaging (MRI). We describe both shared and targeted strategies developed to
+address the specific challenges of these modalities.  
 
 
 <!-- 
@@ -78,21 +78,21 @@ such as section reconstruction and landmark-based alignment with corresponding
 processing scripts 
 (\url{https://github.com/dontminchenit/CCFAlignmentToolkit}).  
 
-### Continuously mapping the DevCCF detrojectory with a velocity flow model
+### Continuously mapping the DevCCF developmental trajectory with a velocity flow model
 
 Recently, the Developmental Common Coordinate Framework (DevCCF) was introduced
 to the mouse brain research community as a public resource [@Kronman:2023aa]
-comprising symmetric atlases of multimodal image data and anatomical
+comprising symmetric atlases of multi-modal image data and anatomical
 segmentations defined by developmental ontology.  These templates sample the
-mouse embryonic days E11.5, E13.5, E15.5, E18.5 and postnatal days P4, P14,
-and P56.  Modalities include light sheet flourescence miscroscopy (LSFM) and at
-least four MRI contrasts per developmental stage.  Anatomical parcellations are
-also available for each time point and were generated from ANTsX-based mappings
-of gene expression and other cell type data.  Additionally, the P56 template was
-integrated with the AllenCCFv3 to further enhance the practical utility of the
-DevCCF. These processes, specifically template generation and multi-modal image
-mapping, were performed using ANTsX functionality in the presence of 
-image mapping difficulties such as missing data and tissue distortion. 
+mouse embryonic days E11.5, E13.5, E15.5, E18.5 and postnatal days P4, P14, and
+P56.  Modalities include LSFM and at least four MRI contrasts per developmental
+stage.  Anatomical parcellations are also available for each time point and were
+generated from ANTsX-based mappings of gene expression and other cell type data.
+Additionally, the P56 template was integrated with the AllenCCFv3 to further
+enhance the practical utility of the DevCCF. These processes, specifically
+template generation and multi-modal image mapping, were performed using ANTsX
+functionality in the presence of image mapping difficulties such as missing data
+and tissue distortion. 
 
 Given the temporal gaps in the discrete set of developmental atlases, we also
 provide an open-source framework for inferring correspondence within the
@@ -102,7 +102,8 @@ the generation of a diffeomorphic velocity flow transformation model
 [@Beg:2005aa], influenced by previous work [@Tustison:2013ac].  The resulting
 time-parameterized velocity field spans the stages of the DevCCF where mappings
 between any two continuous time points within the span bounded by the E11.5 and
-P56 atlases is determined by integration of the optimized velocity field. 
+P56 atlases are determined by numerical integration of the optimized velocity
+field. 
 
 ### Automated structural parcellations of the mouse brain
 
@@ -124,16 +125,16 @@ often has unique issues, such as lower data quality or sampling anisotropy which
 limits its applicability to high resolution resources (e.g., AllenCCFv3,
 DevCCF), specifically with respect to the corresponding granular brain
 parcellations derived from numerous hours of expert annotation leveraging
-multimodal imaging resources.
+multi-modal imaging resources.
 
-Herein, we introduce a mouse brain parcellation pipeline for T2-weighted (T2-w)
+Herein, we introduce a mouse brain parcellation pipeline for multi-modal
 MRI comprising two novel deep learning components:  two-shot learning brain
 extraction from data augmentation of two ANTsX templates generated from two open
 datasets [@Hsu2021;@Reshetnikov2021] and single-shot brain parcellation derived
-from the AllenCCFv3 labelings mapped to the corresponding DevCCF P56 T2-w
-component.  Although we anticipate that this pipeline will be beneficial to the
+from the AllenCCFv3 labelings mapped to the corresponding DevCCF P56 template.  
+Although we anticipate that this pipeline will be beneficial to the
 research community, this work demonstrates more generally how one can leverage
-ANTsX tools for developing quantitative mouse brain morphological tools using
-only publicly available resources.  Evaluation is performed on an independent
+ANTsX tools and other public resources for developing quantitative mouse brain 
+morphological tools.  Evaluation is performed on an independent
 open dataset [@Rahman:2023aa] comprising longitudinal acquisitions of multiple
 specimens.  

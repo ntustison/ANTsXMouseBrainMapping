@@ -19,8 +19,8 @@ learning components for brain extraction and brain parcellation prior to
 estimating cortical labels. Both deep learning networks rely heavily on
 aggressive data augmentation on templates built from open data and provide an
 outline for further refinement and creating alternative parcellations for
-tailored research objectives.  Possible applications include measurement
-of voxelwise cortical thickness measurements.}
+tailored research objectives.  Possible applications include
+voxelwise cortical thickness measurements.}
 \label{fig:mouseKK}
 \end{figure}
 
@@ -35,7 +35,7 @@ regions involved in specific cognitive tasks [@Bergmann:2020aa].
 
 Although deep learning techniques have been used to develop useful parcellation
 tools for human brain research (e.g., SynthSeg [@Billot:2023aa], ANTsXNet
-[@Tustison:2021aa]), analagous development for the mouse brain is limited.  In
+[@Tustison:2021aa]), analogous development for the mouse brain is limited.  In
 addition, mouse data is often characterized by unique imaging issues such as
 extreme anisotropic sampling which are often in sharp contrast to the high
 resolution template-based resources available within the community, e.g.,
@@ -66,16 +66,17 @@ T2-w brain extraction network.
 
 AllenCCFv3 and its hierarchical ontological labeling, along with the DevCCF,
 provides the necessary data for developing a tailored structural parcellation
-network for multimodal imaging.  The ``allensdk`` Python library permits the
+network for multi-modal imaging.  The ``allensdk`` Python library permits the
 creation of any gross parcellation based on the AllenCCFv3 ontology.  For
 example, using ``allensdk`` we coalesced the labels to the following six major
 structures:  cerebral cortex, cerebral nuclei, brain stem, cerebellum, main
 olfactory bulb, and hippocampal formation.  This labeling was mapped to the P56
 component of the DevCCF for use with the T2-w template component. Both the T2-w
 P56 DevCCF and labelings, in conjunction with the data augmentation described
-previously for brain extraction, were used to train the proposed brain parcellation
-network.  Note that other brain parcellation networks have also been made 
-available in the same ANTsXNet functionality using other regions and modalities.
+previously for brain extraction, were used to train the proposed brain
+parcellation network.  Note that other brain parcellation networks have also
+been trained using alternative regions and parcellation schemes and are
+available in the same ANTsXNet functionality.
 
 ### Evaluation
 
@@ -119,7 +120,7 @@ parcellation and the capabilities of mouse brain-based isotropic interpolation
 for anisotropic data.  Cortical thickness has demonstrated utility in both human
 (e.g., [@Tustison:2014ab;@Tustison:2019aa]) and non-human data (e.g., canines
 [@Grewal:2020aa], dolphins [@Avelino-de-Souza:2024aa], non-human primates
-[@Demirci:2023aa;@]) including the mouse brain
+[@Demirci:2023aa]) including the mouse brain
 [@Lerch:2008aa;@Lee:2011aa;@Zoller:2018aa;@zhang:2021aa].
 
 For evaluation, we used an additional publicly available dataset

@@ -7,7 +7,7 @@ changes on a cellular level [@La-Manno:2021aa], associate brain regions and
 tissues with their genetic composition [@Wen:2022aa], and locally characterize
 neural connectivity [@Oh:2014aa]. Much of these scientific achievements have
 been made possible due to breakthroughs in high resolution cell profiling and
-imaging techniques that permit submicron, multi-modal, 3D characterizations of
+imaging techniques that permit submicron, multi-modal, 3-D characterizations of
 whole mouse brains. Among these include advanced techniques such as
 micro-optical sectioning tomography [@Gong:2013aa,@Li:2010aa], tissue clearing
 [@Keller:2015aa;@Ueda:2020aa], spatial transcriptomics
@@ -18,22 +18,22 @@ specificity of single-cell measurements in the brain.
 Recent efforts by the National Institutes of Health's Brain Research Through
 Advancing Innovative Neurotechnologies (BRAIN) Initiative has pushed for
 large-scale, international collaborative efforts to utilize these advanced
-single cell techniques to create a comprehensive reference database for
+single-cell techniques to create a comprehensive reference database for
 high-resolution transcriptomic, epigenomic, structural and imaging data of the
 mouse brain. This consortium of laboratories and data centers, known as the
-BRAIN Initiative Cell Census Network (BICCN), has to date archived datasets
-encompassing over 40 different multi-modal profiling techniques from more than
-30 research groups, each providing unique characterizations of distinct cell
-types in the brain [@hawrylycz:2023aa]. Several of these modalities have been
-further developed into reference atlases to facilitate spatial alignment of
-individual brains and different data types into a common coordinate framework
-(CCF), thus allowing diverse single-cell information to be integrated and
-analyzed in tandem. The most notable of these atlases is the Allen Mouse Brain
-Common Coordinate Framework (AllenCCFv3) [@Wang:2020aa], which serves as the
-primary target coordinate space to which the majority of BICCN mouse data are 
-mapped. Other atlases include modality-specific
-atlases [@perens:2021aa;@ma:2005aa;@qu:2022aa], and spatiotemporal atlases
-[@Kronman:2023aa;@chuang:2011aa] for the developing mouse brain. 
+BRAIN Initiative Cell Census Network (BICCN), has archived datasets encompassing
+over 40 different multi-modal profiling techniques from more than 30 research
+groups, each providing unique characterizations of distinct cell types in the
+brain [@hawrylycz:2023aa]. Several of these modalities have been further
+developed into reference atlases to facilitate spatial alignment of individual
+brains and different data types into a common coordinate framework (CCF), thus
+allowing diverse single-cell information to be analyzed in an integrated manner.
+The most notable of these atlases is the Allen Mouse Brain Common Coordinate
+Framework (AllenCCFv3) [@Wang:2020aa], which serves as a primary target
+coordinate space for much of the work associated with the BICCN. Other atlases
+include modality-specific atlases [@perens:2021aa;@ma:2005aa;@qu:2022aa], and
+spatiotemporal atlases [@Kronman:2023aa;@chuang:2011aa] for the developing mouse
+brain. 
 
 ## Mouse brain mapping
 
@@ -42,11 +42,11 @@ type data into a CCF is critical for improving our understanding of the complex
 relationships between cellular structure, morphology, and genetics in the brain.
 However, finding an accurate mapping between each individual mouse brain and a
 CCF is a challenging and heterogeneous task. There is significant variance in
-the acquisition, fixation and imaging protocols across different cell type data,
-and different tissue processing and imaging methods can potentially introduce
-modality specific tissue distortion and signal differences
+the imaging protocols across different cell type data as well as different
+tissue processing and imaging methods which can potentially introduce
+tissue distortion and signal differences
 [@dries:2021aa;@ricci:2022aa]. Certain modalities can have poor intensity
-correspondence with the CCF, making image alignment less robust. Studies
+correspondence with the CCF, negatively impacting image alignment accuracy. Studies
 targeting specific regions or cell types can lead to missing anatomical
 correspondences. Other considerations include artifacts such as tissue
 distortion, holes, bubbles, folding, tears, and missing sections in the data
@@ -70,15 +70,12 @@ AllenCCFv3. The platforms are designed such that the data is interactively
 manipulated by users through integrated visualization software that allow users
 to spatially manipulate and explore each dataset within the mapped space. While
 highly convenient for investigators who are interested in studying the specific
-modalities provided by these platforms, these systems can be limited in flexibility
-and more general applicability. The mapping software and pipelines are typically
-developed specifically with the data type and platform in mind, and the software
-is limited public availability. Investigators will find it difficult to apply
-the same mapping to their own data without direct collaboration with the
-platform owners.
+modalities provided by these platforms, these systems can be limited in flexibility,
+general applicability, and public availability. As a result, investigators often 
+find it difficult to apply the same mapping solutions to their own data.
 
-The second category are specialized approaches specifically designed for mapping
-one or more modalities into a CCF. These approaches use combinations of
+The second category comprises specialized approaches specifically designed for
+mapping one or more modalities into a CCF. These approaches use combinations of
 specialized manual and automated processes that address specific challenges in
 each modality. Examples include approaches for mapping histology
 [@puchades:2019aa;@eastwood:2019aa;@Ni:2020aa], magnetic resonance imaging (MRI)
@@ -89,30 +86,30 @@ light-sheet fluorescence microscopy (LSFM)
 fluorescence micro-optical sectioning tomography (fMOST)
 [@qu:2022aa;@lin:2023aa] and transcriptomic data
 [@zhang:2021aa;@shi:2023aa;@zhang:2023aa]. As specialized approaches, these
-techniques tend to boast higher mapping accuracy, robustness, and ease of use
-when ran with applicable modalities. Conversely, their specialized designs often
-rely on base assumptions regarding the data type that can make them rigid and
-difficult to adapt for new modalities or unexpected artifacts and distortions in
-the data. Retooling these specialize software to use with new data can require
-significant development, validation time, and engineering expertise that may not
-be readily available for all investigators. 
+techniques tend to boast higher mapping accuracy, robustness, and ease of use.
+Conversely, their specialized designs often rely on base assumptions regarding
+the data type that can make them rigid and difficult to adapt for new modalities
+or unexpected artifacts and distortions in the data. Adapting these specialize
+software tools to use with new data can require significant development,
+validation time, and engineering expertise that may not be readily available for
+all investigators. 
 
-The last category are modular mapping approaches constructed using general image
-analysis toolkits, which are software packages that include varied collections
-of image processing, segmentation and registration tools that have been
-previously developed, and validated for multiple application areas. Examples of
-such toolkits include elastix [@Klein:2010aa], Slicer3D [@fedorov:2012aa], ANTsX
-[@Tustison:2021aa], and several others which have all been applied towards mouse
-brain spatial mapping. The main challenge, in these mouse-specific study
-scenarios, is that tailored pipelines often need be constructed from available
-software components.  Investigators must therefore be familiar with the these
-tools for formulating new or adapting existing pipelines. However, in comparison
-to previously described specialized mapping approaches, these approaches are
-often easier to create and prone to robustness, being typically constructed from
-pipelin components which have been previously vetted in other contexts. In this
-work, we highlight such mapping strategies designed using the ANTsX framework to
-map three distinct mouse cell type data with different characteristics into
-existing CCFs. 
+The last category consist of modular mapping approaches constructed using
+general image analysis toolkits, which are software packages that include
+modular image processing, segmentation and registration tools that have
+been previously developed, and validated for multiple application areas.
+Examples of such toolkits include elastix [@Klein:2010aa], Slicer3D
+[@fedorov:2012aa], ANTsX [@Tustison:2021aa], and several others which have all
+been applied towards mouse brain spatial mapping. The main challenge, in these
+mouse-specific study scenarios, is that tailored pipelines often need be
+constructed from available software components.  Investigators must therefore be
+familiar with the these tools for formulating new or adapting existing
+pipelines. However, in comparison to previously described specialized mapping
+approaches, these approaches are often easier to create and prone to robustness,
+being typically constructed from pipeline components which have been previously
+vetted in other contexts. In this work, we highlight such mapping strategies
+designed using the ANTsX framework to map distinct mouse cell type data
+with different characteristics into existing CCFs. 
 
 <!--
 More

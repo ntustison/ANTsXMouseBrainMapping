@@ -18,7 +18,8 @@
 \end{subfigure}
 \caption{Diagram of the two ANTsX-based pipelines for mapping (a) MERFISH
           and (b)fMOST data into the space of AllenCCFv3.  Each generates
-         the requisite transforms, $\mathcal{T}$, to map individual images.}
+         the requisite transforms, $\mathcal{T}$, to map individual images
+         to the CCF.}
 \label{fig:allenpipelines}
 \end{figure*}
 
@@ -70,9 +71,9 @@ corresponding anatomical tissue parcellations in the AllenCCFv3. The pipeline
 consists of MERFISH data specific preprocessing which includes section
 reconstruction, mapping corresponding anatomical labels between AllenCCFv3 and
 the spatial transcriptomic maps of the MERFISH data, and matching MERFISH
-sections to the atlas space. Following pre-processing, two main alignment steps
+sections to the atlas space. Following preprocessing, two main alignment steps
 were performed: 1) 3-D global affine mapping and section matching of the
-AllenCCFv3 into the MERFISH data and 2) 2D global and deformable mapping between
+AllenCCFv3 into the MERFISH data and 2) 2-D global and deformable mapping between
 each MERFISH section and matched AllenCCFv3 section. Mappings learned via each
 step in the pipeline are preserved and concatenated to provide point-to-point
 correspondence between the original MERFISH data and AllenCCFv3, thus allowing
