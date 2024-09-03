@@ -21,15 +21,15 @@ separate BICCN studies using the Advanced Normalization Tools Ecosystem (ANTsX)
 to map spatial transcriptomic (MERFISH) and high-resolution morphology (fMOST)
 mouse brain data into the Allen Common Coordinate Framework (AllenCCFv3), and
 developmental (MRI and LSFM) data into the Developmental Common Coordinate
-Framework (DevCCF). We discuss both common mapping strategies that can be shared
-across modalities, and targeted strategies driven by specific challenges from
-each data type.  Novel open-source contributions, made publicly available
-through ANTSX, include a generic velocity flow-based approach for continuously
-mapping developmental trajectories such as that characterizing the DevCCF as
-well as an automated framework for determining structural morphology made
-possible through the leveraging of public resources such as the AllenCCFv3 and
-the DevCCF.  Finally, we provide general guidance to aid investigators in their
-efforts to tailor these strategies to address unique challenges in their data
-without the need to develop additional specialized software.  
+Framework (DevCCF).  We discuss both common mapping strategies that can be
+shared across modalities, and targeted strategies driven by specific challenges
+from each data type.  Novel open-source contributions are also made publicly
+available through ANTSX.  These include a velocity flow-based approach for
+continuously mapping developmental trajectories such as that characterizing the
+DevCCF and an automated framework for determining structural morphology solely
+through the leveraging of publicly resources.  Finally, we provide general
+guidance to aid investigators in their efforts to tailor these strategies to
+address unique challenges in their data without the need to develop additional
+specialized software.  
 
 \clearpage
