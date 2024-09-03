@@ -4,17 +4,21 @@
 
 # Methods  
 
-The following methods are all available as part of the ANTsX ecosystem
-with analogous elements existing in both ANTsR (ANTs in R) and ANTsPy
-(ANTs in Python) with an ANTs/ITK C++ core.  However, most of the 
-development for the work described below was performed using ANTsPy.
-For equivalent calls in ANTsR, please see the ANTsX tutorial at
-\url{https://tinyurl.com/antsxtutorial}.
+The following methods are all available as part of the ANTsX ecosystem with
+analogous elements existing in both ANTsR (ANTs in R) and ANTsPy (ANTs in
+Python) with an ANTs/ITK C++ core.  However, most of the development for the
+work described below was performed using ANTsPy. For equivalent calls in ANTsR,
+please see the ANTsX tutorial at \url{https://tinyurl.com/antsxtutorial}.
 
 ## General ANTsX utilities
 
-Although they focus on distinct data types, the three pipelines presented share common components that are generally applicable when mapping mouse cell type data. These include, addressing intensity biases and noise in the data, image registration to solve the mapping, creating custom templates and atlases from the data, and visualization of the results. 
-Table \ref{table:methods} provides a brief summary of key general functionalities in ANTsX for addressing these challenges.
+Although they focus on distinct data types, the three pipelines presented share
+common components that are generally applicable when mapping mouse cell type
+data. These include, addressing intensity biases and noise in the data, image
+registration to solve the mapping, creating custom templates and atlases from
+the data, and visualization of the results. Table \ref{table:methods} provides a
+brief summary of key general functionalities in ANTsX for addressing these
+challenges.
 
 \input{antsx_functionality_table}
 
@@ -51,7 +55,7 @@ image sets where ``type_of_transform`` is a user-specified option that invokes a
 specific parameter set.  For example
 ``type_of_transform='antsRegistrationSyNQuick[s]'`` encapsulates an oft-used
 parameter set for quick registration whereas
-``type_of_transform='antsRegistrationSyN[s]'`` is a more detailed alternative.
+``type_of_transform='antsRegistrationSyN[s]'`` is a more aggressive alternative.
 Transforming images using the derived transforms is performed via the
 ``ants.apply_transforms(...)`` function.
 
@@ -71,25 +75,25 @@ packages.
 ### Template generation 
 
 ANTsX provides functionality for constructing templates from a set (or
-multi-modal sets) of input images as originally described [@Avants:2010aa]
-and recently used to create the DevCCF templates [@Kronman:2023aa]. An
-initial template estimate is constructed from an existing subject image or 
-a voxelwise average derived from a rigid pre-alignment of the image population.
-Pairwise registration between each subject and the current template estimate
-is performed using the Symmetric Normalization (SyN) algorithm [@Avants:2008aa].
-The template estimate is updated by warping all subjects to the space of the
-template, performing a voxelwise average, and then performing a "shape update"
-of this latter image by warping it by the average inverse deformation, thus
-yielding a mean image of the population in terms of both intensity and 
-shape.  The corresponding ANTsPy function is ``ants.build_template(...)``.
+multi-modal sets) of input images as originally described [@Avants:2010aa] and
+recently used to create the DevCCF templates [@Kronman:2023aa]. An initial
+template estimate is constructed from an existing subject image or a voxelwise
+average derived from a rigid pre-alignment of the image population. Pairwise
+registration between each subject and the current template estimate is performed
+using the Symmetric Normalization (SyN) algorithm [@Avants:2008aa]. The template
+estimate is updated by warping all subjects to the space of the template,
+performing a voxelwise average, and then performing a "shape update" of this
+latter image by warping it by the average inverse deformation, thus yielding a
+mean image of the population in terms of both intensity and shape.  The
+corresponding ANTsPy function is ``ants.build_template(...)``.
 
 ### Visualization 
 
 To complement the well-known visualization capabilities of R and Python, e.g.,
 ggplot2 and matplotlib, respectively, image-specific visualization capabilities
-are available in the ``ants.plot(...)`` function (Python).
-These are capable of illustrating multiple slices in different orientations with
-other image overlays and label images.  
+are available in the ``ants.plot(...)`` function (Python). These are capable of
+illustrating multiple slices in different orientations with other image overlays
+and label images.  
 
 ## Mapping fMOST data to AllenCCFv3
 
@@ -143,16 +147,15 @@ addresses these intensity inhomogeneities using N4 bias field correction
   insufficient to capture the significant deformations required to map these
   structures correctly into the AllenCCFv3. We address this challenge in ANTsX
   by using explicitly corresponding parcellations of the brain, ventricles and
-  surrounding structures to directly recover these large morphological differences.
-  However, generating these parcellations for each individual mouse brain is a
-  labor-intensive task. Our solution is to create an average atlas whose mapping
-  to AllenCCFv3
-  encapsulates these large morphological differences to serve as an intermediate
-  registration point. This has the advantage of only needing to generate one set
-  of corresponding annotations which is used to register between the two atlas
-  spaces. New images are first aligned to the fMOST average atlas, which shares
-  common intensity and morphological features and thus can be achieved through
-  standard intensity-based registration.
+  surrounding structures to directly recover these large morphological
+  differences. However, generating these parcellations for each individual mouse
+  brain is a labor-intensive task. Our solution is to create an average atlas
+  whose mapping to AllenCCFv3 encapsulates these large morphological differences
+  to serve as an intermediate registration point. This has the advantage of only
+  needing to generate one set of corresponding annotations which is used to
+  register between the two atlas spaces. New images are first aligned to the
+  fMOST average atlas, which shares common intensity and morphological features
+  and thus can be achieved through standard intensity-based registration.
 
 2. _Average fMOST atlas construction_. An intensity and shape-based
   contralaterally symmetric average of the fMOST image data is constructed from
