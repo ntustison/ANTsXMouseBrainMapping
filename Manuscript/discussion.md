@@ -56,16 +56,18 @@ any continuous time point within the temporal domain.  This novel application
 can potentially enhance our understanding of intermediate developmental stages.
 
 We also presented a mouse brain morphological pipeline for brain extraction and
-brain parcellation using single-shot and two-shot learning with data
+brain parcellation using single-shot and few-shot learning with aggressive data
 augmentation.  This approach attempts to circumvent (or at least minimize) the
 typical requirement of large training datasets as with the human ANTsX pipeline
 analog. However, even given our initial success on independent data, we
 anticipate that refinements will be necessary.  Given that the ANTsX toolkit is
 a dynamic effort undergoing continual improvement, we manually correct cases
 that fail and use them for future training and refinement of network weights as
-we have done for our human-based networks.  Generally, these approaches provide
-a way to bootstrap training data for manual refinement and future generation of
-more accurate deep learning networks in the absence of other applicable tools.
+we have done for our human-based networks.  And, as demonstrated, we welcome
+contributions from the community for improving these approache which, generally,
+provide a way to bootstrap training data for manual refinement and future
+generation of more accurate deep learning networks in the absence of other
+applicable tools.
 
 The ANTsX ecosystem is a powerful framework that has demonstrated applicability
 to diverse cell type data in the mouse brain. This is further evidenced by the
