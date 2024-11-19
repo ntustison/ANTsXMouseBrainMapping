@@ -94,7 +94,7 @@ software tools to use with new data can require significant development,
 validation time, and engineering expertise that may not be readily available for
 all investigators. 
 
-The last category consist of modular mapping approaches constructed using
+The last category consists of modular mapping approaches constructed using
 general image analysis toolkits, which are software packages that include
 modular image processing, segmentation and registration tools that have
 been previously developed, and validated for multiple application areas.
