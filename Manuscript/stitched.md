@@ -1127,7 +1127,7 @@ anticipate that refinements will be necessary.  Given that the ANTsX toolkit is
 a dynamic effort undergoing continual improvement, we manually correct cases
 that fail and use them for future training and refinement of network weights as
 we have done for our human-based networks.  And, as demonstrated, we welcome
-contributions from the community for improving these approache which, generally,
+contributions from the community for improving these approaches which, generally,
 provide a way to bootstrap training data for manual refinement and future
 generation of more accurate deep learning networks in the absence of other
 applicable tools.
@@ -1141,7 +1141,10 @@ multiple packages or lengthy software development. These open-source components
 not only perform well but are available across multiple platforms which
 facilitates the construction of tailored pipelines for individual study
 solutions. These components are also supported by years of development not only
-by the ANTsX development team but by the larger ITK community.
+by the ANTsX development team but by the larger ITK community.  Finally, as 
+an extension to the BICCN program, ANTsX will be a powerful tool for the efforts 
+of the BRAIN Initiative Cell Atlas Network (BICAN) to extend these efforts to the 
+human brain. 
 
 \clearpage
 \newpage
