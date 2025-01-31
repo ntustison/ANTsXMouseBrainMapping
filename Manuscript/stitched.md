@@ -170,7 +170,7 @@ The most notable of these atlases is the Allen Mouse Brain Common Coordinate
 Framework (AllenCCFv3) [@Wang:2020aa], which serves as a primary target
 coordinate space for much of the work associated with the BICCN. Other atlases
 include modality-specific atlases [@perens:2021aa;@ma:2005aa;@qu:2022aa], and
-spatiotemporal atlases [@Kronman:2023aa;@chuang:2011aa] for the developing mouse
+spatiotemporal atlases [@Kronman:2024aa;@chuang:2011aa] for the developing mouse
 brain. 
 
 ## Mouse brain mapping
@@ -232,7 +232,7 @@ software tools to use with new data can require significant development,
 validation time, and engineering expertise that may not be readily available for
 all investigators. 
 
-The last category consist of modular mapping approaches constructed using
+The last category consists of modular mapping approaches constructed using
 general image analysis toolkits, which are software packages that include
 modular image processing, segmentation and registration tools that have
 been previously developed, and validated for multiple application areas.
@@ -284,6 +284,7 @@ tissue deformations are not considered problematic for a particular dataset,
 DeepSlice can be used to determine affine mappings [@Carey:2023aa] with the
 optimal computational efficiency associated with neural networks.
 -->
+
 ## Advanced Normalization Tools (ANTsX)
 
 The Advanced Normalization Tools Ecosystem (ANTsX) has been used in a number of
@@ -366,7 +367,7 @@ processing scripts
 ### Continuously mapping the DevCCF developmental trajectory with a velocity flow model
 
 Recently, the Developmental Common Coordinate Framework (DevCCF) was introduced
-to the mouse brain research community as a public resource [@Kronman:2023aa]
+to the mouse brain research community as a public resource [@Kronman:2024aa]
 comprising symmetric atlases of multi-modal image data and anatomical
 segmentations defined by developmental ontology.  These templates sample the
 mouse embryonic days E11.5, E13.5, E15.5, E18.5 and postnatal days P4, P14, and
@@ -1219,7 +1220,7 @@ packages.
 
 ANTsX provides functionality for constructing templates from a set (or
 multi-modal sets) of input images as originally described [@Avants:2010aa] and
-recently used to create the DevCCF templates [@Kronman:2023aa]. An initial
+recently used to create the DevCCF templates [@Kronman:2024aa]. An initial
 template estimate is constructed from an existing subject image or a voxelwise
 average derived from a rigid pre-alignment of the image population. Pairwise
 registration between each subject and the current template estimate is performed
@@ -1425,7 +1426,7 @@ ITK.
 
 ### Velocity field optimization
 
-To apply this methodology to the developmental templates [@Kronman:2023aa], we
+To apply this methodology to the developmental templates [@Kronman:2024aa], we
 coalesced the manual annotations of the developmental templates into 26 common
 anatomical regions (see Figure \ref{fig:simplifiedannotations}).  We then used
 these regions to generate invertible transformations between successive time
@@ -1580,7 +1581,7 @@ Support for the research reported in this work includes funding from the
 National Institute of Biomedical Imaging and Bioengineering (R01-EB031722)
 and National Institute of Mental Health (RF1-MH124605 and U24-MH114827).
 
-We also acknowledge the data contribution of Dr. Adam Raikes (GitHub @araikes) 
+We also acknowledge the data contribution of Dr. Adam Raikes (GitHub \@araikes) 
 of the Center for Innovation in Brain Science at the University of Arizona 
 for refining the weights of the mouse brain extraction network.  
 

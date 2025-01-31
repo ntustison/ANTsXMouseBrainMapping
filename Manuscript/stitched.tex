@@ -2,12 +2,13 @@
 \PassOptionsToPackage{unicode}{hyperref}
 \PassOptionsToPackage{hyphens}{url}
 \PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
-%
 \documentclass[
   12pt,
 ]{article}
+\usepackage{xcolor}
+\usepackage[margin=1.0in]{geometry}
 \usepackage{amsmath,amssymb}
-\usepackage{setspace}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
 \usepackage{iftex}
 \ifPDFTeX
   \usepackage[T1]{fontenc}
@@ -29,6 +30,7 @@
   \usepackage[]{microtype}
   \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
 }{}
+\usepackage{setspace}
 \makeatletter
 \@ifundefined{KOMAClassName}{% if non-KOMA class
   \IfFileExists{parskip.sty}{%
@@ -39,8 +41,6 @@
 }{% if KOMA class
   \KOMAoptions{parskip=half}}
 \makeatother
-\usepackage{xcolor}
-\usepackage[margin=1.0in]{geometry}
 \usepackage{graphicx}
 \makeatletter
 \newsavebox\pandoc@box
@@ -56,10 +56,6 @@
 % Set default figure placement to htbp
 \def\fps@figure{htbp}
 \makeatother
-\setlength{\emergencystretch}{3em} % prevent overfull lines
-\providecommand{\tightlist}{%
-  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
-\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
 % definitions for citeproc citations
 \NewDocumentCommand\citeproctext{}{}
 \NewDocumentCommand\citeproc{mm}{%
@@ -93,6 +89,9 @@
 \newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{\strut#1\strut}}
 \newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{\strut#1\strut}}
 \newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 \usepackage{longtable}
 \usepackage{graphicx}
 \usepackage{booktabs}
@@ -332,7 +331,7 @@ with new data can require significant development, validation time, and
 engineering expertise that may not be readily available for all
 investigators.
 
-The last category consist of modular mapping approaches constructed
+The last category consists of modular mapping approaches constructed
 using general image analysis toolkits, which are software packages that
 include modular image processing, segmentation and registration tools
 that have been previously developed, and validated for multiple
@@ -626,7 +625,7 @@ use of ANTsX functionality for generating a velocity flow model.}
 \end{figure}
 
 The DevCCF is an openly accessible resource for the mouse brain research
-community\textsuperscript{16}. It consists of multi-modal MRI and LSFM
+community\textsuperscript{80}. It consists of multi-modal MRI and LSFM
 symmetric ANTsX-generated templates\textsuperscript{59} sampling the
 mouse brain developmental trajectory, specifically the embryonic (E) and
 postnatal (P) days E11.5, E13.5, E15.5, E18.5 P4, P14, and P56. Each
@@ -804,17 +803,17 @@ voxelwise cortical thickness measurements.}
 
 Brain parcellation strategies for the mouse brain are pivotal for
 understanding the complex organization and function of murine nervous
-system\textsuperscript{80}. By dividing the brain into distinct regions
+system\textsuperscript{81}. By dividing the brain into distinct regions
 based on anatomical, physiological, or functional characteristics,
 researchers can investigate specific areas in isolation and identify
 their roles in various behaviors and processes. For example, such
 parcellation schemes can help elucidate the spatial distribution of gene
-expression patterns\textsuperscript{81} as well as identify functional
-regions involved in specific cognitive tasks\textsuperscript{82}.
+expression patterns\textsuperscript{82} as well as identify functional
+regions involved in specific cognitive tasks\textsuperscript{83}.
 
 Although deep learning techniques have been used to develop useful
 parcellation tools for human brain research (e.g.,
-SynthSeg\textsuperscript{83}, ANTsXNet\textsuperscript{46}), analogous
+SynthSeg\textsuperscript{84}, ANTsXNet\textsuperscript{46}), analogous
 development for the mouse brain is limited. In addition, mouse data is
 often characterized by unique imaging issues such as extreme anisotropic
 sampling which are often in sharp contrast to the high resolution
@@ -837,7 +836,7 @@ spatially aligned canonical views with in-plane resolution of
 \(0.08 \times 0.08 mm^2\) with a slice thickness of \(0.5 mm\). These
 three orthogonal views were used to reconstruct a single high-resolution
 volume per subject using a B-spline fitting algorithm available in
-ANTsX\textsuperscript{84}.
+ANTsX\textsuperscript{85}.
 
 From these two datasets, two ANTsX templates\textsuperscript{59} were
 generated. Bias field simulation, intensity histogram warping, noise
@@ -1089,9 +1088,9 @@ to the ITK community, \texttt{ants.denoise\_image(...)}.
 
 The ANTs registration toolkit is a complex framework permitting highly
 tailored solutions to pairwise image registration
-scenarios\textsuperscript{85}. It includes innovative transformation
+scenarios\textsuperscript{86}. It includes innovative transformation
 models for biological modeling\textsuperscript{51,67} and has proven
-capable of excellent performance\textsuperscript{56,86}. Various
+capable of excellent performance\textsuperscript{56,87}. Various
 parameter sets targeting specific applications have been packaged with
 the different ANTsX packages, specifically ANTs, ANTsPy, and
 ANTsR\textsuperscript{46}. In ANTsPy, the function
@@ -1256,7 +1255,7 @@ AllenCCFv3}\label{steps-for-spatial-normalization-to-allenccfv3}
   the AllenCCFv3. Each new image is first registered into the fMOST
   average atlas, which shares intensity, modality, and morphological
   characteristics. This allows us to leverage standard, intensity-based
-  registration functionality\textsuperscript{85} available in ANTsX to
+  registration functionality\textsuperscript{86} available in ANTsX to
   perform this alignment. Transformations are then concatenated to the
   original fMOST image to move it into the AllenCCFv3 space using
   \texttt{ants.apply\_transforms(...)}.
@@ -1363,7 +1362,7 @@ field can then be used to describe the displacement between any two time
 points within this time-parameterized domain. Regularization of the
 sparse correspondence between point sets is performed using a
 generalized B-spline scattered data approximation
-technique\textsuperscript{84}, also created by the ANTsX developers and
+technique\textsuperscript{85}, also created by the ANTsX developers and
 contributed to ITK.
 
 \subsubsection{Velocity field
@@ -1414,7 +1413,7 @@ trained networks. Intensity-based data augmentation consisted of
 randomly added noise (i.e., Gaussian, shot, salt-and-pepper), simulated
 bias fields based on N4 bias field modeling, and histogram warping for
 mimicking well-known MRI intensity
-nonlinearities\textsuperscript{46,87}. These augmentation techniques are
+nonlinearities\textsuperscript{46,88}. These augmentation techniques are
 available in ANTsXNet (only ANTsPyNet versions are listed with ANTsRNet
 versions available) and include:
 
@@ -1447,14 +1446,14 @@ for mice brains:
 Similar to human neuroimage processing, brain extraction is a crucial
 preprocessing step for accurate brain mapping. We developed similar
 functionality for T2-weighted mouse brains. This network uses a
-conventional U-net architecture\textsuperscript{88} and, in ANTsPyNet,
+conventional U-net architecture\textsuperscript{89} and, in ANTsPyNet,
 this functionality is available in the program
 \texttt{antspynet.mouse\_brain\_extraction(...)}. For the two-shot
 T2-weighted brain extraction network, two brain templates were generated
 along with their masks. One of the templates was generated from
 orthogonal multi-plane, high resolution data\textsuperscript{69} which
 were combined to synthesize isotropic volumetric data using the B-spline
-fitting algorithm\textsuperscript{84}. This algorithm is encapsulated in
+fitting algorithm\textsuperscript{85}. This algorithm is encapsulated in
 \texttt{ants.fit\_bspline\_object\_to\_scattered\_data(...)} where the
 input is the set of voxel intensity values and each associated physical
 location. Since each point can be assigned a confidence weight, we use
@@ -1514,10 +1513,10 @@ National Institute of Biomedical Imaging and Bioengineering
 (R01-EB031722) and National Institute of Mental Health (RF1-MH124605 and
 U24-MH114827).
 
-We also acknowledge the data contribution of Dr.~Adam Raikes
-(GitHub\textsuperscript{\textbf{araikes?}}) of the Center for Innovation
-in Brain Science at the University of Arizona for refining the weights
-of the mouse brain extraction network.
+We also acknowledge the data contribution of Dr.~Adam Raikes (GitHub
+@araikes) of the Center for Innovation in Brain Science at the
+University of Arizona for refining the weights of the mouse brain
+extraction network.
 
 \clearpage
 
@@ -1636,11 +1635,12 @@ microscopy. \emph{Neuroscience} \textbf{135}, 1203--1215 (2005).}
 of whole mouse brains. \emph{Nature Methods} \textbf{19}, 111--118
 (2022).}
 
-\bibitem[\citeproctext]{ref-Kronman:2023aa}
+\bibitem[\citeproctext]{ref-Kronman:2024aa}
 \CSLLeftMargin{16. }%
-\CSLRightInline{Kronman, F. A. \emph{et al.} Developmental mouse brain
-common coordinate framework. \emph{bioRxiv} (2023)
-doi:\href{https://doi.org/10.1101/2023.09.14.557789}{10.1101/2023.09.14.557789}.}
+\CSLRightInline{Kronman, F. N. \emph{et al.}
+\href{https://doi.org/10.1038/s41467-024-53254-w}{Developmental mouse
+brain common coordinate framework}. \emph{Nat Commun} \textbf{15}, 9072
+(2024).}
 
 \bibitem[\citeproctext]{ref-chuang:2011aa}
 \CSLLeftMargin{17. }%
@@ -2075,36 +2075,42 @@ morphology}. \emph{PLoS One} \textbf{3}, e4099 (2008).}
 diversity of single neurons in molecularly defined cell types}.
 \emph{Nature} \textbf{598}, 174--181 (2021).}
 
-\bibitem[\citeproctext]{ref-Chon:2019aa}
+\bibitem[\citeproctext]{ref-Kronman:2023aa}
 \CSLLeftMargin{80. }%
+\CSLRightInline{Kronman, F. A. \emph{et al.} Developmental mouse brain
+common coordinate framework. \emph{bioRxiv} (2023)
+doi:\href{https://doi.org/10.1101/2023.09.14.557789}{10.1101/2023.09.14.557789}.}
+
+\bibitem[\citeproctext]{ref-Chon:2019aa}
+\CSLLeftMargin{81. }%
 \CSLRightInline{Chon, U., Vanselow, D. J., Cheng, K. C. \& Kim, Y.
 \href{https://doi.org/10.1038/s41467-019-13057-w}{Enhanced and unified
 anatomical labeling for a common mouse brain atlas}. \emph{Nat Commun}
 \textbf{10}, 5067 (2019).}
 
 \bibitem[\citeproctext]{ref-Tasic:2016aa}
-\CSLLeftMargin{81. }%
+\CSLLeftMargin{82. }%
 \CSLRightInline{Tasic, B. \emph{et al.}
 \href{https://doi.org/10.1038/nn.4216}{Adult mouse cortical cell
 taxonomy revealed by single cell transcriptomics}. \emph{Nat Neurosci}
 \textbf{19}, 335--46 (2016).}
 
 \bibitem[\citeproctext]{ref-Bergmann:2020aa}
-\CSLLeftMargin{82. }%
+\CSLLeftMargin{83. }%
 \CSLRightInline{Bergmann, E., Gofman, X., Kavushansky, A. \& Kahn, I.
 \href{https://doi.org/10.1038/s42003-020-01472-5}{Individual variability
 in functional connectivity architecture of the mouse brain}.
 \emph{Commun Biol} \textbf{3}, 738 (2020).}
 
 \bibitem[\citeproctext]{ref-Billot:2023aa}
-\CSLLeftMargin{83. }%
+\CSLLeftMargin{84. }%
 \CSLRightInline{Billot, B. \emph{et al.}
 \href{https://doi.org/10.1016/j.media.2023.102789}{SynthSeg:
 Segmentation of brain MRI scans of any contrast and resolution without
 retraining}. \emph{Med Image Anal} \textbf{86}, 102789 (2023).}
 
 \bibitem[\citeproctext]{ref-Tustison:2006aa}
-\CSLLeftMargin{84. }%
+\CSLLeftMargin{85. }%
 \CSLRightInline{Tustison, N. J. \& Amini, A. A.
 \href{https://doi.org/10.1109/TMI.2005.861015}{Biventricular myocardial
 strains via nonrigid registration of anatomical {NURBS} model
@@ -2112,28 +2118,28 @@ strains via nonrigid registration of anatomical {NURBS} model
 (2006).}
 
 \bibitem[\citeproctext]{ref-Avants:2014aa}
-\CSLLeftMargin{85. }%
+\CSLLeftMargin{86. }%
 \CSLRightInline{Avants, B. B. \emph{et al.}
 \href{https://doi.org/10.3389/fninf.2014.00044}{The {Insight} {ToolKit}
 image registration framework}. \emph{Front Neuroinform} \textbf{8}, 44
 (2014).}
 
 \bibitem[\citeproctext]{ref-Avants:2011wx}
-\CSLLeftMargin{86. }%
+\CSLLeftMargin{87. }%
 \CSLRightInline{Avants, B. B. \emph{et al.}
 \href{https://doi.org/10.1016/j.neuroimage.2010.09.025}{A reproducible
 evaluation of ANTs similarity metric performance in brain image
 registration}. \emph{Neuroimage} \textbf{54}, 2033--44 (2011).}
 
 \bibitem[\citeproctext]{ref-Nyul:2000aa}
-\CSLLeftMargin{87. }%
+\CSLLeftMargin{88. }%
 \CSLRightInline{Nyúl, L. G., Udupa, J. K. \& Zhang, X.
 \href{https://doi.org/10.1109/42.836373}{New variants of a method of MRI
 scale standardization}. \emph{IEEE Trans Med Imaging} \textbf{19},
 143--50 (2000).}
 
 \bibitem[\citeproctext]{ref-Falk:2019aa}
-\CSLLeftMargin{88. }%
+\CSLLeftMargin{89. }%
 \CSLRightInline{Falk, T. \emph{et al.}
 \href{https://doi.org/10.1038/s41592-018-0261-2}{U-net: Deep learning
 for cell counting, detection, and morphometry}. \emph{Nat Methods}

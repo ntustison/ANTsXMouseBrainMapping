@@ -76,7 +76,7 @@ packages.
 
 ANTsX provides functionality for constructing templates from a set (or
 multi-modal sets) of input images as originally described [@Avants:2010aa] and
-recently used to create the DevCCF templates [@Kronman:2023aa]. An initial
+recently used to create the DevCCF templates [@Kronman:2024aa]. An initial
 template estimate is constructed from an existing subject image or a voxelwise
 average derived from a rigid pre-alignment of the image population. Pairwise
 registration between each subject and the current template estimate is performed
@@ -282,7 +282,7 @@ ITK.
 
 ### Velocity field optimization
 
-To apply this methodology to the developmental templates [@Kronman:2023aa], we
+To apply this methodology to the developmental templates [@Kronman:2024aa], we
 coalesced the manual annotations of the developmental templates into 26 common
 anatomical regions (see Figure \ref{fig:simplifiedannotations}).  We then used
 these regions to generate invertible transformations between successive time

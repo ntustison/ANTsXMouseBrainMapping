@@ -32,7 +32,7 @@ The most notable of these atlases is the Allen Mouse Brain Common Coordinate
 Framework (AllenCCFv3) [@Wang:2020aa], which serves as a primary target
 coordinate space for much of the work associated with the BICCN. Other atlases
 include modality-specific atlases [@perens:2021aa;@ma:2005aa;@qu:2022aa], and
-spatiotemporal atlases [@Kronman:2023aa;@chuang:2011aa] for the developing mouse
+spatiotemporal atlases [@Kronman:2024aa;@chuang:2011aa] for the developing mouse
 brain. 
 
 ## Mouse brain mapping

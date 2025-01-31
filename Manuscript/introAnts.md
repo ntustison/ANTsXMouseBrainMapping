@@ -81,7 +81,7 @@ processing scripts
 ### Continuously mapping the DevCCF developmental trajectory with a velocity flow model
 
 Recently, the Developmental Common Coordinate Framework (DevCCF) was introduced
-to the mouse brain research community as a public resource [@Kronman:2023aa]
+to the mouse brain research community as a public resource [@Kronman:2024aa]
 comprising symmetric atlases of multi-modal image data and anatomical
 segmentations defined by developmental ontology.  These templates sample the
 mouse embryonic days E11.5, E13.5, E15.5, E18.5 and postnatal days P4, P14, and
