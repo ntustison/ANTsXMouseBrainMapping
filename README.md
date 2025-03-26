@@ -1,4 +1,4 @@
-# [The ANTsX Ecosystem for Mapping the Mouse Brain](https://www.biorxiv.org/content/10.1101/2024.05.01.592056v1)
+# [Modular strategies for spatial mapping of diverse cell type data of the mouse brain](https://www.biorxiv.org/content/10.1101/2024.05.01.592056v1)
 
 Two novel open-source contributions:
 
