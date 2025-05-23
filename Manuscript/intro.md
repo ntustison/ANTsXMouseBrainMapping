@@ -100,7 +100,7 @@ modular image processing, segmentation and registration tools that have
 been previously developed, and validated for multiple application areas.
 Examples of such toolkits include elastix [@Klein:2010aa], Slicer3D
 [@fedorov:2012aa], ANTsX [@Tustison:2021aa], and several others which have all
-been applied towards mouse brain spatial mapping. The main challenge, in these
+been applied towards mouse brain spatial mapping (e.g., [@Rolfe:2023aa]). The main challenge, in these
 mouse-specific study scenarios, is that tailored pipelines often need be
 constructed from available software components.  Investigators must therefore be
 familiar with the these tools for formulating new or adapting existing
