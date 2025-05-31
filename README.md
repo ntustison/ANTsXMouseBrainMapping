@@ -180,7 +180,7 @@ segmentations version 3.8.
 
 ### Reproducing the DevCCF Velocity Flow Model
 
-```bash
+```{bash}
 # tl;dr
 # * run the following to generate the flow model
 # * results are in Data/Output/
