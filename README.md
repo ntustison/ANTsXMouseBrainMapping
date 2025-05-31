@@ -193,7 +193,7 @@ $ python step3.py
 ```python
 ###
 #
-# First, we register all the input label images to P56 as all the images need to reside 
+# First, rig. register all the input images to P56 as all the images need to reside 
 # in a common post-linearly aligned space.  To do this, we find the common labels 
 # between all the developmental stages and then use those to find a rigid transform
 # to the P56 template. Save the rigid transforms and warped images.  We also resample
