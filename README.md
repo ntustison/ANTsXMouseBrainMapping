@@ -88,7 +88,7 @@ mouse data.  See the training scripts in this repository.
 
 * AllenCCFv3 with labels.
 * Convert labels to a gross parcellation using allensdk
-  ([this](https://github.com/ntustison/ANTsXMouseBrainMapping/blob/main/Scripts/get_allen_parcellation.py) is just
+  ([this](https://github.com/ntustison/ANTsXMouseBrainMapping/blob/main/Scripts/MiscScripts/get_allen_parcellation.py) is just
   one possibility that works for computing KK cortical thickness). 
 * Register AllenCCFv3 and DevCCF P56 T2-w to map to the desired
   template modality.  Note that given a similar resource for DevCCF
