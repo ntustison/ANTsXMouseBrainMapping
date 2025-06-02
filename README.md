@@ -114,7 +114,7 @@ the training scripts in this repository.
     * Whole brain masks are provided
      
 <p align="middle">
-  <img src="https://github.com/ntustison/DevCCF-Velocity-Flow/blob/main/Manuscript/Figures/diceWholeBrain.png" width="400" />
+  <img src="https://github.com/ntustison/DevCCF-Velocity-Flow/blob/main/Manuscript/Figures/diceWholeBrain.png" width="600" />
 </p>
 
 </details>
@@ -239,7 +239,7 @@ the training scripts in this repository.
     * 7 time points (Day 0, Day 3, Week 1, Week 4, Week 8, Week 20)
      
 <p align="middle">
-  <img src="https://github.com/ntustison/DevCCF-Velocity-Flow/blob/main/Manuscript/Figures/kk.png" width="400" />
+  <img src="https://github.com/ntustison/DevCCF-Velocity-Flow/blob/main/Manuscript/Figures/kkPlot.png" width="600" />
 </p>
 
 </details>
