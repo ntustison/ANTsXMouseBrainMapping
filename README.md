@@ -51,6 +51,42 @@ mouse data.  See the training scripts in this repository.
 <details>
 <summary>Two-shot brain extraction network</summary>
 
+### Mouse brain extraction
+
+#### ANTsPyNet example
+
+```python
+>>> import ants
+>>> import antspynet
+>>>
+>>> mouse_t2_file = tf.keras.utils.get_file(fname="mouse.nii.gz",
+      origin="https://figshare.com/ndownloader/files/45289309", force_download=True)
+>>> mouse_t2 = ants.image_read(mouse_t2_file)
+>>> mouse_t2_n4 = ants.n4_bias_field_correction(mouse_t2, 
+                                                rescale_intensities=True,
+                                                shrink_factor=2, 
+                                                convergence={'iters': [50, 50, 50, 50], 'tol': 0.0}, 
+                                                spline_param=20, verbose=True)
+>>> mask = antspynet.mouse_brain_extraction(mouse_t2_n4, modality='t2', verbose=True)
+```
+
+#### ANTsRNet example
+
+```r
+> library( ANTsR )
+> library( ANTsRNet )
+>
+> mouseT2File <- tensorflow::tf$keras$utils$get_file( fname="mouse.nii.gz",
+    origin = "https://figshare.com/ndownloader/files/45289309", force_download = TRUE )
+> mouseT2 <- antsImageRead( mouseT2File )
+> mouseT2N4 <- n4BiasFieldCorrection( mouseT2, 
+                                      rescaleIntensities = TRUE,
+                                      shrinkFactor = 2, 
+                                      convergence = list( iters = c( 50, 50, 50, 50 ), tol = 0.0 ), 
+                                      splineParam = 20, verbose = TRUE )
+>>> mask <- mouseBrainExtraction( mouseT2N4, modality = 't2', verbose = TRUE )
+```
+
 * Build two symmetric isotropic ANTsX templates from two publicly available datasets with different
   "defacing" aesthetics:
     * [CAMRI](https://camri.org/dissemination/mri-data/)
@@ -85,6 +121,102 @@ mouse data.  See the training scripts in this repository.
 
 <details>
 <summary>Single-shot brain parcellation network</summary>
+
+### Mouse brain parcellation
+
+#### ANTsPyNet example
+
+```python
+>>> import ants
+>>> import antspynet
+>>>
+>>> mouse_t2_file = tf.keras.utils.get_file(fname="mouse.nii.gz",
+      origin="https://figshare.com/ndownloader/files/45289309", force_download=True)
+>>> mouse_t2 = ants.image_read(mouse_t2_file)
+>>> mouse_t2_n4 = ants.n4_bias_field_correction(mouse_t2, 
+                                                rescale_intensities=True,
+                                                shrink_factor=2, 
+                                                convergence={'iters': [50, 50, 50, 50], 'tol': 0.0}, 
+                                                spline_param=20, verbose=True)
+>>> parc_nick = antspynet.mouse_brain_parcellation(mouse_t2_n4, 
+                                                   mask=None, 
+                                                   which_parcellation="nick",      
+                                                   return_isotropic_output=True,  
+                                                   verbose=True)
+>>> parc_tct = antspynet.mouse_brain_parcellation(mouse_t2_n4, 
+                                                  mask=None, 
+                                                  which_parcellation="tct",      
+                                                  return_isotropic_output=True,  
+                                                  verbose=True)                                                      
+```
+
+#### ANTsRNet example
+
+```r
+> library( ANTsR )
+> library( ANTsRNet )
+>
+> mouseT2File <- tensorflow::tf$keras$utils$get_file( fname="mouse.nii.gz",
+    origin = "https://figshare.com/ndownloader/files/45289309", force_download = TRUE )
+> mouseT2 <- antsImageRead( mouseT2File )
+> mouseT2N4 <- n4BiasFieldCorrection( mouseT2, 
+                                      rescaleIntensities = TRUE,
+                                      shrinkFactor = 2, 
+                                      convergence = list( iters = c( 50, 50, 50, 50 ), tol = 0.0 ), 
+                                      splineParam = 20, verbose = TRUE )
+> parcNick <- mouseBrainParcellation( mouseT2N4, 
+                                      mask = NULL,
+                                      whichParcellation = 'nick', 
+                                      returnIsotropicOutput = TRUE,
+                                      verbose = TRUE )
+> parcTct <- mouseBrainParcellation( mouseT2N4, 
+                                     mask = NULL,
+                                     whichParcellation = 'tct', 
+                                     returnIsotropicOutput = TRUE,
+                                     verbose = TRUE )                                        
+```
+
+### Mouse cortical thickness
+
+#### ANTsPyNet example
+
+```python
+>>> import ants
+>>> import antspynet
+>>>
+>>> mouse_t2_file = tf.keras.utils.get_file(fname="mouse.nii.gz",
+      origin="https://figshare.com/ndownloader/files/45289309", force_download=True)
+>>> mouse_t2 = ants.image_read(mouse_t2_file)
+>>> mouse_t2_n4 = ants.n4_bias_field_correction(mouse_t2, 
+                                                rescale_intensities=True,
+                                                shrink_factor=2, 
+                                                convergence={'iters': [50, 50, 50, 50], 'tol': 0.0}, 
+                                                spline_param=20, verbose=True)
+>>> kk = antspynet.mouse_cortical_thickness(mouse_t2_n4, 
+                                            mask=None, 
+                                            return_isotropic_output=True,                                    
+                                            verbose=True)
+```
+
+#### ANTsRNet example
+
+```r
+> library( ANTsR )
+> library( ANTsRNet )
+>
+> mouseT2File <- tensorflow::tf$keras$utils$get_file( fname="mouse.nii.gz",
+    origin = "https://figshare.com/ndownloader/files/45289309", force_download = TRUE )
+> mouseT2 <- antsImageRead( mouseT2File )
+> mouseT2N4 <- n4BiasFieldCorrection( mouseT2, 
+                                      rescaleIntensities = TRUE,
+                                      shrinkFactor = 2, 
+                                      convergence = list( iters = c( 50, 50, 50, 50 ), tol = 0.0 ), 
+                                      splineParam = 20, verbose = TRUE )
+> kk <- mouseCorticalThickness( mouseT2N4, 
+                                  mask = NULL,
+                                  returnIsotropicOutput = TRUE,
+                                  verbose = TRUE )
+```
 
 * AllenCCFv3 with labels.
 * Convert labels to a gross parcellation using allensdk
