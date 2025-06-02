@@ -7,7 +7,7 @@ Two novel open-source contributions:
 
 ---
 
-## Two- and single-shot learning for mouse brain cortical thickness measurements
+## Mouse brain cortical thickness measurements
 
 <p align="middle">
   <img src="https://github.com/ntustison/DevCCF-Velocity-Flow/blob/main/Manuscript/Figures/mousePipeline.png" width="700" />
@@ -40,16 +40,16 @@ Structural morphological tools for T2-w volumetric mouse brain images:
 * [Brain parcellation](https://github.com/ANTsX/ANTsPyNet/blob/master/antspynet/utilities/mouse.py#L301-L306)
 * [Cortical thickness](https://github.com/ANTsX/ANTsPyNet/blob/master/antspynet/utilities/mouse.py#L453-L457)
 
-This work also provides a more general framework for single-shot learning using 
-existing templates specifically tailored for both isotropic and anisotropic
-mouse data.  See the training scripts in this repository.
+This work also provides a more general framework for template-based, data 
+augmentation training for both isotropic and anisotropic mouse data.  See 
+the training scripts in this repository.
 
 </details>
 
 ### Innovations
 
 <details>
-<summary>Two-shot brain extraction network</summary>
+<summary>Brain extraction network</summary>
 
 ### Mouse brain extraction
 
@@ -114,13 +114,13 @@ mouse data.  See the training scripts in this repository.
     * Whole brain masks are provided
      
 <p align="middle">
-  <img src="https://github.com/ntustison/DevCCF-Velocity-Flow/blob/main/Manuscript/Figures/dice.png" width="400" />
+  <img src="https://github.com/ntustison/DevCCF-Velocity-Flow/blob/main/Manuscript/Figures/diceWholeBrain.png" width="400" />
 </p>
 
 </details>
 
 <details>
-<summary>Single-shot brain parcellation network</summary>
+<summary>Brain parcellation network</summary>
 
 ### Mouse brain parcellation
 
