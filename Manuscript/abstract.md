@@ -22,7 +22,7 @@ Coordinate Framework (AllenCCFv3), and developmental (MRI and LSFM) data into
 the Developmental Common Coordinate Framework (DevCCF).  We discuss common
 mapping strategies that can be shared across modalities and driven by specific
 challenges from each data type.  These mapping strategies include novel
-open-source contributions that are made publicly available through ANTSX.  These
+open-source contributions that are made publicly available through ANTsX.  These
 include 1) a velocity flow-based approach for continuously mapping developmental
 trajectories such as that characterizing the DevCCF and 2) an automated
 framework for determining structural morphology solely through the leveraging of
