@@ -46,7 +46,7 @@ the training scripts in this repository.
 
 </details>
 
-### Innovations
+### Implementation
 
 <details>
 <summary>Brain extraction network</summary>
