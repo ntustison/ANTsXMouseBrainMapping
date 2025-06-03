@@ -7,7 +7,7 @@ Two novel open-source contributions:
 
 ---
 
-## Two- and single-shot learning for mouse brain cortical thickness measurements
+## Mouse brain cortical thickness measurements
 
 <p align="middle">
   <img src="https://github.com/ntustison/DevCCF-Velocity-Flow/blob/main/Manuscript/Figures/mousePipeline.png" width="700" />
@@ -40,16 +40,52 @@ Structural morphological tools for T2-w volumetric mouse brain images:
 * [Brain parcellation](https://github.com/ANTsX/ANTsPyNet/blob/master/antspynet/utilities/mouse.py#L301-L306)
 * [Cortical thickness](https://github.com/ANTsX/ANTsPyNet/blob/master/antspynet/utilities/mouse.py#L453-L457)
 
-This work also provides a more general framework for single-shot learning using 
-existing templates specifically tailored for both isotropic and anisotropic
-mouse data.  See the training scripts in this repository.
+This work also provides a more general framework for template-based, data 
+augmentation training for both isotropic and anisotropic mouse data.  See 
+the training scripts in this repository.
 
 </details>
 
 ### Innovations
 
 <details>
-<summary>Two-shot brain extraction network</summary>
+<summary>Brain extraction network</summary>
+
+### Mouse brain extraction
+
+#### ANTsPyNet example
+
+```python
+>>> import ants
+>>> import antspynet
+>>>
+>>> mouse_t2_file = tf.keras.utils.get_file(fname="mouse.nii.gz",
+      origin="https://figshare.com/ndownloader/files/45289309", force_download=True)
+>>> mouse_t2 = ants.image_read(mouse_t2_file)
+>>> mouse_t2_n4 = ants.n4_bias_field_correction(mouse_t2, 
+                                                rescale_intensities=True,
+                                                shrink_factor=2, 
+                                                convergence={'iters': [50, 50, 50, 50], 'tol': 0.0}, 
+                                                spline_param=20, verbose=True)
+>>> mask = antspynet.mouse_brain_extraction(mouse_t2_n4, modality='t2', verbose=True)
+```
+
+#### ANTsRNet example
+
+```r
+> library( ANTsR )
+> library( ANTsRNet )
+>
+> mouseT2File <- tensorflow::tf$keras$utils$get_file( fname="mouse.nii.gz",
+    origin = "https://figshare.com/ndownloader/files/45289309", force_download = TRUE )
+> mouseT2 <- antsImageRead( mouseT2File )
+> mouseT2N4 <- n4BiasFieldCorrection( mouseT2, 
+                                      rescaleIntensities = TRUE,
+                                      shrinkFactor = 2, 
+                                      convergence = list( iters = c( 50, 50, 50, 50 ), tol = 0.0 ), 
+                                      splineParam = 20, verbose = TRUE )
+>>> mask <- mouseBrainExtraction( mouseT2N4, modality = 't2', verbose = TRUE )
+```
 
 * Build two symmetric isotropic ANTsX templates from two publicly available datasets with different
   "defacing" aesthetics:
@@ -76,19 +112,117 @@ mouse data.  See the training scripts in this repository.
     * 12 specimens
     * 7 time points (Day 0, Day 3, Week 1, Week 4, Week 8, Week 20)
     * Whole brain masks are provided
-     
+
+<!--     
 <p align="middle">
-  <img src="https://github.com/ntustison/DevCCF-Velocity-Flow/blob/main/Manuscript/Figures/dice.png" width="400" />
+  <img src="https://github.com/ntustison/DevCCF-Velocity-Flow/blob/main/Manuscript/Figures/diceWholeBrain.png" width="600" />
 </p>
+-->
 
 </details>
 
 <details>
-<summary>Single-shot brain parcellation network</summary>
+<summary>Brain parcellation network</summary>
+
+### Mouse brain parcellation
+
+#### ANTsPyNet example
+
+```python
+>>> import ants
+>>> import antspynet
+>>>
+>>> mouse_t2_file = tf.keras.utils.get_file(fname="mouse.nii.gz",
+      origin="https://figshare.com/ndownloader/files/45289309", force_download=True)
+>>> mouse_t2 = ants.image_read(mouse_t2_file)
+>>> mouse_t2_n4 = ants.n4_bias_field_correction(mouse_t2, 
+                                                rescale_intensities=True,
+                                                shrink_factor=2, 
+                                                convergence={'iters': [50, 50, 50, 50], 'tol': 0.0}, 
+                                                spline_param=20, verbose=True)
+>>> parc_nick = antspynet.mouse_brain_parcellation(mouse_t2_n4, 
+                                                   mask=None, 
+                                                   which_parcellation="nick",      
+                                                   return_isotropic_output=True,  
+                                                   verbose=True)
+>>> parc_tct = antspynet.mouse_brain_parcellation(mouse_t2_n4, 
+                                                  mask=None, 
+                                                  which_parcellation="tct",      
+                                                  return_isotropic_output=True,  
+                                                  verbose=True)                                                      
+```
+
+#### ANTsRNet example
+
+```r
+> library( ANTsR )
+> library( ANTsRNet )
+>
+> mouseT2File <- tensorflow::tf$keras$utils$get_file( fname="mouse.nii.gz",
+    origin = "https://figshare.com/ndownloader/files/45289309", force_download = TRUE )
+> mouseT2 <- antsImageRead( mouseT2File )
+> mouseT2N4 <- n4BiasFieldCorrection( mouseT2, 
+                                      rescaleIntensities = TRUE,
+                                      shrinkFactor = 2, 
+                                      convergence = list( iters = c( 50, 50, 50, 50 ), tol = 0.0 ), 
+                                      splineParam = 20, verbose = TRUE )
+> parcNick <- mouseBrainParcellation( mouseT2N4, 
+                                      mask = NULL,
+                                      whichParcellation = 'nick', 
+                                      returnIsotropicOutput = TRUE,
+                                      verbose = TRUE )
+> parcTct <- mouseBrainParcellation( mouseT2N4, 
+                                     mask = NULL,
+                                     whichParcellation = 'tct', 
+                                     returnIsotropicOutput = TRUE,
+                                     verbose = TRUE )                                        
+```
+
+### Mouse cortical thickness
+
+#### ANTsPyNet example
+
+```python
+>>> import ants
+>>> import antspynet
+>>>
+>>> mouse_t2_file = tf.keras.utils.get_file(fname="mouse.nii.gz",
+      origin="https://figshare.com/ndownloader/files/45289309", force_download=True)
+>>> mouse_t2 = ants.image_read(mouse_t2_file)
+>>> mouse_t2_n4 = ants.n4_bias_field_correction(mouse_t2, 
+                                                rescale_intensities=True,
+                                                shrink_factor=2, 
+                                                convergence={'iters': [50, 50, 50, 50], 'tol': 0.0}, 
+                                                spline_param=20, verbose=True)
+>>> kk = antspynet.mouse_cortical_thickness(mouse_t2_n4, 
+                                            mask=None, 
+                                            return_isotropic_output=True,                                    
+                                            verbose=True)
+```
+
+#### ANTsRNet example
+
+```r
+> library( ANTsR )
+> library( ANTsRNet )
+>
+> mouseT2File <- tensorflow::tf$keras$utils$get_file( fname="mouse.nii.gz",
+    origin = "https://figshare.com/ndownloader/files/45289309", force_download = TRUE )
+> mouseT2 <- antsImageRead( mouseT2File )
+> mouseT2N4 <- n4BiasFieldCorrection( mouseT2, 
+                                      rescaleIntensities = TRUE,
+                                      shrinkFactor = 2, 
+                                      convergence = list( iters = c( 50, 50, 50, 50 ), tol = 0.0 ), 
+                                      splineParam = 20, verbose = TRUE )
+> kk <- mouseCorticalThickness( mouseT2N4, 
+                                  mask = NULL,
+                                  returnIsotropicOutput = TRUE,
+                                  verbose = TRUE )
+```
 
 * AllenCCFv3 with labels.
 * Convert labels to a gross parcellation using allensdk
-  ([this](https://github.com/ntustison/ANTsXMouseBrainMapping/blob/main/Scripts/get_allen_parcellation.py) is just
+  ([this](https://github.com/ntustison/ANTsXMouseBrainMapping/blob/main/Scripts/MiscScripts/get_allen_parcellation.py) is just
   one possibility that works for computing KK cortical thickness). 
 * Register AllenCCFv3 and DevCCF P56 T2-w to map to the desired
   template modality.  Note that given a similar resource for DevCCF
@@ -105,10 +239,12 @@ mouse data.  See the training scripts in this repository.
     * Completely *unseen* data
     * 12 specimens
     * 7 time points (Day 0, Day 3, Week 1, Week 4, Week 8, Week 20)
-     
+
+<!--     
 <p align="middle">
-  <img src="https://github.com/ntustison/DevCCF-Velocity-Flow/blob/main/Manuscript/Figures/kk.png" width="400" />
+  <img src="https://github.com/ntustison/DevCCF-Velocity-Flow/blob/main/Manuscript/Figures/kkPlot.png" width="600" />
 </p>
+-->
 
 </details>
 
