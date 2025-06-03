@@ -49,7 +49,7 @@ the training scripts in this repository.
 ### Implementation
 
 <details>
-<summary>Brain extraction network</summary>
+<summary>Brain extraction</summary>
 
 ### Mouse brain extraction
 
@@ -122,7 +122,7 @@ the training scripts in this repository.
 </details>
 
 <details>
-<summary>Brain parcellation network</summary>
+<summary>Brain parcellation</summary>
 
 ### Mouse brain parcellation
 
