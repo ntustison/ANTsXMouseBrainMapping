@@ -1,33 +1,21 @@
 
 # Abstract {-}
 
-Large-scale, international collaborative efforts by members of the BRAIN
-Initiative Cell Census Network (BICCN) consortium are aggregating the most
-comprehensive reference database to date for diverse cell type profiling of the
-mouse brain, which encompasses over 40 different multi-modal profiling
-techniques from more than 30 research groups. One central challenge for this
-integrative effort has been the need to map these unique datasets into common
-reference spaces such that the spatial, structural, and functional information
-from different cell types can be jointly analyzed. However, significant
-variation in the acquisition, tissue processing, and imaging techniques across
-data types makes mapping such diverse data a multifarious problem. Different
-data types exhibit unique tissue distortion and signal characteristics that
-precludes a single mapping strategy from being generally applicable across all
-cell type data. Tailored mapping approaches are often needed to address the
-unique barriers present in each modality. This work highlights modular atlas
-mapping strategies developed across separate BICCN studies using the Advanced
-Normalization Tools Ecosystem (ANTsX) to map spatial transcriptomic (MERFISH)
-and high-resolution morphology (fMOST) mouse brain data into the Allen Common
-Coordinate Framework (AllenCCFv3), and developmental (MRI and LSFM) data into
-the Developmental Common Coordinate Framework (DevCCF).  We discuss common
-mapping strategies that can be shared across modalities and driven by specific
-challenges from each data type.  These mapping strategies include novel
-open-source contributions that are made publicly available through ANTsX.  These
-include 1) a velocity flow-based approach for continuously mapping developmental
-trajectories such as that characterizing the DevCCF and 2) an automated
-framework for determining structural morphology solely through the leveraging of
-publicly resources.  Finally, we provide general guidance to aid investigators
-to tailor these strategies to address unique data challenges without the need to
-develop additional specialized software.  
+Large-scale efforts by the BRAIN Initiative Cell Census Network (BICCN) are
+generating a comprehensive reference atlas of cell types in the mouse brain. A
+key challenge in this effort is mapping diverse datasets—acquired with varied
+imaging, tissue processing, and profiling methods—into shared coordinate
+frameworks. Here, we present modular mapping pipelines developed using the
+Advanced Normalization Tools Ecosystem (ANTsX) to align MERFISH spatial
+transcriptomics and high-resolution fMOST morphology data to the Allen Common
+Coordinate Framework (CCFv3), and developmental MRI and LSFM data to the
+Developmental CCF (DevCCF). Simultaneously, we introduce two novel methods: 1) a
+velocity field–based approach for continuous interpolation across developmental
+timepoints, and 2) a deep learning framework for automated brain parcellation
+using minimally annotated and publicly available data. All workflows are
+open-source and reproducible. We also provide general guidance for selecting
+appropriate strategies across modalities, enabling researchers to adapt these
+tools to new data.
+
 
 \clearpage
