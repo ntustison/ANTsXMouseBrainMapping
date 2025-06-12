@@ -1121,15 +1121,15 @@ region.
 
 \textbf{Velocity field fitting.} Using these point sets, we fit a
 continuous velocity field over developmental time using a generalized
-B-spline scattered data approximation method {[}\textsuperscript{85}{]},
-which is implemented in ANTsX and ITK. The field was parameterized over
-a log-scaled time axis to ensure finer temporal resolution during early
-embryonic stages, where morphological changes are most rapid.
-Optimization proceeded for approximately 125 iterations, minimizing the
-average Euclidean norm between transformed points at each step. Ten
-integration points were used to ensure numerical stability. The result
-is a smooth, differentiable vector field that defines a diffeomorphic
-transform between any two timepoints within the template range.
+B-spline scattered data approximation method\textsuperscript{85}. The
+field was parameterized over a log-scaled time axis to ensure finer
+temporal resolution during early embryonic stages, where morphological
+changes are most rapid. Optimization proceeded for approximately 125
+iterations, minimizing the average Euclidean norm between transformed
+points at each step. Ten integration points were used to ensure
+numerical stability. The result is a smooth, differentiable vector field
+that defines a diffeomorphic transform between any two timepoints within
+the template range.
 
 \textbf{Applications and availability.} This velocity model can be used
 to estimate spatial transformations between any pair of developmental
@@ -1137,9 +1137,13 @@ stages---even those for which no empirical template exists---allowing
 researchers to create interpolated atlases, align new datasets, or
 measure continuous structural changes. It also enables developmental
 alignment of multi-modal data (e.g., MRI to LSFM) by acting as a
-unifying spatiotemporal scaffold. The implementation is accessible via
-\texttt{ants.fit\_time\_varying\_transform\_to\_point\_sets(...)} in
-ANTsPy, and we include reproducible examples in our public codebase.
+unifying spatiotemporal scaffold. The underlying components for velocity
+field fitting and integration are implemented in ITK, and the complete
+workflow is accessible in both ANTsPy
+(\texttt{ants.fit\_time\_varying\_transform\_to\_point\_sets(...)}) and
+ANTsR. In addition the availability of the DevCCF use case,
+self-contained examples and usage tutorials are provided in our public
+codebase.
 
 \subsection{ANTsXNet mouse brain
 applications}\label{antsxnet-mouse-brain-applications}
@@ -1157,11 +1161,13 @@ and heterogeneous acquisition protocols.
 setup}\label{deep-learning-training-setup}
 
 All networks were implemented in ANTsPyNet using standard 3D U-net
-architectures {[}\textsuperscript{87}{]}. Training was performed on an
-NVIDIA DGX system (4× Tesla V100 GPUs, 256\,GB RAM). Model weights and
+architectures\textsuperscript{87} previously employed in previously
+published work\textsuperscript{44}. Training was performed on an NVIDIA
+DGX system (4\(\times\) Tesla V100 GPUs, 256\,GB RAM). Model weights and
 preprocessing routines are shared across ANTsPyNet and ANTsRNet to
-ensure reproducibility and language portability. Public training scripts
-and data generators are available at
+ensure reproducibility and language portability. For both published and
+unpublished trained networks available through ANTsXNet, all training
+scripts and data augmentation generators are publicly available at
 \textbf{\url{https://github.com/ntustison/ANTsXNetTraining}}.
 
 \textbf{Data augmentation.} Robust data augmentation was critical to
@@ -1175,13 +1181,13 @@ applied both intensity- and shape-based augmentation strategies:
   \begin{itemize}
   \tightlist
   \item
-    Gaussian, Poisson, and salt-and-pepper noise:
+    Gaussian, Poisson, and salt-and-pepper noise:\\
     \texttt{ants.add\_noise\_to\_image(...)}
   \item
-    Simulated intensity inhomogeneity via bias field modeling:
+    Simulated intensity inhomogeneity via bias field modeling:\\
     \texttt{antspynet.simulate\_bias\_field(...)}
   \item
-    Histogram warping to simulate contrast variation:
+    Histogram warping to simulate contrast variation:\\
     \texttt{antspynet.histogram\_warp\_image\_intensities(...)}
   \end{itemize}
 \item
@@ -1190,37 +1196,50 @@ applied both intensity- and shape-based augmentation strategies:
   \begin{itemize}
   \tightlist
   \item
-    Random nonlinear deformations and affine transforms:
+    Random nonlinear deformations and affine transforms:\\
     \texttt{antspynet.randomly\_transform\_image\_data(...)}
   \item
-    Anisotropic resampling across axial, sagittal, and coronal planes:
+    Anisotropic resampling across axial, sagittal, and coronal planes:\\
     \texttt{ants.resample\_image(...)}
   \end{itemize}
 \end{itemize}
 
 \subsubsection{Brain extraction}\label{brain-extraction}
 
-We trained a mouse-specific brain extraction model on two manually
-masked T2-weighted templates, generated from public datasets
-{[}\textsuperscript{68};\textsuperscript{67}{]}. One of the templates
-was constructed from orthogonal 2D acquisitions using B-spline-based
-volumetric synthesis via
+We originally trained a mouse-specific brain extraction model on two
+manually masked T2-weighted templates, generated from public
+datasets\textsuperscript{67,68}. One of the templates was constructed
+from orthogonal 2D acquisitions using B-spline--based volumetric
+synthesis via
 \texttt{ants.fit\_bspline\_object\_to\_scattered\_data(...)}. Normalized
 gradient magnitude was used as a weighting function to emphasize
-boundaries during reconstruction.
+boundaries during reconstruction\textsuperscript{85}.
 
 This training strategy provides strong spatial priors despite limited
-data --- leveraging high-quality template data and aggressive
-augmentation to mimic population variability. The final trained network
-is available via ANTsXNet:
+data---leveraging high-quality template images and aggressive
+augmentation to mimic population variability. During the development of
+this work, the network was further refined through community engagement.
+A user from a U.S.-based research institute applied the publicly
+available (but then unpublished) brain extraction tool to their own
+mouse MRI dataset. Based on feedback and iterative collaboration with
+the ANTsX team, the model was retrained and improved to better
+generalize to additional imaging contexts. This reflects our broader
+commitment to community-driven development and responsiveness to user
+needs across diverse mouse brain imaging scenarios.
+
+The final trained network is available via ANTsXNet through the
+function\\
+\texttt{antspynet.mouse\_brain\_extraction(...)}. Additionally, both
+template/mask pairs are accessible via ANTsXNet. For example, one such
+image pair is available via:
 
 \begin{itemize}
 \tightlist
 \item
-  Template:
+  Template:\\
   \texttt{antspynet.get\_antsxnet\_data("bsplineT2MouseTemplate")}
 \item
-  Brain mask:
+  Brain mask:\\
   \texttt{antspynet.get\_antsxnet\_data("bsplineT2MouseTemplateBrainMask")}
 \end{itemize}
 
