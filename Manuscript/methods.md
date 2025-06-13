@@ -208,7 +208,7 @@ tutorials are provided in our public codebase.
 
 <!----------------------------------------------------------------------->
 
-## ANTsXNet mouse brain applications
+## Automated brain extraction and parcellation with ANTsXNet
 
 To support template-based deep learning approaches for structural brain
 extraction and parcellation, we implemented dedicated pipelines using the
@@ -238,9 +238,9 @@ shape-based augmentation strategies:
 
   * Gaussian, Poisson, and salt-and-pepper noise:  
     `ants.add_noise_to_image(...)`
-  * Simulated intensity inhomogeneity via bias field modeling:  
+  * Simulated intensity inhomogeneity via bias field modeling [@Tustison:2010ac]:  
     `antspynet.simulate_bias_field(...)`
-  * Histogram warping to simulate contrast variation:   
+  * Histogram warping to simulate contrast variation [@Tustison:2021ab]:   
     `antspynet.histogram_warp_image_intensities(...)`
 
 * *Shape augmentations:*
@@ -285,23 +285,36 @@ are accessible via ANTsXNet. For example, one such image pair is available via:
 
 For brain parcellation, we trained a 3D U-net model using the DevCCF P56
 T2-weighted template and anatomical segmentations derived from AllenCCFv3. This
-template-based training strategy allows the model to produce accurate,
+template-based training strategy enables the model to produce accurate,
 multi-region parcellations without requiring large-scale annotated subject data.
 
-To harmonize intensity across specimens, input images were preprocessed using
+To normalize intensity across specimens, input images were preprocessed using
 rank-based intensity normalization (`ants.rank_intensity(...)`). Spatial
-harmonization was achieved by affine and deformable alignment of each extracted
-brain to the P56 template prior to inference. In addition to the normalized
-image input, the network also receives prior probability maps derived from the
-atlas segmentations, providing additional spatial context. These resources are
-available via `get_antsxnet_data(...)`.
+harmonization was achieved through affine and deformable alignment of each
+extracted brain to the P56 template prior to inference. In addition to the
+normalized image input, the network also receives prior probability maps derived
+from the atlas segmentations, providing additional spatial context. 
+
+This general parcellation deep learning framework has also been applied in
+collaboration with other groups pursuing related but distinct projects. In one
+case, a model variant was adapted for T2-weighted MRI using an alternative
+anatomical labeling scheme; in another, a separate model was developed for
+serial two-photon tomography (STPT) with a different parcellation set. All three
+models are accessible through a shared interface in ANTsXNet:
+`antspynet.mouse_brain_parcellation(...)`. Ongoing work is further extending
+this approach to embryonic mouse brain data. These independent efforts reflect
+broader community interest in adaptable parcellation tools and reinforce the
+utility of ANTsXNet as a platform for reproducible, extensible deep learning
+workflows.
 
 ### Evaluation and reuse
 
-To assess model generalizability, both brain extraction and parcellation models
-were evaluated on an external longitudinal dataset \[@Rahman:2023aa] with varied
-scanning parameters. The pipeline demonstrated robust performance without
-retraining, highlighting the utility of a template-driven, low-shot approach.
-All models, training scripts, and data resources are publicly available and
-designed for plug-and-play use within ANTsX workflows.
-
+To assess model generalizability, both the brain extraction and parcellation
+networks were evaluated on an independent longitudinal dataset comprising
+multiple imaging sessions with varied acquisition parameters [@Rahman:2023aa].
+Although each label or imaging modality required retraining, the process was
+streamlined by the reusable ANTsX infrastructure enabled by rapid adaptation
+with minimal overhead. These results illustrate the practical benefits of a
+template-based, low-shot strategy and modular deep learning framework. All
+trained models, associated training scripts, and supporting resources are openly
+available and designed for straightforward integration into ANTsX workflows.
