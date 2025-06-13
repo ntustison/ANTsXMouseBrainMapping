@@ -3,8 +3,8 @@
 
 Large-scale efforts by the BRAIN Initiative Cell Census Network (BICCN) are
 generating a comprehensive reference atlas of cell types in the mouse brain. A
-key challenge in this effort is mapping diverse datasets—acquired with varied
-imaging, tissue processing, and profiling methods—into shared coordinate
+key challenge in this effort is mapping diverse datasets, acquired with varied
+imaging, tissue processing, and profiling methods, into shared coordinate
 frameworks. Here, we present modular mapping pipelines developed using the
 Advanced Normalization Tools Ecosystem (ANTsX) to align MERFISH spatial
 transcriptomics and high-resolution fMOST morphology data to the Allen Common

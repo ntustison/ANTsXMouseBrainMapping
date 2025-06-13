@@ -55,11 +55,11 @@ often require extensive engineering effort to adapt to new datasets or
 modalities.  Finally, general-purpose toolkits such as elastix [@Klein:2010aa],
 Slicer3D [@fedorov:2012aa], and the Advanced Normalization Tools Ecosystem
 (ANTsX) [@Tustison:2021aa] have all been applied to mouse brain mapping
-scenarios (e.g., [@Rolfe:2023aa]). These toolkits support modular workflows that
-can be flexibly composed from reusable components, offering a powerful
-alternative to rigid, modality-specific solutions. However, their use often
-requires familiarity with pipeline modules, parameter tuning, and tool-specific
-conventions which can limit adoption.
+scenarios (e.g., SlicerMEMOS [@Rolfe:2023aa]). These toolkits support modular
+workflows that can be flexibly composed from reusable components, offering a
+powerful alternative to rigid, modality-specific solutions. However, their use
+often requires familiarity with pipeline modules, parameter tuning, and
+tool-specific conventions which can limit adoption.
 
 Building on this third category, we describe a set of modular, ANTsX-based
 pipelines specifically tailored for mapping diverse mouse brain data into
