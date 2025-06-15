@@ -503,105 +503,86 @@ template-building functionality.
 All usage examples, scripts, and supporting data are publicly available in the
 associated codebase.
 
-## Automated structural parcellations of the mouse brain
-
-<!-- One of the most well-utilized pipelines in the ANTsX toolkit is the generation
-of cortical thickness maps in the human brain from T1-weighted MRI.  Starting
-with the novel Diffeomorphic Registration-based Cortical Thickness (DiReCT)
-algorithm [@Das:2009uv], a complete algorithmic workflow was developed for both
-cross-sectional [@Tustison:2014ab] and longitudinal [@Tustison:2019aa]
-T1-weighted MR image data.  This contribution was later refactored using deep
-learning [@Tustison:2021aa] leveraging the earlier results [@Tustison:2014ab] 
-for training data.   -->
-
+## Automated structural labeling of the mouse brain
 
 \begin{figure}
 \centering
 \includegraphics[width=0.95\textwidth]{Figures/mousePipeline.pdf}
-\caption{The mouse brain cortical parcellation pipeline integrating two deep
-learning components for brain extraction and brain parcellation prior to
-estimating cortical labels. Both deep learning networks rely heavily on
-aggressive data augmentation on templates built from open data and provide an
-outline for further refinement and creating alternative parcellations for
-tailored research objectives.  Possible applications include
-voxelwise cortical thickness measurements.}
+\caption{The mouse brain cortical labeling pipeline integrates two deep
+learning components for brain extraction and anatomical region segmentation.
+Both networks rely heavily on data augmentation applied to templates constructed
+from open datasets. The framework also supports further refinement or
+alternative label sets tailored to specific research needs. Possible
+applications include voxelwise cortical thickness estimation.}
 \label{fig:mouseKK}
 \end{figure}
 
-Brain parcellation strategies for the mouse brain are pivotal for understanding
-the complex organization and function of murine nervous system [@Chon:2019aa].
-By dividing the brain into distinct regions based on anatomical, physiological,
-or functional characteristics, researchers can investigate specific areas in
-isolation and identify their roles in various behaviors and processes. For
-example, such parcellation schemes can help elucidate the spatial distribution
-of gene expression patterns [@Tasic:2016aa] as well as identify functional
-regions involved in specific cognitive tasks [@Bergmann:2020aa]. 
+Structural labeling strategies for the mouse brain are essential for
+understanding the organization and function of the murine nervous system
+[@Chon:2019aa]. By dividing the brain into anatomically or functionally defined
+regions, researchers can localize biological processes, relate regional features
+to behavior, or quantify spatial variation in gene expression patterns
+[@Tasic:2016aa; @Bergmann:2020aa]. While deep learning techniques have yielded
+robust segmentation and labeling tools for the human brain (e.g., SynthSeg
+[@Billot:2023aa], ANTsXNet [@Tustison:2021aa]), analogous development for mouse
+data has been limited. Mouse neuroimaging often presents unique challenges, such
+as highly anisotropic sampling, that complicate transfer of existing tools. At
+the same time, high resolution resources like the AllenCCFv3 and DevCCF provide
+reference label sets that can serve as training data or spatial priors. We
+demonstrate how ANTsX can be used to construct a full structural labeling
+pipeline for the mouse brain (Figure \ref{fig:mouseKK}), including both brain
+extraction and atlas-based region segmentation.
 
-Although deep learning techniques have been used to develop useful parcellation
-tools for human brain research (e.g., SynthSeg [@Billot:2023aa], ANTsXNet
-[@Tustison:2021aa]), analogous development for the mouse brain is limited.  In
-addition, mouse data is often characterized by unique imaging issues such as
-extreme anisotropic sampling which are often in sharp contrast to the high
-resolution template-based resources available within the community, e.g.,
-AllenCCFv3 and DevCCF. We demonstrate how one can use the ANTsX tools to develop
-a complete mouse brain structural morphology pipeline as illustrated in Figure
-\ref{fig:mouseKK} and detailed below. 
 
-### Few-shot mouse brain extraction network
+### Template-based mouse brain extraction network
 
-In order to create a generalized mouse brain extraction network, we built
-whole-head templates from two publicly available datasets.  The Center for
-Animal MRI (CAMRI) dataset [@Hsu2021] from the University of North Carolina at
-Chapel Hill consists of 16 T2-w MRI volumes of voxel resolution $0.16
-\times 0.16 \times 0.16 mm^3$.  The second high-resolution dataset
-[@Reshetnikov2021] comprises 88 specimens each with three spatially aligned
-canonical views with in-plane resolution of $0.08 \times 0.08 mm^2$ with a slice
-thickness of $0.5 mm$.  These three orthogonal views were used to reconstruct a
-single high-resolution volume per subject using a B-spline fitting algorithm
-available in ANTsX [@Tustison:2006aa].  
+To develop a general-purpose mouse brain extraction model, we constructed
+whole-head templates from two publicly available T2-weighted datasets. The first
+dataset, from the Center for Animal MRI (CAMRI) at the University of North
+Carolina at Chapel Hill [@Hsu2021], includes 16 isotropic MRI volumes acquired
+at $0.16 \times 0.16 \times 0.16$ mm$^3$ resolution. The second dataset
+[@Reshetnikov2021] comprises 88 specimens acquired in three orthogonal 2D views
+(coronal, axial, sagittal) at $0.08 \times 0.08$ mm$^3$ in-plane resolution with
+0.5 mm slice thickness. These orthogonal 2D acquisitions were reconstructed into
+high-resolution 3D volumes using a B-spline fitting algorithm
+[@Tustison:2006aa]. Using this synthesized dataset and the CAMRI images, we
+created two ANTsX-based population templates [@Avants:2010aa], each paired with
+a manually delineated brain mask. These served as the basis for training an
+initial template-based brain extraction model.  Deep learning training of the 
+network employed aggressive data augmentation strategies, including bias field
+simulation, histogram warping, random spatial deformation, noise injection, and
+anisotropic resampling. This enabled the model to generalize beyond the two 
+templates. The initial model was released through ANTsXNet
+and made publicly available.
 
-From these two datasets, two ANTsX templates [@Avants:2010aa] were generated.
-Bias field simulation, intensity histogram warping, noise simulation, random
-translation and warping, and random anisotropic resampling in the three
-canonical directions were used for data augmentation in training an initial T2-w
-brain extraction network.  This network was posted and the corresponding
-functionality was immediately made available within ANTsXNet, similar to our
-previous contributions to the community.  
+Subsequent community use led to further improvements. A research group applying
+the tool to their own ex vivo T2-weighted mouse brain data contributed a third
+template and associated mask (acquired at 0.08 mm isotropic resolution).
+Incorporating this into the training data improved robustness and accuracy to an
+independent dataset and extended the model’s generalizability. The refined model
+is distributed through ANTsPyNet via ``antspynet.mouse_brain_extraction(...)``.
 
-User interest led to a GitHub inquiry regarding possible study-specific
-improvements (https://github.com/ANTsX/ANTsPyNet/issues/133).  This interaction
-led to the offering of a user-made third template and extracted brian mask
-generated from T2-w ex-vivo data with isotropic spacing of 0.08 mm in each voxel
-dimension.  This third template, in conjunction with the other two, were used
-with the same aggressive data augmentation to refine the network weights which
-were subsequently posted and made available through ANTsPyNet using the function
-``antspynet.mouse_brain_extraction(...)``.
+### Template-based mouse brain anatomical labeling
 
-### Single-shot mouse brain parcellation network
-
-AllenCCFv3 and its hierarchical ontological labeling, along with the DevCCF,
-provides the necessary data for developing a tailored structural parcellation
-network for multi-modal imaging.  The ``allensdk`` Python library permits the
-creation of any gross parcellation based on the AllenCCFv3 ontology.  Specifically, 
-using ``allensdk`` we coalesced the labels to the following six major
-structures:  cerebral cortex, cerebral nuclei, brain stem, cerebellum, main
-olfactory bulb, and hippocampal formation.  This labeling was mapped to the P56
-component of the DevCCF for use with the T2-w template component. 
-
-The T2-w P56 DevCCF and labelings, in conjunction with the data augmentation
-described previously for brain extraction, were used to train the proposed brain
-parcellation network.  This is available in ANTsXNet (e.g. in ANTsPyNet using
-``antspynet.mouse_brain_parcellation(...)``). Note that other brain parcellation
-networks have also been trained using alternative regions and parcellation
-schemes and are available in the same ANTsXNet functionality.  One usage note
-is that the data augmentation used to train the network permits a learned 
-interpolation in 0.08 mm isotropic space.  Since the training data is isotropic 
-and data augmentation includes downsampling in the canonical directions, each of 
-the two networks learns mouse brain-specific interpolation such that one can 
-perform prediction on thick-sliced images, as, for example, in these evaluation 
-data, and return isotropic probability and thickness maps (a choice available to 
-the user).  This permits robust cortical thickness estimation even in the case 
-of anisotropic data (see ``antspynet.mouse_cortical_thickness(...)``).
+The AllenCCFv3 atlas and its hierarchical ontology, along with the DevCCF,
+provide a strong foundation for developing region-wise anatomical labeling
+models for multi-modal mouse brain imaging. Using the `allensdk` Python library,
+we generated a coarse segmentation scheme by grouping anatomical labels into six
+major regions: cerebral cortex, cerebral nuclei, brainstem, cerebellum, main
+olfactory bulb, and hippocampal formation. These labels were mapped onto the P56
+T2-weighted DevCCF template to serve as training targets. We trained a 3D
+U-net–based segmentation network using this template and the same augmentation
+strategies described for brain extraction. The model is publicly available via
+ANTsXNet (`antspynet.mouse_brain_parcellation(...)`) and supports robust
+anatomical labeling across diverse imaging geometries and contrasts.  The
+inclusion of aggressive augmentation, including simulated anisotropy, enables
+the model to perform well even on thick-slice input data. Internally, the model
+reconstructs isotropic probability and label maps, facilitating downstream
+morphometric analyses. For example, this network integrates with the ANTsX
+cortical thickness estimation pipeline
+(`antspynet.mouse_cortical_thickness(...)`) to produce voxelwise cortical
+thickness maps, even when applied to anisotropic or limited-resolution mouse
+brain data.
 
 ### Evaluation
 
@@ -664,52 +645,6 @@ these data, the whole brain extraction demonstrates excellent performance across
 the large age range.  And although the intensity-only image registration
 provides adequate alignment, intensity with the regional parcellations
 significantly improves those measures.
-
-<!-- Although the utility of the proposed brain parcellation framework is highly
-dependent on the specific application, we demonstrate the utility through the
-generation of cortical thickness maps [@Das:2009uv] which leverages both brain
-parcellation and the capabilities of mouse brain-based isotropic interpolation
-for anisotropic data.  Cortical thickness has demonstrated utility in both human
-(e.g., [@Tustison:2014ab;@Tustison:2019aa]) and non-human data (e.g., canines
-[@Grewal:2020aa], dolphins [@Avelino-de-Souza:2024aa], non-human primates
-[@Demirci:2023aa]) including the mouse brain
-[@Lerch:2008aa;@Lee:2011aa;@Zoller:2018aa;@zhang:2021aa]. -->
-
-
-<!-- 
-\begin{figure}
-\centering
-\begin{subfigure}{0.5\textwidth}
-  \centering
-  \includegraphics[width=\linewidth]{Figures/diceWholeBrain.png}
-  \caption{}
-  \label{fig:suba}
-\end{subfigure}\\
-\begin{subfigure}{0.5\textwidth}
-  \centering
-  \includegraphics[width=\linewidth]{Figures/corticoPlot.png}
-  \caption{}
-  \label{fig:subb}
-\end{subfigure}%
-\begin{subfigure}{.5\textwidth}
-  \centering
-  \includegraphics[width=\linewidth]{Figures/kkPlot.png}
-  \caption{}
-  \label{fig:subc}
-\end{subfigure}
-\caption{Evaluation of the ANTsX mouse brain extraction and parcellation on an
-independent, publicly available dataset consisting of 12 specimens $\times$ 7
-time points = 84 total images.  (a) Dice overlap comparisons with the
-user-generated brain masks provide good agreement with the automated results
-from the brain extraction network. (b) Cortical volume measurements show similar
-average quantities over growth and development between the original anisotropic
-data and interpolated isotropic data.  (c) The volumetric comparative results
-contrast with the cortical thickness measurements which illustrate estimation in
-anisotropic space severely underestimates the actual values in comparison with
-the isotropic prediction.}
-\label{fig:evaluation}
-\end{figure} 
--->
 
 
 \clearpage
