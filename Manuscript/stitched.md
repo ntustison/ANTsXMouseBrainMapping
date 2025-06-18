@@ -523,13 +523,14 @@ to behavior, or quantify spatial variation in gene expression patterns
 [@Tasic:2016aa; @Bergmann:2020aa]. While deep learning techniques have yielded
 robust segmentation and labeling tools for the human brain (e.g., SynthSeg
 [@Billot:2023aa], ANTsXNet [@Tustison:2021aa]), analogous development for mouse
-data (e.g., MEMOS [@Rolfe:2023aa]) has been limited. Mouse neuroimaging often presents unique challenges, such
-as highly anisotropic sampling, that complicate transfer of existing tools. At
-the same time, high resolution resources like the AllenCCFv3 and DevCCF provide
-reference label sets that can serve as training data. We demonstrate how ANTsX
-can be used to construct a full structural labeling pipeline for the mouse brain
-(Figure \ref{fig:mouseKK}), including both whole brain segmentation (i.e., brain
-extraction) and the subsequent atlas-based region segmentation.
+data (e.g., MEMOS [@Rolfe:2023aa]) has been limited. Mouse neuroimaging often
+presents unique challenges, such as highly anisotropic sampling, that complicate
+transfer of existing tools. At the same time, high resolution resources like the
+AllenCCFv3 and DevCCF provide reference label sets that can serve as training
+data. We demonstrate how ANTsX can be used to construct a full structural
+labeling pipeline for the mouse brain (Figure \ref{fig:mouseKK}), including both
+whole brain segmentation (i.e., brain extraction) and the subsequent atlas-based
+region segmentation.
 
 
 ### Template-based mouse brain extraction network
@@ -630,8 +631,8 @@ For evaluation, we used an additional publicly available dataset
 the brain extraction and parcellation networks.  Data includes 12 specimens each
 imaged at seven time points (Day 0, Day 3, Week 1, Week 4, Week 8, Week 20) with
 in-house-generated brain masks for a total of 84 images.  Spacing is anistropic
-with an in-plane resolution of $0.1 \times 0.1 mm^2$ and a slice thickness of
-$0.5 mm$.  
+with an in-plane resolution of $0.1 \times 0.1$ mm$^2$ and a slice thickness of
+$0.5$ mm.  
 
 Figure \ref{fig:evaluation} summarizes the whole brain overlap between the
 provided segmentations for all 84 images and the results of applying the
