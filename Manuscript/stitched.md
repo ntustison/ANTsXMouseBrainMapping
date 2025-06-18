@@ -132,7 +132,7 @@ neurons [@Keller:2015aa], observe whole-brain developmental changes at cellular
 resolution [@La-Manno:2021aa], associate brain regions with genetic composition
 [@Wen:2022aa], and locally characterize neural connectivity [@Oh:2014aa]. These
 scientific achievements have been propelled by high-resolution profiling and
-imaging techniques that enable submicron, multimodal, three-dimensional
+imaging techniques that enable submicron, multimodal, 3D
 characterizations of whole mouse brains. Among these are micro-optical
 sectioning tomography [@Gong:2013aa;@Li:2010aa], tissue clearing methods
 [@Keller:2015aa;@Ueda:2020aa], spatial transcriptomics
@@ -181,27 +181,27 @@ often require extensive engineering effort to adapt to new datasets or
 modalities.  Finally, general-purpose toolkits such as elastix [@Klein:2010aa],
 Slicer3D [@fedorov:2012aa], and the Advanced Normalization Tools Ecosystem
 (ANTsX) [@Tustison:2021aa] have all been applied to mouse brain mapping
-scenarios (e.g., SlicerMEMOS [@Rolfe:2023aa]). These toolkits support modular
-workflows that can be flexibly composed from reusable components, offering a
-powerful alternative to rigid, modality-specific solutions. However, their use
-often requires familiarity with pipeline modules, parameter tuning, and
-tool-specific conventions which can limit adoption.
+scenarios. These toolkits support modular workflows that can be flexibly
+composed from reusable components, offering a powerful alternative to rigid,
+modality-specific solutions. However, their use often requires familiarity with
+pipeline modules, parameter tuning, and tool-specific conventions which can
+limit adoption.
 
 Building on this third category, we describe a set of modular, ANTsX-based
 pipelines specifically tailored for mapping diverse mouse brain data into
 standardized anatomical frameworks. These include two new pipelines: a velocity
-field–based interpolation model that potentially enables biologically plausible
-transformations across developmental timepoints, and a template-based deep
-learning pipeline for brain extraction and parcellation requiring minimal
-annotated data. In addition, we include two modular pipelines for aligning
-multiplexed error-robust fluorescence in situ hybridization (MERFISH) and fMOST
-datasets to the Allen CCFv3. These workflows were adapted and tailored using
-ANTsX tools to support collaborative efforts within the BICCN and are now made
-openly available in a reproducible format. To facilitate broader adoption, we
-also provide general guidance for customizing these strategies across imaging
-modalities and data types.  We first introduce key components of the ANTsX
-toolkit, which provide a basis for all of the mapping workflows described here,
-and then detail the specific contributions made in each pipeline.
+field–based interpolation model that enables continuous transformations across
+developmental timepoints of the DevCCF, and a template-based deep learning
+pipeline for brain extraction and parcellation requiring minimal annotated data.
+In addition, we include two modular pipelines for aligning multiplexed
+error-robust fluorescence in situ hybridization (MERFISH) and fMOST datasets to
+the Allen CCFv3. These workflows were adapted and tailored using ANTsX tools to
+support collaborative efforts within the BICCN and are now made openly available
+in a reproducible format. To facilitate broader adoption, we also provide
+general guidance for customizing these strategies across imaging modalities and
+data types.  We first introduce key components of the ANTsX toolkit, which
+provide a basis for all of the mapping workflows described here, and then detail
+the specific contributions made in each pipeline.
 
 
 ## The Advanced Normalization Tools Ecosystem (ANTsX)
@@ -283,7 +283,7 @@ at (https://github.com/dontminchenit/CCFAlignmentToolkit).
 \end{subfigure}
 \caption{Diagram of the two ANTsX-based pipelines for mapping (a) MERFISH
           and (b)fMOST data into the space of AllenCCFv3.  Each generates
-         the requisite transforms, $\mathcal{T}$, to map individual images
+         the requisite transforms to map individual images
          to the CCF.}
 \label{fig:allenpipelines}
 \end{figure*}
@@ -309,9 +309,9 @@ data to AllenCCFv3.
 **Data.** MERFISH imaging was performed on cryosectioned brains from C57BL/6
 mice using previously described protocols [@Yao:2023aa]. Brains were placed into
 an optimal cutting temperature (OCT) compound (Sakura FineTek 4583) stored at
--80$^\circ$.  The fresh frozen brain was sectioned at 10 $\mu$µm on Leica 3050 S
+-80$^\circ$.  The fresh frozen brain was sectioned at 10 $\mu$m on Leica 3050 S
 cryostats at intervals of 200 $\mu$m to evenly cover the brain. A set of 500
-genes was selected to distinguish $\sim 5200$ transcriptomic clusters. Raw
+genes was selected to distinguish $\sim5200$ transcriptomic clusters. Raw
 MERSCOPE data were decoded using Vizgen software (v231). Cell segmentation was
 performed using Cellpose [@Liu:2023aa;@Stringer:2021aa] based on DAPI and PolyT
 stains which was propagated to adjacent slices across z-planes. Each MERFISH
@@ -395,7 +395,7 @@ sampling limits the ability to model continuous transformations across time. To
 address this, we developed a velocity flow–based modeling approach that enables
 anatomically plausible, diffeomorphic transformations between any two continuous
 time points within the DevCCF range. This functionality is implemented in both
-ANTsR and ANTsPy (ants.fit_time_varying_transform_to_point_sets(...)) and
+ANTsR and ANTsPy (`ants.fit_time_varying_transform_to_point_sets(...)`) and
 integrates seamlessly with existing ANTsX workflows. The velocity field is
 encoded as a 4D ITK image where each voxel stores the $x$,$y$,$z$ components of
 motion at a given time point.
@@ -449,7 +449,7 @@ the log-scaled time axis.}
 The velocity field was optimized using the seven corresponding point sets and
 their associated weights. The field geometry was defined at $[256, 182, 360]$
 with 11 integration points at 50 $\mu$m resolution, yielding a compressed velocity
-model of $\sim 2$ GB. This resolution balanced accuracy and computational tractability
+model of $\sim2$ GB. This resolution balanced accuracy and computational tractability
 while remaining portable. All data and code are publicly available in the
 accompanying GitHub repository.
 
@@ -461,12 +461,12 @@ which improved the temporal distribution of integration points (Figure
 \ref{fig:convergence}, right panel).
 
 Optimization was run for a maximum of 200 iterations using a 2020 iMac (3.6 GHz
-10-Core Intel Core i9, 64 GB RAM), with each iteration taking $\sim 6$ minutes.
+10-Core Intel Core i9, 64 GB RAM), with each iteration taking $\sim6$ minutes.
 During each iteration, the velocity field was updated across all 11 integration
 points by computing regularized displacement fields between warped point sets at
 adjacent time slices. Updates were applied using a step size of $\delta = 0.2$.
 Convergence was assessed via average displacement error across all points, with
-final convergence achieved after $\sim 125$ iterations (Figure \ref{fig:convergence},
+final convergence achieved after $\sim125$ iterations (Figure \ref{fig:convergence},
 left panel). Median errors across integration points also trended toward zero,
 albeit at varying rates.
 
@@ -490,30 +490,28 @@ albeit at varying rates.
 Once optimized, the velocity field enables the computation of diffeomorphic
 transformations between any pair of continuous time points within the DevCCF
 developmental range. Figure \ref{fig:crosswarp} illustrates cross-warping
-between all DevCCF stages using the learned velocity flow model. In addition to
+between all DevCCF stages using the velocity flow model. In addition to
 facilitating flexible alignment between existing templates, the model also
 supports the synthesis of virtual templates at intermediate, unsampled
-developmental stages.
+developmental stages. As shown in Figure \ref{fig:virtual}, we demonstrate the
+creation of virtual age templates (e.g., P10.3 and P20) by warping adjacent
+developmental atlases to a target timepoint and constructing an averaged
+representation using ANTsX’s template-building functionality.
 
-As shown in Figure \ref{fig:virtual}, we demonstrate the creation of virtual
-age templates (e.g., P10.3 and P20) by warping adjacent developmental atlases to
-a target timepoint and constructing an averaged representation using ANTsX’s
-template-building functionality.
-
-All usage examples, scripts, and supporting data are publicly available in the
-associated codebase.
+All usage examples, scripts, and supporting data for full reproducibility are
+publicly available in the associated codebase.
 
 ## Automated structural labeling of the mouse brain
 
 \begin{figure}
 \centering
-\includegraphics[width=0.95\textwidth]{Figures/mousePipeline.pdf}
-\caption{The mouse brain cortical labeling pipeline integrates two deep
-learning components for brain extraction and anatomical region segmentation.
-Both networks rely heavily on data augmentation applied to templates constructed
-from open datasets. The framework also supports further refinement or
-alternative label sets tailored to specific research needs. Possible
-applications include voxelwise cortical thickness estimation.}
+\includegraphics[width=0.95\textwidth]{Figures/mousePipeline.pdf} \caption{The
+mouse brain cortical labeling pipeline integrates two deep learning components
+for brain extraction and anatomical region segmentation. Both networks rely
+heavily on data augmentation applied to templates constructed from open
+datasets. The framework also supports further refinement or alternative label
+sets tailored to specific research needs. Possible applications include
+voxelwise cortical thickness estimation.}
 \label{fig:mouseKK}
 \end{figure}
 
@@ -525,13 +523,13 @@ to behavior, or quantify spatial variation in gene expression patterns
 [@Tasic:2016aa; @Bergmann:2020aa]. While deep learning techniques have yielded
 robust segmentation and labeling tools for the human brain (e.g., SynthSeg
 [@Billot:2023aa], ANTsXNet [@Tustison:2021aa]), analogous development for mouse
-data has been limited. Mouse neuroimaging often presents unique challenges, such
+data (e.g., MEMOS [@Rolfe:2023aa]) has been limited. Mouse neuroimaging often presents unique challenges, such
 as highly anisotropic sampling, that complicate transfer of existing tools. At
 the same time, high resolution resources like the AllenCCFv3 and DevCCF provide
-reference label sets that can serve as training data or spatial priors. We
-demonstrate how ANTsX can be used to construct a full structural labeling
-pipeline for the mouse brain (Figure \ref{fig:mouseKK}), including both brain
-extraction and atlas-based region segmentation.
+reference label sets that can serve as training data. We demonstrate how ANTsX
+can be used to construct a full structural labeling pipeline for the mouse brain
+(Figure \ref{fig:mouseKK}), including both whole brain segmentation (i.e., brain
+extraction) and the subsequent atlas-based region segmentation.
 
 
 ### Template-based mouse brain extraction network
@@ -548,12 +546,12 @@ high-resolution 3D volumes using a B-spline fitting algorithm
 [@Tustison:2006aa]. Using this synthesized dataset and the CAMRI images, we
 created two ANTsX-based population templates [@Avants:2010aa], each paired with
 a manually delineated brain mask. These served as the basis for training an
-initial template-based brain extraction model.  Deep learning training of the 
+initial template-based brain extraction model.  Deep learning training of the
 network employed aggressive data augmentation strategies, including bias field
 simulation, histogram warping, random spatial deformation, noise injection, and
-anisotropic resampling. This enabled the model to generalize beyond the two 
-templates. The initial model was released through ANTsXNet
-and made publicly available.
+anisotropic resampling. This enabled the model to generalize beyond the two
+templates. The initial model was released through ANTsXNet and made publicly
+available.
 
 Subsequent community use led to further improvements. A research group applying
 the tool to their own ex vivo T2-weighted mouse brain data contributed a third

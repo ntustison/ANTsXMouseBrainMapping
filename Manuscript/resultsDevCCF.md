@@ -23,7 +23,7 @@ sampling limits the ability to model continuous transformations across time. To
 address this, we developed a velocity flow–based modeling approach that enables
 anatomically plausible, diffeomorphic transformations between any two continuous
 time points within the DevCCF range. This functionality is implemented in both
-ANTsR and ANTsPy (ants.fit_time_varying_transform_to_point_sets(...)) and
+ANTsR and ANTsPy (`ants.fit_time_varying_transform_to_point_sets(...)`) and
 integrates seamlessly with existing ANTsX workflows. The velocity field is
 encoded as a 4D ITK image where each voxel stores the $x$,$y$,$z$ components of
 motion at a given time point.
@@ -77,7 +77,7 @@ the log-scaled time axis.}
 The velocity field was optimized using the seven corresponding point sets and
 their associated weights. The field geometry was defined at $[256, 182, 360]$
 with 11 integration points at 50 $\mu$m resolution, yielding a compressed velocity
-model of $\sim 2$ GB. This resolution balanced accuracy and computational tractability
+model of $\sim2$ GB. This resolution balanced accuracy and computational tractability
 while remaining portable. All data and code are publicly available in the
 accompanying GitHub repository.
 
@@ -89,12 +89,12 @@ which improved the temporal distribution of integration points (Figure
 \ref{fig:convergence}, right panel).
 
 Optimization was run for a maximum of 200 iterations using a 2020 iMac (3.6 GHz
-10-Core Intel Core i9, 64 GB RAM), with each iteration taking $\sim 6$ minutes.
+10-Core Intel Core i9, 64 GB RAM), with each iteration taking $\sim6$ minutes.
 During each iteration, the velocity field was updated across all 11 integration
 points by computing regularized displacement fields between warped point sets at
 adjacent time slices. Updates were applied using a step size of $\delta = 0.2$.
 Convergence was assessed via average displacement error across all points, with
-final convergence achieved after $\sim 125$ iterations (Figure \ref{fig:convergence},
+final convergence achieved after $\sim125$ iterations (Figure \ref{fig:convergence},
 left panel). Median errors across integration points also trended toward zero,
 albeit at varying rates.
 
@@ -118,15 +118,13 @@ albeit at varying rates.
 Once optimized, the velocity field enables the computation of diffeomorphic
 transformations between any pair of continuous time points within the DevCCF
 developmental range. Figure \ref{fig:crosswarp} illustrates cross-warping
-between all DevCCF stages using the learned velocity flow model. In addition to
+between all DevCCF stages using the velocity flow model. In addition to
 facilitating flexible alignment between existing templates, the model also
 supports the synthesis of virtual templates at intermediate, unsampled
-developmental stages.
+developmental stages. As shown in Figure \ref{fig:virtual}, we demonstrate the
+creation of virtual age templates (e.g., P10.3 and P20) by warping adjacent
+developmental atlases to a target timepoint and constructing an averaged
+representation using ANTsX’s template-building functionality.
 
-As shown in Figure \ref{fig:virtual}, we demonstrate the creation of virtual
-age templates (e.g., P10.3 and P20) by warping adjacent developmental atlases to
-a target timepoint and constructing an averaged representation using ANTsX’s
-template-building functionality.
-
-All usage examples, scripts, and supporting data are publicly available in the
-associated codebase.
+All usage examples, scripts, and supporting data for full reproducibility are
+publicly available in the associated codebase.

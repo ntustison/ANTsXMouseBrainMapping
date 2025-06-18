@@ -2,13 +2,12 @@
 \PassOptionsToPackage{unicode}{hyperref}
 \PassOptionsToPackage{hyphens}{url}
 \PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+%
 \documentclass[
   12pt,
 ]{article}
-\usepackage{xcolor}
-\usepackage[margin=1.0in]{geometry}
 \usepackage{amsmath,amssymb}
-\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{setspace}
 \usepackage{iftex}
 \ifPDFTeX
   \usepackage[T1]{fontenc}
@@ -22,7 +21,7 @@
 \usepackage{lmodern}
 \ifPDFTeX\else
   % xetex/luatex font selection
-    \setmainfont[]{Georgia}
+  \setmainfont[]{Georgia}
 \fi
 % Use upquote if available, for straight quotes in verbatim environments
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
@@ -30,7 +29,6 @@
   \usepackage[]{microtype}
   \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
 }{}
-\usepackage{setspace}
 \makeatletter
 \@ifundefined{KOMAClassName}{% if non-KOMA class
   \IfFileExists{parskip.sty}{%
@@ -41,21 +39,25 @@
 }{% if KOMA class
   \KOMAoptions{parskip=half}}
 \makeatother
+\usepackage{xcolor}
+\usepackage[margin=1.0in]{geometry}
 \usepackage{graphicx}
 \makeatletter
-\newsavebox\pandoc@box
-\newcommand*\pandocbounded[1]{% scales image to fit in text height/width
-  \sbox\pandoc@box{#1}%
-  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
-  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
-  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi% select the smaller of both
-  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
-  \else\usebox{\pandoc@box}%
-  \fi%
-}
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
 % Set default figure placement to htbp
+\makeatletter
 \def\fps@figure{htbp}
 \makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
 % definitions for citeproc citations
 \NewDocumentCommand\citeproctext{}{}
 \NewDocumentCommand\citeproc{mm}{%
@@ -85,13 +87,10 @@
   \setlength{\itemsep}{#2\baselineskip}}}
  {\end{list}}
 \usepackage{calc}
-\newcommand{\CSLBlock}[1]{\hfill\break\parbox[t]{\linewidth}{\strut\ignorespaces#1\strut}}
+\newcommand{\CSLBlock}[1]{\hfill\break#1\hfill\break}
 \newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{\strut#1\strut}}
 \newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{\strut#1\strut}}
 \newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
-\setlength{\emergencystretch}{3em} % prevent overfull lines
-\providecommand{\tightlist}{%
-  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 \usepackage{longtable}
 \usepackage{graphicx}
 \usepackage{booktabs}
@@ -108,7 +107,10 @@
 \definecolor{listnumbers}{gray}{0.65}
 \definecolor{listlightgray}{gray}{0.955}
 \definecolor{listwhite}{gray}{1.0}
-\usepackage{bookmark}
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
 \urlstyle{same}
 \hypersetup{
@@ -224,10 +226,10 @@ developmental changes at cellular resolution\textsuperscript{2},
 associate brain regions with genetic composition\textsuperscript{3}, and
 locally characterize neural connectivity\textsuperscript{4}. These
 scientific achievements have been propelled by high-resolution profiling
-and imaging techniques that enable submicron, multimodal,
-three-dimensional characterizations of whole mouse brains. Among these
-are micro-optical sectioning tomography\textsuperscript{5,6}, tissue
-clearing methods\textsuperscript{1,7}, spatial
+and imaging techniques that enable submicron, multimodal, 3D
+characterizations of whole mouse brains. Among these are micro-optical
+sectioning tomography\textsuperscript{5,6}, tissue clearing
+methods\textsuperscript{1,7}, spatial
 transcriptomics\textsuperscript{8,9}, and single-cell genomic
 profiling\textsuperscript{10}, each offering expanded specificity and
 resolution for cell-level brain analysis.
@@ -276,27 +278,26 @@ often require extensive engineering effort to adapt to new datasets or
 modalities. Finally, general-purpose toolkits such as
 elastix\textsuperscript{42}, Slicer3D\textsuperscript{43}, and the
 Advanced Normalization Tools Ecosystem (ANTsX)\textsuperscript{44} have
-all been applied to mouse brain mapping scenarios (e.g.,
-SlicerMEMOS\textsuperscript{45}). These toolkits support modular
-workflows that can be flexibly composed from reusable components,
-offering a powerful alternative to rigid, modality-specific solutions.
-However, their use often requires familiarity with pipeline modules,
-parameter tuning, and tool-specific conventions which can limit
+all been applied to mouse brain mapping scenarios. These toolkits
+support modular workflows that can be flexibly composed from reusable
+components, offering a powerful alternative to rigid, modality-specific
+solutions. However, their use often requires familiarity with pipeline
+modules, parameter tuning, and tool-specific conventions which can limit
 adoption.
 
 Building on this third category, we describe a set of modular,
 ANTsX-based pipelines specifically tailored for mapping diverse mouse
 brain data into standardized anatomical frameworks. These include two
-new pipelines: a velocity field--based interpolation model that
-potentially enables biologically plausible transformations across
-developmental timepoints, and a template-based deep learning pipeline
-for brain extraction and parcellation requiring minimal annotated data.
-In addition, we include two modular pipelines for aligning multiplexed
-error-robust fluorescence in situ hybridization (MERFISH) and fMOST
-datasets to the Allen CCFv3. These workflows were adapted and tailored
-using ANTsX tools to support collaborative efforts within the BICCN and
-are now made openly available in a reproducible format. To facilitate
-broader adoption, we also provide general guidance for customizing these
+new pipelines: a velocity field--based interpolation model that enables
+continuous transformations across developmental timepoints of the
+DevCCF, and a template-based deep learning pipeline for brain extraction
+and parcellation requiring minimal annotated data. In addition, we
+include two modular pipelines for aligning multiplexed error-robust
+fluorescence in situ hybridization (MERFISH) and fMOST datasets to the
+Allen CCFv3. These workflows were adapted and tailored using ANTsX tools
+to support collaborative efforts within the BICCN and are now made
+openly available in a reproducible format. To facilitate broader
+adoption, we also provide general guidance for customizing these
 strategies across imaging modalities and data types. We first introduce
 key components of the ANTsX toolkit, which provide a basis for all of
 the mapping workflows described here, and then detail the specific
@@ -307,25 +308,25 @@ contributions made in each pipeline.
 
 The Advanced Normalization Tools Ecosystem (ANTsX) has been used in a
 number of applications for mapping mouse brain data as part of core
-processing steps in various workflows\textsuperscript{30,46--49},
+processing steps in various workflows\textsuperscript{30,45--48},
 particularly its pairwise, intensity-based image registration
-capabilities\textsuperscript{50} and bias field
-correction\textsuperscript{51}. Historically, ANTsX development is based
-on foundational approaches to image mapping\textsuperscript{52--54},
+capabilities\textsuperscript{49} and bias field
+correction\textsuperscript{50}. Historically, ANTsX development is based
+on foundational approaches to image mapping\textsuperscript{51--53},
 especially in the human brain, with key contributions such as the
-Symmetric Normalization (SyN) algorithm\textsuperscript{50}. It has been
+Symmetric Normalization (SyN) algorithm\textsuperscript{49}. It has been
 independently evaluated in diverse imaging domains including multi-site
-brain MRI\textsuperscript{55}, pulmonary CT\textsuperscript{56}, and
-multi-modal brain tumor registration\textsuperscript{57}.
+brain MRI\textsuperscript{54}, pulmonary CT\textsuperscript{55}, and
+multi-modal brain tumor registration\textsuperscript{56}.
 
 Beyond registration, ANTsX provides functionality for template
-generation\textsuperscript{58}, intensity-based
-segmentation\textsuperscript{59}, preprocessing\textsuperscript{51,60},
+generation\textsuperscript{57}, intensity-based
+segmentation\textsuperscript{58}, preprocessing\textsuperscript{50,59},
 and deep learning\textsuperscript{44}. It has demonstrated strong
-performance in consensus labeling\textsuperscript{61}, brain tumor
-segmentation\textsuperscript{62}, and cardiac motion
-estimation\textsuperscript{63}. Built on the Insight Toolkit
-(ITK)\textsuperscript{64}, ANTsX benefits from open-source contributions
+performance in consensus labeling\textsuperscript{60}, brain tumor
+segmentation\textsuperscript{61}, and cardiac motion
+estimation\textsuperscript{62}. Built on the Insight Toolkit
+(ITK)\textsuperscript{63}, ANTsX benefits from open-source contributions
 while supporting continued algorithm evaluation and innovation. In the
 context of mouse brain data, ANTsX provides a robust platform for
 developing modular pipelines to map diverse imaging modalities into
@@ -345,17 +346,17 @@ velocity field--based interpolation framework for continuous mapping
 across the sampled embryonic and postnatal stages of the DevCCF
 atlas\textsuperscript{16}. This functionality enables biologically
 plausible interpolation between timepoints via a time-parameterized
-diffeomorphic velocity model\textsuperscript{65}, inspired by previous
-work\textsuperscript{66}. Second, we present a deep learning pipeline
+diffeomorphic velocity model\textsuperscript{64}, inspired by previous
+work\textsuperscript{65}. Second, we present a deep learning pipeline
 for structural parcellation of the mouse brain from multimodal MRI data.
 This includes two novel components: 1) a template-derived brain
 extraction model using augmented data from two ANTsX-derived template
-datasets\textsuperscript{67,68}, and 2) a template-derived parcellation
+datasets\textsuperscript{66,67}, and 2) a template-derived parcellation
 model trained on DevCCF P56 labelings mapped from the AllenCCFv3. This
 pipeline demonstrates how ANTsX tools and public resources can be
 leveraged to build robust anatomical segmentation pipelines with minimal
 annotated data. We independently evaluate this framework using a
-longitudinal external dataset\textsuperscript{69}, demonstrating
+longitudinal external dataset\textsuperscript{68}, demonstrating
 generalizability across specimens and imaging protocols. All components
 are openly available through the R and Python ANTsX packages, with
 general-purpose functionality documented in a reproducible,
@@ -386,7 +387,7 @@ structural (fMOST) data to the AllenCCFv3 are separately available at
 \end{subfigure}
 \caption{Diagram of the two ANTsX-based pipelines for mapping (a) MERFISH
           and (b)fMOST data into the space of AllenCCFv3.  Each generates
-         the requisite transforms, $\mathcal{T}$, to map individual images
+         the requisite transforms to map individual images
          to the CCF.}
 \label{fig:allenpipelines}
 \end{figure*}
@@ -402,7 +403,7 @@ data}\label{mapping-multiplexed-error-robust-fluorescence-in-situ-hybridization-
 transcriptomic MERFISH data into the AllenCCFv3
 (Figure\,\ref{fig:allenpipelines}(a)). This approach was used in recent
 efforts to create a high-resolution transcriptomic atlas of the mouse
-brain\textsuperscript{49}. The pipeline maps spatial gene expression
+brain\textsuperscript{48}. The pipeline maps spatial gene expression
 patterns from MERFISH onto anatomical labels in the AllenCCFv3. It
 includes MERFISH-specific preprocessing steps such as section
 reconstruction, label generation from spatial transcriptomic maps, and
@@ -415,21 +416,21 @@ AllenCCFv3.
 
 \textbf{Data.} MERFISH imaging was performed on cryosectioned brains
 from C57BL/6 mice using previously described
-protocols\textsuperscript{49}. Brains were placed into an optimal
+protocols\textsuperscript{48}. Brains were placed into an optimal
 cutting temperature (OCT) compound (Sakura FineTek 4583) stored at
--80\(^\circ\). The fresh frozen brain was sectioned at 10 \(\mu\)µm on
+-80\(^\circ\). The fresh frozen brain was sectioned at 10 \(\mu\)m on
 Leica 3050 S cryostats at intervals of 200\,\(\mu\)m to evenly cover the
-brain. A set of 500 genes was selected to distinguish \(\sim 5200\)
+brain. A set of 500 genes was selected to distinguish \(\sim5200\)
 transcriptomic clusters. Raw MERSCOPE data were decoded using Vizgen
 software (v231). Cell segmentation was performed using
-Cellpose\textsuperscript{70,71} based on DAPI and PolyT stains which was
+Cellpose\textsuperscript{69,70} based on DAPI and PolyT stains which was
 propagated to adjacent slices across z-planes. Each MERFISH cell was
 assigned a transcriptomic identity by mapping to a scRNA-seq reference
 taxonomy.
 
 \textbf{Evaluation.} Alignment quality was evaluated iteratively by an
 expert anatomist, guided by expected gene-marker correspondences to
-AllenCCFv3 regions. As previously reported\textsuperscript{49}, of the
+AllenCCFv3 regions. As previously reported\textsuperscript{48}, of the
 554 terminal gray matter regions in the AllenCCFv3, only seven small
 subregions were not represented in the MERFISH dataset: frontal pole
 layer 1 (FRP1), FRP2/3, FRP5; accessory olfactory bulb glomerular
@@ -445,14 +446,14 @@ images to the AllenCCFv3 using ANTsX
 (Figure\,\ref{fig:allenpipelines}(b)). The approach leverages a
 modality-specific average fMOST atlas as an intermediate target, adapted
 from previous work in human and mouse brain
-mapping\textsuperscript{12,15,16,58,72--75}. The atlas was constructed
+mapping\textsuperscript{12,15,16,57,71--74}. The atlas was constructed
 from 30 fMOST images selected to capture representative variability in
 anatomical shape and image intensity across the population.
 Preprocessing includes cubic B-spline downsampling to match the
 25\,\(\mu\)m isotropic AllenCCFv3 resolution, stripe artifact
 suppression using a 3D notch filter implemented with SciPy's
 frequency-domain filtering tools, and N4 bias field
-correction\textsuperscript{51}. A one-time, annotation-driven alignment
+correction\textsuperscript{50}. A one-time, annotation-driven alignment
 registers the fMOST atlas to AllenCCFv3 using landmark-based
 registration of key structures. This canonical mapping is then reused.
 New fMOST specimens are first aligned to the fMOST atlas using standard
@@ -462,8 +463,8 @@ applied to neuron reconstructions to facilitate population-level
 analysis of morphology and spatial distribution.
 
 \textbf{Data.} fMOST imaging was performed on 55 mouse brains with
-sparse transgenic labeling of neuron populations\textsuperscript{76,77}
-using the high-throughput fMOST platform\textsuperscript{78,79}. Voxel
+sparse transgenic labeling of neuron populations\textsuperscript{75,76}
+using the high-throughput fMOST platform\textsuperscript{77,78}. Voxel
 resolution was \(0.35\times 0.35\times 1.0\) \(\mu\)m\(^3\). Two imaging
 channels were acquired: GFP-labeled neuron morphology (green), and
 propidium iodide counterstaining for cytoarchitecture (red). Alignment
@@ -499,8 +500,8 @@ functionality for generating a velocity flow model.}
 \end{figure}
 
 The DevCCF is an openly accessible resource for the mouse brain research
-community\textsuperscript{80}, comprising symmetric, multi-modal MRI and
-LSFM templates generated using the ANTsX framework\textsuperscript{58}.
+community\textsuperscript{79}, comprising symmetric, multi-modal MRI and
+LSFM templates generated using the ANTsX framework\textsuperscript{57}.
 It spans key stages of mouse brain development (E11.5, E13.5, E15.5,
 E18.5, P4, P14, and P56) and includes structural labels defined by a
 developmental ontology. The DevCCF was constructed in coordination with
@@ -512,7 +513,7 @@ across time. To address this, we developed a velocity flow--based
 modeling approach that enables anatomically plausible, diffeomorphic
 transformations between any two continuous time points within the DevCCF
 range. This functionality is implemented in both ANTsR and ANTsPy
-(ants.fit\_time\_varying\_transform\_to\_point\_sets(\ldots)) and
+(\texttt{ants.fit\_time\_varying\_transform\_to\_point\_sets(...)}) and
 integrates seamlessly with existing ANTsX workflows. The velocity field
 is encoded as a 4D ITK image where each voxel stores the
 \(x\),\(y\),\(z\) components of motion at a given time point.
@@ -544,16 +545,16 @@ computed using ANTsX's multi-metric registration via
 multi-label registration directly, we constructed 24 binary label masks
 per atlas pair (one per structure) and optimized alignment using the
 mean squares similarity metric with the SyN
-transform\textsuperscript{50}.
+transform\textsuperscript{49}.
 
 To generate the point sets for velocity field optimization, we sampled
 both boundary (contour) and interior (region) points from the P56 labels
 and propagated them to each developmental stage using the learned
 pairwise transforms. Contours were sampled at 10\% of available points
 and regions at 1\%, yielding 173,303 total points per atlas
-(\(N_{contour} = 98{,}151\); \(N_{region} =
-75{,}152\)). Boundary points were assigned double weight during
-optimization to emphasize anatomical boundary correspondence.
+(\(N_{contour} = 98{,}151\); \(N_{region} = 75{,}152\)). Boundary points
+were assigned double weight during optimization to emphasize anatomical
+boundary correspondence.
 
 \subsubsection{Velocity field
 optimization}\label{velocity-field-optimization}
@@ -570,7 +571,7 @@ the log-scaled time axis.}
 The velocity field was optimized using the seven corresponding point
 sets and their associated weights. The field geometry was defined at
 \([256, 182, 360]\) with 11 integration points at 50 \(\mu\)m
-resolution, yielding a compressed velocity model of \(\sim 2\) GB. This
+resolution, yielding a compressed velocity model of \(\sim2\) GB. This
 resolution balanced accuracy and computational tractability while
 remaining portable. All data and code are publicly available in the
 accompanying GitHub repository.
@@ -584,14 +585,14 @@ of integration points (Figure \ref{fig:convergence}, right panel).
 
 Optimization was run for a maximum of 200 iterations using a 2020 iMac
 (3.6 GHz 10-Core Intel Core i9, 64 GB RAM), with each iteration taking
-\(\sim 6\) minutes. During each iteration, the velocity field was
-updated across all 11 integration points by computing regularized
-displacement fields between warped point sets at adjacent time slices.
-Updates were applied using a step size of \(\delta = 0.2\). Convergence
-was assessed via average displacement error across all points, with
-final convergence achieved after \(\sim 125\) iterations (Figure
-\ref{fig:convergence}, left panel). Median errors across integration
-points also trended toward zero, albeit at varying rates.
+\(\sim6\) minutes. During each iteration, the velocity field was updated
+across all 11 integration points by computing regularized displacement
+fields between warped point sets at adjacent time slices. Updates were
+applied using a step size of \(\delta = 0.2\). Convergence was assessed
+via average displacement error across all points, with final convergence
+achieved after \(\sim125\) iterations (Figure \ref{fig:convergence},
+left panel). Median errors across integration points also trended toward
+zero, albeit at varying rates.
 
 \subsubsection{The velocity flow transformation
 model}\label{the-velocity-flow-transformation-model}
@@ -613,51 +614,51 @@ model}\label{the-velocity-flow-transformation-model}
 Once optimized, the velocity field enables the computation of
 diffeomorphic transformations between any pair of continuous time points
 within the DevCCF developmental range. Figure\,\ref{fig:crosswarp}
-illustrates cross-warping between all DevCCF stages using the learned
-velocity flow model. In addition to facilitating flexible alignment
-between existing templates, the model also supports the synthesis of
-virtual templates at intermediate, unsampled developmental stages.
-
-As shown in Figure\,\ref{fig:virtual}, we demonstrate the creation of
-virtual age templates (e.g., P10.3 and P20) by warping adjacent
-developmental atlases to a target timepoint and constructing an averaged
+illustrates cross-warping between all DevCCF stages using the velocity
+flow model. In addition to facilitating flexible alignment between
+existing templates, the model also supports the synthesis of virtual
+templates at intermediate, unsampled developmental stages. As shown in
+Figure\,\ref{fig:virtual}, we demonstrate the creation of virtual age
+templates (e.g., P10.3 and P20) by warping adjacent developmental
+atlases to a target timepoint and constructing an averaged
 representation using ANTsX's template-building functionality.
 
-All usage examples, scripts, and supporting data are publicly available
-in the associated codebase.
+All usage examples, scripts, and supporting data for full
+reproducibility are publicly available in the associated codebase.
 
 \subsection{Automated structural labeling of the mouse
 brain}\label{automated-structural-labeling-of-the-mouse-brain}
 
 \begin{figure}
 \centering
-\includegraphics[width=0.95\textwidth]{Figures/mousePipeline.pdf}
-\caption{The mouse brain cortical labeling pipeline integrates two deep
-learning components for brain extraction and anatomical region segmentation.
-Both networks rely heavily on data augmentation applied to templates constructed
-from open datasets. The framework also supports further refinement or
-alternative label sets tailored to specific research needs. Possible
-applications include voxelwise cortical thickness estimation.}
+\includegraphics[width=0.95\textwidth]{Figures/mousePipeline.pdf} \caption{The
+mouse brain cortical labeling pipeline integrates two deep learning components
+for brain extraction and anatomical region segmentation. Both networks rely
+heavily on data augmentation applied to templates constructed from open
+datasets. The framework also supports further refinement or alternative label
+sets tailored to specific research needs. Possible applications include
+voxelwise cortical thickness estimation.}
 \label{fig:mouseKK}
 \end{figure}
 
 Structural labeling strategies for the mouse brain are essential for
 understanding the organization and function of the murine nervous
-system\textsuperscript{81}. By dividing the brain into anatomically or
+system\textsuperscript{80}. By dividing the brain into anatomically or
 functionally defined regions, researchers can localize biological
 processes, relate regional features to behavior, or quantify spatial
-variation in gene expression patterns\textsuperscript{82,83}. While deep
+variation in gene expression patterns\textsuperscript{81,82}. While deep
 learning techniques have yielded robust segmentation and labeling tools
-for the human brain (e.g., SynthSeg\textsuperscript{84},
-ANTsXNet\textsuperscript{44}), analogous development for mouse data has
-been limited. Mouse neuroimaging often presents unique challenges, such
-as highly anisotropic sampling, that complicate transfer of existing
-tools. At the same time, high resolution resources like the AllenCCFv3
-and DevCCF provide reference label sets that can serve as training data
-or spatial priors. We demonstrate how ANTsX can be used to construct a
-full structural labeling pipeline for the mouse brain
-(Figure\,\ref{fig:mouseKK}), including both brain extraction and
-atlas-based region segmentation.
+for the human brain (e.g., SynthSeg\textsuperscript{83},
+ANTsXNet\textsuperscript{44}), analogous development for mouse data
+(e.g., MEMOS\textsuperscript{84}) has been limited. Mouse neuroimaging
+often presents unique challenges, such as highly anisotropic sampling,
+that complicate transfer of existing tools. At the same time, high
+resolution resources like the AllenCCFv3 and DevCCF provide reference
+label sets that can serve as training data. We demonstrate how ANTsX can
+be used to construct a full structural labeling pipeline for the mouse
+brain (Figure\,\ref{fig:mouseKK}), including both whole brain
+segmentation (i.e., brain extraction) and the subsequent atlas-based
+region segmentation.
 
 \subsubsection{Template-based mouse brain extraction
 network}\label{template-based-mouse-brain-extraction-network}
@@ -665,16 +666,16 @@ network}\label{template-based-mouse-brain-extraction-network}
 To develop a general-purpose mouse brain extraction model, we
 constructed whole-head templates from two publicly available T2-weighted
 datasets. The first dataset, from the Center for Animal MRI (CAMRI) at
-the University of North Carolina at Chapel Hill\textsuperscript{67},
+the University of North Carolina at Chapel Hill\textsuperscript{66},
 includes 16 isotropic MRI volumes acquired at
 \(0.16 \times 0.16 \times 0.16\) mm\(^3\) resolution. The second
-dataset\textsuperscript{68} comprises 88 specimens acquired in three
+dataset\textsuperscript{67} comprises 88 specimens acquired in three
 orthogonal 2D views (coronal, axial, sagittal) at \(0.08 \times 0.08\)
 mm\(^3\) in-plane resolution with 0.5 mm slice thickness. These
 orthogonal 2D acquisitions were reconstructed into high-resolution 3D
 volumes using a B-spline fitting algorithm\textsuperscript{85}. Using
 this synthesized dataset and the CAMRI images, we created two
-ANTsX-based population templates\textsuperscript{58}, each paired with a
+ANTsX-based population templates\textsuperscript{57}, each paired with a
 manually delineated brain mask. These served as the basis for training
 an initial template-based brain extraction model. Deep learning training
 of the network employed aggressive data augmentation strategies,
@@ -760,7 +761,7 @@ parcellation scheme.}
 \end{figure}
 
 For evaluation, we used an additional publicly available
-dataset\textsuperscript{69} that is completely independent from the data
+dataset\textsuperscript{68} that is completely independent from the data
 used in training the brain extraction and parcellation networks. Data
 includes 12 specimens each imaged at seven time points (Day 0, Day 3,
 Week 1, Week 4, Week 8, Week 20) with in-house-generated brain masks for
@@ -877,18 +878,18 @@ preprocessing steps in mouse brain imaging include correcting for
 spatial intensity inhomogeneities and reducing image noise, both of
 which can impact registration accuracy and downstream analysis. ANTsX
 provides implementations of widely used methods for these tasks. The N4
-bias field correction algorithm\textsuperscript{51}, originally
+bias field correction algorithm\textsuperscript{50}, originally
 developed in ANTs and contributed to ITK, mitigates artifactual,
 low-frequency intensity variation and is accessible via
 \texttt{ants.n4\_bias\_field\_correction(...)}. Patch-based
-denoising\textsuperscript{60} has been implemented as
+denoising\textsuperscript{59} has been implemented as
 \texttt{ants.denoise\_image(...)}.
 
 \textbf{Image registration.} ANTsX includes a robust and flexible
 framework for pairwise and groupwise image
 registration\textsuperscript{86}. At its core is the SyN
-algorithm\textsuperscript{50}, a symmetric diffeomorphic model with
-optional B-spline regularization\textsuperscript{66}. In ANTsPy,
+algorithm\textsuperscript{49}, a symmetric diffeomorphic model with
+optional B-spline regularization\textsuperscript{65}. In ANTsPy,
 registration is performed via \texttt{ants.registration(...)} using
 preconfigured parameter sets (e.g.,
 \texttt{antsRegistrationSyNQuick{[}s{]}},
@@ -899,7 +900,7 @@ can be applied to new images with \texttt{ants.apply\_transforms(...)}.
 \textbf{Template generation.} ANTsX supports population-based template
 generation through iterative pairwise registration to an evolving
 estimate of the mean shape and intensity reference space across
-subjects\textsuperscript{58}. This functionality was used in generating
+subjects\textsuperscript{57}. This functionality was used in generating
 the DevCCF templates\textsuperscript{16}. The procedure, implemented as
 \texttt{ants.build\_template(...)}, produces average images in both
 shape and intensity by aligning all inputs to a common evolving
@@ -953,7 +954,7 @@ final mapping into AllenCCFv3 space.
 
 \textbf{Mapping neuron projections.} A key advantage of fMOST imaging is
 its ability to support single neuron projection reconstruction across
-the entire brain\textsuperscript{77}. Because these reconstructions are
+the entire brain\textsuperscript{76}. Because these reconstructions are
 stored as 3D point sets aligned to the original fMOST volume, we applied
 the same composite transform used for image alignment to the point data
 using ANTsX functionality. This enables seamless integration of cellular
@@ -1033,7 +1034,7 @@ developmental stages. This enables anatomically plausible estimation of
 intermediate templates or mappings at arbitrary timepoints between the
 E11.5 and P56 endpoints of the DevCCF. Our approach builds on
 established insights from time-varying diffeomorphic
-registration\textsuperscript{65}, where a velocity field governs the
+registration\textsuperscript{64}, where a velocity field governs the
 smooth deformation of anatomical structures over time. Importantly, the
 framework is extensible and can naturally accommodate additional
 timepoints for the potential expansion of the DevCCF.
@@ -1119,7 +1120,7 @@ applied both intensity- and shape-based augmentation strategies:
     \texttt{ants.add\_noise\_to\_image(...)}
   \item
     Simulated intensity inhomogeneity via bias field
-    modeling\textsuperscript{51}:\\
+    modeling\textsuperscript{50}:\\
     \texttt{antspynet.simulate\_bias\_field(...)}
   \item
     Histogram warping to simulate contrast
@@ -1144,7 +1145,7 @@ applied both intensity- and shape-based augmentation strategies:
 
 We originally trained a mouse-specific brain extraction model on two
 manually masked T2-weighted templates, generated from public
-datasets\textsuperscript{67,68}. One of the templates was constructed
+datasets\textsuperscript{66,67}. One of the templates was constructed
 from orthogonal 2D acquisitions using B-spline--based volumetric
 synthesis via
 \texttt{ants.fit\_bspline\_object\_to\_scattered\_data(...)}. Normalized
@@ -1213,7 +1214,7 @@ for reproducible, extensible deep learning workflows.
 To assess model generalizability, both the brain extraction and
 parcellation networks were evaluated on an independent longitudinal
 dataset comprising multiple imaging sessions with varied acquisition
-parameters\textsuperscript{69}. Although each label or imaging modality
+parameters\textsuperscript{68}. Although each label or imaging modality
 required retraining, the process was streamlined by the reusable ANTsX
 infrastructure enabled by rapid adaptation with minimal overhead. These
 results illustrate the practical benefits of a template-based, low-shot
@@ -1565,15 +1566,8 @@ resonance imaging} \textbf{30}, 1323--1341 (2012).}
 for quantitative biological and medical imaging}. \emph{Sci Rep}
 \textbf{11}, 9068 (2021).}
 
-\bibitem[\citeproctext]{ref-Rolfe:2023aa}
-\CSLLeftMargin{45. }%
-\CSLRightInline{Rolfe, S. M., Whikehart, S. M. \& Maga, A. M.
-\href{https://doi.org/10.1242/bio.059698}{Deep learning enabled
-multi-organ segmentation of mouse embryos}. \emph{Biol Open}
-\textbf{12}, bio059698 (2023).}
-
 \bibitem[\citeproctext]{ref-pagani:2016aa}
-\CSLLeftMargin{46. }%
+\CSLLeftMargin{45. }%
 \CSLRightInline{Pagani, M., Damiano, M., Galbusera, A., Tsaftaris, S. A.
 \& Gozzi, A. Semi-automated registration-based anatomical labelling,
 voxel based morphometry and cortical thickness mapping of the mouse
@@ -1581,7 +1575,7 @@ brain. \emph{Journal of neuroscience methods} \textbf{267}, 62--73
 (2016).}
 
 \bibitem[\citeproctext]{ref-Anderson:2019aa}
-\CSLLeftMargin{47. }%
+\CSLLeftMargin{46. }%
 \CSLRightInline{Anderson, R. J. \emph{et al.}
 \href{https://doi.org/10.1007/s12021-018-9410-0}{Small animal
 multivariate brain analysis (SAMBA) - a high throughput pipeline with a
@@ -1589,20 +1583,20 @@ validation framework}. \emph{Neuroinformatics} \textbf{17}, 451--472
 (2019).}
 
 \bibitem[\citeproctext]{ref-allan:2019aa}
-\CSLLeftMargin{48. }%
+\CSLLeftMargin{47. }%
 \CSLRightInline{Allan Johnson, G. \emph{et al.} Whole mouse brain
 connectomics. \emph{Journal of Comparative Neurology} \textbf{527},
 2146--2157 (2019).}
 
 \bibitem[\citeproctext]{ref-Yao:2023aa}
-\CSLLeftMargin{49. }%
+\CSLLeftMargin{48. }%
 \CSLRightInline{Yao, Z. \emph{et al.}
 \href{https://doi.org/10.1038/s41586-023-06812-z}{A high-resolution
 transcriptomic and spatial atlas of cell types in the whole mouse
 brain}. \emph{Nature} \textbf{624}, 317--332 (2023).}
 
 \bibitem[\citeproctext]{ref-Avants:2008aa}
-\CSLLeftMargin{50. }%
+\CSLLeftMargin{49. }%
 \CSLRightInline{Avants, B. B., Epstein, C. L., Grossman, M. \& Gee, J.
 C. \href{https://doi.org/10.1016/j.media.2007.06.004}{Symmetric
 diffeomorphic image registration with cross-correlation: Evaluating
@@ -1610,48 +1604,48 @@ automated labeling of elderly and neurodegenerative brain}. \emph{Med
 Image Anal} \textbf{12}, 26--41 (2008).}
 
 \bibitem[\citeproctext]{ref-Tustison:2010ac}
-\CSLLeftMargin{51. }%
+\CSLLeftMargin{50. }%
 \CSLRightInline{Tustison, N. J. \emph{et al.}
 \href{https://doi.org/10.1109/TMI.2010.2046908}{{N4ITK}: Improved {N3}
 bias correction}. \emph{IEEE Trans Med Imaging} \textbf{29}, 1310--20
 (2010).}
 
 \bibitem[\citeproctext]{ref-Bajcsy:1982aa}
-\CSLLeftMargin{52. }%
+\CSLLeftMargin{51. }%
 \CSLRightInline{Bajcsy, R. \& Broit, C. Matching of deformed images. in
 \emph{{S}ixth {I}nternational {C}onference on {P}attern {R}ecognition
 ({ICPR}'82)} 351--353 (1982).}
 
 \bibitem[\citeproctext]{ref-Bajcsy:1989aa}
-\CSLLeftMargin{53. }%
+\CSLLeftMargin{52. }%
 \CSLRightInline{Bajcsy, R. \& Kovacic, S.
 \href{https://doi.org/10.1016/S0734-189X(89)80014-3}{Multiresolution
 elastic matching}. \emph{Computer Vision, Graphics, and Image
 Processing} \textbf{46}, 1--21 (1989).}
 
 \bibitem[\citeproctext]{ref-Gee:1993aa}
-\CSLLeftMargin{54. }%
+\CSLLeftMargin{53. }%
 \CSLRightInline{Gee, J. C., Reivich, M. \& Bajcsy, R.
 \href{https://www.ncbi.nlm.nih.gov/pubmed/8454749}{Elastically deforming
 3D atlas to match anatomical brain images}. \emph{J Comput Assist
 Tomogr} \textbf{17}, 225--36 (1993).}
 
 \bibitem[\citeproctext]{ref-Klein:2009aa}
-\CSLLeftMargin{55. }%
+\CSLLeftMargin{54. }%
 \CSLRightInline{Klein, A. \emph{et al.}
 \href{https://doi.org/10.1016/j.neuroimage.2008.12.037}{Evaluation of 14
 nonlinear deformation algorithms applied to human brain {MRI}
 registration}. \emph{Neuroimage} \textbf{46}, 786--802 (2009).}
 
 \bibitem[\citeproctext]{ref-Murphy:2011aa}
-\CSLLeftMargin{56. }%
+\CSLLeftMargin{55. }%
 \CSLRightInline{Murphy, K. \emph{et al.}
 \href{https://doi.org/10.1109/TMI.2011.2158349}{Evaluation of
 registration methods on thoracic {CT}: The {EMPIRE10} challenge}.
 \emph{IEEE Trans Med Imaging} \textbf{30}, 1901--20 (2011).}
 
 \bibitem[\citeproctext]{ref-Baheti:2021aa}
-\CSLLeftMargin{57. }%
+\CSLLeftMargin{56. }%
 \CSLRightInline{Baheti, B. \emph{et al.}
 \href{https://arxiv.org/abs/2112.06979}{The brain tumor sequence
 registration challenge: Establishing correspondence between
@@ -1659,35 +1653,35 @@ pre-operative and follow-up MRI scans of diffuse glioma patients}.
 (2021).}
 
 \bibitem[\citeproctext]{ref-Avants:2010aa}
-\CSLLeftMargin{58. }%
+\CSLLeftMargin{57. }%
 \CSLRightInline{Avants, B. B. \emph{et al.}
 \href{https://doi.org/10.1016/j.neuroimage.2009.09.062}{The optimal
 template effect in hippocampus studies of diseased populations}.
 \emph{Neuroimage} \textbf{49}, 2457--66 (2010).}
 
 \bibitem[\citeproctext]{ref-Avants:2011uf}
-\CSLLeftMargin{59. }%
+\CSLLeftMargin{58. }%
 \CSLRightInline{Avants, B. B., Tustison, N. J., Wu, J., Cook, P. A. \&
 Gee, J. C. \href{https://doi.org/10.1007/s12021-011-9109-y}{An open
 source multivariate framework for n-tissue segmentation with evaluation
 on public data}. \emph{Neuroinformatics} \textbf{9}, 381--400 (2011).}
 
 \bibitem[\citeproctext]{ref-Manjon:2010aa}
-\CSLLeftMargin{60. }%
+\CSLLeftMargin{59. }%
 \CSLRightInline{Manjón, J. V., Coupé, P., Martí-Bonmatí, L., Collins, D.
 L. \& Robles, M. \href{https://doi.org/10.1002/jmri.22003}{Adaptive
 non-local means denoising of {MR} images with spatially varying noise
 levels}. \emph{J Magn Reson Imaging} \textbf{31}, 192--203 (2010).}
 
 \bibitem[\citeproctext]{ref-Wang:2013ab}
-\CSLLeftMargin{61. }%
+\CSLLeftMargin{60. }%
 \CSLRightInline{Wang, H. \emph{et al.}
 \href{https://doi.org/10.1109/TPAMI.2012.143}{Multi-atlas segmentation
 with joint label fusion}. \emph{IEEE Trans Pattern Anal Mach Intell}
 \textbf{35}, 611--23 (2013).}
 
 \bibitem[\citeproctext]{ref-Tustison:2014aa}
-\CSLLeftMargin{62. }%
+\CSLLeftMargin{61. }%
 \CSLRightInline{Tustison, N. J. \emph{et al.} Optimal symmetric
 multimodal templates and concatenated random forests for supervised
 brain tumor segmentation (simplified) with {\(ANTsR\)}.
@@ -1695,7 +1689,7 @@ brain tumor segmentation (simplified) with {\(ANTsR\)}.
 doi:\href{https://doi.org/10.1007/s12021-014-9245-2}{10.1007/s12021-014-9245-2}.}
 
 \bibitem[\citeproctext]{ref-Tustison:2015ab}
-\CSLLeftMargin{63. }%
+\CSLLeftMargin{62. }%
 \CSLRightInline{Tustison, N. J., Yang, Y. \& Salerno, M.
 \href{https://doi.org/10.1007/978-3-319-14678-2_1}{Advanced
 normalization tools for cardiac motion correction}. in \emph{Statistical
@@ -1704,14 +1698,14 @@ challenges} (eds. Camara, O. et al.) vol. 8896 3--12 (Springer
 International Publishing, 2015).}
 
 \bibitem[\citeproctext]{ref-McCormick:2014aa}
-\CSLLeftMargin{64. }%
+\CSLLeftMargin{63. }%
 \CSLRightInline{McCormick, M., Liu, X., Jomier, J., Marion, C. \&
 Ibanez, L. \href{https://doi.org/10.3389/fninf.2014.00013}{ITK: Enabling
 reproducible research and open science}. \emph{Front Neuroinform}
 \textbf{8}, 13 (2014).}
 
 \bibitem[\citeproctext]{ref-Beg:2005aa}
-\CSLLeftMargin{65. }%
+\CSLLeftMargin{64. }%
 \CSLRightInline{Beg, M. F., Miller, M. I., Trouvé, A. \& Younes, L.
 \href{https://doi.org/10.1023/B:VISI.0000043755.93987.aa}{Computing
 large deformation metric mappings via geodesic flows of
@@ -1719,69 +1713,69 @@ diffeomorphisms}. \emph{International Journal of Computer Vision}
 \textbf{61}, 139--157 (2005).}
 
 \bibitem[\citeproctext]{ref-Tustison:2013ac}
-\CSLLeftMargin{66. }%
+\CSLLeftMargin{65. }%
 \CSLRightInline{Tustison, N. J. \& Avants, B. B.
 \href{https://doi.org/10.3389/fninf.2013.00039}{Explicit {B}-spline
 regularization in diffeomorphic image registration}. \emph{Front
 Neuroinform} \textbf{7}, 39 (2013).}
 
 \bibitem[\citeproctext]{ref-Hsu2021}
-\CSLLeftMargin{67. }%
+\CSLLeftMargin{66. }%
 \CSLRightInline{Hsu, L.-M. \emph{et al.} CAMRI mouse brain MRI data.}
 
 \bibitem[\citeproctext]{ref-Reshetnikov2021}
-\CSLLeftMargin{68. }%
+\CSLLeftMargin{67. }%
 \CSLRightInline{Reshetnikov, V. \emph{et al.} High-resolution MRI data
 of brain C57BL/6 and BTBR mice in three different anatomical views.}
 
 \bibitem[\citeproctext]{ref-Rahman:2023aa}
-\CSLLeftMargin{69. }%
+\CSLLeftMargin{68. }%
 \CSLRightInline{Rahman, N., Xu, K., Budde, M. D., Brown, A. \& Baron, C.
 A. \href{https://doi.org/10.1038/s41597-023-01942-5}{A longitudinal
 microstructural MRI dataset in healthy C57Bl/6 mice at 9.4 tesla}.
 \emph{Sci Data} \textbf{10}, 94 (2023).}
 
 \bibitem[\citeproctext]{ref-Liu:2023aa}
-\CSLLeftMargin{70. }%
+\CSLLeftMargin{69. }%
 \CSLRightInline{Liu, J. \emph{et al.}
 \href{https://doi.org/10.26508/lsa.202201701}{Concordance of MERFISH
 spatial transcriptomics with bulk and single-cell RNA sequencing}.
 \emph{Life Sci Alliance} \textbf{6}, (2023).}
 
 \bibitem[\citeproctext]{ref-Stringer:2021aa}
-\CSLLeftMargin{71. }%
+\CSLLeftMargin{70. }%
 \CSLRightInline{Stringer, C., Wang, T., Michaelos, M. \& Pachitariu, M.
 \href{https://doi.org/10.1038/s41592-020-01018-x}{Cellpose: A generalist
 algorithm for cellular segmentation}. \emph{Nat Methods} \textbf{18},
 100--106 (2021).}
 
 \bibitem[\citeproctext]{ref-jia:2011aa}
-\CSLLeftMargin{72. }%
+\CSLLeftMargin{71. }%
 \CSLRightInline{Jia, H., Yap, P.-T., Wu, G., Wang, Q. \& Shen, D.
 Intermediate templates guided groupwise registration of diffusion tensor
 images. \emph{NeuroImage} \textbf{54}, 928--939 (2011).}
 
 \bibitem[\citeproctext]{ref-tang:2009aa}
-\CSLLeftMargin{73. }%
+\CSLLeftMargin{72. }%
 \CSLRightInline{Tang, S., Fan, Y., Wu, G., Kim, M. \& Shen, D. RABBIT:
 Rapid alignment of brains by building intermediate templates.
 \emph{NeuroImage} \textbf{47}, 1277--1287 (2009).}
 
 \bibitem[\citeproctext]{ref-dewey:2017aa}
-\CSLLeftMargin{74. }%
+\CSLLeftMargin{73. }%
 \CSLRightInline{Dewey, B. E., Carass, A., Blitz, A. M. \& Prince, J. L.
 Efficient multi-atlas registration using an intermediate template image.
 in \emph{Proceedings of SPIE--the international society for optical
 engineering} vol. 10137 (NIH Public Access, 2017).}
 
 \bibitem[\citeproctext]{ref-perens:2023aa}
-\CSLLeftMargin{75. }%
+\CSLLeftMargin{74. }%
 \CSLRightInline{Perens, J. \emph{et al.} Multimodal 3D mouse brain atlas
 framework with the skull-derived coordinate system.
 \emph{Neuroinformatics} \textbf{21}, 269--286 (2023).}
 
 \bibitem[\citeproctext]{ref-Rotolo:2008aa}
-\CSLLeftMargin{76. }%
+\CSLLeftMargin{75. }%
 \CSLRightInline{Rotolo, T., Smallwood, P. M., Williams, J. \& Nathans,
 J.
 \href{https://doi.org/10.1371/journal.pone.0004099}{Genetically-directed,
@@ -1789,14 +1783,14 @@ cell type-specific sparse labeling for the analysis of neuronal
 morphology}. \emph{PLoS One} \textbf{3}, e4099 (2008).}
 
 \bibitem[\citeproctext]{ref-Peng:2021aa}
-\CSLLeftMargin{77. }%
+\CSLLeftMargin{76. }%
 \CSLRightInline{Peng, H. \emph{et al.}
 \href{https://doi.org/10.1038/s41586-021-03941-1}{Morphological
 diversity of single neurons in molecularly defined cell types}.
 \emph{Nature} \textbf{598}, 174--181 (2021).}
 
 \bibitem[\citeproctext]{ref-Gong:2016aa}
-\CSLLeftMargin{78. }%
+\CSLLeftMargin{77. }%
 \CSLRightInline{Gong, H. \emph{et al.}
 \href{https://doi.org/10.1038/ncomms12142}{High-throughput dual-colour
 precision imaging for brain-wide connectome with cytoarchitectonic
@@ -1804,7 +1798,7 @@ landmarks at the cellular level}. \emph{Nat Commun} \textbf{7}, 12142
 (2016).}
 
 \bibitem[\citeproctext]{ref-Wang:2021aa}
-\CSLLeftMargin{79. }%
+\CSLLeftMargin{78. }%
 \CSLRightInline{Wang, J. \emph{et al.}
 \href{https://doi.org/10.1007/s12264-020-00616-1}{Divergent projection
 patterns revealed by reconstruction of individual neurons in
@@ -1812,38 +1806,45 @@ orbitofrontal cortex}. \emph{Neurosci Bull} \textbf{37}, 461--477
 (2021).}
 
 \bibitem[\citeproctext]{ref-Kronman:2023aa}
-\CSLLeftMargin{80. }%
+\CSLLeftMargin{79. }%
 \CSLRightInline{Kronman, F. A. \emph{et al.} Developmental mouse brain
 common coordinate framework. \emph{bioRxiv} (2023)
 doi:\href{https://doi.org/10.1101/2023.09.14.557789}{10.1101/2023.09.14.557789}.}
 
 \bibitem[\citeproctext]{ref-Chon:2019aa}
-\CSLLeftMargin{81. }%
+\CSLLeftMargin{80. }%
 \CSLRightInline{Chon, U., Vanselow, D. J., Cheng, K. C. \& Kim, Y.
 \href{https://doi.org/10.1038/s41467-019-13057-w}{Enhanced and unified
 anatomical labeling for a common mouse brain atlas}. \emph{Nat Commun}
 \textbf{10}, 5067 (2019).}
 
 \bibitem[\citeproctext]{ref-Tasic:2016aa}
-\CSLLeftMargin{82. }%
+\CSLLeftMargin{81. }%
 \CSLRightInline{Tasic, B. \emph{et al.}
 \href{https://doi.org/10.1038/nn.4216}{Adult mouse cortical cell
 taxonomy revealed by single cell transcriptomics}. \emph{Nat Neurosci}
 \textbf{19}, 335--46 (2016).}
 
 \bibitem[\citeproctext]{ref-Bergmann:2020aa}
-\CSLLeftMargin{83. }%
+\CSLLeftMargin{82. }%
 \CSLRightInline{Bergmann, E., Gofman, X., Kavushansky, A. \& Kahn, I.
 \href{https://doi.org/10.1038/s42003-020-01472-5}{Individual variability
 in functional connectivity architecture of the mouse brain}.
 \emph{Commun Biol} \textbf{3}, 738 (2020).}
 
 \bibitem[\citeproctext]{ref-Billot:2023aa}
-\CSLLeftMargin{84. }%
+\CSLLeftMargin{83. }%
 \CSLRightInline{Billot, B. \emph{et al.}
 \href{https://doi.org/10.1016/j.media.2023.102789}{SynthSeg:
 Segmentation of brain MRI scans of any contrast and resolution without
 retraining}. \emph{Med Image Anal} \textbf{86}, 102789 (2023).}
+
+\bibitem[\citeproctext]{ref-Rolfe:2023aa}
+\CSLLeftMargin{84. }%
+\CSLRightInline{Rolfe, S. M., Whikehart, S. M. \& Maga, A. M.
+\href{https://doi.org/10.1242/bio.059698}{Deep learning enabled
+multi-organ segmentation of mouse embryos}. \emph{Biol Open}
+\textbf{12}, bio059698 (2023).}
 
 \bibitem[\citeproctext]{ref-Tustison:2006aa}
 \CSLLeftMargin{85. }%

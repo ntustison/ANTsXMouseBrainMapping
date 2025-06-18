@@ -3,13 +3,13 @@
 
 \begin{figure}
 \centering
-\includegraphics[width=0.95\textwidth]{Figures/mousePipeline.pdf}
-\caption{The mouse brain cortical labeling pipeline integrates two deep
-learning components for brain extraction and anatomical region segmentation.
-Both networks rely heavily on data augmentation applied to templates constructed
-from open datasets. The framework also supports further refinement or
-alternative label sets tailored to specific research needs. Possible
-applications include voxelwise cortical thickness estimation.}
+\includegraphics[width=0.95\textwidth]{Figures/mousePipeline.pdf} \caption{The
+mouse brain cortical labeling pipeline integrates two deep learning components
+for brain extraction and anatomical region segmentation. Both networks rely
+heavily on data augmentation applied to templates constructed from open
+datasets. The framework also supports further refinement or alternative label
+sets tailored to specific research needs. Possible applications include
+voxelwise cortical thickness estimation.}
 \label{fig:mouseKK}
 \end{figure}
 
@@ -21,13 +21,14 @@ to behavior, or quantify spatial variation in gene expression patterns
 [@Tasic:2016aa; @Bergmann:2020aa]. While deep learning techniques have yielded
 robust segmentation and labeling tools for the human brain (e.g., SynthSeg
 [@Billot:2023aa], ANTsXNet [@Tustison:2021aa]), analogous development for mouse
-data has been limited. Mouse neuroimaging often presents unique challenges, such
-as highly anisotropic sampling, that complicate transfer of existing tools. At
-the same time, high resolution resources like the AllenCCFv3 and DevCCF provide
-reference label sets that can serve as training data or spatial priors. We
-demonstrate how ANTsX can be used to construct a full structural labeling
-pipeline for the mouse brain (Figure \ref{fig:mouseKK}), including both brain
-extraction and atlas-based region segmentation.
+data (e.g., MEMOS [@Rolfe:2023aa]) has been limited. Mouse neuroimaging often
+presents unique challenges, such as highly anisotropic sampling, that complicate
+transfer of existing tools. At the same time, high resolution resources like the
+AllenCCFv3 and DevCCF provide reference label sets that can serve as training
+data. We demonstrate how ANTsX can be used to construct a full structural
+labeling pipeline for the mouse brain (Figure \ref{fig:mouseKK}), including both
+whole brain segmentation (i.e., brain extraction) and the subsequent atlas-based
+region segmentation.
 
 
 ### Template-based mouse brain extraction network
@@ -44,12 +45,12 @@ high-resolution 3D volumes using a B-spline fitting algorithm
 [@Tustison:2006aa]. Using this synthesized dataset and the CAMRI images, we
 created two ANTsX-based population templates [@Avants:2010aa], each paired with
 a manually delineated brain mask. These served as the basis for training an
-initial template-based brain extraction model.  Deep learning training of the 
+initial template-based brain extraction model.  Deep learning training of the
 network employed aggressive data augmentation strategies, including bias field
 simulation, histogram warping, random spatial deformation, noise injection, and
-anisotropic resampling. This enabled the model to generalize beyond the two 
-templates. The initial model was released through ANTsXNet
-and made publicly available.
+anisotropic resampling. This enabled the model to generalize beyond the two
+templates. The initial model was released through ANTsXNet and made publicly
+available.
 
 Subsequent community use led to further improvements. A research group applying
 the tool to their own ex vivo T2-weighted mouse brain data contributed a third

@@ -6,7 +6,7 @@ neurons [@Keller:2015aa], observe whole-brain developmental changes at cellular
 resolution [@La-Manno:2021aa], associate brain regions with genetic composition
 [@Wen:2022aa], and locally characterize neural connectivity [@Oh:2014aa]. These
 scientific achievements have been propelled by high-resolution profiling and
-imaging techniques that enable submicron, multimodal, three-dimensional
+imaging techniques that enable submicron, multimodal, 3D
 characterizations of whole mouse brains. Among these are micro-optical
 sectioning tomography [@Gong:2013aa;@Li:2010aa], tissue clearing methods
 [@Keller:2015aa;@Ueda:2020aa], spatial transcriptomics
@@ -55,25 +55,25 @@ often require extensive engineering effort to adapt to new datasets or
 modalities.  Finally, general-purpose toolkits such as elastix [@Klein:2010aa],
 Slicer3D [@fedorov:2012aa], and the Advanced Normalization Tools Ecosystem
 (ANTsX) [@Tustison:2021aa] have all been applied to mouse brain mapping
-scenarios (e.g., SlicerMEMOS [@Rolfe:2023aa]). These toolkits support modular
-workflows that can be flexibly composed from reusable components, offering a
-powerful alternative to rigid, modality-specific solutions. However, their use
-often requires familiarity with pipeline modules, parameter tuning, and
-tool-specific conventions which can limit adoption.
+scenarios. These toolkits support modular workflows that can be flexibly
+composed from reusable components, offering a powerful alternative to rigid,
+modality-specific solutions. However, their use often requires familiarity with
+pipeline modules, parameter tuning, and tool-specific conventions which can
+limit adoption.
 
 Building on this third category, we describe a set of modular, ANTsX-based
 pipelines specifically tailored for mapping diverse mouse brain data into
 standardized anatomical frameworks. These include two new pipelines: a velocity
-field–based interpolation model that potentially enables biologically plausible
-transformations across developmental timepoints, and a template-based deep
-learning pipeline for brain extraction and parcellation requiring minimal
-annotated data. In addition, we include two modular pipelines for aligning
-multiplexed error-robust fluorescence in situ hybridization (MERFISH) and fMOST
-datasets to the Allen CCFv3. These workflows were adapted and tailored using
-ANTsX tools to support collaborative efforts within the BICCN and are now made
-openly available in a reproducible format. To facilitate broader adoption, we
-also provide general guidance for customizing these strategies across imaging
-modalities and data types.  We first introduce key components of the ANTsX
-toolkit, which provide a basis for all of the mapping workflows described here,
-and then detail the specific contributions made in each pipeline.
+field–based interpolation model that enables continuous transformations across
+developmental timepoints of the DevCCF, and a template-based deep learning
+pipeline for brain extraction and parcellation requiring minimal annotated data.
+In addition, we include two modular pipelines for aligning multiplexed
+error-robust fluorescence in situ hybridization (MERFISH) and fMOST datasets to
+the Allen CCFv3. These workflows were adapted and tailored using ANTsX tools to
+support collaborative efforts within the BICCN and are now made openly available
+in a reproducible format. To facilitate broader adoption, we also provide
+general guidance for customizing these strategies across imaging modalities and
+data types.  We first introduce key components of the ANTsX toolkit, which
+provide a basis for all of the mapping workflows described here, and then detail
+the specific contributions made in each pipeline.
 

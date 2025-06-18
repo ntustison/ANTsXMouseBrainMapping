@@ -18,7 +18,7 @@
 \end{subfigure}
 \caption{Diagram of the two ANTsX-based pipelines for mapping (a) MERFISH
           and (b)fMOST data into the space of AllenCCFv3.  Each generates
-         the requisite transforms, $\mathcal{T}$, to map individual images
+         the requisite transforms to map individual images
          to the CCF.}
 \label{fig:allenpipelines}
 \end{figure*}
@@ -44,9 +44,9 @@ data to AllenCCFv3.
 **Data.** MERFISH imaging was performed on cryosectioned brains from C57BL/6
 mice using previously described protocols [@Yao:2023aa]. Brains were placed into
 an optimal cutting temperature (OCT) compound (Sakura FineTek 4583) stored at
--80$^\circ$.  The fresh frozen brain was sectioned at 10 $\mu$µm on Leica 3050 S
+-80$^\circ$.  The fresh frozen brain was sectioned at 10 $\mu$m on Leica 3050 S
 cryostats at intervals of 200 $\mu$m to evenly cover the brain. A set of 500
-genes was selected to distinguish $\sim 5200$ transcriptomic clusters. Raw
+genes was selected to distinguish $\sim5200$ transcriptomic clusters. Raw
 MERSCOPE data were decoded using Vizgen software (v231). Cell segmentation was
 performed using Cellpose [@Liu:2023aa;@Stringer:2021aa] based on DAPI and PolyT
 stains which was propagated to adjacent slices across z-planes. Each MERFISH
