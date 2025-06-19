@@ -7,16 +7,26 @@ Two novel open-source contributions:
 
 ---
 
-## Mouse brain cortical thickness measurements
+## Mouse brain extraction and structural labeling
 
 <p align="middle">
   <img src="https://github.com/ntustison/DevCCF-Velocity-Flow/blob/main/Manuscript/Figures/mousePipeline.png" width="700" />
 </p>
 
-### Motivation
+### Description
 
 To develop a structural morphological processing pipeline for the mouse brain 
 analogous to our [human-based tools](https://www.nature.com/articles/s41598-021-87564-6).
+This repository includes reproducible code and resources for training and
+applying mouse brain structural segmentation models using ANTsXNet. These
+murine pipelines consist of (1) a **brain extraction network**
+trained on high-resolution T2-weighted mouse MRI templates from public datasets,
+and (2) a **regional labeling model**. Both networks follow a
+standardized U-net architecture with aggressive data augmentation to support
+generalization across varying acquisition protocols and resolutions. They have
+been independently applied and refined by community users across multiple
+imaging contexts, including serial two-photon tomography and alternate labeling
+schemes. All models are available via `ANTsPyNet` and `ANTsRNet`.
 
 <details>
 <summary>Elaboration</summary>
