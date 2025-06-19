@@ -26,8 +26,12 @@ standardized U-net architecture with aggressive data augmentation to support
 generalization across varying acquisition protocols and resolutions. They have
 been independently applied and refined by community users across multiple
 imaging contexts, including serial two-photon tomography and alternate labeling
-schemes. All models are available via `ANTsPyNet` and `ANTsRNet`.
+schemes. All models are available via `ANTsPyNet` and `ANTsRNet`.  This work 
+also provides a more general framework for template-based, data 
+augmentation training for both isotropic and anisotropic mouse data.  
 
+
+<!--
 <details>
 <summary>Elaboration</summary>
 
@@ -50,11 +54,9 @@ Structural morphological tools for T2-w volumetric mouse brain images:
 * [Brain parcellation](https://github.com/ANTsX/ANTsPyNet/blob/master/antspynet/utilities/mouse.py#L301-L306)
 * [Cortical thickness](https://github.com/ANTsX/ANTsPyNet/blob/master/antspynet/utilities/mouse.py#L453-L457)
 
-This work also provides a more general framework for template-based, data 
-augmentation training for both isotropic and anisotropic mouse data.  See 
-the training scripts in this repository.
-
 </details>
+-->
+
 
 ### Implementation details and self-contained examples
 
