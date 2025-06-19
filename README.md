@@ -287,10 +287,8 @@ above cited work and using [ANTsX tools](https://github.com/ANTsX).  This
 repository provides the code and data to reproduce and utilize the velocity
 flow field.
 
-### Preliminaries
-
 <details>
-<summary>Code</summary>
+<summary>Preliminaries</summary>
 
 All data processing uses [ANTsPy](https://github.com/ANTsX/ANTsPy) with 
 equivalent calls possible in [ANTsR](https://github.com/ANTsX/ANTsR).
@@ -312,6 +310,8 @@ following plots:
 
 </details>
 
+### Reproducing the DevCCF Velocity Flow Model
+
 <details>
 <summary>Data</summary>
 
@@ -325,17 +325,6 @@ segmentations version 3.8.
   <img src="https://github.com/ntustison/DevCCF-Velocity-Flow/assets/324811/3f3a4369-eb82-4dce-b1a3-3e4481f66509" width="450" />
 </p>
 </details>
-
-### Reproducing the DevCCF Velocity Flow Model
-
-```bash
-# * run the following to generate the flow model
-# * results are in Data/Output/
-$ cd Scripts/DevCCFVelocityFlowModel/
-$ python step1.py
-$ python step2.py
-$ python step3.py
-```
 
 <details>
 <summary>Step 1:  Rigidly register all label images to P56</summary>
@@ -756,6 +745,14 @@ for i in range(20):  # Run the optimization for 20 iterations
 
 </details>
 
+```bash
+# * run the following to generate the flow model
+# * results are in Data/Output/
+$ cd Scripts/DevCCFVelocityFlowModel/
+$ python step1.py
+$ python step2.py
+$ python step3.py
+```
 
 ### Using the DevCCF Velocity Flow Model
 
