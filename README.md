@@ -46,7 +46,7 @@ the training scripts in this repository.
 
 </details>
 
-### Implementation
+### Implementation details and self-contained examples
 
 <details>
 <summary>Brain extraction</summary>
