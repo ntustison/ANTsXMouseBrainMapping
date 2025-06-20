@@ -99,6 +99,8 @@ Structural morphological tools for T2-w volumetric mouse brain images:
 >>> mask <- mouseBrainExtraction( mouseT2N4, modality = 't2', verbose = TRUE )
 ```
 
+#### Additional notes concerning training and evaluation data and training augmentation
+
 * Build two symmetric isotropic ANTsX templates from two publicly available datasets with different
   "defacing" aesthetics:
     * [CAMRI](https://camri.org/dissemination/mri-data/)
@@ -134,9 +136,9 @@ Structural morphological tools for T2-w volumetric mouse brain images:
 </details>
 
 <details>
-<summary>Brain parcellation</summary>
+<summary>Brain structural labeling</summary>
 
-### Mouse brain parcellation
+### Mouse brain structural labeling
 
 #### ANTsPyNet example
 
@@ -231,6 +233,8 @@ Structural morphological tools for T2-w volumetric mouse brain images:
                                   returnIsotropicOutput = TRUE,
                                   verbose = TRUE )
 ```
+
+#### Additional notes concerning training and evaluation data and training augmentation
 
 * AllenCCFv3 with labels.
 * Convert labels to a gross parcellation using allensdk
