@@ -7,17 +7,31 @@ Two novel open-source contributions:
 
 ---
 
-## Mouse brain cortical thickness measurements
+## Mouse brain extraction and structural labeling
 
 <p align="middle">
   <img src="https://github.com/ntustison/DevCCF-Velocity-Flow/blob/main/Manuscript/Figures/mousePipeline.png" width="700" />
 </p>
 
-### Motivation
+### Description
 
 To develop a structural morphological processing pipeline for the mouse brain 
 analogous to our [human-based tools](https://www.nature.com/articles/s41598-021-87564-6).
+This repository includes reproducible code and resources for training and
+applying mouse brain structural segmentation models using ANTsXNet. These
+murine pipelines consist of (1) a **brain extraction network**
+trained on high-resolution T2-weighted mouse MRI templates from public datasets,
+and (2) a **regional labeling model**. Both networks follow a
+standardized U-net architecture with aggressive data augmentation to support
+generalization across varying acquisition protocols and resolutions. They have
+been independently applied and refined by community users across multiple
+imaging contexts, including serial two-photon tomography and alternate labeling
+schemes. All models are available via `ANTsPyNet` and `ANTsRNet`.  This work 
+also provides a more general framework for template-based, data 
+augmentation training for both isotropic and anisotropic mouse data.  
 
+
+<!--
 <details>
 <summary>Elaboration</summary>
 
@@ -40,13 +54,11 @@ Structural morphological tools for T2-w volumetric mouse brain images:
 * [Brain parcellation](https://github.com/ANTsX/ANTsPyNet/blob/master/antspynet/utilities/mouse.py#L301-L306)
 * [Cortical thickness](https://github.com/ANTsX/ANTsPyNet/blob/master/antspynet/utilities/mouse.py#L453-L457)
 
-This work also provides a more general framework for template-based, data 
-augmentation training for both isotropic and anisotropic mouse data.  See 
-the training scripts in this repository.
-
 </details>
+-->
 
-### Implementation
+
+### Implementation details and self-contained examples
 
 <details>
 <summary>Brain extraction</summary>
@@ -87,6 +99,8 @@ the training scripts in this repository.
 >>> mask <- mouseBrainExtraction( mouseT2N4, modality = 't2', verbose = TRUE )
 ```
 
+#### Additional notes concerning training and evaluation data and training augmentation
+
 * Build two symmetric isotropic ANTsX templates from two publicly available datasets with different
   "defacing" aesthetics:
     * [CAMRI](https://camri.org/dissemination/mri-data/)
@@ -122,9 +136,9 @@ the training scripts in this repository.
 </details>
 
 <details>
-<summary>Brain parcellation</summary>
+<summary>Brain structural labeling</summary>
 
-### Mouse brain parcellation
+### Mouse brain structural labeling
 
 #### ANTsPyNet example
 
@@ -220,6 +234,8 @@ the training scripts in this repository.
                                   verbose = TRUE )
 ```
 
+#### Additional notes concerning training and evaluation data and training augmentation
+
 * AllenCCFv3 with labels.
 * Convert labels to a gross parcellation using allensdk
   ([this](https://github.com/ntustison/ANTsXMouseBrainMapping/blob/main/Scripts/MiscScripts/get_allen_parcellation.py) is just
@@ -275,10 +291,8 @@ above cited work and using [ANTsX tools](https://github.com/ANTsX).  This
 repository provides the code and data to reproduce and utilize the velocity
 flow field.
 
-### Preliminaries
-
 <details>
-<summary>Code</summary>
+<summary>Preliminaries</summary>
 
 All data processing uses [ANTsPy](https://github.com/ANTsX/ANTsPy) with 
 equivalent calls possible in [ANTsR](https://github.com/ANTsX/ANTsR).
@@ -300,6 +314,8 @@ following plots:
 
 </details>
 
+### Reproducing the DevCCF Velocity Flow Model
+
 <details>
 <summary>Data</summary>
 
@@ -313,17 +329,6 @@ segmentations version 3.8.
   <img src="https://github.com/ntustison/DevCCF-Velocity-Flow/assets/324811/3f3a4369-eb82-4dce-b1a3-3e4481f66509" width="450" />
 </p>
 </details>
-
-### Reproducing the DevCCF Velocity Flow Model
-
-```bash
-# * run the following to generate the flow model
-# * results are in Data/Output/
-$ cd Scripts/DevCCFVelocityFlowModel/
-$ python step1.py
-$ python step2.py
-$ python step3.py
-```
 
 <details>
 <summary>Step 1:  Rigidly register all label images to P56</summary>
@@ -744,6 +749,14 @@ for i in range(20):  # Run the optimization for 20 iterations
 
 </details>
 
+```bash
+# * run the following to generate the flow model
+# * results are in Data/Output/
+$ cd Scripts/DevCCFVelocityFlowModel/
+$ python step1.py
+$ python step2.py
+$ python step3.py
+```
 
 ### Using the DevCCF Velocity Flow Model
 
