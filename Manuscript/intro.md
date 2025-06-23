@@ -33,9 +33,15 @@ poses unique challenges. For example, differences in tissue processing, imaging
 protocols, and anatomical completeness often introduce artifacts such as
 distortion, tearing, holes, and signal dropout
 [@dries:2021aa;@ricci:2022aa;@agarwal:2016aa;@agarwal:2017aa;@tward:2019aa;@cahill:2012aa].
-Intensity differences and partial representations of anatomy can further complicate
-alignment. Given this diversity specialized strategies are often needed to address
-the unique, modality-specific challenges.
+Intensity differences and partial representations of anatomy can further
+complicate alignment. Also, while alternative strategies for mapping single-cell
+spatial transcriptomic data exist (e.g., gene expression–based models such as
+Tangram [@Biancalani:2021aa]) this work focuses on image-based anatomical
+alignment to common coordinate frameworks using spatially resolved reference
+images.
+
+Given this diversity specialized strategies are often needed to address
+the unique, modality-specific challenges.  
 
 Existing mapping solutions fall into three broad categories. The first includes
 integrated processing platforms that provide users with mapped datasets (e.g.,
@@ -66,14 +72,15 @@ pipelines specifically tailored for mapping diverse mouse brain data into
 standardized anatomical frameworks. These include two new pipelines: a velocity
 field–based interpolation model that enables continuous transformations across
 developmental timepoints of the DevCCF, and a template-based deep learning
-pipeline for brain extraction and parcellation requiring minimal annotated data.
-In addition, we include two modular pipelines for aligning multiplexed
-error-robust fluorescence in situ hybridization (MERFISH) and fMOST datasets to
-the Allen CCFv3. These workflows were adapted and tailored using ANTsX tools to
-support collaborative efforts within the BICCN and are now made openly available
-in a reproducible format. To facilitate broader adoption, we also provide
-general guidance for customizing these strategies across imaging modalities and
-data types.  We first introduce key components of the ANTsX toolkit, which
-provide a basis for all of the mapping workflows described here, and then detail
-the specific contributions made in each pipeline.
+pipeline for whole brain segmentation (i.e., brain extraction) and structural
+anatomical regional labeling of the brain (i.e., brain parcellation) requiring
+minimal annotated data. In addition, we include two modular pipelines for
+aligning MERFISH and fMOST datasets to the Allen CCFv3. These workflows were
+adapted and tailored using ANTsX tools to support collaborative efforts within
+the BICCN and are now made openly available in a reproducible format. To
+facilitate broader adoption, we also provide general guidance for customizing
+these strategies across imaging modalities and data types.  We first introduce
+key components of the ANTsX toolkit, which provide a basis for all of the
+mapping workflows described here, and then detail the specific contributions
+made in each pipeline.
 

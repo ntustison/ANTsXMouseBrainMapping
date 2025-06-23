@@ -45,7 +45,12 @@ generation of virtual templates at unsampled ages. This functionality is built
 using ANTsX components for velocity field optimization and integration, and
 offers a novel mechanism for interpolating across the non-linear developmental
 trajectory of the mouse brain. Such interpolation has potential utility for both
-anatomical harmonization and longitudinal analyses.
+anatomical harmonization and longitudinal analyses.  Interestingly, long-range
+transformations (e.g., P56 to E11.5) revealed anatomy evolving in plausible ways
+yet sometimes diverging from known developmental patterns (e.g., hippocampal
+shape changes) reflecting the input data and offering insight into temporal
+gaps. These behaviors could assist future efforts to determine which additional
+time points would most improve spatiotemporal coverage.
 
 We also introduced a template-based deep learning pipeline for mouse brain
 extraction and parcellation using aggressive data augmentation. This approach is

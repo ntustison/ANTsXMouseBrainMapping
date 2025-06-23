@@ -22,11 +22,20 @@ Although this collection provides broad developmental coverage, its discrete
 sampling limits the ability to model continuous transformations across time. To
 address this, we developed a velocity flow–based modeling approach that enables
 anatomically plausible, diffeomorphic transformations between any two continuous
-time points within the DevCCF range. This functionality is implemented in both
-ANTsR and ANTsPy (`ants.fit_time_varying_transform_to_point_sets(...)`) and
-integrates seamlessly with existing ANTsX workflows. The velocity field is
-encoded as a 4D ITK image where each voxel stores the $x$,$y$,$z$ components of
-motion at a given time point.
+time points within the DevCCF range. Unlike traditional pairwise interpolation,
+which requires sequential warping through each intermediate stage, this model,
+defined by a time-varying velocity field (i.e., a smooth vector field defined
+over space and time that governs the continuous deformation of an image domain),
+allows direct computation of deformations between any two time points in the
+continuum which improves smoothness and enables flexible spatiotemporal
+alignment. 
+
+This functionality is implemented in both ANTsR and ANTsPy
+(`ants.fit_time_varying_transform_to_point_sets(...)`) and integrates seamlessly
+with existing ANTsX workflows.  The velocity field is represented as a 4D ITK
+image where each voxel stores the $x$,$y$,$z$ components of motion at a given
+time point.  Integration of the time-varying velocity field uses uses 4$^{th}$ 
+order Runge-Kutta (`ants.integrate_velocity_field(...)`) [@Avants:2014aa].
 
 ### Data
 
@@ -83,10 +92,12 @@ accompanying GitHub repository.
 
 To normalize temporal spacing, we assigned scalar values in $[0, 1]$ to each
 template. Given the nonlinear spacing in postnatal development, we applied a
-logarithmic transform to the raw time values prior to normalization. P56 was
-assigned a span of 28 postnatal days to reflect known developmental dynamics,
-which improved the temporal distribution of integration points (Figure
-\ref{fig:convergence}, right panel).
+logarithmic transform to the raw time values prior to normalization. Within this
+logarithmic temporal transform, P56 was assigned a span of 28 postnatal days to
+reflect known developmental dynamics (i.e., in terms of modeling the continuous
+deformation, the morphological changes between Day 28 and Day 56 are
+insignificant).  This improved the temporal distribution of integration points
+(Figure \ref{fig:convergence}, right panel).
 
 Optimization was run for a maximum of 200 iterations using a 2020 iMac (3.6 GHz
 10-Core Intel Core i9, 64 GB RAM), with each iteration taking $\sim6$ minutes.

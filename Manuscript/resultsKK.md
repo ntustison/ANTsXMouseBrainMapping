@@ -27,7 +27,7 @@ transfer of existing tools. At the same time, high resolution resources like the
 AllenCCFv3 and DevCCF provide reference label sets that can serve as training
 data. We demonstrate how ANTsX can be used to construct a full structural
 labeling pipeline for the mouse brain (Figure \ref{fig:mouseKK}), including both
-whole brain segmentation (i.e., brain extraction) and the subsequent atlas-based
+whole brain segmentation (i.e., brain extraction) and the subsequent template-based
 region segmentation.
 
 
@@ -118,9 +118,9 @@ from the brain extraction network.}
 (a) T2-w DevCCF P56 with the described parcellation consisting of the cerebral
 cortex, nuclei, brain stem, cerebellum, main olfactory bulb, and hippocampal
 formation. (b) Sample subject (NR5 Day 0) with the proposed deep learning-based
-segmentation. (c) Dice overlap for comparing the regional alignments between
-registration using intensity information only and using intensity with the given
-parcellation scheme.}
+segmentation. (c) Dice overlap over the entire cohort (i.e., all 84 images) for
+comparing the regional alignments between registration using intensity
+information only and using intensity with the given parcellation scheme.}
 \label{fig:evaluationParcellation}
 \end{figure}
 
@@ -128,18 +128,19 @@ For evaluation, we used an additional publicly available dataset
 [@Rahman:2023aa] that is completely independent from the data used in training
 the brain extraction and parcellation networks.  Data includes 12 specimens each
 imaged at seven time points (Day 0, Day 3, Week 1, Week 4, Week 8, Week 20) with
-in-house-generated brain masks for a total of 84 images.  Spacing is anistropic
-with an in-plane resolution of $0.1 \times 0.1$ mm$^2$ and a slice thickness of
-$0.5$ mm.  
+in-house-generated brain masks (i.e., produced by the data providers) for a
+total of 84 images.  Spacing is anistropic with an in-plane resolution of $0.1
+\times 0.1$ mm$^2$ and a slice thickness of $0.5$ mm.  
 
 Figure \ref{fig:evaluation} summarizes the whole brain overlap between the
 provided segmentations for all 84 images and the results of applying the
-proposed network.   Also, since mapping to the AllenCCFv3 atlas is crucial for
-many mouse studies, we demonstrate the utility of the second network by
-leveraging the labeled regions to perform anatomically-explicit alignment using
-ANTsX multi-component registration instead of intensity-only registration. For
-these data, the whole brain extraction demonstrates excellent performance across
-the large age range.  And although the intensity-only image registration
-provides adequate alignment, intensity with the regional parcellations
-significantly improves those measures.
-
+proposed network.   For these data, the whole brain extraction demonstrates
+excellent performance across the large age range over the entire cohort.  Since
+mapping to the AllenCCFv3 atlas is crucial for many mouse studies, we
+demonstrate the utility of the second network by leveraging the labeled regions
+to perform anatomically-explicit alignment using ANTsX multi-component
+registration instead of intensity-only registration (Figure
+\ref{fig:evaluationParcellation}). Although the intensity-only image
+registration provides adequate alignment, intensity with the regional
+parcellations significantly improves those measures (Figure
+\ref{fig:evaluationParcellation}(c)).

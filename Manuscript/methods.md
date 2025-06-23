@@ -220,15 +220,26 @@ anatomical variation, lower SNR, and heterogeneous acquisition protocols.
 
 ### Deep learning training setup
 
-All networks were implemented in ANTsPyNet using standard 3D U-net architectures
-[@Falk:2019aa] previously employed in previously published work
-[@Tustison:2021aa,Tustison:2024aa,Stone:2024aa]. Training was performed on an
-NVIDIA DGX system (4 $\times$ Tesla V100 GPUs, 256 GB RAM). Model weights and
-preprocessing routines are shared across ANTsPyNet and ANTsRNet to ensure
-reproducibility and language portability. For both published and unpublished
-trained networks available through ANTsXNet, all training scripts and data
-augmentation generators are publicly available at
+All network-based approaches were implemented using a standard U-net
+[@Falk:2019aa] architecture and hyperparameters previously evaluated in ANTsXNet
+pipelines for human brain imaging
+[@Tustison:2021aa,Tustison:2024aa,Stone:2024aa]. This design follows the
+'no-new-net' principle [@Isensee:2021aa], which demonstrates that a
+well-configured, conventional U-net can achieve robust and competitive
+performance across a wide range of biomedical segmentation tasks with little to
+no architectural modifications from the original. Both networks use a 3D U-net
+architecture implemented in TensorFlow/Keras, with five
+encoding/decoding levels and skip connections. The loss
+function combined Dice and categorical cross-entropy terms. Training used a
+batch size of 4, Adam optimizer with an initial learning rate of 2e-4, and early
+stopping based on validation loss. Training was performed on an NVIDIA DGX
+system (4 $\times$ Tesla V100 GPUs, 256 GB RAM). Model weights and preprocessing
+routines are shared across ANTsPyNet and ANTsRNet to ensure reproducibility and
+language portability. For both published and unpublished trained networks
+available through ANTsXNet, all training scripts and data augmentation
+generators are publicly available at
 **[https://github.com/ntustison/ANTsXNetTraining](https://github.com/ntustison/ANTsXNetTraining)**.
+
 
 **Data augmentation.** Robust data augmentation was critical to generalization
 across scanners, contrast types, and resolutions. We applied both intensity- and
@@ -264,7 +275,7 @@ This training strategy provides strong spatial priors despite limited data by
 leveraging high-quality template images and aggressive augmentation to mimic
 population variability. During the development of this work, the network was
 further refined through community engagement. A user from a U.S.-based research
-institute applied the publicly available (but then unpublished) brain extraction
+institute applied this publicly available (but then unpublished) brain extraction
 tool to their own mouse MRI dataset. Based on feedback and iterative
 collaboration with the ANTsX team, the model was retrained and improved to
 better generalize to additional imaging contexts. This reflects our broader

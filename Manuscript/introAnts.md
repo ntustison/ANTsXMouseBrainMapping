@@ -23,11 +23,15 @@ tumor segmentation [@Tustison:2014aa], and cardiac motion estimation
 ANTsX benefits from open-source contributions while supporting continued
 algorithm evaluation and innovation.  In the context of mouse brain data, ANTsX
 provides a robust platform for developing modular pipelines to map diverse
-imaging modalities into CCFs. This paper highlights its use across distinct
-BICCN projects such as spatial transcriptomic data from MERFISH, structural data
-from fMOST, and multimodal developmental data from LSFM and MRI. We describe
-both shared infrastructure and targeted strategies adapted to the specific
-challenges of each modality.
+imaging modalities into CCFs. These tools span multiple classes of mapping
+problems: cross-modality image registration, landmark-driven alignment, temporal
+interpolation across developmental stages, and deep learning–based segmentation.
+As such, they also serve as illustrative case studies for adapting ANTsX tools
+to other use cases We describe both shared infrastructure and targeted
+strategies adapted to the specific challenges of each modality.  This paper
+highlights usage across distinct BICCN projects such as spatial transcriptomic
+data from MERFISH, structural data from fMOST, and multimodal developmental data
+from LSFM and MRI. 
 
 ## Novel ANTsX-based open-source contributions
 

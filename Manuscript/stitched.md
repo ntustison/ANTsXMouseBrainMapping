@@ -159,9 +159,15 @@ poses unique challenges. For example, differences in tissue processing, imaging
 protocols, and anatomical completeness often introduce artifacts such as
 distortion, tearing, holes, and signal dropout
 [@dries:2021aa;@ricci:2022aa;@agarwal:2016aa;@agarwal:2017aa;@tward:2019aa;@cahill:2012aa].
-Intensity differences and partial representations of anatomy can further complicate
-alignment. Given this diversity specialized strategies are often needed to address
-the unique, modality-specific challenges.
+Intensity differences and partial representations of anatomy can further
+complicate alignment. Also, while alternative strategies for mapping single-cell
+spatial transcriptomic data exist (e.g., gene expression–based models such as
+Tangram [@Biancalani:2021aa]) this work focuses on image-based anatomical
+alignment to common coordinate frameworks using spatially resolved reference
+images.
+
+Given this diversity specialized strategies are often needed to address
+the unique, modality-specific challenges.  
 
 Existing mapping solutions fall into three broad categories. The first includes
 integrated processing platforms that provide users with mapped datasets (e.g.,
@@ -192,16 +198,17 @@ pipelines specifically tailored for mapping diverse mouse brain data into
 standardized anatomical frameworks. These include two new pipelines: a velocity
 field–based interpolation model that enables continuous transformations across
 developmental timepoints of the DevCCF, and a template-based deep learning
-pipeline for brain extraction and parcellation requiring minimal annotated data.
-In addition, we include two modular pipelines for aligning multiplexed
-error-robust fluorescence in situ hybridization (MERFISH) and fMOST datasets to
-the Allen CCFv3. These workflows were adapted and tailored using ANTsX tools to
-support collaborative efforts within the BICCN and are now made openly available
-in a reproducible format. To facilitate broader adoption, we also provide
-general guidance for customizing these strategies across imaging modalities and
-data types.  We first introduce key components of the ANTsX toolkit, which
-provide a basis for all of the mapping workflows described here, and then detail
-the specific contributions made in each pipeline.
+pipeline for whole brain segmentation (i.e., brain extraction) and structural
+anatomical regional labeling of the brain (i.e., brain parcellation) requiring
+minimal annotated data. In addition, we include two modular pipelines for
+aligning MERFISH and fMOST datasets to the Allen CCFv3. These workflows were
+adapted and tailored using ANTsX tools to support collaborative efforts within
+the BICCN and are now made openly available in a reproducible format. To
+facilitate broader adoption, we also provide general guidance for customizing
+these strategies across imaging modalities and data types.  We first introduce
+key components of the ANTsX toolkit, which provide a basis for all of the
+mapping workflows described here, and then detail the specific contributions
+made in each pipeline.
 
 
 ## The Advanced Normalization Tools Ecosystem (ANTsX)
@@ -228,11 +235,15 @@ tumor segmentation [@Tustison:2014aa], and cardiac motion estimation
 ANTsX benefits from open-source contributions while supporting continued
 algorithm evaluation and innovation.  In the context of mouse brain data, ANTsX
 provides a robust platform for developing modular pipelines to map diverse
-imaging modalities into CCFs. This paper highlights its use across distinct
-BICCN projects such as spatial transcriptomic data from MERFISH, structural data
-from fMOST, and multimodal developmental data from LSFM and MRI. We describe
-both shared infrastructure and targeted strategies adapted to the specific
-challenges of each modality.
+imaging modalities into CCFs. These tools span multiple classes of mapping
+problems: cross-modality image registration, landmark-driven alignment, temporal
+interpolation across developmental stages, and deep learning–based segmentation.
+As such, they also serve as illustrative case studies for adapting ANTsX tools
+to other use cases We describe both shared infrastructure and targeted
+strategies adapted to the specific challenges of each modality.  This paper
+highlights usage across distinct BICCN projects such as spatial transcriptomic
+data from MERFISH, structural data from fMOST, and multimodal developmental data
+from LSFM and MRI. 
 
 ## Novel ANTsX-based open-source contributions
 
@@ -394,11 +405,20 @@ Although this collection provides broad developmental coverage, its discrete
 sampling limits the ability to model continuous transformations across time. To
 address this, we developed a velocity flow–based modeling approach that enables
 anatomically plausible, diffeomorphic transformations between any two continuous
-time points within the DevCCF range. This functionality is implemented in both
-ANTsR and ANTsPy (`ants.fit_time_varying_transform_to_point_sets(...)`) and
-integrates seamlessly with existing ANTsX workflows. The velocity field is
-encoded as a 4D ITK image where each voxel stores the $x$,$y$,$z$ components of
-motion at a given time point.
+time points within the DevCCF range. Unlike traditional pairwise interpolation,
+which requires sequential warping through each intermediate stage, this model,
+defined by a time-varying velocity field (i.e., a smooth vector field defined
+over space and time that governs the continuous deformation of an image domain),
+allows direct computation of deformations between any two time points in the
+continuum which improves smoothness and enables flexible spatiotemporal
+alignment. 
+
+This functionality is implemented in both ANTsR and ANTsPy
+(`ants.fit_time_varying_transform_to_point_sets(...)`) and integrates seamlessly
+with existing ANTsX workflows.  The velocity field is represented as a 4D ITK
+image where each voxel stores the $x$,$y$,$z$ components of motion at a given
+time point.  Integration of the time-varying velocity field uses uses 4$^{th}$ 
+order Runge-Kutta (`ants.integrate_velocity_field(...)`) [@Avants:2014aa].
 
 ### Data
 
@@ -455,10 +475,12 @@ accompanying GitHub repository.
 
 To normalize temporal spacing, we assigned scalar values in $[0, 1]$ to each
 template. Given the nonlinear spacing in postnatal development, we applied a
-logarithmic transform to the raw time values prior to normalization. P56 was
-assigned a span of 28 postnatal days to reflect known developmental dynamics,
-which improved the temporal distribution of integration points (Figure
-\ref{fig:convergence}, right panel).
+logarithmic transform to the raw time values prior to normalization. Within this
+logarithmic temporal transform, P56 was assigned a span of 28 postnatal days to
+reflect known developmental dynamics (i.e., in terms of modeling the continuous
+deformation, the morphological changes between Day 28 and Day 56 are
+insignificant).  This improved the temporal distribution of integration points
+(Figure \ref{fig:convergence}, right panel).
 
 Optimization was run for a maximum of 200 iterations using a 2020 iMac (3.6 GHz
 10-Core Intel Core i9, 64 GB RAM), with each iteration taking $\sim6$ minutes.
@@ -529,7 +551,7 @@ transfer of existing tools. At the same time, high resolution resources like the
 AllenCCFv3 and DevCCF provide reference label sets that can serve as training
 data. We demonstrate how ANTsX can be used to construct a full structural
 labeling pipeline for the mouse brain (Figure \ref{fig:mouseKK}), including both
-whole brain segmentation (i.e., brain extraction) and the subsequent atlas-based
+whole brain segmentation (i.e., brain extraction) and the subsequent template-based
 region segmentation.
 
 
@@ -620,9 +642,9 @@ from the brain extraction network.}
 (a) T2-w DevCCF P56 with the described parcellation consisting of the cerebral
 cortex, nuclei, brain stem, cerebellum, main olfactory bulb, and hippocampal
 formation. (b) Sample subject (NR5 Day 0) with the proposed deep learning-based
-segmentation. (c) Dice overlap for comparing the regional alignments between
-registration using intensity information only and using intensity with the given
-parcellation scheme.}
+segmentation. (c) Dice overlap over the entire cohort (i.e., all 84 images) for
+comparing the regional alignments between registration using intensity
+information only and using intensity with the given parcellation scheme.}
 \label{fig:evaluationParcellation}
 \end{figure}
 
@@ -630,22 +652,22 @@ For evaluation, we used an additional publicly available dataset
 [@Rahman:2023aa] that is completely independent from the data used in training
 the brain extraction and parcellation networks.  Data includes 12 specimens each
 imaged at seven time points (Day 0, Day 3, Week 1, Week 4, Week 8, Week 20) with
-in-house-generated brain masks for a total of 84 images.  Spacing is anistropic
-with an in-plane resolution of $0.1 \times 0.1$ mm$^2$ and a slice thickness of
-$0.5$ mm.  
+in-house-generated brain masks (i.e., produced by the data providers) for a
+total of 84 images.  Spacing is anistropic with an in-plane resolution of $0.1
+\times 0.1$ mm$^2$ and a slice thickness of $0.5$ mm.  
 
 Figure \ref{fig:evaluation} summarizes the whole brain overlap between the
 provided segmentations for all 84 images and the results of applying the
-proposed network.   Also, since mapping to the AllenCCFv3 atlas is crucial for
-many mouse studies, we demonstrate the utility of the second network by
-leveraging the labeled regions to perform anatomically-explicit alignment using
-ANTsX multi-component registration instead of intensity-only registration. For
-these data, the whole brain extraction demonstrates excellent performance across
-the large age range.  And although the intensity-only image registration
-provides adequate alignment, intensity with the regional parcellations
-significantly improves those measures.
-
-
+proposed network.   For these data, the whole brain extraction demonstrates
+excellent performance across the large age range over the entire cohort.  Since
+mapping to the AllenCCFv3 atlas is crucial for many mouse studies, we
+demonstrate the utility of the second network by leveraging the labeled regions
+to perform anatomically-explicit alignment using ANTsX multi-component
+registration instead of intensity-only registration (Figure
+\ref{fig:evaluationParcellation}). Although the intensity-only image
+registration provides adequate alignment, intensity with the regional
+parcellations significantly improves those measures (Figure
+\ref{fig:evaluationParcellation}(c)).
 \clearpage
 \newpage
 
@@ -692,7 +714,12 @@ generation of virtual templates at unsampled ages. This functionality is built
 using ANTsX components for velocity field optimization and integration, and
 offers a novel mechanism for interpolating across the non-linear developmental
 trajectory of the mouse brain. Such interpolation has potential utility for both
-anatomical harmonization and longitudinal analyses.
+anatomical harmonization and longitudinal analyses.  Interestingly, long-range
+transformations (e.g., P56 to E11.5) revealed anatomy evolving in plausible ways
+yet sometimes diverging from known developmental patterns (e.g., hippocampal
+shape changes) reflecting the input data and offering insight into temporal
+gaps. These behaviors could assist future efforts to determine which additional
+time points would most improve spatiotemporal coverage.
 
 We also introduced a template-based deep learning pipeline for mouse brain
 extraction and parcellation using aggressive data augmentation. This approach is
@@ -935,15 +962,26 @@ anatomical variation, lower SNR, and heterogeneous acquisition protocols.
 
 ### Deep learning training setup
 
-All networks were implemented in ANTsPyNet using standard 3D U-net architectures
-[@Falk:2019aa] previously employed in previously published work
-[@Tustison:2021aa,Tustison:2024aa,Stone:2024aa]. Training was performed on an
-NVIDIA DGX system (4 $\times$ Tesla V100 GPUs, 256 GB RAM). Model weights and
-preprocessing routines are shared across ANTsPyNet and ANTsRNet to ensure
-reproducibility and language portability. For both published and unpublished
-trained networks available through ANTsXNet, all training scripts and data
-augmentation generators are publicly available at
+All network-based approaches were implemented using a standard U-net
+[@Falk:2019aa] architecture and hyperparameters previously evaluated in ANTsXNet
+pipelines for human brain imaging
+[@Tustison:2021aa,Tustison:2024aa,Stone:2024aa]. This design follows the
+'no-new-net' principle [@Isensee:2021aa], which demonstrates that a
+well-configured, conventional U-net can achieve robust and competitive
+performance across a wide range of biomedical segmentation tasks with little to
+no architectural modifications from the original. Both networks use a 3D U-net
+architecture implemented in TensorFlow/Keras, with five
+encoding/decoding levels and skip connections. The loss
+function combined Dice and categorical cross-entropy terms. Training used a
+batch size of 4, Adam optimizer with an initial learning rate of 2e-4, and early
+stopping based on validation loss. Training was performed on an NVIDIA DGX
+system (4 $\times$ Tesla V100 GPUs, 256 GB RAM). Model weights and preprocessing
+routines are shared across ANTsPyNet and ANTsRNet to ensure reproducibility and
+language portability. For both published and unpublished trained networks
+available through ANTsXNet, all training scripts and data augmentation
+generators are publicly available at
 **[https://github.com/ntustison/ANTsXNetTraining](https://github.com/ntustison/ANTsXNetTraining)**.
+
 
 **Data augmentation.** Robust data augmentation was critical to generalization
 across scanners, contrast types, and resolutions. We applied both intensity- and
@@ -979,7 +1017,7 @@ This training strategy provides strong spatial priors despite limited data by
 leveraging high-quality template images and aggressive augmentation to mimic
 population variability. During the development of this work, the network was
 further refined through community engagement. A user from a U.S.-based research
-institute applied the publicly available (but then unpublished) brain extraction
+institute applied this publicly available (but then unpublished) brain extraction
 tool to their own mouse MRI dataset. Based on feedback and iterative
 collaboration with the ANTsX team, the model was retrained and improved to
 better generalize to additional imaging contexts. This reflects our broader
