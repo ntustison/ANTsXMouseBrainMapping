@@ -776,13 +776,15 @@ from the brain extraction network.}
   \caption{}
   \label{fig:subc}
 \end{subfigure}
-\caption{Evaluation of the ANTsX mouse brain parcellation on the same dataset.
-(a) T2-w DevCCF P56 with the described parcellation consisting of the cerebral
-cortex, nuclei, brain stem, cerebellum, main olfactory bulb, and hippocampal
-formation. (b) Sample subject (NR5 Day 0) with the proposed deep learning-based
-segmentation. (c) Dice overlap over the entire cohort (i.e., all 84 images) for
-comparing the regional alignments between registration using intensity
-information only and using intensity with the given parcellation scheme.}
+\caption{Evaluation of the ANTsX deep learning–based mouse brain parcellation on
+a diverse MRI cohort. (a) T2-weighted DevCCF P56 template with the six-region
+parcellation: cerebral cortex, nuclei, brain stem, cerebellum, main olfactory
+bulb, and hippocampal formation. (b) Example segmentation result from a
+representative subject (NR5, Day 0) using the proposed deep learning pipeline.
+(c) Dice overlap scores across the full evaluation cohort ($n=84$), comparing
+anatomical alignment achieved via registration using intensity alone versus
+registration guided by the predicted parcellation. Dice values were computed
+using manually segmented labels transformed to AllenCCFv3 space.}
 \label{fig:evaluationParcellation}
 \end{figure}
 
@@ -795,19 +797,20 @@ Week 1, Week 4, Week 8, Week 20) with in-house-generated brain masks
 is anistropic with an in-plane resolution of \(0.1 \times 0.1\) mm\(^2\)
 and a slice thickness of \(0.5\) mm.
 
-Figure \ref{fig:evaluation} summarizes the whole brain overlap between
-the provided segmentations for all 84 images and the results of applying
-the proposed network. For these data, the whole brain extraction
-demonstrates excellent performance across the large age range over the
-entire cohort. Since mapping to the AllenCCFv3 atlas is crucial for many
-mouse studies, we demonstrate the utility of the second network by
-leveraging the labeled regions to perform anatomically-explicit
-alignment using ANTsX multi-component registration instead of
-intensity-only registration (Figure \ref{fig:evaluationParcellation}).
-Although the intensity-only image registration provides adequate
-alignment, intensity with the regional parcellations significantly
-improves those measures (Figure \ref{fig:evaluationParcellation}(c)).
-\clearpage \newpage
+Figure\,\ref{fig:evaluation} summarizes the whole-brain overlap between
+manually segmented reference masks and the predicted segmentations for
+all 84 images in the evaluation cohort. The proposed network
+demonstrates excellent performance in brain extraction across a wide age
+range. To further assess the utility of the parcellation network, we
+used the predicted labels to guide anatomically informed registration to
+the AllenCCFv3 atlas using ANTsX multi-component registration, and
+compared this to intensity-only registration
+(Figure\,\ref{fig:evaluationParcellation}). While intensity-based
+alignment performs reasonably well, incorporating the predicted
+parcellation significantly improves regional correspondence. Dice scores
+shown in Figure\,\ref{fig:evaluationParcellation}(c) were computed using
+manually segmented labels transformed to AllenCCFv3 space. \clearpage
+\newpage
 
 \section{Discussion}\label{discussion}
 

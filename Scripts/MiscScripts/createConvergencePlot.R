@@ -71,5 +71,5 @@ convergencePlot <- ggplot() +
                           axis.text = element_text( size = 12 ),
                           axis.title = element_text( size = 13, face = "bold" ),
                           legend.title=element_blank() ) + 
-                   ggtitle( "Per integration point")
+                   ggtitle( "Per integration point" )
 ggsave( "./velocityFieldIntegrationConvergence.pdf", plot = convergencePlot, width = 6.5, height = 8, units = "in" )
