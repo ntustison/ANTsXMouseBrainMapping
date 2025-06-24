@@ -778,10 +778,13 @@ normalized_time_points = (time_points - time_points[0]) / (time_points[-1] - tim
 
 velocity_field = ants.image_read("Data/Output/DevCCF_velocity_flow.nii.gz")
 
-# Read template files.
-# template_files = list()
-# for i in range(len(atlas_ids)):
-#      fa_template_files.append(glob.glob(atlas_ids[i] + "*.nii.gz")[0])
+# Read template files.  The user will need to download the DevCCF files
+# themselves (https://kimlab.io/brain-map/DevCCF/).  Reach out to the
+# maintainer for assistance.
+
+template_files = list()
+for i in range(len(atlas_ids)):
+     fa_template_files.append(glob.glob(atlas_ids[i] + "*.nii.gz")[0])
 
 for i in range(len(atlas_ids)):
     for j in range(len(atlas_ids)):
@@ -812,6 +815,10 @@ import numpy as np
 import math
 
 velocity_field = ants.image_read("DevCCF_flow_model.nii.gz")
+
+# Read the P56 template file.  (https://kimlab.io/brain-map/DevCCF/).
+# Reach out to the maintainer for assistance.
+
 P56 = ants.image_read("P56.nii.gz")  
 
 # We discretize the time domain into 50 intervals.
