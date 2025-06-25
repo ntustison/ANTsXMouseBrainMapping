@@ -52,7 +52,7 @@ integrationDataFrame <- data.frame( IntegrationError = integrationArray,
                                     Iteration = rep( seq.int( 1, numberOfIterationsToPlot ), 11 ) )
 convergencePlot <- ggplot( data = convergenceDataFrame, mapping = aes( x = Iteration, y = Error ) ) + 
                    geom_point( colour = "black", size = 1 ) + 
-                   geom_line( colour = "black", size = 1 ) + 
+                   geom_line( colour = "black", linewidth = 1 ) + 
                    xlab( "Iteration" ) + 
                    ylab( "Total distance error (mm)") +
                    theme( plot.title = element_text( size = 16, face = "bold" ), 
@@ -60,7 +60,7 @@ convergencePlot <- ggplot( data = convergenceDataFrame, mapping = aes( x = Itera
                           axis.title = element_text( size = 13, face = "bold" ),
                           legend.title=element_blank() ) + 
                    ggtitle( "Overall convergence")
-ggsave( "./velocityFieldTotalConvergence.pdf", plot = convergencePlot, width = 5, height = 8, units = "in" )
+ggsave( "./velocityFieldTotalConvergence.pdf", plot = convergencePlot, width = 5, height = 4, units = "in" )
 
 convergencePlot <- ggplot() + 
                    geom_line( data = integrationDataFrame, mapping = aes( x = Iteration, y = IntegrationError, colour = IntegrationPoint ) ) +
@@ -72,4 +72,4 @@ convergencePlot <- ggplot() +
                           axis.title = element_text( size = 13, face = "bold" ),
                           legend.title=element_blank() ) + 
                    ggtitle( "Per integration point" )
-ggsave( "./velocityFieldIntegrationConvergence.pdf", plot = convergencePlot, width = 6.5, height = 8, units = "in" )
+ggsave( "./velocityFieldIntegrationConvergence.pdf", plot = convergencePlot, width = 6.5, height = 4, units = "in" )

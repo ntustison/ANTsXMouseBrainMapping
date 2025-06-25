@@ -77,9 +77,15 @@ emphasize anatomical boundary correspondence.
 \begin{figure}[!htb]
 \centering
 \includegraphics[width=0.99\textwidth]{Figures/convergence.pdf}
-\caption{Convergence of velocity field optimization across the DevCCF
-developmental trajectory. Integration points (color-coded) are distributed along
-the log-scaled time axis.}
+\caption{Convergence and evaluation of the velocity flow model across the DevCCF
+developmental trajectory. (Top left) Total distance error and (top right)
+per-integation-point error across optimization iterations. where integration
+spans the full range from embryonic (E11.5) to postnatal (P56) templates
+(right). (Bottom) Comparison of segmentation overlap accuracy (Dice score)
+between the velocity flow model and conventional pairwise SyN registration
+across intermediate DevCCF timepoints. The velocity model achieves comparable
+accuracy to SyN while also allowing for a smooth continuous deformation across
+the entire developmental trajectory.}
 \label{fig:convergence}
 \end{figure}
 
@@ -105,9 +111,13 @@ During each iteration, the velocity field was updated across all 11 integration
 points by computing regularized displacement fields between warped point sets at
 adjacent time slices. Updates were applied using a step size of $\delta = 0.2$.
 Convergence was assessed via average displacement error across all points, with
-final convergence achieved after $\sim125$ iterations (Figure \ref{fig:convergence},
-left panel). Median errors across integration points also trended toward zero,
-albeit at varying rates.
+final convergence achieved after $\sim125$ iterations (Figure
+\ref{fig:convergence}, left panel). Median errors across integration points also
+trended toward zero, albeit at varying rates.  Using region-based pairwise
+registration with SyN as a performance upper bound at sampled timepoints, we
+find that the velocity flow model achieves comparable accuracy while also
+providing a smooth, continuous deformation across the entire developmental
+trajectory.
 
 
 ### The velocity flow transformation model
