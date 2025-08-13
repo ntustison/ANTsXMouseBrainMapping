@@ -116,16 +116,17 @@ tissue loss. To further constrain alignment and enable deformable registration,
 we derived region-level anatomical labels directly from the gene expression
 data.
 
-**Label creation.** We assigned each detected cell to one of 15 coarse
-anatomical regions (e.g., hippocampus, cortex, striatum—using transcriptomic
-similarity to scRNA) seq reference data. These assignments were aggregated
-across spatial grids to produce probabilistic label maps for each section. To
-ensure full regional coverage, morphological dilation was applied to fill gaps
-between sparsely distributed cells. Finer-resolution structures (e.g., cortical
-layers, habenula) were similarly labeled using marker gene enrichment and
-spatial constraints.  This dual-level labeling (i.e., coarse and fine) allowed
-us to construct a robust anatomical scaffold in the MERFISH coordinate system
-that could be matched to AllenCCFv3 annotations.
+**Label creation.** To assign region labels to the MERFISH data, we use a cell
+type clustering approach previously detailed in [@Yao:2023aa]. In short,
+manually dissected scRNAseq data was used to establish the distribution of cell
+types present in each of the following major regions: cerebellum, CTXsp,
+hindbrain, HPF, hypothalamus, isocortex, LSX, midbrain, OLF, PAL, sAMY, STRd,
+STRv, thalamus and hindbrain. Clusters in the scRNA-seq dataset were then used
+to assign similar clusters of cell types in the MERFISH data to the regions they
+are predominantly found in the scRNA-seq data. To account for clusters that were
+found at low frequency in regions outside its main region we calculated for each
+cell its 50 nearest neighbors in physical space and reassigned each cell to the
+region annotation dominating its neighborhood.
 
 **Section matching via global alignment.** A major challenge was compensating
 for oblique cutting angles and non-uniform section thickness, which distort the

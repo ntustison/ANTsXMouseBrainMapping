@@ -442,12 +442,14 @@ taxonomy.
 
 \textbf{Evaluation.} Alignment quality was evaluated iteratively by an
 expert anatomist, guided by expected gene-marker correspondences to
-AllenCCFv3 regions. As previously reported\textsuperscript{49}, of the
-554 terminal gray matter regions in the AllenCCFv3, only seven small
-subregions were not represented in the MERFISH dataset: frontal pole
-layer 1 (FRP1), FRP2/3, FRP5; accessory olfactory bulb glomerular
-(AOBgl), granular (AOBgr), and mitral (AOBmi) layers; and the accessory
-supraoptic group (ASO).
+AllenCCFv3 regions. As previously reported\textsuperscript{49}, further
+assessment of the alignment showed that, of the 554 terminal regions
+(gray matter only in the AllenCCFv3), only seven small subregions did
+not contain cells from the MERFISH dataset post registration: frontal
+pole, layer 1 (FRP1), FRP2/3, FRP5; accessory olfactory bulb, glomerular
+layer (AOBgl); accessory olfactory bulb, granular layer (AOBgr);
+accessory olfactory bulb, mitral layer (AOBmi); and accessory supraoptic
+group (ASO).
 
 \subsubsection{Mapping fluorescence micro-optical sectioning tomography
 (fMOST)
@@ -1025,18 +1027,19 @@ orientation, spacing, and tissue loss. To further constrain alignment
 and enable deformable registration, we derived region-level anatomical
 labels directly from the gene expression data.
 
-\textbf{Label creation.} We assigned each detected cell to one of 15
-coarse anatomical regions (e.g., hippocampus, cortex, striatum---using
-transcriptomic similarity to scRNA) seq reference data. These
-assignments were aggregated across spatial grids to produce
-probabilistic label maps for each section. To ensure full regional
-coverage, morphological dilation was applied to fill gaps between
-sparsely distributed cells. Finer-resolution structures (e.g., cortical
-layers, habenula) were similarly labeled using marker gene enrichment
-and spatial constraints. This dual-level labeling (i.e., coarse and
-fine) allowed us to construct a robust anatomical scaffold in the
-MERFISH coordinate system that could be matched to AllenCCFv3
-annotations.
+\textbf{Label creation.} To assign region labels to the MERFISH data, we
+use a cell type clustering approach previously detailed
+in\textsuperscript{49}. In short, manually dissected scRNAseq data was
+used to establish the distribution of cell types present in each of the
+following major regions: cerebellum, CTXsp, hindbrain, HPF,
+hypothalamus, isocortex, LSX, midbrain, OLF, PAL, sAMY, STRd, STRv,
+thalamus and hindbrain. Clusters in the scRNA-seq dataset were then used
+to assign similar clusters of cell types in the MERFISH data to the
+regions they are predominantly found in the scRNA-seq data. To account
+for clusters that were found at low frequency in regions outside its
+main region we calculated for each cell its 50 nearest neighbors in
+physical space and reassigned each cell to the region annotation
+dominating its neighborhood.
 
 \textbf{Section matching via global alignment.} A major challenge was
 compensating for oblique cutting angles and non-uniform section
