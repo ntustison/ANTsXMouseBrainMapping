@@ -38,9 +38,7 @@ complicate alignment. Also, while alternative strategies for mapping single-cell
 spatial transcriptomic data exist (e.g., gene expression–based models such as
 Tangram [@Biancalani:2021aa]) this work focuses on image-based anatomical
 alignment to common coordinate frameworks using spatially resolved reference
-images.
-
-Given this diversity specialized strategies are often needed to address
+images.  Given this diversity specialized strategies are often needed to address
 the unique, modality-specific challenges.  
 
 Existing mapping solutions fall into three broad categories. The first includes

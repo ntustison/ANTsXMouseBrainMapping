@@ -17,5 +17,4 @@ open-source and reproducible. We also provide general guidance for selecting
 appropriate strategies across modalities, enabling researchers to adapt these
 tools to new data.
 
-
 \clearpage

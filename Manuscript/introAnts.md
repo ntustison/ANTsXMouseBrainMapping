@@ -12,10 +12,13 @@ ANTsX development is based on foundational approaches to image mapping
 key contributions such as the Symmetric Normalization (SyN) algorithm
 [@Avants:2008aa]. It has been independently evaluated in diverse imaging domains
 including multi-site brain MRI [@Klein:2009aa], pulmonary CT [@Murphy:2011aa],
-and multi-modal brain tumor registration [@Baheti:2021aa].
+and multi-modal brain tumor registration [@Baheti:2021aa].  More recent
+contributions for mouse-specific applications showcase multimodal template
+generation [@Kronman:2024aa] and anatomy-aware registration [@Roston]
+ANTsX functionality.
 
 Beyond registration, ANTsX provides functionality for template generation
-[@Avants:2010aa], intensity-based segmentation [@Avants:2011uf], preprocessing
+[@Avants:2010aa], segmentation [@Avants:2011uf], preprocessing
 [@Manjon:2010aa;@Tustison:2010ac], and deep learning [@Tustison:2021aa]. It has
 demonstrated strong performance in consensus labeling [@Wang:2013ab], brain
 tumor segmentation [@Tustison:2014aa], and cardiac motion estimation
@@ -27,7 +30,7 @@ imaging modalities into CCFs. These tools span multiple classes of mapping
 problems: cross-modality image registration, landmark-driven alignment, temporal
 interpolation across developmental stages, and deep learning–based segmentation.
 As such, they also serve as illustrative case studies for adapting ANTsX tools
-to other use cases We describe both shared infrastructure and targeted
+to other use cases.  We describe both shared infrastructure and targeted
 strategies adapted to the specific challenges of each modality.  This paper
 highlights usage across distinct BICCN projects such as spatial transcriptomic
 data from MERFISH, structural data from fMOST, and multimodal developmental data

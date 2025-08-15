@@ -28,10 +28,8 @@ defined by a time-varying velocity field (i.e., a smooth vector field defined
 over space and time that governs the continuous deformation of an image domain),
 allows direct computation of deformations between any two time points in the
 continuum which improves smoothness and enables flexible spatiotemporal
-alignment. 
-
-This functionality is implemented in both ANTsR and ANTsPy
-(`ants.fit_time_varying_transform_to_point_sets(...)`) and integrates seamlessly
+alignment. This functionality is implemented in both ANTsR and ANTsPy
+(see `ants.fit_time_varying_transform_to_point_sets(...)`) and integrates seamlessly
 with existing ANTsX workflows.  The velocity field is represented as a 4D ITK
 image where each voxel stores the $x$,$y$,$z$ components of motion at a given
 time point.  Integration of the time-varying velocity field uses uses 4$^{th}$ 
@@ -77,15 +75,16 @@ emphasize anatomical boundary correspondence.
 \begin{figure}[!htb]
 \centering
 \includegraphics[width=0.99\textwidth]{Figures/convergence.pdf}
-\caption{Convergence and evaluation of the velocity flow model across the DevCCF
-developmental trajectory. (Top left) Total distance error and (top right)
-per-integation-point error across optimization iterations. where integration
-spans the full range from embryonic (E11.5) to postnatal (P56) templates
-(right). (Bottom) Comparison of segmentation overlap accuracy (Dice score)
-between the velocity flow model and conventional pairwise SyN registration
-across intermediate DevCCF timepoints. The velocity model achieves comparable
-accuracy to SyN while also allowing for a smooth continuous deformation across
-the entire developmental trajectory.}
+\caption{Convergence and evaluation of the velocity flow model across the
+DevCCF developmental trajectory. (Top left) Total displacement error over
+iterations. (Top right) Median displacement error per integration point across
+the optimization timeline, spanning embryonic (E11.5) to postnatal (P56) stages.
+(Bottom) Dice similarity scores comparing region-level label overlap between:
+(1) conventional pairwise SyN registration and (2) velocity flow-based
+deformation, across intermediate timepoints. Using region-based pairwise
+registration with SyN as a performance upper bound, the velocity flow model
+achieves comparable accuracy while also enabling smooth, continuous deformation
+across the full developmental continuum.}
 \label{fig:convergence}
 \end{figure}
 
@@ -113,12 +112,11 @@ adjacent time slices. Updates were applied using a step size of $\delta = 0.2$.
 Convergence was assessed via average displacement error across all points, with
 final convergence achieved after $\sim125$ iterations (Figure
 \ref{fig:convergence}, left panel). Median errors across integration points also
-trended toward zero, albeit at varying rates.  Using region-based pairwise
-registration with SyN as a performance upper bound at sampled timepoints, we
-find that the velocity flow model achieves comparable accuracy while also
-providing a smooth, continuous deformation across the entire developmental
-trajectory.
-
+trended toward zero, albeit at varying rates.  To benchmark performance, we
+compared the velocity model’s region-based alignment to traditional pairwise
+registration using SyN, a widely used diffeomorphic algorithm. The velocity
+model achieved comparable Dice scores at sampled timepoints while additionally
+offering smooth interpolation across the entire developmental trajectory.
 
 ### The velocity flow transformation model
 

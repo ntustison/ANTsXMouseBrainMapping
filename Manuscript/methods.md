@@ -117,7 +117,7 @@ we derived region-level anatomical labels directly from the gene expression
 data.
 
 **Label creation.** To assign region labels to the MERFISH data, we use a cell
-type clustering approach previously detailed in [@Yao:2023aa]. In short,
+type clustering approach previously detailed [@Yao:2023aa]. In short,
 manually dissected scRNAseq data was used to establish the distribution of cell
 types present in each of the following major regions: cerebellum, CTXsp,
 hindbrain, HPF, hypothalamus, isocortex, LSX, midbrain, OLF, PAL, sAMY, STRd,

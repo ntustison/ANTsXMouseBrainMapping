@@ -123,7 +123,6 @@ open-source and reproducible. We also provide general guidance for selecting
 appropriate strategies across modalities, enabling researchers to adapt these
 tools to new data.
 
-
 \clearpage# Introduction
 
 Over the past decade, there have been significant advancements in mesoscopic
@@ -164,9 +163,7 @@ complicate alignment. Also, while alternative strategies for mapping single-cell
 spatial transcriptomic data exist (e.g., gene expression–based models such as
 Tangram [@Biancalani:2021aa]) this work focuses on image-based anatomical
 alignment to common coordinate frameworks using spatially resolved reference
-images.
-
-Given this diversity specialized strategies are often needed to address
+images.  Given this diversity specialized strategies are often needed to address
 the unique, modality-specific challenges.  
 
 Existing mapping solutions fall into three broad categories. The first includes
@@ -224,10 +221,13 @@ ANTsX development is based on foundational approaches to image mapping
 key contributions such as the Symmetric Normalization (SyN) algorithm
 [@Avants:2008aa]. It has been independently evaluated in diverse imaging domains
 including multi-site brain MRI [@Klein:2009aa], pulmonary CT [@Murphy:2011aa],
-and multi-modal brain tumor registration [@Baheti:2021aa].
+and multi-modal brain tumor registration [@Baheti:2021aa].  More recent
+contributions for mouse-specific applications showcase multimodal template
+generation [@Kronman:2024aa] and anatomy-aware registration [@Roston]
+ANTsX functionality.
 
 Beyond registration, ANTsX provides functionality for template generation
-[@Avants:2010aa], intensity-based segmentation [@Avants:2011uf], preprocessing
+[@Avants:2010aa], segmentation [@Avants:2011uf], preprocessing
 [@Manjon:2010aa;@Tustison:2010ac], and deep learning [@Tustison:2021aa]. It has
 demonstrated strong performance in consensus labeling [@Wang:2013ab], brain
 tumor segmentation [@Tustison:2014aa], and cardiac motion estimation
@@ -239,7 +239,7 @@ imaging modalities into CCFs. These tools span multiple classes of mapping
 problems: cross-modality image registration, landmark-driven alignment, temporal
 interpolation across developmental stages, and deep learning–based segmentation.
 As such, they also serve as illustrative case studies for adapting ANTsX tools
-to other use cases We describe both shared infrastructure and targeted
+to other use cases.  We describe both shared infrastructure and targeted
 strategies adapted to the specific challenges of each modality.  This paper
 highlights usage across distinct BICCN projects such as spatial transcriptomic
 data from MERFISH, structural data from fMOST, and multimodal developmental data
@@ -413,10 +413,8 @@ defined by a time-varying velocity field (i.e., a smooth vector field defined
 over space and time that governs the continuous deformation of an image domain),
 allows direct computation of deformations between any two time points in the
 continuum which improves smoothness and enables flexible spatiotemporal
-alignment. 
-
-This functionality is implemented in both ANTsR and ANTsPy
-(`ants.fit_time_varying_transform_to_point_sets(...)`) and integrates seamlessly
+alignment. This functionality is implemented in both ANTsR and ANTsPy
+(see `ants.fit_time_varying_transform_to_point_sets(...)`) and integrates seamlessly
 with existing ANTsX workflows.  The velocity field is represented as a 4D ITK
 image where each voxel stores the $x$,$y$,$z$ components of motion at a given
 time point.  Integration of the time-varying velocity field uses uses 4$^{th}$ 
@@ -462,15 +460,16 @@ emphasize anatomical boundary correspondence.
 \begin{figure}[!htb]
 \centering
 \includegraphics[width=0.99\textwidth]{Figures/convergence.pdf}
-\caption{Convergence and evaluation of the velocity flow model across the DevCCF
-developmental trajectory. (Top left) Total distance error and (top right)
-per-integation-point error across optimization iterations. where integration
-spans the full range from embryonic (E11.5) to postnatal (P56) templates
-(right). (Bottom) Comparison of segmentation overlap accuracy (Dice score)
-between the velocity flow model and conventional pairwise SyN registration
-across intermediate DevCCF timepoints. The velocity model achieves comparable
-accuracy to SyN while also allowing for a smooth continuous deformation across
-the entire developmental trajectory.}
+\caption{Convergence and evaluation of the velocity flow model across the
+DevCCF developmental trajectory. (Top left) Total displacement error over
+iterations. (Top right) Median displacement error per integration point across
+the optimization timeline, spanning embryonic (E11.5) to postnatal (P56) stages.
+(Bottom) Dice similarity scores comparing region-level label overlap between:
+(1) conventional pairwise SyN registration and (2) velocity flow-based
+deformation, across intermediate timepoints. Using region-based pairwise
+registration with SyN as a performance upper bound, the velocity flow model
+achieves comparable accuracy while also enabling smooth, continuous deformation
+across the full developmental continuum.}
 \label{fig:convergence}
 \end{figure}
 
@@ -498,12 +497,11 @@ adjacent time slices. Updates were applied using a step size of $\delta = 0.2$.
 Convergence was assessed via average displacement error across all points, with
 final convergence achieved after $\sim125$ iterations (Figure
 \ref{fig:convergence}, left panel). Median errors across integration points also
-trended toward zero, albeit at varying rates.  Using region-based pairwise
-registration with SyN as a performance upper bound at sampled timepoints, we
-find that the velocity flow model achieves comparable accuracy while also
-providing a smooth, continuous deformation across the entire developmental
-trajectory.
-
+trended toward zero, albeit at varying rates.  To benchmark performance, we
+compared the velocity model’s region-based alignment to traditional pairwise
+registration using SyN, a widely used diffeomorphic algorithm. The velocity
+model achieved comparable Dice scores at sampled timepoints while additionally
+offering smooth interpolation across the entire developmental trajectory.
 
 ### The velocity flow transformation model
 
