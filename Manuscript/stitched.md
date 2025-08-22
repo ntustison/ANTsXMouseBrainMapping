@@ -77,7 +77,7 @@ James C. Gee$^{2}$
 
 $^{1}$Department of Radiology and Medical Imaging, University of Virginia, Charlottesville, VA \\
 $^{2}$Department of Radiology, University of Pennsylvania, Philadelphia, PA \\
-$^{3}$Department of Neural and Behavioral Sciences, Penn State University, Hershey, PA \\
+$^{3}$Department of Neuroscience and Experimental Therapeutics, Penn State University, Hershey, PA \\
 $^{4}$Allen Institute for Brain Science, Seattle, WA \\
 
 \end{centering}
@@ -396,7 +396,7 @@ functionality for generating a velocity flow model.}
 \end{figure} 
 
 The DevCCF is an openly accessible resource for the mouse brain research
-community [@Kronman:2023aa], comprising symmetric, multi-modal MRI and LSFM
+community [@Kronman:2024aa], comprising symmetric, multi-modal MRI and LSFM
 templates generated using the ANTsX framework [@Avants:2010aa]. It spans key
 stages of mouse brain development (E11.5, E13.5, E15.5, E18.5, P4, P14, and P56)
 and includes structural labels defined by a developmental ontology. The DevCCF
@@ -871,7 +871,7 @@ we derived region-level anatomical labels directly from the gene expression
 data.
 
 **Label creation.** To assign region labels to the MERFISH data, we use a cell
-type clustering approach previously detailed in [@Yao:2023aa]. In short,
+type clustering approach previously detailed [@Yao:2023aa]. In short,
 manually dissected scRNAseq data was used to establish the distribution of cell
 types present in each of the following major regions: cerebellum, CTXsp,
 hindbrain, HPF, hypothalamus, isocortex, LSX, midbrain, OLF, PAL, sAMY, STRd,
@@ -1106,25 +1106,27 @@ cortical thickness pipeline, we refer the interested reader to
 
 # Acknowledgments {-}
 
+NIH RF1MH124605
+
 Support for the research reported in this work includes funding from the
 National Institute of Biomedical Imaging and Bioengineering (R01-EB031722)
-and National Institute of Mental Health (RF1-MH124605 and U24-MH114827).
+and National Institute of Mental Health (RF1-MH124605, U24-MH114827, and
+NIH RF1MH124605 to Y.K.).
 
 We also acknowledge the data contribution of Dr. Adam Raikes (GitHub \@araikes) 
 of the Center for Innovation in Brain Science at the University of Arizona 
 for refining the weights of the mouse brain extraction network.  
 
-
 \clearpage
 
 # Author contributions {-}
 
-N.T., M.C., and J.G. wrote the main manuscript text and figures.  M.C.,
-M.K., R.D., S.S., Q.W., L.G., J.D., C.G., and J.G. developed the Allen 
-registration pipelines.  N.T. and F.K. developed the time-varying velocity
-transformation model for the DevCCF.  N.T. and M.T. developed the brain 
-parcellation and cortical thickness methodology.  All authors reviewed 
-the manuscript.
+N.T., M.C., and J.G. wrote the main manuscript text and figures.  M.C., M.K.,
+R.D., S.S., Q.W., L.G., J.D., C.G., and J.G. developed the Allen registration
+pipelines.  N.T., F.K., and Y.K. developed the time-varying velocity
+transformation model for the DevCCF.  N.T. and M.T. developed the brain
+parcellation and cortical thickness methodology.  All authors reviewed the
+manuscript.
 \clearpage
 
 # References {-}

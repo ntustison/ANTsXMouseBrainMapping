@@ -164,7 +164,7 @@ James C. Gee$^{2}$
 
 $^{1}$Department of Radiology and Medical Imaging, University of Virginia, Charlottesville, VA \\
 $^{2}$Department of Radiology, University of Pennsylvania, Philadelphia, PA \\
-$^{3}$Department of Neural and Behavioral Sciences, Penn State University, Hershey, PA \\
+$^{3}$Department of Neuroscience and Experimental Therapeutics, Penn State University, Hershey, PA \\
 $^{4}$Allen Institute for Brain Science, Seattle, WA \\
 
 \end{centering}
@@ -515,7 +515,7 @@ functionality for generating a velocity flow model.}
 \end{figure}
 
 The DevCCF is an openly accessible resource for the mouse brain research
-community\textsuperscript{81}, comprising symmetric, multi-modal MRI and
+community\textsuperscript{16}, comprising symmetric, multi-modal MRI and
 LSFM templates generated using the ANTsX framework\textsuperscript{59}.
 It spans key stages of mouse brain development (E11.5, E13.5, E15.5,
 E18.5, P4, P14, and P56) and includes structural labels defined by a
@@ -541,7 +541,7 @@ is represented as a 4D ITK image where each voxel stores the
 \(x\),\(y\),\(z\) components of motion at a given time point.
 Integration of the time-varying velocity field uses uses 4\(^{th}\)
 order Runge-Kutta
-(\texttt{ants.integrate\_velocity\_field(...)})\textsuperscript{82}.
+(\texttt{ants.integrate\_velocity\_field(...)})\textsuperscript{81}.
 
 \subsubsection{Data}\label{data}
 
@@ -683,14 +683,14 @@ voxelwise cortical thickness estimation.}
 
 Structural labeling strategies for the mouse brain are essential for
 understanding the organization and function of the murine nervous
-system\textsuperscript{83}. By dividing the brain into anatomically or
+system\textsuperscript{82}. By dividing the brain into anatomically or
 functionally defined regions, researchers can localize biological
 processes, relate regional features to behavior, or quantify spatial
-variation in gene expression patterns\textsuperscript{84,85}. While deep
+variation in gene expression patterns\textsuperscript{83,84}. While deep
 learning techniques have yielded robust segmentation and labeling tools
-for the human brain (e.g., SynthSeg\textsuperscript{86},
+for the human brain (e.g., SynthSeg\textsuperscript{85},
 ANTsXNet\textsuperscript{45}), analogous development for mouse data
-(e.g., MEMOS\textsuperscript{87}) has been limited. Mouse neuroimaging
+(e.g., MEMOS\textsuperscript{86}) has been limited. Mouse neuroimaging
 often presents unique challenges, such as highly anisotropic sampling,
 that complicate transfer of existing tools. At the same time, high
 resolution resources like the AllenCCFv3 and DevCCF provide reference
@@ -713,7 +713,7 @@ dataset\textsuperscript{69} comprises 88 specimens acquired in three
 orthogonal 2D views (coronal, axial, sagittal) at \(0.08 \times 0.08\)
 mm\(^3\) in-plane resolution with 0.5 mm slice thickness. These
 orthogonal 2D acquisitions were reconstructed into high-resolution 3D
-volumes using a B-spline fitting algorithm\textsuperscript{88}. Using
+volumes using a B-spline fitting algorithm\textsuperscript{87}. Using
 this synthesized dataset and the CAMRI images, we created two
 ANTsX-based population templates\textsuperscript{59}, each paired with a
 manually delineated brain mask. These served as the basis for training
@@ -936,7 +936,7 @@ denoising\textsuperscript{61} has been implemented as
 
 \textbf{Image registration.} ANTsX includes a robust and flexible
 framework for pairwise and groupwise image
-registration\textsuperscript{82}. At its core is the SyN
+registration\textsuperscript{81}. At its core is the SyN
 algorithm\textsuperscript{50}, a symmetric diffeomorphic model with
 optional B-spline regularization\textsuperscript{67}. In ANTsPy,
 registration is performed via \texttt{ants.registration(...)} using
@@ -1030,10 +1030,10 @@ and enable deformable registration, we derived region-level anatomical
 labels directly from the gene expression data.
 
 \textbf{Label creation.} To assign region labels to the MERFISH data, we
-use a cell type clustering approach previously detailed
-in\textsuperscript{49}. In short, manually dissected scRNAseq data was
-used to establish the distribution of cell types present in each of the
-following major regions: cerebellum, CTXsp, hindbrain, HPF,
+use a cell type clustering approach previously
+detailed\textsuperscript{49}. In short, manually dissected scRNAseq data
+was used to establish the distribution of cell types present in each of
+the following major regions: cerebellum, CTXsp, hindbrain, HPF,
 hypothalamus, isocortex, LSX, midbrain, OLF, PAL, sAMY, STRd, STRv,
 thalamus and hindbrain. Clusters in the scRNA-seq dataset were then used
 to assign similar clusters of cell types in the MERFISH data to the
@@ -1106,7 +1106,7 @@ region.
 
 \textbf{Velocity field fitting.} Using these point sets, we fit a
 continuous velocity field over developmental time using a generalized
-B-spline scattered data approximation method\textsuperscript{88}. The
+B-spline scattered data approximation method\textsuperscript{87}. The
 field was parameterized over a log-scaled time axis to ensure finer
 temporal resolution during early embryonic stages, where morphological
 changes are most rapid. Optimization proceeded for approximately 125
@@ -1146,10 +1146,10 @@ and heterogeneous acquisition protocols.
 setup}\label{deep-learning-training-setup}
 
 All network-based approaches were implemented using a standard
-U-net\textsuperscript{89} architecture and hyperparameters previously
+U-net\textsuperscript{88} architecture and hyperparameters previously
 evaluated in ANTsXNet pipelines for human brain
 imaging\textsuperscript{45}. This design follows the `no-new-net'
-principle\textsuperscript{90}, which demonstrates that a
+principle\textsuperscript{89}, which demonstrates that a
 well-configured, conventional U-net can achieve robust and competitive
 performance across a wide range of biomedical segmentation tasks with
 little to no architectural modifications from the original. Both
@@ -1185,7 +1185,7 @@ applied both intensity- and shape-based augmentation strategies:
     \texttt{antspynet.simulate\_bias\_field(...)}
   \item
     Histogram warping to simulate contrast
-    variation\textsuperscript{91}:\\
+    variation\textsuperscript{90}:\\
     \texttt{antspynet.histogram\_warp\_image\_intensities(...)}
   \end{itemize}
 \item
@@ -1211,7 +1211,7 @@ from orthogonal 2D acquisitions using B-spline--based volumetric
 synthesis via
 \texttt{ants.fit\_bspline\_object\_to\_scattered\_data(...)}. Normalized
 gradient magnitude was used as a weighting function to emphasize
-boundaries during reconstruction\textsuperscript{88}.
+boundaries during reconstruction\textsuperscript{87}.
 
 This training strategy provides strong spatial priors despite limited
 data by leveraging high-quality template images and aggressive
@@ -1307,10 +1307,12 @@ interested reader to
 \section*{Acknowledgments}\label{acknowledgments}
 \addcontentsline{toc}{section}{Acknowledgments}
 
+NIH RF1MH124605
+
 Support for the research reported in this work includes funding from the
 National Institute of Biomedical Imaging and Bioengineering
-(R01-EB031722) and National Institute of Mental Health (RF1-MH124605 and
-U24-MH114827).
+(R01-EB031722) and National Institute of Mental Health (RF1-MH124605,
+U24-MH114827, and NIH RF1MH124605 to Y.K.).
 
 We also acknowledge the data contribution of Dr.~Adam Raikes (GitHub
 @araikes) of the Center for Innovation in Brain Science at the
@@ -1324,7 +1326,7 @@ extraction network.
 
 N.T., M.C., and J.G. wrote the main manuscript text and figures. M.C.,
 M.K., R.D., S.S., Q.W., L.G., J.D., C.G., and J.G. developed the Allen
-registration pipelines. N.T. and F.K. developed the time-varying
+registration pipelines. N.T., F.K., and Y.K. developed the time-varying
 velocity transformation model for the DevCCF. N.T. and M.T. developed
 the brain parcellation and cortical thickness methodology. All authors
 reviewed the manuscript. \clearpage
@@ -1880,56 +1882,50 @@ patterns revealed by reconstruction of individual neurons in
 orbitofrontal cortex}. \emph{Neurosci Bull} \textbf{37}, 461--477
 (2021).}
 
-\bibitem[\citeproctext]{ref-Kronman:2023aa}
-\CSLLeftMargin{81. }%
-\CSLRightInline{Kronman, F. A. \emph{et al.} Developmental mouse brain
-common coordinate framework. \emph{bioRxiv} (2023)
-doi:\href{https://doi.org/10.1101/2023.09.14.557789}{10.1101/2023.09.14.557789}.}
-
 \bibitem[\citeproctext]{ref-Avants:2014aa}
-\CSLLeftMargin{82. }%
+\CSLLeftMargin{81. }%
 \CSLRightInline{Avants, B. B. \emph{et al.}
 \href{https://doi.org/10.3389/fninf.2014.00044}{The {Insight} {ToolKit}
 image registration framework}. \emph{Front Neuroinform} \textbf{8}, 44
 (2014).}
 
 \bibitem[\citeproctext]{ref-Chon:2019aa}
-\CSLLeftMargin{83. }%
+\CSLLeftMargin{82. }%
 \CSLRightInline{Chon, U., Vanselow, D. J., Cheng, K. C. \& Kim, Y.
 \href{https://doi.org/10.1038/s41467-019-13057-w}{Enhanced and unified
 anatomical labeling for a common mouse brain atlas}. \emph{Nat Commun}
 \textbf{10}, 5067 (2019).}
 
 \bibitem[\citeproctext]{ref-Tasic:2016aa}
-\CSLLeftMargin{84. }%
+\CSLLeftMargin{83. }%
 \CSLRightInline{Tasic, B. \emph{et al.}
 \href{https://doi.org/10.1038/nn.4216}{Adult mouse cortical cell
 taxonomy revealed by single cell transcriptomics}. \emph{Nat Neurosci}
 \textbf{19}, 335--46 (2016).}
 
 \bibitem[\citeproctext]{ref-Bergmann:2020aa}
-\CSLLeftMargin{85. }%
+\CSLLeftMargin{84. }%
 \CSLRightInline{Bergmann, E., Gofman, X., Kavushansky, A. \& Kahn, I.
 \href{https://doi.org/10.1038/s42003-020-01472-5}{Individual variability
 in functional connectivity architecture of the mouse brain}.
 \emph{Commun Biol} \textbf{3}, 738 (2020).}
 
 \bibitem[\citeproctext]{ref-Billot:2023aa}
-\CSLLeftMargin{86. }%
+\CSLLeftMargin{85. }%
 \CSLRightInline{Billot, B. \emph{et al.}
 \href{https://doi.org/10.1016/j.media.2023.102789}{SynthSeg:
 Segmentation of brain MRI scans of any contrast and resolution without
 retraining}. \emph{Med Image Anal} \textbf{86}, 102789 (2023).}
 
 \bibitem[\citeproctext]{ref-Rolfe:2023aa}
-\CSLLeftMargin{87. }%
+\CSLLeftMargin{86. }%
 \CSLRightInline{Rolfe, S. M., Whikehart, S. M. \& Maga, A. M.
 \href{https://doi.org/10.1242/bio.059698}{Deep learning enabled
 multi-organ segmentation of mouse embryos}. \emph{Biol Open}
 \textbf{12}, bio059698 (2023).}
 
 \bibitem[\citeproctext]{ref-Tustison:2006aa}
-\CSLLeftMargin{88. }%
+\CSLLeftMargin{87. }%
 \CSLRightInline{Tustison, N. J. \& Amini, A. A.
 \href{https://doi.org/10.1109/TMI.2005.861015}{Biventricular myocardial
 strains via nonrigid registration of anatomical {NURBS} model
@@ -1937,14 +1933,14 @@ strains via nonrigid registration of anatomical {NURBS} model
 (2006).}
 
 \bibitem[\citeproctext]{ref-Falk:2019aa}
-\CSLLeftMargin{89. }%
+\CSLLeftMargin{88. }%
 \CSLRightInline{Falk, T. \emph{et al.}
 \href{https://doi.org/10.1038/s41592-018-0261-2}{U-net: Deep learning
 for cell counting, detection, and morphometry}. \emph{Nat Methods}
 \textbf{16}, 67--70 (2019).}
 
 \bibitem[\citeproctext]{ref-Isensee:2021aa}
-\CSLLeftMargin{90. }%
+\CSLLeftMargin{89. }%
 \CSLRightInline{Isensee, F., Jaeger, P. F., Kohl, S. A. A., Petersen, J.
 \& Maier-Hein, K. H.
 \href{https://doi.org/10.1038/s41592-020-01008-z}{nnU-net: A
@@ -1952,7 +1948,7 @@ self-configuring method for deep learning-based biomedical image
 segmentation}. \emph{Nat Methods} \textbf{18}, 203--211 (2021).}
 
 \bibitem[\citeproctext]{ref-Tustison:2021ab}
-\CSLLeftMargin{91. }%
+\CSLLeftMargin{90. }%
 \CSLRightInline{Tustison, N. J. \emph{et al.}
 \href{https://doi.org/10.1002/mrm.28908}{Image- versus histogram-based
 considerations in semantic segmentation of pulmonary hyperpolarized gas

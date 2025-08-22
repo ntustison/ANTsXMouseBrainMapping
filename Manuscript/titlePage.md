@@ -35,7 +35,7 @@ James C. Gee$^{2}$
 
 $^{1}$Department of Radiology and Medical Imaging, University of Virginia, Charlottesville, VA \\
 $^{2}$Department of Radiology, University of Pennsylvania, Philadelphia, PA \\
-$^{3}$Department of Neural and Behavioral Sciences, Penn State University, Hershey, PA \\
+$^{3}$Department of Neuroscience and Experimental Therapeutics, Penn State University, Hershey, PA \\
 $^{4}$Allen Institute for Brain Science, Seattle, WA \\
 
 \end{centering}

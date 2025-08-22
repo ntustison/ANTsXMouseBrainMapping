@@ -11,7 +11,7 @@ functionality for generating a velocity flow model.}
 \end{figure} 
 
 The DevCCF is an openly accessible resource for the mouse brain research
-community [@Kronman:2023aa], comprising symmetric, multi-modal MRI and LSFM
+community [@Kronman:2024aa], comprising symmetric, multi-modal MRI and LSFM
 templates generated using the ANTsX framework [@Avants:2010aa]. It spans key
 stages of mouse brain development (E11.5, E13.5, E15.5, E18.5, P4, P14, and P56)
 and includes structural labels defined by a developmental ontology. The DevCCF
