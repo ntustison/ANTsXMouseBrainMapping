@@ -13,7 +13,6 @@ output:
     fig_caption: true
 bibliography:
   - references.bib
-  - references2.bib
 csl: nature.csl
 longtable: true
 urlcolor: blue

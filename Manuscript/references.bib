@@ -1,12 +1,132 @@
 %% This BibTeX bibliography file was created using BibDesk.
 %% https://bibdesk.sourceforge.io/
 
-%% Created for Nick Tustison at 2025-08-15 14:06:29 -0700 
+%% Created for Nick Tustison at 2025-08-22 13:01:48 -0700 
 
 
 %% Saved with string encoding Unicode (UTF-8) 
 
 
+
+@article{Manjon:2010aa,
+	abstract = {PURPOSE: To adapt the so-called nonlocal means filter to deal with magnetic resonance (MR) images with spatially varying noise levels (for both Gaussian and Rician distributed noise).
+MATERIALS AND METHODS: Most filtering techniques assume an equal noise distribution across the image. When this assumption is not met, the resulting filtering becomes suboptimal. This is the case of MR images with spatially varying noise levels, such as those obtained by parallel imaging (sensitivity-encoded), intensity inhomogeneity-corrected images, or surface coil-based acquisitions. We propose a new method where information regarding the local image noise level is used to adjust the amount of denoising strength of the filter. Such information is automatically obtained from the images using a new local noise estimation method.
+RESULTS: The proposed method was validated and compared with the standard nonlocal means filter on simulated and real MRI data showing an improved performance in all cases.
+CONCLUSION: The new noise-adaptive method was demonstrated to outperform the standard filter when spatially varying noise is present in the images.},
+	author = {Manj\'{o}n, Jos\'{e} V and Coup\'{e}, Pierrick and Mart\'{i}-Bonmat\'{i}, Luis and Collins, D Louis and Robles, Montserrat},
+	date-added = {2025-08-22 12:54:49 -0700},
+	date-modified = {2025-08-22 12:54:49 -0700},
+	doi = {10.1002/jmri.22003},
+	journal = {J Magn Reson Imaging},
+	journal-full = {Journal of magnetic resonance imaging : JMRI},
+	mesh = {Algorithms; Artifacts; Brain; Humans; Image Enhancement; Image Interpretation, Computer-Assisted; Magnetic Resonance Imaging; Phantoms, Imaging; Reproducibility of Results; Sensitivity and Specificity; Signal Processing, Computer-Assisted},
+	month = {Jan},
+	number = {1},
+	pages = {192-203},
+	pmid = {20027588},
+	pst = {ppublish},
+	title = {Adaptive non-local means denoising of {MR} images with spatially varying noise levels},
+	volume = {31},
+	year = {2010},
+	bdsk-url-1 = {http://dx.doi.org/10.1002/jmri.22003}}
+
+@article{Wang:2013ab,
+	abstract = {Multi-atlas segmentation is an effective approach for automatically labeling objects of interest in biomedical images. In this approach, multiple expert-segmented example images, called atlases, are registered to a target image, and deformed atlas segmentations are combined using label fusion. Among the proposed label fusion strategies, weighted voting with spatially varying weight distributions derived from atlas-target intensity similarity have been particularly successful. However, one limitation of these strategies is that the weights are computed independently for each atlas, without taking into account the fact that different atlases may produce similar label errors. To address this limitation, we propose a new solution for the label fusion problem in which weighted voting is formulated in terms of minimizing the total expectation of labeling error and in which pairwise dependency between atlases is explicitly modeled as the joint probability of two atlases making a segmentation error at a voxel. This probability is approximated using intensity similarity between a pair of atlases and the target image in the neighborhood of each voxel. We validate our method in two medical image segmentation problems: hippocampus segmentation and hippocampus subfield segmentation in magnetic resonance (MR) images. For both problems, we show consistent and significant improvement over label fusion strategies that assign atlas weights independently.},
+	author = {Hongzhi Wang and Suh, J W and Das, S R and Pluta, J B and Craige, C and Yushkevich, P A},
+	date-added = {2025-08-22 12:53:26 -0700},
+	date-modified = {2025-08-22 12:53:26 -0700},
+	doi = {10.1109/TPAMI.2012.143},
+	journal = {IEEE Trans Pattern Anal Mach Intell},
+	journal-full = {IEEE transactions on pattern analysis and machine intelligence},
+	month = {Mar},
+	number = {3},
+	pages = {611-23},
+	pmc = {PMC3864549},
+	pmid = {22732662},
+	pst = {ppublish},
+	title = {Multi-Atlas Segmentation with Joint Label Fusion},
+	volume = {35},
+	year = {2013},
+	bdsk-url-1 = {http://dx.doi.org/10.1109/TPAMI.2012.143}}
+
+@incollection{Tustison:2015ab,
+	author = {Tustison, Nicholas J and Yang, Yang and Salerno, Michael},
+	booktitle = {Statistical Atlases and Computational Models of the Heart - Imaging and Modelling Challenges},
+	date-added = {2025-08-22 12:53:16 -0700},
+	date-modified = {2025-08-22 12:53:16 -0700},
+	doi = {10.1007/978-3-319-14678-2_1},
+	editor = {Camara, Oscar and Mansi, Tommaso and Pop, Mihaela and Rhode, Kawal and Sermesant, Maxime and Young, Alistair},
+	isbn = {978-3-319-14677-5},
+	keywords = {ANTs; Image registration; Motion estimation; Myocardial perfusion},
+	language = {English},
+	pages = {3-12},
+	publisher = {Springer International Publishing},
+	series = {Lecture Notes in Computer Science},
+	title = {Advanced Normalization Tools for Cardiac Motion Correction},
+	url = {http://dx.doi.org/10.1007/978-3-319-14678-2_1},
+	volume = {8896},
+	year = {2015},
+	bdsk-url-1 = {http://dx.doi.org/10.1007/978-3-319-14678-2_1}}
+
+@article{Tustison:2014aa,
+	abstract = {Segmenting and quantifying gliomas from MRI is an important task for diagnosis, planning intervention, and for tracking tumor changes over time. However, this task is complicated by the lack of prior knowledge concerning tumor location, spatial extent, shape, possible displacement of normal tissue, and intensity signature. To accommodate such complications, we introduce a framework for supervised segmentation based on multiple modality intensity, geometry, and asymmetry feature sets. These features drive a supervised whole-brain and tumor segmentation approach based on random forest-derived probabilities. The asymmetry-related features (based on optimal symmetric multimodal templates) demonstrate excellent discriminative properties within this framework. We also gain performance by generating probability maps from random forest models and using these maps for a refining Markov random field regularized probabilistic segmentation. This strategy allows us to interface the supervised learning capabilities of the random forest model with regularized probabilistic segmentation using the recently developed ANTsR package-a comprehensive statistical and visualization interface between the popular Advanced Normalization Tools (ANTs) and the R statistical project. The reported algorithmic framework was the top-performing entry in the MICCAI 2013 Multimodal Brain Tumor Segmentation challenge. The challenge data were widely varying consisting of both high-grade and low-grade glioma tumor four-modality MRI from five different institutions. Average Dice overlap measures for the final algorithmic assessment were 0.87, 0.78, and 0.74 for "complete", "core", and "enhanced" tumor components, respectively.},
+	author = {Tustison, Nicholas J and Shrinidhi, K L and Wintermark, Max and Durst, Christopher R and Kandel, Benjamin M and Gee, James C and Grossman, Murray C and Avants, Brian B},
+	date-added = {2025-08-22 12:53:10 -0700},
+	date-modified = {2025-08-22 12:53:10 -0700},
+	doi = {10.1007/s12021-014-9245-2},
+	journal = {Neuroinformatics},
+	journal-full = {Neuroinformatics},
+	month = {Nov},
+	pmid = {25433513},
+	pst = {aheadofprint},
+	title = {Optimal Symmetric Multimodal Templates and Concatenated Random Forests for Supervised Brain Tumor Segmentation (Simplified) with {$ANTsR$}},
+	year = {2014},
+	bdsk-url-1 = {http://dx.doi.org/10.1007/s12021-014-9245-2}}
+
+@article{Murphy:2011aa,
+	abstract = {EMPIRE10 (Evaluation of Methods for Pulmonary Image REgistration 2010) is a public platform for fair and meaningful comparison of registration algorithms which are applied to a database of intrapatient thoracic CT image pairs. Evaluation of nonrigid registration techniques is a nontrivial task. This is compounded by the fact that researchers typically test only on their own data, which varies widely. For this reason, reliable assessment and comparison of different registration algorithms has been virtually impossible in the past. In this work we present the results of the launch phase of EMPIRE10, which comprised the comprehensive evaluation and comparison of 20 individual algorithms from leading academic and industrial research groups. All algorithms are applied to the same set of 30 thoracic CT pairs. Algorithm settings and parameters are chosen by researchers expert in the configuration of their own method and the evaluation is independent, using the same criteria for all participants. All results are published on the EMPIRE10 website (http://empire10.isi.uu.nl). The challenge remains ongoing and open to new participants. Full results from 24 algorithms have been published at the time of writing. This paper details the organization of the challenge, the data and evaluation methods and the outcome of the initial launch with 20 algorithms. The gain in knowledge and future work are discussed.},
+	author = {Murphy, Keelin and van Ginneken, Bram and Reinhardt, Joseph M and Kabus, Sven and Ding, Kai and Deng, Xiang and Cao, Kunlin and Du, Kaifang and Christensen, Gary E and Garcia, Vincent and Vercauteren, Tom and Ayache, Nicholas and Commowick, Olivier and Malandain, Gr{\'e}goire and Glocker, Ben and Paragios, Nikos and Navab, Nassir and Gorbunova, Vladlena and Sporring, Jon and de Bruijne, Marleen and Han, Xiao and Heinrich, Mattias P and Schnabel, Julia A and Jenkinson, Mark and Lorenz, Cristian and Modat, Marc and McClelland, Jamie R and Ourselin, S{\'e}bastien and Muenzing, Sascha E A and Viergever, Max A and De Nigris, Dante and Collins, D Louis and Arbel, Tal and Peroni, Marta and Li, Rui and Sharp, Gregory C and Schmidt-Richberg, Alexander and Ehrhardt, Jan and Werner, Ren{\'e} and Smeets, Dirk and Loeckx, Dirk and Song, Gang and Tustison, Nicholas and Avants, Brian and Gee, James C and Staring, Marius and Klein, Stefan and Stoel, Berend C and Urschler, Martin and Werlberger, Manuel and Vandemeulebroucke, Jef and Rit, Simon and Sarrut, David and Pluim, Josien P W},
+	date-added = {2025-08-22 12:52:53 -0700},
+	date-modified = {2025-08-22 12:52:53 -0700},
+	doi = {10.1109/TMI.2011.2158349},
+	journal = {IEEE Trans Med Imaging},
+	journal-full = {IEEE transactions on medical imaging},
+	mesh = {Algorithms; Animals; Databases, Factual; Lung; Observer Variation; Radiographic Image Enhancement; Radiographic Image Interpretation, Computer-Assisted; Radiography, Thoracic; Reference Standards; Reproducibility of Results; Sensitivity and Specificity; Sheep; Software Validation; Thorax; Tomography, X-Ray Computed},
+	month = {Nov},
+	number = {11},
+	pages = {1901-20},
+	pmid = {21632295},
+	pst = {ppublish},
+	title = {Evaluation of registration methods on thoracic {CT}: the {EMPIRE10} challenge},
+	volume = {30},
+	year = {2011},
+	bdsk-url-1 = {http://dx.doi.org/10.1109/TMI.2011.2158349}}
+
+@inproceedings{Bajcsy:1982aa,
+	author = {R. Bajcsy and C. Broit},
+	booktitle = {{S}ixth {I}nternational {C}onference on {P}attern {R}ecognition ({ICPR}'82)},
+	date-added = {2025-08-22 12:52:39 -0700},
+	date-modified = {2025-08-22 12:52:39 -0700},
+	pages = {351--353},
+	title = {Matching of deformed images},
+	year = {1982}}
+
+@article{Bajcsy:1989aa,
+	author = {Ruzena Bajcsy and Stanislav Kovacic},
+	bibsource = {dblp computer science bibliography, http://dblp.org},
+	biburl = {http://dblp.uni-trier.de/rec/bib/journals/cvgip/BajcsyK89},
+	date-added = {2025-08-22 12:52:39 -0700},
+	date-modified = {2025-08-22 12:52:39 -0700},
+	doi = {10.1016/S0734-189X(89)80014-3},
+	journal = {Computer Vision, Graphics, and Image Processing},
+	number = {1},
+	pages = {1--21},
+	timestamp = {Mon, 04 Sep 2006 12:38:04 +0200},
+	title = {Multiresolution elastic matching},
+	url = {http://dx.doi.org/10.1016/S0734-189X(89)80014-3},
+	volume = {46},
+	year = {1989},
+	bdsk-url-1 = {http://dx.doi.org/10.1016/S0734-189X(89)80014-3}}
 
 @article{Roston,
 	abstract = {Image registration-based volumetric morphometrics have emerged as a valuable method for identifying subtle morphological differences in neuroimaging and other biomedical images. However, accurate registration out-of-the-box remains challenging when overt morphological phenotypes{\textemdash}such as those observed in developmental and comparative studies{\textemdash}are present in a dataset. A new label-informed image registration function developed in the ANTsX ecosystem provides an easy to use, generalizable solution for anatomy-aware registration of a wide diversity of morphological variation. In this approach, segmentations (i.e., labels) provide a priori regional correspondences that guide the registration. These labels can be generated by any method{\textendash}manually, using semi-automated tools, or through deep learning-based approaches{\textendash}and allow morphological experts to define regions of correspondence based on biological concepts of homology (e.g., tissue origin, gene expression patterns). Here we demonstrate the utility of this label-informed image registration approach for improving the registration knockout mouse embryos which fail to register to a wildtype (normative) template image by traditional registration methods. E15.5 Gli2-/- mouse embryos show a severe scoliosis and radical topological rearrangement of the internal organs. Compared to traditional, intensity-only registration, the new label-informed image registration improved the correspondence of knockout subjects to the canonical template image, which resulted in increased power and sensitivity of downstream statistical analyses. All in all, label-informed image registration provides a flexible and customizable method to allow image registration in datasets for which registration-based morphometrics were previously unfeasible, unlocking new potential applications of registration-based morphometrics in developmental, comparative, and evolutionary studies.Competing Interest StatementThe authors have declared no competing interest.},
@@ -1066,35 +1186,13 @@ CONCLUSIONS: Sparse genetically-directed, cell type-specific neuronal labeling w
 	author = {Tustison, Nicholas J. and Gee, James C.},
 	booktitle = {Medical Imaging and Augmented Reality},
 	date-added = {2023-12-03 20:31:47 -0800},
-	date-modified = {2023-12-03 20:32:37 -0800},
+	date-modified = {2025-08-22 13:01:48 -0700},
 	editor = {Yang, Guang-Zhong and Jiang, TianZi and Shen, Dinggang and Gu, Lixu and Yang, Jie},
 	isbn = {978-3-540-37221-9},
 	pages = {76--83},
 	publisher = {Springer Berlin Heidelberg},
-	title = {Generalized $n$-D $C^k$ B-Spline Scattered Data Approximation with Confidence Values},
+	title = {Generalized $n$-D $C^k$ {B}-Spline Scattered Data Approximation with Confidence Values},
 	year = {2006}}
-
-@article{Manjon:2010aa,
-	abstract = {PURPOSE: To adapt the so-called nonlocal means filter to deal with magnetic resonance (MR) images with spatially varying noise levels (for both Gaussian and Rician distributed noise).
-MATERIALS AND METHODS: Most filtering techniques assume an equal noise distribution across the image. When this assumption is not met, the resulting filtering becomes suboptimal. This is the case of MR images with spatially varying noise levels, such as those obtained by parallel imaging (sensitivity-encoded), intensity inhomogeneity-corrected images, or surface coil-based acquisitions. We propose a new method where information regarding the local image noise level is used to adjust the amount of denoising strength of the filter. Such information is automatically obtained from the images using a new local noise estimation method.
-RESULTS: The proposed method was validated and compared with the standard nonlocal means filter on simulated and real MRI data showing an improved performance in all cases.
-CONCLUSION: The new noise-adaptive method was demonstrated to outperform the standard filter when spatially varying noise is present in the images.},
-	author = {Manj{\'o}n, Jos{\'e} V and Coup{\'e}, Pierrick and Mart{\'\i}-Bonmat{\'\i}, Luis and Collins, D Louis and Robles, Montserrat},
-	date-added = {2023-12-01 20:38:15 -0800},
-	date-modified = {2023-12-01 20:38:15 -0800},
-	doi = {10.1002/jmri.22003},
-	journal = {J Magn Reson Imaging},
-	journal-full = {Journal of magnetic resonance imaging : JMRI},
-	mesh = {Algorithms; Artifacts; Brain; Humans; Image Enhancement; Image Interpretation, Computer-Assisted; Magnetic Resonance Imaging; Phantoms, Imaging; Reproducibility of Results; Sensitivity and Specificity; Signal Processing, Computer-Assisted},
-	month = {Jan},
-	number = {1},
-	pages = {192-203},
-	pmid = {20027588},
-	pst = {ppublish},
-	title = {Adaptive non-local means denoising of MR images with spatially varying noise levels},
-	volume = {31},
-	year = {2010},
-	bdsk-url-1 = {https://doi.org/10.1002/jmri.22003}}
 
 @article{Nyul:2000aa,
 	abstract = {One of the major drawbacks of magnetic resonance imaging (MRI) has been the lack of a standard and quantifiable interpretation of image intensities. Unlike in other modalities, such as X-ray computerized tomography, MR images taken for the same patient on the same scanner at different times may appear different from each other due to a variety of scanner-dependent variations and, therefore, the absolute intensity values do not have a fixed meaning. We have devised a two-step method wherein all images (independent of patients and the specific brand of the MR scanner used) can be transformed in such a way that for the same protocol and body region, in the transformed images similar intensities will have similar tissue meaning. Standardized images can be displayed with fixed windows without the need of per-case adjustment. More importantly, extraction of quantitative information about healthy organs or about abnormalities can be considerably simplified. This paper introduces and compares new variants of this standardizing method that can help to overcome some of the problems with the original method.},
