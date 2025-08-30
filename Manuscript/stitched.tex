@@ -298,15 +298,20 @@ DevCCF, and a template-based deep learning pipeline for whole brain
 segmentation (i.e., brain extraction) and structural anatomical regional
 labeling of the brain (i.e., brain parcellation) requiring minimal
 annotated data. In addition, we include two modular pipelines for
-aligning MERFISH and fMOST datasets to the Allen CCFv3. These workflows
-were adapted and tailored using ANTsX tools to support collaborative
-efforts within the BICCN and are now made openly available in a
-reproducible format. To facilitate broader adoption, we also provide
-general guidance for customizing these strategies across imaging
-modalities and data types. We first introduce key components of the
-ANTsX toolkit, which provide a basis for all of the mapping workflows
-described here, and then detail the specific contributions made in each
-pipeline.
+aligning MERFISH and fMOST datasets to the Allen CCFv3. While the
+MERFISH dataset was previously published as part of earlier BICCN
+efforts, the full image processing and registration workflow had not
+been described in detail until now. The fMOST workflow, by contrast, was
+developed internally to support high-resolution morphology mapping and
+has not been previously published in any form. Both pipelines were built
+using ANTsX tools, adapted for collaborative use with the Allen
+Institute, and are now released as fully reproducible, open-source
+workflows to support reuse and extension by the community. To facilitate
+broader adoption, we also provide general guidance for customizing these
+strategies across imaging modalities and data types. We first introduce
+key components of the ANTsX toolkit, which provide a basis for all of
+the mapping workflows described here, and then detail the specific
+contributions made in each pipeline.
 
 \subsection{The Advanced Normalization Tools Ecosystem
 (ANTsX)}\label{the-advanced-normalization-tools-ecosystem-antsx}
@@ -450,7 +455,8 @@ not contain cells from the MERFISH dataset post registration: frontal
 pole, layer 1 (FRP1), FRP2/3, FRP5; accessory olfactory bulb, glomerular
 layer (AOBgl); accessory olfactory bulb, granular layer (AOBgr);
 accessory olfactory bulb, mitral layer (AOBmi); and accessory supraoptic
-group (ASO).
+group (ASO). A broader discussion of evaluation design choices and
+validation rationale is included in the Discussion.
 
 \subsubsection{Mapping fluorescence micro-optical sectioning tomography
 (fMOST)
@@ -500,7 +506,9 @@ qualitatively. An expert anatomist reviewed alignment accuracy and
 confirmed structural correspondence. Neuron reconstructions from
 individual brains were also transformed into AllenCCFv3 space, and their
 trajectories were visually inspected to confirm anatomical plausibility
-and preservation of known projection patterns.
+and preservation of known projection patterns. A broader discussion of
+evaluation design choices and validation rationale is included in the
+Discussion.
 
 \subsection{Continuously mapping the DevCCF developmental
 trajectory}\label{continuously-mapping-the-devccf-developmental-trajectory}
@@ -843,23 +851,36 @@ demonstrated how a flexible image analysis toolkit like ANTsX can be
 tailored to address specific modality-driven constraints by leveraging
 reusable, validated components.
 
-The MERFISH mapping pipeline illustrates how ANTsX tools can be adapted
-to accommodate high-resolution spatial transcriptomic data. While the
-general mapping strategy is applicable to other sectioned histological
-data, the pipeline includes specific adjustments for known anatomical
-and imaging artifacts present in MERFISH datasets. As such, this example
-demonstrates how general-purpose tools can be customized to meet the
-requirements of highly specialized data types.
+As part of collaborative efforts with the Allen Institute for Brain
+Science and the broader BICCN initiative, we developed two modular
+pipelines for mapping MERFISH and fMOST datasets to the AllenCCFv3.
+These workflows were designed to accommodate the specific requirements
+of high-resolution transcriptomic and morphological data while
+leveraging reusable components from the ANTsX ecosystem. The MERFISH
+pipeline incorporates preprocessing and registration steps tailored to
+known anatomical and imaging artifacts in multiplexed spatial
+transcriptomic data. While the general mapping strategy is applicable to
+other sectioned histological datasets, these refinements demonstrate how
+general-purpose tools can be customized to meet the demands of
+specialized modalities. The fMOST workflow, in contrast, emphasizes
+reusability and consistency across large datasets. It introduces an
+intermediate, canonical fMOST atlas to stabilize transformations to the
+AllenCCFv3, reducing the need for repeated manual alignment and enabling
+standardized mapping of single-neuron reconstructions to a common
+coordinate framework.
 
-The fMOST mapping pipeline was developed with the intention of broader
-applicability. Built primarily from existing ANTsX preprocessing and
-registration modules, this pipeline introduces an fMOST-specific
-intermediate atlas to facilitate consistent mappings to the AllenCCFv3.
-The use of a canonical fMOST atlas reduces the need for repeated manual
-alignment across new datasets, and the resulting transformations can be
-directly applied to associated single-neuron reconstructions. This
-supports integrative morphological analysis across specimens using a
-common coordinate system.
+Evaluation of both workflows followed established QA/QC protocols used
+at the Allen Institute, emphasizing biologically meaningful criteria
+such as expected gene-marker alignment (MERFISH) and accurate
+reconstruction of neuronal morphology (fMOST). These domain-informed
+assessments, also used in prior large-scale mapping
+projects\textsuperscript{49}, prioritize task-relevant accuracy over
+other possible benchmarks such as Dice coefficients or landmark
+distances. While formal quantitative scores were not reported for these
+specific pipelines, they both demonstrate reliable, expert-validated
+performance in collaborative contexts. Additional documentation and
+evaluation commentary are available in the updated CCFAlignmentToolkit
+GitHub repository.
 
 For developmental data, we introduced a velocity field--based model for
 continuous interpolation between discrete DevCCF timepoints. Although

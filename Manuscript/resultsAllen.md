@@ -55,14 +55,14 @@ taxonomy.
 
 **Evaluation.** Alignment quality was evaluated iteratively by an expert
 anatomist, guided by expected gene-marker correspondences to AllenCCFv3 regions.
-As previously reported [@Yao:2023aa], further assessment of the alignment
-showed that, of the 554 terminal regions (gray matter only in the AllenCCFv3),
-only seven small subregions did not contain cells from the MERFISH dataset post
+As previously reported [@Yao:2023aa], further assessment of the alignment showed
+that, of the 554 terminal regions (gray matter only in the AllenCCFv3), only
+seven small subregions did not contain cells from the MERFISH dataset post
 registration: frontal pole, layer 1 (FRP1), FRP2/3, FRP5; accessory olfactory
 bulb, glomerular layer (AOBgl); accessory olfactory bulb, granular layer
 (AOBgr); accessory olfactory bulb, mitral layer (AOBmi); and accessory
-supraoptic group (ASO).
-
+supraoptic group (ASO).  A broader discussion of evaluation design choices and
+validation rationale is included in the Discussion.
 
 ### Mapping fluorescence micro-optical sectioning tomography (fMOST) data
 
@@ -106,4 +106,5 @@ expert anatomist reviewed alignment accuracy and confirmed structural
 correspondence. Neuron reconstructions from individual brains were also
 transformed into AllenCCFv3 space, and their trajectories were visually
 inspected to confirm anatomical plausibility and preservation of known
-projection patterns.
+projection patterns.  A broader discussion of evaluation design choices and
+validation rationale is included in the Discussion.

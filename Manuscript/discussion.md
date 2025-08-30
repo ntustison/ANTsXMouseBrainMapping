@@ -19,22 +19,32 @@ demonstrated how a flexible image analysis toolkit like ANTsX can be tailored to
 address specific modality-driven constraints by leveraging reusable, validated
 components.
 
-The MERFISH mapping pipeline illustrates how ANTsX tools can be adapted to
-accommodate high-resolution spatial transcriptomic data. While the general
-mapping strategy is applicable to other sectioned histological data, the
-pipeline includes specific adjustments for known anatomical and imaging
-artifacts present in MERFISH datasets. As such, this example demonstrates how
-general-purpose tools can be customized to meet the requirements of highly
-specialized data types.
+As part of collaborative efforts with the Allen Institute for Brain Science and
+the broader BICCN initiative, we developed two modular pipelines for mapping
+MERFISH and fMOST datasets to the AllenCCFv3. These workflows were designed to
+accommodate the specific requirements of high-resolution transcriptomic and
+morphological data while leveraging reusable components from the ANTsX
+ecosystem.  The MERFISH pipeline incorporates preprocessing and registration
+steps tailored to known anatomical and imaging artifacts in multiplexed spatial
+transcriptomic data. While the general mapping strategy is applicable to other
+sectioned histological datasets, these refinements demonstrate how
+general-purpose tools can be customized to meet the demands of specialized
+modalities. The fMOST workflow, in contrast, emphasizes reusability and
+consistency across large datasets. It introduces an intermediate, canonical
+fMOST atlas to stabilize transformations to the AllenCCFv3, reducing the need
+for repeated manual alignment and enabling standardized mapping of single-neuron
+reconstructions to a common coordinate framework.
 
-The fMOST mapping pipeline was developed with the intention of broader applicability.
-Built primarily from existing ANTsX preprocessing and registration modules, this
-pipeline introduces an fMOST-specific intermediate atlas to facilitate
-consistent mappings to the AllenCCFv3. The use of a canonical fMOST atlas
-reduces the need for repeated manual alignment across new datasets, and the
-resulting transformations can be directly applied to associated single-neuron
-reconstructions. This supports integrative morphological analysis across
-specimens using a common coordinate system.
+Evaluation of both workflows followed established QA/QC protocols used at the
+Allen Institute, emphasizing biologically meaningful criteria such as expected
+gene-marker alignment (MERFISH) and accurate reconstruction of neuronal
+morphology (fMOST). These domain-informed assessments, also used in prior
+large-scale mapping projects [@Yao:2023aa], prioritize task-relevant
+accuracy over other possible benchmarks such as Dice coefficients or landmark
+distances. While formal quantitative scores were not reported for these specific
+pipelines, they both demonstrate reliable, expert-validated performance in
+collaborative contexts. Additional documentation and evaluation commentary are
+available in the updated CCFAlignmentToolkit GitHub repository.
 
 For developmental data, we introduced a velocity field–based model for
 continuous interpolation between discrete DevCCF timepoints. Although the DevCCF
