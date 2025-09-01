@@ -62,7 +62,7 @@ registration: frontal pole, layer 1 (FRP1), FRP2/3, FRP5; accessory olfactory
 bulb, glomerular layer (AOBgl); accessory olfactory bulb, granular layer
 (AOBgr); accessory olfactory bulb, mitral layer (AOBmi); and accessory
 supraoptic group (ASO).  A broader discussion of evaluation design choices and
-validation rationale is included in the Discussion.
+evaluation rationale is included in the Discussion.
 
 ### Mapping fluorescence micro-optical sectioning tomography (fMOST) data
 
@@ -107,4 +107,4 @@ correspondence. Neuron reconstructions from individual brains were also
 transformed into AllenCCFv3 space, and their trajectories were visually
 inspected to confirm anatomical plausibility and preservation of known
 projection patterns.  A broader discussion of evaluation design choices and
-validation rationale is included in the Discussion.
+evaluation rationale is included in the Discussion.

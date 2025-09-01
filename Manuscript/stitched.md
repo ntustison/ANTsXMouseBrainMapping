@@ -198,17 +198,17 @@ pipeline for whole brain segmentation (i.e., brain extraction) and structural
 anatomical regional labeling of the brain (i.e., brain parcellation) requiring
 minimal annotated data. In addition, we include two modular pipelines for
 aligning MERFISH and fMOST datasets to the Allen CCFv3. While the MERFISH
-dataset was previously published as part of earlier BICCN efforts, the full
-image processing and registration workflow had not been described in detail
-until now. The fMOST workflow, by contrast, was developed internally to support
-high-resolution morphology mapping and has not been previously published in any
-form. Both pipelines were built using ANTsX tools, adapted for collaborative use
-with the Allen Institute, and are now released as fully reproducible,
-open-source workflows to support reuse and extension by the community.  To
-facilitate broader adoption, we also provide general guidance for customizing
-these strategies across imaging modalities and data types.  We first introduce
-key components of the ANTsX toolkit, which provide a basis for all of the
-mapping workflows described here, and then detail the specific contributions
+dataset was previously published as part of earlier BICCN efforts [@Yao:2023aa],
+the full image processing and registration workflow had not been described in
+detail until now. The fMOST workflow, by contrast, was developed internally to
+support high-resolution morphology mapping and has not been previously published
+in any form. Both pipelines were built using ANTsX tools, adapted for
+collaborative use with the Allen Institute, and are now released as fully
+reproducible, open-source workflows to support reuse and extension by the
+community.  To facilitate broader adoption, we also provide general guidance for
+customizing these strategies across imaging modalities and data types.  We first
+introduce key components of the ANTsX toolkit, which provide a basis for all of
+the mapping workflows described here, and then detail the specific contributions
 made in each pipeline.
 
 ## The Advanced Normalization Tools Ecosystem (ANTsX)
@@ -341,7 +341,7 @@ registration: frontal pole, layer 1 (FRP1), FRP2/3, FRP5; accessory olfactory
 bulb, glomerular layer (AOBgl); accessory olfactory bulb, granular layer
 (AOBgr); accessory olfactory bulb, mitral layer (AOBmi); and accessory
 supraoptic group (ASO).  A broader discussion of evaluation design choices and
-validation rationale is included in the Discussion.
+evaluation rationale is included in the Discussion.
 
 ### Mapping fluorescence micro-optical sectioning tomography (fMOST) data
 
@@ -386,7 +386,7 @@ correspondence. Neuron reconstructions from individual brains were also
 transformed into AllenCCFv3 space, and their trajectories were visually
 inspected to confirm anatomical plausibility and preservation of known
 projection patterns.  A broader discussion of evaluation design choices and
-validation rationale is included in the Discussion.
+evaluation rationale is included in the Discussion.
 
 ## Continuously mapping the DevCCF developmental trajectory
 
@@ -849,7 +849,7 @@ brains and the AllenCCFv3 was insufficiently robust.  Instead, we performed a
 one-time expert-guided label-driven registration between the average fMOST
 template and AllenCCFv3. This involved sequential alignment of seven manually
 selected anatomical regions:  1) brain mask/ventricles, 2) caudate/putamen, 3)
-fimbria, 4) posterior choroid615 plexus, 5) optic chiasm, 6) anterior choroid
+fimbria, 4) posterior choroid plexus, 5) optic chiasm, 6) anterior choroid
 plexus, and 7) habenular commissure which were prioritized to enable
 coarse-to-fine correction of shape differences. Once established, this
 fMOST-template-to-AllenCCFv3 transform was reused for all subsequent specimens.
@@ -908,9 +908,9 @@ in the MERFISH data and facilitates one-to-one section matching.
 **Landmark-driven deformable alignment.** We used a 2.5D approach for fine
 alignment of individual sections. In each MERFISH slice, deformable registration
 was driven by sequential alignment of anatomical landmarks between the label
-maps derived from MERFISH and AllenCCFv3. A total of nine regions—including
+maps derived from MERFISH and AllenCCFv3. A total of nine regions, including
 isocortical layers 2/3, 5, and 6, the striatum, hippocampus, thalamus, and
-medial/lateral habenula—were registered in an empirically determined order.
+medial/lateral habenula, were registered in an empirically determined order.
 After each round, anatomical alignment was visually assessed by an expert, and
 the next structure was selected to maximize improvement in the remaining
 misaligned regions.
@@ -1101,21 +1101,42 @@ available and designed for straightforward integration into ANTsX workflows.
 
 \clearpage
 
-# Data availability {-}
+# Data Availability {-}
 
- All data and software used in this work are publicly available.  The DevCCF
-atlas is available at \url{https://kimlab.io/brain-map/DevCCF/}. ANTsPy, ANTsR,
-ANTsPyNet, and ANTsRNet are available through GitHub at the ANTsX Ecosystem
-(\url{https://github.com/ANTsX}).  Training scripts for all deep learning
-functionality in ANTsXNet can also be found on GitHub
-(\url{https://github.com/ntustison/ANTsXNetTraining}). A GitHub repository
-specifically pertaining to the AllenCCFv3 mapping is available at
-\url{https://github.com/dontminchenit/CCFAlignmentToolkit}. For the other two
-contributions contained in this work, the longitudinal DevCCF mapping and mouse
-cortical thickness pipeline, we refer the interested reader to
-\url{https://github.com/ntustison/ANTsXMouseBrainMapping}. 
+The following datasets were used in this study and are publicly available:
+
+* **Allen Common Coordinate Framework (AllenCCFv3)**: Available from the Allen Institute for Brain Science at [https://atlas.brain-map.org/atlas](https://atlas.brain-map.org/atlas).
+* **Developmental Common Coordinate Framework (DevCCF)** MRI and LSFM datasets: Publicly available via the Kim Lab  [https://kimlab.io/home/projects/DevCCF/index.html](https://kimlab.io/home/projects/DevCCF/index.html).
+* **MERFISH spatial transcriptomics data**: Previously published [@Yao:2023aa] [https://portal.brain-map.org](https://portal.brain-map.org).
+* **Developmental datasets for brain extraction and segmentation**: 
+    * High-resolution MRI data of brain C57BL/6 and BTBR mice in three different anatomical views: 
+      [https://data.mendeley.com/datasets/dz9x23fttt/1](https://data.mendeley.com/datasets/dz9x23fttt/1).
+    * CAMRI Mouse Brain Data: 
+      [https://openneuro.org/datasets/ds002868/versions/1.0.1](https://openneuro.org/datasets/ds002868/versions/1.0.1)
+* **Evaluation dataset for brain extraction and segmentation**: A longitudinal microstructural MRI dataset in healthy C57Bl/6 mice at 9.4 Tesla
+[https://www.frdr-dfdr.ca/repo/dataset/9ea832ad-7f36-4e37-b7ac-47167c0001c1](https://www.frdr-dfdr.ca/repo/dataset/9ea832ad-7f36-4e37-b7ac-47167c0001c1).
+* **ANTsXNet-pretrained templates and models**: Available through ANTsPy at [https://github.com/ANTsX/ANTsPyNet](https://github.com/ANTsX/ANTsXNet). 
 
 
+\clearpage
+
+# Code Availability {-}
+
+All processing pipelines and supporting code are openly available at:
+
+* [https://github.com/ntustison/ANTsXMouseBrainMapping](https://github.com/ntustison/ANTsXMouseBrainMapping) (DevCCF velocity model and deep learning parcellation).  Also contains the text, scripts, and data to reproduce the manuscript (including figures).
+* [https://github.com/dontminchenit/CCFAlignmentToolkit](https://github.com/dontminchenit/CCFAlignmentToolkit) (MERFISH and fMOST workflows)
+
+
+\clearpage
+
+# Inclusion and Ethics Statement {-}
+
+All imaging data were obtained from publicly available sources that were
+collected in accordance with institutional animal care and use committee
+protocols and relevant ethical regulations. The authors affirm that all analyses
+were conducted using open, reproducible methods and that no exclusionary
+criteria were applied based on sex, age, or genetic background.
 \clearpage
 
 # Acknowledgments {-}

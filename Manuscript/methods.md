@@ -81,7 +81,7 @@ brains and the AllenCCFv3 was insufficiently robust.  Instead, we performed a
 one-time expert-guided label-driven registration between the average fMOST
 template and AllenCCFv3. This involved sequential alignment of seven manually
 selected anatomical regions:  1) brain mask/ventricles, 2) caudate/putamen, 3)
-fimbria, 4) posterior choroid615 plexus, 5) optic chiasm, 6) anterior choroid
+fimbria, 4) posterior choroid plexus, 5) optic chiasm, 6) anterior choroid
 plexus, and 7) habenular commissure which were prioritized to enable
 coarse-to-fine correction of shape differences. Once established, this
 fMOST-template-to-AllenCCFv3 transform was reused for all subsequent specimens.
@@ -140,9 +140,9 @@ in the MERFISH data and facilitates one-to-one section matching.
 **Landmark-driven deformable alignment.** We used a 2.5D approach for fine
 alignment of individual sections. In each MERFISH slice, deformable registration
 was driven by sequential alignment of anatomical landmarks between the label
-maps derived from MERFISH and AllenCCFv3. A total of nine regions—including
+maps derived from MERFISH and AllenCCFv3. A total of nine regions, including
 isocortical layers 2/3, 5, and 6, the striatum, hippocampus, thalamus, and
-medial/lateral habenula—were registered in an empirically determined order.
+medial/lateral habenula, were registered in an empirically determined order.
 After each round, anatomical alignment was visually assessed by an expert, and
 the next structure was selected to maximize improvement in the remaining
 misaligned regions.

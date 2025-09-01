@@ -74,15 +74,15 @@ pipeline for whole brain segmentation (i.e., brain extraction) and structural
 anatomical regional labeling of the brain (i.e., brain parcellation) requiring
 minimal annotated data. In addition, we include two modular pipelines for
 aligning MERFISH and fMOST datasets to the Allen CCFv3. While the MERFISH
-dataset was previously published as part of earlier BICCN efforts, the full
-image processing and registration workflow had not been described in detail
-until now. The fMOST workflow, by contrast, was developed internally to support
-high-resolution morphology mapping and has not been previously published in any
-form. Both pipelines were built using ANTsX tools, adapted for collaborative use
-with the Allen Institute, and are now released as fully reproducible,
-open-source workflows to support reuse and extension by the community.  To
-facilitate broader adoption, we also provide general guidance for customizing
-these strategies across imaging modalities and data types.  We first introduce
-key components of the ANTsX toolkit, which provide a basis for all of the
-mapping workflows described here, and then detail the specific contributions
+dataset was previously published as part of earlier BICCN efforts [@Yao:2023aa],
+the full image processing and registration workflow had not been described in
+detail until now. The fMOST workflow, by contrast, was developed internally to
+support high-resolution morphology mapping and has not been previously published
+in any form. Both pipelines were built using ANTsX tools, adapted for
+collaborative use with the Allen Institute, and are now released as fully
+reproducible, open-source workflows to support reuse and extension by the
+community.  To facilitate broader adoption, we also provide general guidance for
+customizing these strategies across imaging modalities and data types.  We first
+introduce key components of the ANTsX toolkit, which provide a basis for all of
+the mapping workflows described here, and then detail the specific contributions
 made in each pipeline.
