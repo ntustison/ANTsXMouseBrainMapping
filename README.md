@@ -1,4 +1,5 @@
-# [Modular strategies for spatial mapping of multi-modal mouse brain data](https://www.biorxiv.org/content/10.1101/2024.05.01.592056v1)
+# [The ANTsX ecosystem for mapping the mouse brain]<img width="468" height="19" alt="image" src="https://github.com/user-attachments/assets/f8db795f-0226-496e-ac6e-a0a39ba95544" />
+](https://www.biorxiv.org/content/10.1101/2024.05.01.592056v1)
 
 Two novel open-source contributions:
 
