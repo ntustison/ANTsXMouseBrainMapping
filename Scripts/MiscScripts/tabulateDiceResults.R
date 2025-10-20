@@ -39,7 +39,7 @@ dicePlot <- ggplot( data = dice_melt, aes( x = Registration, y = Dice, fill = Re
               ggtitle( "Normalization to AllenCCFv3" ) + 
               scale_fill_manual( name = "Regions", labels = regions, values = itkColors ) + 
               theme( axis.text.x = element_text( angle = 0, vjust = 0.5 ) )
-ggsave( paste0( "~/Desktop/diceAllenCCFv3.png" ), dicePlot, width = 7, height = 4 )
+ggsave( paste0( "~/Desktop/diceAllenCCFv3.pdf" ), dicePlot, width = 7, height = 4 )
 
 ######################################################
 

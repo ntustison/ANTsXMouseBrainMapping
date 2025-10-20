@@ -79,7 +79,7 @@ brain data.
 
 \begin{figure}
 \centering
-  \includegraphics[width=0.75\textwidth]{Figures/diceWholeBrain.png}
+  \includegraphics[width=0.75\textwidth]{Figures/diceWholeBrain.pdf}
 \caption{Evaluation of the ANTsX mouse brain extraction on an
 independent, publicly available dataset consisting of 12 specimens $\times$ 7
 time points = 84 total images.  Dice overlap comparisons with the
@@ -92,19 +92,19 @@ from the brain extraction network.}
 \centering
 \begin{subfigure}{0.25\textwidth}
   \centering
-  \includegraphics[width=\linewidth]{Figures/AllenCCFv3_parcellation_slice91.png}
+  \includegraphics[width=\linewidth]{Figures/AllenCCFv3_parcellation_slice91.pdf}
   \caption{}
   \label{fig:subp_a}
 \end{subfigure}
 \begin{subfigure}{0.25\textwidth}
   \centering
-  \includegraphics[width=\linewidth]{Figures/NR5_M_Day0_slice53.png}
+  \includegraphics[width=\linewidth]{Figures/NR5_M_Day0_slice53.pdf}
   \caption{}
   \label{fig:subp_b}
 \end{subfigure} \\
 \begin{subfigure}{.75\textwidth}
   \centering
-  \includegraphics[width=\linewidth]{Figures/diceAllenCCFv3.png}
+  \includegraphics[width=\linewidth]{Figures/diceAllenCCFv3.pdf}
   \caption{}
   \label{fig:subc}
 \end{subfigure}

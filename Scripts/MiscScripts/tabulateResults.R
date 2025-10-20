@@ -144,7 +144,7 @@ dicePlot <- ggplot( data = kkDf ) +
               ylab( "" ) + 
               geom_label( aes( label = paste0( "Mean = ", round( mean( WholeHeadDice ), digits = 2 ) ), x = 0.95, y = 16 ), color = "NavyBlue" ) + 
               ggtitle( "Whole brain extraction" )
-ggsave( paste0( scriptsDirectory, "diceWholeBrain.png" ), dicePlot, width = 5, height = 3 )
+ggsave( paste0( scriptsDirectory, "diceWholeBrain.pdf" ), dicePlot, width = 5, height = 3 )
 
 kkThkDf <- returnAverageDataFrame( 'Thickness' )
 kkThkDfIso <- returnAverageDataFrame( 'ThicknessIso' )
@@ -166,7 +166,7 @@ kkPlot <- ggplot( kkThk, aes( x = TimePoint, y = AverageValue, colour = Sex, sha
           scale_colour_manual( values = colorValues ) +
           guides( shape = "none" ) +
           theme( legend.position = "right" )
-ggsave( paste0( scriptsDirectory, "kkPlot.png" ), kkPlot, width = 5, height = 3 )
+ggsave( paste0( scriptsDirectory, "kkPlot.pdf" ), kkPlot, width = 5, height = 3 )
 
 corticoDf <- returnAverageDataFrame( 'CorticalVolume' )
 corticoDfIso <- returnAverageDataFrame( 'CorticalIsoVolume' )
@@ -188,7 +188,7 @@ corticoPlot <- ggplot( cortico, aes( x = TimePoint, y = AverageValue, colour = S
           scale_colour_manual( values = colorValues ) +
           guides( shape = "none" ) +
           theme( legend.position = "right" )
-ggsave( paste0( scriptsDirectory, "corticoPlot.png" ), corticoPlot, width = 5, height = 3 )
+ggsave( paste0( scriptsDirectory, "corticoPlot.pdf" ), corticoPlot, width = 5, height = 3 )
 
 hippoDf <- returnAverageDataFrame( 'HippocampalVolume' )
 hippoDfIso <- returnAverageDataFrame( 'HippocampalIsoVolume' )
@@ -210,4 +210,4 @@ hippoPlot <- ggplot( hippo, aes( x = TimePoint, y = AverageValue, colour = Sex, 
           scale_colour_manual( values = colorValues ) +
           guides( shape = "none" ) +
           theme( legend.position = "right" )
-ggsave( paste0( scriptsDirectory, "hippoPlot.png" ), hippoPlot, width = 5, height = 3 )
+ggsave( paste0( scriptsDirectory, "hippoPlot.pdf" ), hippoPlot, width = 5, height = 3 )
