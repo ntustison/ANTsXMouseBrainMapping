@@ -14,7 +14,7 @@ key contributions such as the Symmetric Normalization (SyN) algorithm
 including multi-site brain MRI [@Klein:2009aa], pulmonary CT [@Murphy:2011aa],
 and multi-modal brain tumor registration [@Baheti:2021aa].  More recent
 contributions for mouse-specific applications showcase multimodal template
-generation [@Kronman:2024aa] and anatomy-aware registration [@Roston]
+generation [@Kronman:2024aa] and anatomy-aware registration
 ANTsX functionality.
 
 Beyond registration, ANTsX provides functionality for template generation

@@ -23,12 +23,9 @@
 \label{fig:allenpipelines}
 \end{figure*}
 
+## Mapping multiplexed error-robust fluorescence in situ hybridization (MERFISH)
 
-## AllenCCFv3 brain image mapping
-
-### Mapping multiplexed error-robust fluorescence in situ hybridization (MERFISH) data
-
-**Overview.** We developed an ANTsX-based pipeline to map spatial transcriptomic
+We developed an ANTsX-based pipeline to map spatial transcriptomic
 MERFISH data into the AllenCCFv3 (Figure \ref{fig:allenpipelines}(a)). This
 approach was used in recent efforts to create a high-resolution transcriptomic
 atlas of the mouse brain [@Yao:2023aa]. The pipeline maps spatial gene expression 
@@ -41,7 +38,7 @@ section matching of the AllenCCFv3 to the MERFISH data, and 2) linear + deformab
 transformations are concatenated to produce a complete mapping from each MERFISH 
 data to AllenCCFv3.
 
-**Data.** MERFISH imaging was performed on cryosectioned brains from C57BL/6
+MERFISH imaging was performed on cryosectioned brains from C57BL/6
 mice using previously described protocols [@Yao:2023aa]. Brains were placed into
 an optimal cutting temperature (OCT) compound (Sakura FineTek 4583) stored at
 -80$^\circ$.  The fresh frozen brain was sectioned at 10 $\mu$m on Leica 3050 S
@@ -53,7 +50,7 @@ stains which was propagated to adjacent slices across z-planes. Each MERFISH
 cell was assigned a transcriptomic identity by mapping to a scRNA-seq reference
 taxonomy.
 
-**Evaluation.** Alignment quality was evaluated iteratively by an expert
+Alignment quality was evaluated iteratively by an expert
 anatomist, guided by expected gene-marker correspondences to AllenCCFv3 regions.
 As previously reported [@Yao:2023aa], further assessment of the alignment showed
 that, of the 554 terminal regions (gray matter only in the AllenCCFv3), only
@@ -64,9 +61,9 @@ bulb, glomerular layer (AOBgl); accessory olfactory bulb, granular layer
 supraoptic group (ASO).  A broader discussion of evaluation design choices and
 evaluation rationale is included in the Discussion.
 
-### Mapping fluorescence micro-optical sectioning tomography (fMOST) data
+## Mapping fluorescence micro-optical sectioning tomography (fMOST) data
 
-**Overview.** We also constructed a pipeline for mapping fMOST images to the
+We also constructed a pipeline for mapping fMOST images to the
 AllenCCFv3 using ANTsX (Figure \ref{fig:allenpipelines}(b)). The approach
 leverages a modality-specific average fMOST atlas as an intermediate target,
 adapted from previous work in human and mouse brain mapping
@@ -85,7 +82,7 @@ normalization to the AllenCCFv3. This same mapping can be applied to neuron
 reconstructions to facilitate population-level analysis of morphology and
 spatial distribution.
 
-**Data.** fMOST imaging was performed on 55 mouse brains with sparse transgenic
+fMOST imaging was performed on 55 mouse brains with sparse transgenic
 labeling of neuron populations [@Rotolo:2008aa;@Peng:2021aa] using the
 high-throughput fMOST platform [@Gong:2016aa; @Wang:2021aa]. Voxel resolution
 was $0.35\times 0.35\times 1.0$ $\mu$m$^3$. Two imaging channels were acquired:
@@ -93,7 +90,7 @@ GFP-labeled neuron morphology (green), and propidium iodide counterstaining for
 cytoarchitecture (red). Alignment was performed using the red channel for its
 greater contrast, though multi-channel mapping is also supported.
 
-**Evaluation.** The canonical mapping from the fMOST atlas to AllenCCFv3 was
+The canonical mapping from the fMOST atlas to AllenCCFv3 was
 evaluated using both quantitative and qualitative approaches. Dice similarity
 coefficients were computed between corresponding anatomical labels in the fMOST
 atlas and AllenCCFv3 following registration. These labels were manually

@@ -11,32 +11,33 @@ $ $
 
 \LARGE
 
-{\bf Modular strategies for spatial mapping of multi-modal mouse brain data}
+{\bf The ANTsX ecosystem for mapping the mouse brain}
 
 \vspace{1.0 cm}
 
 \normalsize
 
-Nicholas J. Tustison$^{1}$,
-Min Chen$^{2}$,
-Fae N. Kronman$^{3}$,
-Jeffrey T. Duda$^{2}$,
-Clare Gamlin$^{4}$,
-Mia G. Tustison,
-Michael Kunst$^{4}$,
-Rachel Dalley$^{4}$,
-Staci Sorenson$^{4}$,
-Quanxin Wang$^{4}$,
-Lydia Ng$^{4}$,
-Yongsoo Kim$^{3}$, and
-James C. Gee$^{2}$
+Nicholas J. Tustison\textsuperscript{1,\textrm{\Letter}},
+Min Chen\textsuperscript{2},
+Fae N. Kronman\textsuperscript{3},
+Jeffrey T. Duda\textsuperscript{2},
+Clare Gamlin\textsuperscript{4},
+Mia G. Tustison\textsuperscript{5},
+Michael Kunst\textsuperscript{4},
+Rachel Dalley\textsuperscript{4},
+Staci Sorenson\textsuperscript{4},
+Quanxin Wang\textsuperscript{4},
+Lydia Ng\textsuperscript{4},
+Yongsoo Kim\textsuperscript{3}, and
+James C. Gee\textsuperscript{2,\textrm{\Letter}}
 
 \small
 
-$^{1}$Department of Radiology and Medical Imaging, University of Virginia, Charlottesville, VA \\
-$^{2}$Department of Radiology, University of Pennsylvania, Philadelphia, PA \\
-$^{3}$Department of Neuroscience and Experimental Therapeutics, Penn State University, Hershey, PA \\
-$^{4}$Allen Institute for Brain Science, Seattle, WA \\
+\textsuperscript{1}Department of Radiology and Medical Imaging, University of Virginia, Charlottesville, VA \\
+\textsuperscript{2}Department of Radiology, University of Pennsylvania, Philadelphia, PA \\
+\textsuperscript{3}Department of Neuroscience and Experimental Therapeutics, Penn State University, Hershey, PA \\
+\textsuperscript{4}Allen Institute for Brain Science, Seattle, WA \\
+\textsuperscript{5}Santiago High School, Corona, CA \\
 
 \end{centering}
 
@@ -45,7 +46,7 @@ $^{4}$Allen Institute for Brain Science, Seattle, WA \\
 \noindent\rule{4cm}{0.4pt}
 
 \scriptsize
-Corresponding authors: \
+\Letter$\,$ Corresponding authors: \
 
 Nicholas J. Tustison, DSc \
 Department of Radiology and Medical Imaging \

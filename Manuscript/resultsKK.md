@@ -31,8 +31,6 @@ whole brain segmentation (i.e., brain extraction) and the subsequent template-ba
 region segmentation.
 
 
-### Template-based mouse brain extraction network
-
 To develop a general-purpose mouse brain extraction model, we constructed
 whole-head templates from two publicly available T2-weighted datasets. The first
 dataset, from the Center for Animal MRI (CAMRI) at the University of North
@@ -59,8 +57,6 @@ Incorporating this into the training data improved robustness and accuracy to an
 independent dataset and extended the model’s generalizability. The refined model
 is distributed through ANTsPyNet via ``antspynet.mouse_brain_extraction(...)``.
 
-### Template-based mouse brain anatomical labeling
-
 The AllenCCFv3 atlas and its hierarchical ontology, along with the DevCCF,
 provide a strong foundation for developing region-wise anatomical labeling
 models for multi-modal mouse brain imaging. Using the `allensdk` Python library,
@@ -80,8 +76,6 @@ cortical thickness estimation pipeline
 (`antspynet.mouse_cortical_thickness(...)`) to produce voxelwise cortical
 thickness maps, even when applied to anisotropic or limited-resolution mouse
 brain data.
-
-### Evaluation
 
 \begin{figure}
 \centering

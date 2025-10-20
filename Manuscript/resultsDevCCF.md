@@ -35,8 +35,6 @@ image where each voxel stores the $x$,$y$,$z$ components of motion at a given
 time point.  Integration of the time-varying velocity field uses uses 4$^{th}$ 
 order Runge-Kutta (`ants.integrate_velocity_field(...)`) [@Avants:2014aa].
 
-### Data
-
 \begin{figure}[!htb]
 \centering
 \includegraphics[width=0.75\textwidth]{Figures/SimplifiedAnnotations.pdf}
@@ -69,8 +67,6 @@ yielding 173,303 total points per atlas ($N_{contour} = 98{,}151$; $N_{region} =
 75{,}152$). Boundary points were assigned double weight during optimization to
 emphasize anatomical boundary correspondence.
 
-
-### Velocity field optimization
 
 \begin{figure}[!htb]
 \centering
@@ -117,8 +113,6 @@ compared the velocity model’s region-based alignment to traditional pairwise
 registration using SyN, a widely used diffeomorphic algorithm. The velocity
 model achieved comparable Dice scores at sampled timepoints while additionally
 offering smooth interpolation across the entire developmental trajectory.
-
-### The velocity flow transformation model
 
 \begin{figure}[!htb]
 \centering

@@ -28,6 +28,7 @@ header-includes:
   - \usepackage{lineno}
   - \usepackage{makecell}
   - \usepackage{pdflscape}
+  - \usepackage[misc]{ifsym}
   - \definecolor{listcomment}{rgb}{0.0,0.5,0.0}
   - \definecolor{listkeyword}{rgb}{0.0,0.0,0.5}
   - \definecolor{listnumbers}{gray}{0.65}

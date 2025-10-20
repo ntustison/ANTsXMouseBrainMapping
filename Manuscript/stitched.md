@@ -28,6 +28,7 @@ header-includes:
   - \usepackage{lineno}
   - \usepackage{makecell}
   - \usepackage{pdflscape}
+  - \usepackage[misc]{ifsym}
   - \definecolor{listcomment}{rgb}{0.0,0.5,0.0}
   - \definecolor{listkeyword}{rgb}{0.0,0.0,0.5}
   - \definecolor{listnumbers}{gray}{0.65}
@@ -52,32 +53,33 @@ $ $
 
 \LARGE
 
-{\bf Modular strategies for spatial mapping of multi-modal mouse brain data}
+{\bf The ANTsX ecosystem for mapping the mouse brain}
 
 \vspace{1.0 cm}
 
 \normalsize
 
-Nicholas J. Tustison$^{1}$,
-Min Chen$^{2}$,
-Fae N. Kronman$^{3}$,
-Jeffrey T. Duda$^{2}$,
-Clare Gamlin$^{4}$,
-Mia G. Tustison,
-Michael Kunst$^{4}$,
-Rachel Dalley$^{4}$,
-Staci Sorenson$^{4}$,
-Quanxin Wang$^{4}$,
-Lydia Ng$^{4}$,
-Yongsoo Kim$^{3}$, and
-James C. Gee$^{2}$
+Nicholas J. Tustison\textsuperscript{1,\textrm{\Letter}},
+Min Chen\textsuperscript{2},
+Fae N. Kronman\textsuperscript{3},
+Jeffrey T. Duda\textsuperscript{2},
+Clare Gamlin\textsuperscript{4},
+Mia G. Tustison\textsuperscript{5},
+Michael Kunst\textsuperscript{4},
+Rachel Dalley\textsuperscript{4},
+Staci Sorenson\textsuperscript{4},
+Quanxin Wang\textsuperscript{4},
+Lydia Ng\textsuperscript{4},
+Yongsoo Kim\textsuperscript{3}, and
+James C. Gee\textsuperscript{2,\textrm{\Letter}}
 
 \small
 
-$^{1}$Department of Radiology and Medical Imaging, University of Virginia, Charlottesville, VA \\
-$^{2}$Department of Radiology, University of Pennsylvania, Philadelphia, PA \\
-$^{3}$Department of Neuroscience and Experimental Therapeutics, Penn State University, Hershey, PA \\
-$^{4}$Allen Institute for Brain Science, Seattle, WA \\
+\textsuperscript{1}Department of Radiology and Medical Imaging, University of Virginia, Charlottesville, VA \\
+\textsuperscript{2}Department of Radiology, University of Pennsylvania, Philadelphia, PA \\
+\textsuperscript{3}Department of Neuroscience and Experimental Therapeutics, Penn State University, Hershey, PA \\
+\textsuperscript{4}Allen Institute for Brain Science, Seattle, WA \\
+\textsuperscript{5}Santiago High School, Corona, CA \\
 
 \end{centering}
 
@@ -86,7 +88,7 @@ $^{4}$Allen Institute for Brain Science, Seattle, WA \\
 \noindent\rule{4cm}{0.4pt}
 
 \scriptsize
-Corresponding authors: \
+\Letter$\,$ Corresponding authors: \
 
 Nicholas J. Tustison, DSc \
 Department of Radiology and Medical Imaging \
@@ -226,7 +228,7 @@ key contributions such as the Symmetric Normalization (SyN) algorithm
 including multi-site brain MRI [@Klein:2009aa], pulmonary CT [@Murphy:2011aa],
 and multi-modal brain tumor registration [@Baheti:2021aa].  More recent
 contributions for mouse-specific applications showcase multimodal template
-generation [@Kronman:2024aa] and anatomy-aware registration [@Roston]
+generation [@Kronman:2024aa] and anatomy-aware registration
 ANTsX functionality.
 
 Beyond registration, ANTsX provides functionality for template generation
@@ -302,12 +304,9 @@ at (https://github.com/dontminchenit/CCFAlignmentToolkit).
 \label{fig:allenpipelines}
 \end{figure*}
 
+## Mapping multiplexed error-robust fluorescence in situ hybridization (MERFISH)
 
-## AllenCCFv3 brain image mapping
-
-### Mapping multiplexed error-robust fluorescence in situ hybridization (MERFISH) data
-
-**Overview.** We developed an ANTsX-based pipeline to map spatial transcriptomic
+We developed an ANTsX-based pipeline to map spatial transcriptomic
 MERFISH data into the AllenCCFv3 (Figure \ref{fig:allenpipelines}(a)). This
 approach was used in recent efforts to create a high-resolution transcriptomic
 atlas of the mouse brain [@Yao:2023aa]. The pipeline maps spatial gene expression 
@@ -320,7 +319,7 @@ section matching of the AllenCCFv3 to the MERFISH data, and 2) linear + deformab
 transformations are concatenated to produce a complete mapping from each MERFISH 
 data to AllenCCFv3.
 
-**Data.** MERFISH imaging was performed on cryosectioned brains from C57BL/6
+MERFISH imaging was performed on cryosectioned brains from C57BL/6
 mice using previously described protocols [@Yao:2023aa]. Brains were placed into
 an optimal cutting temperature (OCT) compound (Sakura FineTek 4583) stored at
 -80$^\circ$.  The fresh frozen brain was sectioned at 10 $\mu$m on Leica 3050 S
@@ -332,7 +331,7 @@ stains which was propagated to adjacent slices across z-planes. Each MERFISH
 cell was assigned a transcriptomic identity by mapping to a scRNA-seq reference
 taxonomy.
 
-**Evaluation.** Alignment quality was evaluated iteratively by an expert
+Alignment quality was evaluated iteratively by an expert
 anatomist, guided by expected gene-marker correspondences to AllenCCFv3 regions.
 As previously reported [@Yao:2023aa], further assessment of the alignment showed
 that, of the 554 terminal regions (gray matter only in the AllenCCFv3), only
@@ -343,9 +342,9 @@ bulb, glomerular layer (AOBgl); accessory olfactory bulb, granular layer
 supraoptic group (ASO).  A broader discussion of evaluation design choices and
 evaluation rationale is included in the Discussion.
 
-### Mapping fluorescence micro-optical sectioning tomography (fMOST) data
+## Mapping fluorescence micro-optical sectioning tomography (fMOST) data
 
-**Overview.** We also constructed a pipeline for mapping fMOST images to the
+We also constructed a pipeline for mapping fMOST images to the
 AllenCCFv3 using ANTsX (Figure \ref{fig:allenpipelines}(b)). The approach
 leverages a modality-specific average fMOST atlas as an intermediate target,
 adapted from previous work in human and mouse brain mapping
@@ -364,7 +363,7 @@ normalization to the AllenCCFv3. This same mapping can be applied to neuron
 reconstructions to facilitate population-level analysis of morphology and
 spatial distribution.
 
-**Data.** fMOST imaging was performed on 55 mouse brains with sparse transgenic
+fMOST imaging was performed on 55 mouse brains with sparse transgenic
 labeling of neuron populations [@Rotolo:2008aa;@Peng:2021aa] using the
 high-throughput fMOST platform [@Gong:2016aa; @Wang:2021aa]. Voxel resolution
 was $0.35\times 0.35\times 1.0$ $\mu$m$^3$. Two imaging channels were acquired:
@@ -372,7 +371,7 @@ GFP-labeled neuron morphology (green), and propidium iodide counterstaining for
 cytoarchitecture (red). Alignment was performed using the red channel for its
 greater contrast, though multi-channel mapping is also supported.
 
-**Evaluation.** The canonical mapping from the fMOST atlas to AllenCCFv3 was
+The canonical mapping from the fMOST atlas to AllenCCFv3 was
 evaluated using both quantitative and qualitative approaches. Dice similarity
 coefficients were computed between corresponding anatomical labels in the fMOST
 atlas and AllenCCFv3 following registration. These labels were manually
@@ -424,8 +423,6 @@ image where each voxel stores the $x$,$y$,$z$ components of motion at a given
 time point.  Integration of the time-varying velocity field uses uses 4$^{th}$ 
 order Runge-Kutta (`ants.integrate_velocity_field(...)`) [@Avants:2014aa].
 
-### Data
-
 \begin{figure}[!htb]
 \centering
 \includegraphics[width=0.75\textwidth]{Figures/SimplifiedAnnotations.pdf}
@@ -458,8 +455,6 @@ yielding 173,303 total points per atlas ($N_{contour} = 98{,}151$; $N_{region} =
 75{,}152$). Boundary points were assigned double weight during optimization to
 emphasize anatomical boundary correspondence.
 
-
-### Velocity field optimization
 
 \begin{figure}[!htb]
 \centering
@@ -506,8 +501,6 @@ compared the velocity model’s region-based alignment to traditional pairwise
 registration using SyN, a widely used diffeomorphic algorithm. The velocity
 model achieved comparable Dice scores at sampled timepoints while additionally
 offering smooth interpolation across the entire developmental trajectory.
-
-### The velocity flow transformation model
 
 \begin{figure}[!htb]
 \centering
@@ -569,8 +562,6 @@ whole brain segmentation (i.e., brain extraction) and the subsequent template-ba
 region segmentation.
 
 
-### Template-based mouse brain extraction network
-
 To develop a general-purpose mouse brain extraction model, we constructed
 whole-head templates from two publicly available T2-weighted datasets. The first
 dataset, from the Center for Animal MRI (CAMRI) at the University of North
@@ -597,8 +588,6 @@ Incorporating this into the training data improved robustness and accuracy to an
 independent dataset and extended the model’s generalizability. The refined model
 is distributed through ANTsPyNet via ``antspynet.mouse_brain_extraction(...)``.
 
-### Template-based mouse brain anatomical labeling
-
 The AllenCCFv3 atlas and its hierarchical ontology, along with the DevCCF,
 provide a strong foundation for developing region-wise anatomical labeling
 models for multi-modal mouse brain imaging. Using the `allensdk` Python library,
@@ -618,8 +607,6 @@ cortical thickness estimation pipeline
 (`antspynet.mouse_cortical_thickness(...)`) to produce voxelwise cortical
 thickness maps, even when applied to anisotropic or limited-resolution mouse
 brain data.
-
-### Evaluation
 
 \begin{figure}
 \centering
@@ -785,8 +772,6 @@ brain data. These include correcting image intensity artifacts, denoising,
 spatial registration, template generation, and visualization. Table
 \ref{table:methods} provides a concise summary of the relevant ANTsX
 functionality.
-
-\input{antsx_functionality_table}
 
 **Preprocessing: bias field correction and denoising.** Standard preprocessing
 steps in mouse brain imaging include correcting for spatial intensity
@@ -1130,13 +1115,9 @@ All processing pipelines and supporting code are openly available at:
 
 \clearpage
 
-# Inclusion and Ethics Statement {-}
+# References {-}
 
-All imaging data were obtained from publicly available sources that were
-collected in accordance with institutional animal care and use committee
-protocols and relevant ethical regulations. The authors affirm that all analyses
-were conducted using open, reproducible methods and that no exclusionary
-criteria were applied based on sex, age, or genetic background.
+<div id="refs"></div>
 \clearpage
 
 # Acknowledgments {-}
@@ -1162,4 +1143,63 @@ parcellation and cortical thickness methodology.  All authors reviewed the
 manuscript.
 \clearpage
 
-# References {-}
+# Competing Interests {-}
+
+The authors declare no competing interests.
+\clearpage 
+
+# Tables {-}
+
+\input{antsx_functionality_table}
+
+
+\clearpage
+
+# Figure Legends
+
+__Figure 1.__ Diagram of the two ANTsX-based pipelines for mapping (a) MERFISH and
+(b)fMOST data into the space of AllenCCFv3. Each generates the requisite transforms to
+map individual images to the CCF.
+
+__Figure 2.__ The spatial transformation between any two time points within the continuous
+DevCCF longitudinal developmental trajectory is available through the use of ANTsX
+functionality for generating a velocity flow model.
+
+__Figure 3.__ Annotated regions representing common labels across developmental stages, shown
+for both P4 and P14.
+
+__Figure 4.__ Convergence and evaluation of the velocity flow model across the DevCCF develop-
+mental trajectory. (Top left) Total displacement error over iterations. (Top right) Median
+displacement error per integration point across the optimization timeline, spanning embryonic
+(E11.5) to postnatal (P56) stages. (Bottom) Dice similarity scores comparing region-level
+label overlap between: (1) conventional pairwise SyN registration and (2) velocity flow-based
+deformation, across intermediate timepoints. Using region-based pairwise registration with
+SyN as a performance upper bound, the velocity flow model achieves comparable accuracy
+while also enabling smooth, continuous deformation across the full developmental continuum.
+
+__Figure 5.__ Mid-sagittal visualization of DevCCF templates warped to every other time point.
+Each row is a reference space; each column is a warped input. Diagonal entries show original
+templates.
+
+__Figure 6.__ Example of generating "virtual" DevCCF templates at intermediate time points
+(e.g., P10.3, P20) by warping adjacent stages to a shared time and averaging using ANTsX.
+
+__Figure 7.__ The mouse brain cortical labeling pipeline integrates two deep learning components
+for brain extraction and anatomical region segmentation. Both networks rely heavily on
+data augmentation applied to templates constructed from open datasets. The framework
+also supports further refinement or alternative label sets tailored to specific research needs.
+Possible applications include voxelwise cortical thickness estimation.
+
+__Figure 8.__ Evaluation of the ANTsX mouse brain extraction on an independent, publicly
+available dataset consisting of 12 specimens $\times$ 7 time points = 84 total images. Dice overlap
+comparisons with the user-generated brain masks provide good agreement with the automated
+results from the brain extraction network.
+
+__Figure 9.__ Evaluation of the ANTsX deep learning–based mouse brain parcellation on a diverse
+MRI cohort. (a) T2-weighted DevCCF P56 template with the six-region parcellation: cerebral
+cortex, nuclei, brain stem, cerebellum, main olfactory bulb, and hippocampal formation.
+(b) Example segmentation result from a representative subject (NR5, Day 0) using the
+proposed deep learning pipeline. (c) Dice overlap scores across the full evaluation cohort
+($n = 84$), comparing anatomical alignment achieved via registration using intensity alone
+versus registration guided by the predicted parcellation. Dice values were computed using
+manually segmented labels transformed to AllenCCFv3 space.

@@ -14,10 +14,13 @@ rmdFiles <- c( "format.md",
                "discussion.md",
                "methods.md",
                "data_code_availability.md",
-               "inclusion_and_ethics.md",
+               "references.md",
+               # "inclusion_and_ethics.md",
                "acknowledgments.md",
                "author_contributions.md",
-               "references.md"
+               "competing_interests.md",
+               "tables.md",
+               "figure_legends.md"
              )
 
 for( i in 1:length( rmdFiles ) )

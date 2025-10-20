@@ -18,8 +18,6 @@ spatial registration, template generation, and visualization. Table
 \ref{table:methods} provides a concise summary of the relevant ANTsX
 functionality.
 
-\input{antsx_functionality_table}
-
 **Preprocessing: bias field correction and denoising.** Standard preprocessing
 steps in mouse brain imaging include correcting for spatial intensity
 inhomogeneities and reducing image noise, both of which can impact registration
