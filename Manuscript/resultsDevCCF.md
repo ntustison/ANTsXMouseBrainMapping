@@ -1,14 +1,12 @@
 
 ## Continuously mapping the DevCCF developmental trajectory
 
-\begin{figure}
+<!-- \begin{figure}
 \centering
-\includegraphics[width=0.99\textwidth]{Figures/lowerLeftPanel.pdf} \caption{The
-spatial transformation between any two time points within the continuous DevCCF
-longitudinal developmental trajectory is available through the use of ANTsX
-functionality for generating a velocity flow model.}
+\includegraphics[width=0.99\textwidth]{Figures/lowerLeftPanel.pdf} 
+\caption{}
 \label{fig:devccfvelocity}
-\end{figure} 
+\end{figure}  -->
 
 The DevCCF is an openly accessible resource for the mouse brain research
 community [@Kronman:2024aa], comprising symmetric, multi-modal MRI and LSFM
@@ -35,13 +33,12 @@ image where each voxel stores the $x$,$y$,$z$ components of motion at a given
 time point.  Integration of the time-varying velocity field uses uses 4$^{th}$ 
 order Runge-Kutta (`ants.integrate_velocity_field(...)`) [@Avants:2014aa].
 
-\begin{figure}[!htb]
+<!-- \begin{figure}[!htb]
 \centering
 \includegraphics[width=0.75\textwidth]{Figures/SimplifiedAnnotations.pdf}
-\caption{Annotated regions representing common labels across developmental
-stages, shown for both P4 and P14.}
+\caption{}
 \label{fig:simplifiedannotations}
-\end{figure}
+\end{figure} -->
 
 Each DevCCF template includes over 2,500 labeled anatomical regions, with
 spatial resolutions ranging from 31.5 to 50$\mu$m. For the velocity flow modeling
@@ -49,7 +46,7 @@ task, we identified a common set of 26 bilateral regions (13 per hemisphere)
 that were consistently labeled across all timepoints. These regions span major
 developmental domains including the pallium, subpallium, midbrain, prosomeres,
 hypothalamus, hindbrain subregions, and key white matter tracts
-(Figure \ref{fig:simplifiedannotations}).
+(Figure 3).
 
 Prior to velocity field optimization, all templates were rigidly aligned to the
 DevCCF P56 template using the centroids of these common label sets. Pairwise
@@ -67,22 +64,13 @@ yielding 173,303 total points per atlas ($N_{contour} = 98{,}151$; $N_{region} =
 75{,}152$). Boundary points were assigned double weight during optimization to
 emphasize anatomical boundary correspondence.
 
-
-\begin{figure}[!htb]
+<!-- \begin{figure}[!htb]
 \centering
 \includegraphics[width=0.99\textwidth]{Figures/convergence.pdf}
-\caption{Convergence and evaluation of the velocity flow model across the
-DevCCF developmental trajectory. (Top left) Total displacement error over
-iterations. (Top right) Median displacement error per integration point across
-the optimization timeline, spanning embryonic (E11.5) to postnatal (P56) stages.
-(Bottom) Dice similarity scores comparing region-level label overlap between:
-(1) conventional pairwise SyN registration and (2) velocity flow-based
-deformation, across intermediate timepoints. Using region-based pairwise
-registration with SyN as a performance upper bound, the velocity flow model
-achieves comparable accuracy while also enabling smooth, continuous deformation
-across the full developmental continuum.}
+\caption{}
 \label{fig:convergence}
-\end{figure}
+\end{figure} -->
+
 
 The velocity field was optimized using the seven corresponding point sets and
 their associated weights. The field geometry was defined at $[256, 182, 360]$
@@ -98,7 +86,7 @@ logarithmic temporal transform, P56 was assigned a span of 28 postnatal days to
 reflect known developmental dynamics (i.e., in terms of modeling the continuous
 deformation, the morphological changes between Day 28 and Day 56 are
 insignificant).  This improved the temporal distribution of integration points
-(Figure \ref{fig:convergence}, right panel).
+(Figure 4, right panel).
 
 Optimization was run for a maximum of 200 iterations using a 2020 iMac (3.6 GHz
 10-Core Intel Core i9, 64 GB RAM), with each iteration taking $\sim6$ minutes.
@@ -107,34 +95,34 @@ points by computing regularized displacement fields between warped point sets at
 adjacent time slices. Updates were applied using a step size of $\delta = 0.2$.
 Convergence was assessed via average displacement error across all points, with
 final convergence achieved after $\sim125$ iterations (Figure
-\ref{fig:convergence}, left panel). Median errors across integration points also
+4, left panel). Median errors across integration points also
 trended toward zero, albeit at varying rates.  To benchmark performance, we
 compared the velocity model’s region-based alignment to traditional pairwise
 registration using SyN, a widely used diffeomorphic algorithm. The velocity
 model achieved comparable Dice scores at sampled timepoints while additionally
 offering smooth interpolation across the entire developmental trajectory.
 
-\begin{figure}[!htb]
+<!-- \begin{figure}[!htb]
 \centering
 \includegraphics[width=0.8\textwidth]{Figures/CrossWarp.pdf}
-\caption{Mid-sagittal visualization of DevCCF templates warped to every other time point. Each row is a reference space; each column is a warped input. Diagonal entries show original templates.}
+\caption{}
 \label{fig:crosswarp}
 \end{figure}
 
 \begin{figure}[!htb]
 \centering
 \includegraphics[width=0.8\textwidth]{Figures/pseudo_template.pdf}
-\caption{Example of generating “virtual” DevCCF templates at intermediate time points (e.g., P10.3, P20) by warping adjacent stages to a shared time and averaging using ANTsX.}
+\caption{}
 \label{fig:virtual}
-\end{figure}
+\end{figure} -->
 
 Once optimized, the velocity field enables the computation of diffeomorphic
 transformations between any pair of continuous time points within the DevCCF
-developmental range. Figure \ref{fig:crosswarp} illustrates cross-warping
+developmental range. Figure 5 illustrates cross-warping
 between all DevCCF stages using the velocity flow model. In addition to
 facilitating flexible alignment between existing templates, the model also
 supports the synthesis of virtual templates at intermediate, unsampled
-developmental stages. As shown in Figure \ref{fig:virtual}, we demonstrate the
+developmental stages. As shown in Figure 6, we demonstrate the
 creation of virtual age templates (e.g., P10.3 and P20) by warping adjacent
 developmental atlases to a target timepoint and constructing an averaged
 representation using ANTsX’s template-building functionality.

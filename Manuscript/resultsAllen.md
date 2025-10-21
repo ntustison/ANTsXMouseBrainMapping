@@ -4,7 +4,7 @@
 
 # Results
 
-\begin{figure*}
+<!-- \begin{figure*}
 \centering
 \begin{subfigure}[t]{0.49\textwidth}
 \centering
@@ -16,17 +16,14 @@
 \includegraphics[width=0.99\textwidth]{Figures/fmostPipeline.pdf}
 \caption{}
 \end{subfigure}
-\caption{Diagram of the two ANTsX-based pipelines for mapping (a) MERFISH
-          and (b)fMOST data into the space of AllenCCFv3.  Each generates
-         the requisite transforms to map individual images
-         to the CCF.}
+\caption{}
 \label{fig:allenpipelines}
-\end{figure*}
+\end{figure*}  -->
 
 ## Mapping multiplexed error-robust fluorescence in situ hybridization (MERFISH)
 
 We developed an ANTsX-based pipeline to map spatial transcriptomic
-MERFISH data into the AllenCCFv3 (Figure \ref{fig:allenpipelines}(a)). This
+MERFISH data into the AllenCCFv3 (Figure 1(a)). This
 approach was used in recent efforts to create a high-resolution transcriptomic
 atlas of the mouse brain [@Yao:2023aa]. The pipeline maps spatial gene expression 
 patterns from MERFISH onto anatomical labels in the AllenCCFv3.
@@ -64,7 +61,7 @@ evaluation rationale is included in the Discussion.
 ## Mapping fluorescence micro-optical sectioning tomography (fMOST) data
 
 We also constructed a pipeline for mapping fMOST images to the
-AllenCCFv3 using ANTsX (Figure \ref{fig:allenpipelines}(b)). The approach
+AllenCCFv3 using ANTsX (Figure 1(b)). The approach
 leverages a modality-specific average fMOST atlas as an intermediate target,
 adapted from previous work in human and mouse brain mapping
 [@Avants:2010aa;@jia:2011aa;@tang:2009aa;@dewey:2017aa;@perens:2023aa;@Wang:2020aa;@qu:2022aa;@Kronman:2024aa].

@@ -1,6 +1,7 @@
 
 ## Automated structural labeling of the mouse brain
 
+<!--
 \begin{figure}
 \centering
 \includegraphics[width=0.95\textwidth]{Figures/mousePipeline.pdf} \caption{The
@@ -12,6 +13,7 @@ sets tailored to specific research needs. Possible applications include
 voxelwise cortical thickness estimation.}
 \label{fig:mouseKK}
 \end{figure}
+-->
 
 Structural labeling strategies for the mouse brain are essential for
 understanding the organization and function of the murine nervous system
@@ -26,10 +28,9 @@ presents unique challenges, such as highly anisotropic sampling, that complicate
 transfer of existing tools. At the same time, high resolution resources like the
 AllenCCFv3 and DevCCF provide reference label sets that can serve as training
 data. We demonstrate how ANTsX can be used to construct a full structural
-labeling pipeline for the mouse brain (Figure \ref{fig:mouseKK}), including both
-whole brain segmentation (i.e., brain extraction) and the subsequent template-based
-region segmentation.
-
+labeling pipeline for the mouse brain (Figure 7), including both whole brain
+segmentation (i.e., brain extraction) and the subsequent template-based region
+segmentation.
 
 To develop a general-purpose mouse brain extraction model, we constructed
 whole-head templates from two publicly available T2-weighted datasets. The first
@@ -77,6 +78,7 @@ cortical thickness estimation pipeline
 thickness maps, even when applied to anisotropic or limited-resolution mouse
 brain data.
 
+<!--
 \begin{figure}
 \centering
   \includegraphics[width=0.75\textwidth]{Figures/diceWholeBrain.pdf}
@@ -87,7 +89,9 @@ user-generated brain masks provide good agreement with the automated results
 from the brain extraction network.}
 \label{fig:evaluation}
 \end{figure}
+-->
 
+<!--
 \begin{figure}
 \centering
 \begin{subfigure}{0.25\textwidth}
@@ -113,12 +117,14 @@ a diverse MRI cohort. (a) T2-weighted DevCCF P56 template with the six-region
 parcellation: cerebral cortex, nuclei, brain stem, cerebellum, main olfactory
 bulb, and hippocampal formation. (b) Example segmentation result from a
 representative subject (NR5, Day 0) using the proposed deep learning pipeline.
-(c) Dice overlap scores across the full evaluation cohort ($n=84$), comparing
-anatomical alignment achieved via registration using intensity alone versus
-registration guided by the predicted parcellation. Dice values were computed
-using manually segmented labels transformed to AllenCCFv3 space.}
+(c) Box plots show Dice overlap across subjects for each registration approach
+and region. The centre line is the median; box bounds are the interquartile
+range (25th–75th percentiles); whiskers extend to the minimum and maximum values
+within 1.5×IQR of the lower/upper quartiles; points beyond the whiskers are
+outliers.
 \label{fig:evaluationParcellation}
 \end{figure}
+-->
 
 For evaluation, we used an additional publicly available dataset
 [@Rahman:2023aa] that is completely independent from the data used in training
@@ -128,15 +134,14 @@ in-house-generated brain masks (i.e., produced by the data providers) for a
 total of 84 images.  Spacing is anistropic with an in-plane resolution of $0.1
 \times 0.1$ mm$^2$ and a slice thickness of $0.5$ mm.  
 
-Figure \ref{fig:evaluation} summarizes the whole-brain overlap between manually
-segmented reference masks and the predicted segmentations for all 84 images in
-the evaluation cohort. The proposed network demonstrates excellent performance
-in brain extraction across a wide age range. To further assess the utility of
-the parcellation network, we used the predicted labels to guide anatomically
+Figure 8 summarizes the whole-brain overlap between manually segmented reference
+masks and the predicted segmentations for all 84 images in the evaluation
+cohort. The proposed network demonstrates excellent performance in brain
+extraction across a wide age range. To further assess the utility of the
+parcellation network, we used the predicted labels to guide anatomically
 informed registration to the AllenCCFv3 atlas using ANTsX multi-component
-registration, and compared this to intensity-only registration
-(Figure \ref{fig:evaluationParcellation}). While intensity-based alignment
-performs reasonably well, incorporating the predicted parcellation significantly
-improves regional correspondence. Dice scores shown in
-Figure \ref{fig:evaluationParcellation}(c) were computed using manually
-segmented labels transformed to AllenCCFv3 space.
+registration, and compared this to intensity-only registration (Figure 9). While
+intensity-based alignment performs reasonably well, incorporating the predicted
+parcellation significantly improves regional correspondence. Dice scores shown
+in Figure 9(c) were computed using manually segmented labels transformed to
+AllenCCFv3 space.
