@@ -112,7 +112,7 @@ Large-scale efforts by the BRAIN Initiative Cell Census Network (BICCN) are
 generating a comprehensive reference atlas of cell types in the mouse brain. A
 key challenge in this effort is mapping diverse datasets, acquired with varied
 imaging, tissue processing, and profiling methods, into shared coordinate
-frameworks. Here, we present modular mapping pipelines developed using the
+frameworks. Here, we present mouse brain mapping pipelines developed using the
 Advanced Normalization Tools Ecosystem (ANTsX) to align MERFISH spatial
 transcriptomics and high-resolution fMOST morphology data to the Allen Common
 Coordinate Framework (CCFv3), and developmental MRI and LSFM data to the
@@ -285,7 +285,7 @@ at (https://github.com/dontminchenit/CCFAlignmentToolkit).
 
 # Results
 
-\begin{figure*}
+<!-- \begin{figure*}
 \centering
 \begin{subfigure}[t]{0.49\textwidth}
 \centering
@@ -297,17 +297,14 @@ at (https://github.com/dontminchenit/CCFAlignmentToolkit).
 \includegraphics[width=0.99\textwidth]{Figures/fmostPipeline.pdf}
 \caption{}
 \end{subfigure}
-\caption{Diagram of the two ANTsX-based pipelines for mapping (a) MERFISH
-          and (b)fMOST data into the space of AllenCCFv3.  Each generates
-         the requisite transforms to map individual images
-         to the CCF.}
+\caption{}
 \label{fig:allenpipelines}
-\end{figure*}
+\end{figure*}  -->
 
 ## Mapping multiplexed error-robust fluorescence in situ hybridization (MERFISH)
 
 We developed an ANTsX-based pipeline to map spatial transcriptomic
-MERFISH data into the AllenCCFv3 (Figure \ref{fig:allenpipelines}(a)). This
+MERFISH data into the AllenCCFv3 (Figure 1(a)). This
 approach was used in recent efforts to create a high-resolution transcriptomic
 atlas of the mouse brain [@Yao:2023aa]. The pipeline maps spatial gene expression 
 patterns from MERFISH onto anatomical labels in the AllenCCFv3.
@@ -345,7 +342,7 @@ evaluation rationale is included in the Discussion.
 ## Mapping fluorescence micro-optical sectioning tomography (fMOST) data
 
 We also constructed a pipeline for mapping fMOST images to the
-AllenCCFv3 using ANTsX (Figure \ref{fig:allenpipelines}(b)). The approach
+AllenCCFv3 using ANTsX (Figure 1(b)). The approach
 leverages a modality-specific average fMOST atlas as an intermediate target,
 adapted from previous work in human and mouse brain mapping
 [@Avants:2010aa;@jia:2011aa;@tang:2009aa;@dewey:2017aa;@perens:2023aa;@Wang:2020aa;@qu:2022aa;@Kronman:2024aa].
@@ -389,14 +386,12 @@ evaluation rationale is included in the Discussion.
 
 ## Continuously mapping the DevCCF developmental trajectory
 
-\begin{figure}
+<!-- \begin{figure}
 \centering
-\includegraphics[width=0.99\textwidth]{Figures/lowerLeftPanel.pdf} \caption{The
-spatial transformation between any two time points within the continuous DevCCF
-longitudinal developmental trajectory is available through the use of ANTsX
-functionality for generating a velocity flow model.}
+\includegraphics[width=0.99\textwidth]{Figures/lowerLeftPanel.pdf} 
+\caption{}
 \label{fig:devccfvelocity}
-\end{figure} 
+\end{figure}  -->
 
 The DevCCF is an openly accessible resource for the mouse brain research
 community [@Kronman:2024aa], comprising symmetric, multi-modal MRI and LSFM
@@ -423,13 +418,12 @@ image where each voxel stores the $x$,$y$,$z$ components of motion at a given
 time point.  Integration of the time-varying velocity field uses uses 4$^{th}$ 
 order Runge-Kutta (`ants.integrate_velocity_field(...)`) [@Avants:2014aa].
 
-\begin{figure}[!htb]
+<!-- \begin{figure}[!htb]
 \centering
 \includegraphics[width=0.75\textwidth]{Figures/SimplifiedAnnotations.pdf}
-\caption{Annotated regions representing common labels across developmental
-stages, shown for both P4 and P14.}
+\caption{}
 \label{fig:simplifiedannotations}
-\end{figure}
+\end{figure} -->
 
 Each DevCCF template includes over 2,500 labeled anatomical regions, with
 spatial resolutions ranging from 31.5 to 50$\mu$m. For the velocity flow modeling
@@ -437,7 +431,7 @@ task, we identified a common set of 26 bilateral regions (13 per hemisphere)
 that were consistently labeled across all timepoints. These regions span major
 developmental domains including the pallium, subpallium, midbrain, prosomeres,
 hypothalamus, hindbrain subregions, and key white matter tracts
-(Figure \ref{fig:simplifiedannotations}).
+(Figure 3).
 
 Prior to velocity field optimization, all templates were rigidly aligned to the
 DevCCF P56 template using the centroids of these common label sets. Pairwise
@@ -455,22 +449,13 @@ yielding 173,303 total points per atlas ($N_{contour} = 98{,}151$; $N_{region} =
 75{,}152$). Boundary points were assigned double weight during optimization to
 emphasize anatomical boundary correspondence.
 
-
-\begin{figure}[!htb]
+<!-- \begin{figure}[!htb]
 \centering
 \includegraphics[width=0.99\textwidth]{Figures/convergence.pdf}
-\caption{Convergence and evaluation of the velocity flow model across the
-DevCCF developmental trajectory. (Top left) Total displacement error over
-iterations. (Top right) Median displacement error per integration point across
-the optimization timeline, spanning embryonic (E11.5) to postnatal (P56) stages.
-(Bottom) Dice similarity scores comparing region-level label overlap between:
-(1) conventional pairwise SyN registration and (2) velocity flow-based
-deformation, across intermediate timepoints. Using region-based pairwise
-registration with SyN as a performance upper bound, the velocity flow model
-achieves comparable accuracy while also enabling smooth, continuous deformation
-across the full developmental continuum.}
+\caption{}
 \label{fig:convergence}
-\end{figure}
+\end{figure} -->
+
 
 The velocity field was optimized using the seven corresponding point sets and
 their associated weights. The field geometry was defined at $[256, 182, 360]$
@@ -486,7 +471,7 @@ logarithmic temporal transform, P56 was assigned a span of 28 postnatal days to
 reflect known developmental dynamics (i.e., in terms of modeling the continuous
 deformation, the morphological changes between Day 28 and Day 56 are
 insignificant).  This improved the temporal distribution of integration points
-(Figure \ref{fig:convergence}, right panel).
+(Figure 4, right panel).
 
 Optimization was run for a maximum of 200 iterations using a 2020 iMac (3.6 GHz
 10-Core Intel Core i9, 64 GB RAM), with each iteration taking $\sim6$ minutes.
@@ -495,34 +480,34 @@ points by computing regularized displacement fields between warped point sets at
 adjacent time slices. Updates were applied using a step size of $\delta = 0.2$.
 Convergence was assessed via average displacement error across all points, with
 final convergence achieved after $\sim125$ iterations (Figure
-\ref{fig:convergence}, left panel). Median errors across integration points also
+4, left panel). Median errors across integration points also
 trended toward zero, albeit at varying rates.  To benchmark performance, we
 compared the velocity model’s region-based alignment to traditional pairwise
 registration using SyN, a widely used diffeomorphic algorithm. The velocity
 model achieved comparable Dice scores at sampled timepoints while additionally
 offering smooth interpolation across the entire developmental trajectory.
 
-\begin{figure}[!htb]
+<!-- \begin{figure}[!htb]
 \centering
 \includegraphics[width=0.8\textwidth]{Figures/CrossWarp.pdf}
-\caption{Mid-sagittal visualization of DevCCF templates warped to every other time point. Each row is a reference space; each column is a warped input. Diagonal entries show original templates.}
+\caption{}
 \label{fig:crosswarp}
 \end{figure}
 
 \begin{figure}[!htb]
 \centering
 \includegraphics[width=0.8\textwidth]{Figures/pseudo_template.pdf}
-\caption{Example of generating “virtual” DevCCF templates at intermediate time points (e.g., P10.3, P20) by warping adjacent stages to a shared time and averaging using ANTsX.}
+\caption{}
 \label{fig:virtual}
-\end{figure}
+\end{figure} -->
 
 Once optimized, the velocity field enables the computation of diffeomorphic
 transformations between any pair of continuous time points within the DevCCF
-developmental range. Figure \ref{fig:crosswarp} illustrates cross-warping
+developmental range. Figure 5 illustrates cross-warping
 between all DevCCF stages using the velocity flow model. In addition to
 facilitating flexible alignment between existing templates, the model also
 supports the synthesis of virtual templates at intermediate, unsampled
-developmental stages. As shown in Figure \ref{fig:virtual}, we demonstrate the
+developmental stages. As shown in Figure 6, we demonstrate the
 creation of virtual age templates (e.g., P10.3 and P20) by warping adjacent
 developmental atlases to a target timepoint and constructing an averaged
 representation using ANTsX’s template-building functionality.
@@ -532,6 +517,7 @@ publicly available in the associated codebase.
 
 ## Automated structural labeling of the mouse brain
 
+<!--
 \begin{figure}
 \centering
 \includegraphics[width=0.95\textwidth]{Figures/mousePipeline.pdf} \caption{The
@@ -543,6 +529,7 @@ sets tailored to specific research needs. Possible applications include
 voxelwise cortical thickness estimation.}
 \label{fig:mouseKK}
 \end{figure}
+-->
 
 Structural labeling strategies for the mouse brain are essential for
 understanding the organization and function of the murine nervous system
@@ -557,10 +544,9 @@ presents unique challenges, such as highly anisotropic sampling, that complicate
 transfer of existing tools. At the same time, high resolution resources like the
 AllenCCFv3 and DevCCF provide reference label sets that can serve as training
 data. We demonstrate how ANTsX can be used to construct a full structural
-labeling pipeline for the mouse brain (Figure \ref{fig:mouseKK}), including both
-whole brain segmentation (i.e., brain extraction) and the subsequent template-based
-region segmentation.
-
+labeling pipeline for the mouse brain (Figure 7), including both whole brain
+segmentation (i.e., brain extraction) and the subsequent template-based region
+segmentation.
 
 To develop a general-purpose mouse brain extraction model, we constructed
 whole-head templates from two publicly available T2-weighted datasets. The first
@@ -608,6 +594,7 @@ cortical thickness estimation pipeline
 thickness maps, even when applied to anisotropic or limited-resolution mouse
 brain data.
 
+<!--
 \begin{figure}
 \centering
   \includegraphics[width=0.75\textwidth]{Figures/diceWholeBrain.pdf}
@@ -618,7 +605,9 @@ user-generated brain masks provide good agreement with the automated results
 from the brain extraction network.}
 \label{fig:evaluation}
 \end{figure}
+-->
 
+<!--
 \begin{figure}
 \centering
 \begin{subfigure}{0.25\textwidth}
@@ -644,12 +633,14 @@ a diverse MRI cohort. (a) T2-weighted DevCCF P56 template with the six-region
 parcellation: cerebral cortex, nuclei, brain stem, cerebellum, main olfactory
 bulb, and hippocampal formation. (b) Example segmentation result from a
 representative subject (NR5, Day 0) using the proposed deep learning pipeline.
-(c) Dice overlap scores across the full evaluation cohort ($n=84$), comparing
-anatomical alignment achieved via registration using intensity alone versus
-registration guided by the predicted parcellation. Dice values were computed
-using manually segmented labels transformed to AllenCCFv3 space.}
+(c) Box plots show Dice overlap across subjects for each registration approach
+and region. The centre line is the median; box bounds are the interquartile
+range (25th–75th percentiles); whiskers extend to the minimum and maximum values
+within 1.5×IQR of the lower/upper quartiles; points beyond the whiskers are
+outliers.
 \label{fig:evaluationParcellation}
 \end{figure}
+-->
 
 For evaluation, we used an additional publicly available dataset
 [@Rahman:2023aa] that is completely independent from the data used in training
@@ -659,18 +650,17 @@ in-house-generated brain masks (i.e., produced by the data providers) for a
 total of 84 images.  Spacing is anistropic with an in-plane resolution of $0.1
 \times 0.1$ mm$^2$ and a slice thickness of $0.5$ mm.  
 
-Figure \ref{fig:evaluation} summarizes the whole-brain overlap between manually
-segmented reference masks and the predicted segmentations for all 84 images in
-the evaluation cohort. The proposed network demonstrates excellent performance
-in brain extraction across a wide age range. To further assess the utility of
-the parcellation network, we used the predicted labels to guide anatomically
+Figure 8 summarizes the whole-brain overlap between manually segmented reference
+masks and the predicted segmentations for all 84 images in the evaluation
+cohort. The proposed network demonstrates excellent performance in brain
+extraction across a wide age range. To further assess the utility of the
+parcellation network, we used the predicted labels to guide anatomically
 informed registration to the AllenCCFv3 atlas using ANTsX multi-component
-registration, and compared this to intensity-only registration
-(Figure \ref{fig:evaluationParcellation}). While intensity-based alignment
-performs reasonably well, incorporating the predicted parcellation significantly
-improves regional correspondence. Dice scores shown in
-Figure \ref{fig:evaluationParcellation}(c) were computed using manually
-segmented labels transformed to AllenCCFv3 space.
+registration, and compared this to intensity-only registration (Figure 9). While
+intensity-based alignment performs reasonably well, incorporating the predicted
+parcellation significantly improves regional correspondence. Dice scores shown
+in Figure 9(c) were computed using manually segmented labels transformed to
+AllenCCFv3 space.
 \clearpage
 \newpage
 
@@ -1157,49 +1147,64 @@ The authors declare no competing interests.
 
 # Figure Legends
 
-__Figure 1.__ Diagram of the two ANTsX-based pipelines for mapping (a) MERFISH and
-(b)fMOST data into the space of AllenCCFv3. Each generates the requisite transforms to
-map individual images to the CCF.
+__Figure 1.__ Overview of ANTsX pipelines for mapping MERFISH and fMOST data to
+the AllenCCFv3. Diagram of the two ANTsX-based pipelines for mapping (a) MERFISH
+and (b)fMOST data into the space of AllenCCFv3. Each generates the requisite
+transforms to map individual images to the CCF.
 
-__Figure 2.__ The spatial transformation between any two time points within the continuous
-DevCCF longitudinal developmental trajectory is available through the use of ANTsX
-functionality for generating a velocity flow model.
+__Figure 2.__ Continuous developmental mapping enabled by the DevCCF velocity
+flow model.  The spatial transformation between any two time points within the
+continuous DevCCF longitudinal developmental trajectory is available through the
+use of ANTsX functionality for generating a velocity flow model.
 
-__Figure 3.__ Annotated regions representing common labels across developmental stages, shown
-for both P4 and P14.
+__Figure 3.__ Common anatomical labels across developmental stages of the
+DevCCF. Annotated regions representing common labels across developmental
+stages, shown for both P4 and P14.
 
-__Figure 4.__ Convergence and evaluation of the velocity flow model across the DevCCF develop-
-mental trajectory. (Top left) Total displacement error over iterations. (Top right) Median
-displacement error per integration point across the optimization timeline, spanning embryonic
-(E11.5) to postnatal (P56) stages. (Bottom) Dice similarity scores comparing region-level
-label overlap between: (1) conventional pairwise SyN registration and (2) velocity flow-based
-deformation, across intermediate timepoints. Using region-based pairwise registration with
-SyN as a performance upper bound, the velocity flow model achieves comparable accuracy
-while also enabling smooth, continuous deformation across the full developmental continuum.
+__Figure 4.__ Convergence and evaluation of the velocity flow model across the
+DevCCF develop- mental trajectory. (Top left) Total displacement error over
+iterations. (Top right) Median displacement error per integration point across
+the optimization timeline, spanning embryonic (E11.5) to postnatal (P56) stages.
+(Bottom) Dice similarity scores comparing region-level label overlap between:
+(1) conventional pairwise SyN registration and (2) velocity flow-based
+deformation, across intermediate timepoints. Using region-based pairwise
+registration with SyN as a performance upper bound, the velocity flow model
+achieves comparable accuracy while also enabling smooth, continuous deformation
+across the full developmental continuum.
 
-__Figure 5.__ Mid-sagittal visualization of DevCCF templates warped to every other time point.
-Each row is a reference space; each column is a warped input. Diagonal entries show original
-templates.
+__Figure 5.__ Visualization of DevCCF templates warped across developmental time
+points.  Mid-sagittal visualization of DevCCF templates warped to every other
+time point. Each row is a reference space; each column is a warped input.
+Diagonal entries show original templates.
 
-__Figure 6.__ Example of generating "virtual" DevCCF templates at intermediate time points
-(e.g., P10.3, P20) by warping adjacent stages to a shared time and averaging using ANTsX.
+__Figure 6.__ Generation of virtual DevCCF templates at intermediate
+developmental stages.  Example of generating "virtual" DevCCF templates at
+intermediate time points (e.g., P10.3, P20) by warping adjacent stages to a
+shared time and averaging using ANTsX.
 
-__Figure 7.__ The mouse brain cortical labeling pipeline integrates two deep learning components
-for brain extraction and anatomical region segmentation. Both networks rely heavily on
-data augmentation applied to templates constructed from open datasets. The framework
-also supports further refinement or alternative label sets tailored to specific research needs.
-Possible applications include voxelwise cortical thickness estimation.
+__Figure 7.__ Deep learning pipelines for mouse brain extraction and
+parcellation.  The mouse brain cortical labeling pipeline integrates two deep
+learning components for brain extraction and anatomical region segmentation.
+Both networks rely heavily on data augmentation applied to templates constructed
+from open datasets. The framework also supports further refinement or
+alternative label sets tailored to specific research needs. Possible
+applications include voxelwise cortical thickness estimation.
 
-__Figure 8.__ Evaluation of the ANTsX mouse brain extraction on an independent, publicly
-available dataset consisting of 12 specimens $\times$ 7 time points = 84 total images. Dice overlap
-comparisons with the user-generated brain masks provide good agreement with the automated
-results from the brain extraction network.
+__Figure 8.__ Evaluation of ANTsX brain extraction across an independent
+dataset. Evaluation of the ANTsX mouse brain extraction on an independent,
+publicly available dataset consisting of 12 specimens $\times$ 7 time points =
+84 total images. Dice overlap comparisons with the user-generated brain masks
+provide good agreement with the automated results from the brain extraction
+network.
 
-__Figure 9.__ Evaluation of the ANTsX deep learning–based mouse brain parcellation on a diverse
-MRI cohort. (a) T2-weighted DevCCF P56 template with the six-region parcellation: cerebral
-cortex, nuclei, brain stem, cerebellum, main olfactory bulb, and hippocampal formation.
-(b) Example segmentation result from a representative subject (NR5, Day 0) using the
-proposed deep learning pipeline. (c) Dice overlap scores across the full evaluation cohort
-($n = 84$), comparing anatomical alignment achieved via registration using intensity alone
-versus registration guided by the predicted parcellation. Dice values were computed using
-manually segmented labels transformed to AllenCCFv3 space.
+__Figure 9.__ Performance of ANTsX deep learning–based mouse brain parcellation.
+Evaluation of the ANTsX deep learning–based mouse brain parcellation on a
+diverse MRI cohort. (a) T2-weighted DevCCF P56 template with the six-region
+parcellation: cerebral cortex, nuclei, brain stem, cerebellum, main olfactory
+bulb, and hippocampal formation. (b) Example segmentation result from a
+representative subject (NR5, Day 0) using the proposed deep learning pipeline.
+(c) Box plots show Dice overlap across subjects for each registration approach
+and region. The centre line is the median; box bounds are the interquartile
+range (25th–75th percentiles); whiskers extend to the minimum and maximum values
+within 1.5×IQR of the lower/upper quartiles; points beyond the whiskers are
+outliers.
