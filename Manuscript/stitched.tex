@@ -793,9 +793,8 @@ artifacts, denoising, spatial registration, template generation, and
 visualization. Table \ref{table:methods} provides a concise summary of
 the relevant ANTsX functionality.
 
-\textbf{Preprocessing: bias field correction and denoising.} Standard
-preprocessing steps in mouse brain imaging include correcting for
-spatial intensity inhomogeneities and reducing image noise, both of
+Standard preprocessing steps in mouse brain imaging include correcting
+for spatial intensity inhomogeneities and reducing image noise, both of
 which can impact registration accuracy and downstream analysis. ANTsX
 provides implementations of widely used methods for these tasks. The N4
 bias field correction algorithm\textsuperscript{51}, originally
@@ -805,9 +804,8 @@ low-frequency intensity variation and is accessible via
 denoising\textsuperscript{60} has been implemented as
 \texttt{ants.denoise\_image(...)}.
 
-\textbf{Image registration.} ANTsX includes a robust and flexible
-framework for pairwise and groupwise image
-registration\textsuperscript{80}. At its core is the SyN
+ANTsX includes a robust and flexible framework for pairwise and
+groupwise image registration\textsuperscript{80}. At its core is the SyN
 algorithm\textsuperscript{50}, a symmetric diffeomorphic model with
 optional B-spline regularization\textsuperscript{66}. In ANTsPy,
 registration is performed via \texttt{ants.registration(...)} using
@@ -817,31 +815,31 @@ preconfigured parameter sets (e.g.,
 modalities and levels of computational demand. Resulting transformations
 can be applied to new images with \texttt{ants.apply\_transforms(...)}.
 
-\textbf{Template generation.} ANTsX supports population-based template
-generation through iterative pairwise registration to an evolving
-estimate of the mean shape and intensity reference space across
-subjects\textsuperscript{58}. This functionality was used in generating
-the DevCCF templates\textsuperscript{16}. The procedure, implemented as
+ANTsX supports population-based template generation through iterative
+pairwise registration to an evolving estimate of the mean shape and
+intensity reference space across subjects\textsuperscript{58}. This
+functionality was used in generating the DevCCF
+templates\textsuperscript{16}. The procedure, implemented as
 \texttt{ants.build\_template(...)}, produces average images in both
 shape and intensity by aligning all inputs to a common evolving
 template.
 
-\textbf{Visualization.} To support visual inspection and quality
-control, ANTsPy provides flexible image visualization with
-\texttt{ants.plot(...)}. This function enables multi-slice and
-multi-orientation rendering with optional overlays and label maps.
+To support visual inspection and quality control, ANTsPy provides
+flexible image visualization with \texttt{ants.plot(...)}. This function
+enables multi-slice and multi-orientation rendering with optional
+overlays and label maps.
 
 \subsection{Mapping fMOST data to
 AllenCCFv3}\label{mapping-fmost-data-to-allenccfv3}
 
-\textbf{Preprocessing.} Mapping fMOST data into the AllenCCFv3 presents
-unique challenges due to its native ultra-high resolution and imaging
-artifacts common to the fMOST modality. Each fMOST image can exceed a
-terabyte in size, with spatial resolutions far exceeding those of the
-AllenCCFv3 (25\,\(\mu m\) isotropic). To reduce computational burden and
-prevent resolution mismatch, each fMOST image is downsampled using cubic
-B-spline interpolation via \texttt{ants.resample\_image(...)} to match
-the template resolution.
+Mapping fMOST data into the AllenCCFv3 presents unique challenges due to
+its native ultra-high resolution and imaging artifacts common to the
+fMOST modality. Each fMOST image can exceed a terabyte in size, with
+spatial resolutions far exceeding those of the AllenCCFv3 (25\,\(\mu m\)
+isotropic). To reduce computational burden and prevent resolution
+mismatch, each fMOST image is downsampled using cubic B-spline
+interpolation via \texttt{ants.resample\_image(...)} to match the
+template resolution.
 
 Stripe artifacts (i.e., periodic intensity distortions caused by
 nonuniform sectioning or illumination) are common in fMOST and can
@@ -853,45 +851,43 @@ user-specified axis in the Fourier domain. In addition, intensity
 inhomogeneity across sections, often arising from variable staining or
 illumination, was corrected using N4 bias field correction.
 
-\textbf{Template-based spatial normalization.} To facilitate
-reproducible mapping, we first constructed a contralaterally symmetric
-average template from 30 fMOST brains and their mirrored counterparts
-using ANTsX template-building tools. Because the AllenCCFv3 and fMOST
-data differ substantially in both intensity contrast and morphology,
-direct deformable registration between individual fMOST brains and the
-AllenCCFv3 was insufficiently robust. Instead, we performed a one-time
-expert-guided label-driven registration between the average fMOST
-template and AllenCCFv3. This involved sequential alignment of seven
-manually selected anatomical regions: 1) brain mask/ventricles, 2)
-caudate/putamen, 3) fimbria, 4) posterior choroid plexus, 5) optic
-chiasm, 6) anterior choroid plexus, and 7) habenular commissure which
-were prioritized to enable coarse-to-fine correction of shape
-differences. Once established, this fMOST-template-to-AllenCCFv3
-transform was reused for all subsequent specimens. Each new fMOST brain
-was then registered to the average fMOST template using intensity-based
-registration, followed by concatenation of transforms to produce the
-final mapping into AllenCCFv3 space.
+To facilitate reproducible mapping, we first constructed a
+contralaterally symmetric average template from 30 fMOST brains and
+their mirrored counterparts using ANTsX template-building tools. Because
+the AllenCCFv3 and fMOST data differ substantially in both intensity
+contrast and morphology, direct deformable registration between
+individual fMOST brains and the AllenCCFv3 was insufficiently robust.
+Instead, we performed a one-time expert-guided label-driven registration
+between the average fMOST template and AllenCCFv3. This involved
+sequential alignment of seven manually selected anatomical regions: 1)
+brain mask/ventricles, 2) caudate/putamen, 3) fimbria, 4) posterior
+choroid plexus, 5) optic chiasm, 6) anterior choroid plexus, and 7)
+habenular commissure which were prioritized to enable coarse-to-fine
+correction of shape differences. Once established, this
+fMOST-template-to-AllenCCFv3 transform was reused for all subsequent
+specimens. Each new fMOST brain was then registered to the average fMOST
+template using intensity-based registration, followed by concatenation
+of transforms to produce the final mapping into AllenCCFv3 space.
 
-\textbf{Mapping neuron projections.} A key advantage of fMOST imaging is
-its ability to support single neuron projection reconstruction across
-the entire brain\textsuperscript{77}. Because these reconstructions are
-stored as 3D point sets aligned to the original fMOST volume, we applied
-the same composite transform used for image alignment to the point data
-using ANTsX functionality. This enables seamless integration of cellular
-morphology data into AllenCCFv3 space, facilitating comparative analyses
-across specimens.
+A key advantage of fMOST imaging is its ability to support single neuron
+projection reconstruction across the entire brain\textsuperscript{77}.
+Because these reconstructions are stored as 3D point sets aligned to the
+original fMOST volume, we applied the same composite transform used for
+image alignment to the point data using ANTsX functionality. This
+enables seamless integration of cellular morphology data into AllenCCFv3
+space, facilitating comparative analyses across specimens.
 
 \subsection{Mapping MERFISH data to
 AllenCCFv3}\label{mapping-merfish-data-to-allenccfv3}
 
-\textbf{Preprocessing.} MERFISH data are acquired as a series of 2D
-tissue sections, each comprising spatially localized gene expression
-measurements at subcellular resolution. To enable 3D mapping to the
-AllenCCFv3, we first constructed anatomical reference images by
-aggregating the number of detected transcripts per voxel across all
-probes within each section. These 2D projections were resampled to a
-resolution of 10 \(\mu m\)\,\(\times\)\,10\,\(\mu m\) to match the
-in-plane resolution of the AllenCCFv3.
+MERFISH data are acquired as a series of 2D tissue sections, each
+comprising spatially localized gene expression measurements at
+subcellular resolution. To enable 3D mapping to the AllenCCFv3, we first
+constructed anatomical reference images by aggregating the number of
+detected transcripts per voxel across all probes within each section.
+These 2D projections were resampled to a resolution of 10
+\(\mu m\)\,\(\times\)\,10\,\(\mu m\) to match the in-plane resolution of
+the AllenCCFv3.
 
 Sections were coarsely aligned using manually annotated dorsal and
 ventral midline points, allowing initial volumetric reconstruction.
@@ -900,40 +896,38 @@ orientation, spacing, and tissue loss. To further constrain alignment
 and enable deformable registration, we derived region-level anatomical
 labels directly from the gene expression data.
 
-\textbf{Label creation.} To assign region labels to the MERFISH data, we
-use a cell type clustering approach previously
-detailed\textsuperscript{46}. In short, manually dissected scRNAseq data
-was used to establish the distribution of cell types present in each of
-the following major regions: cerebellum, CTXsp, hindbrain, HPF,
-hypothalamus, isocortex, LSX, midbrain, OLF, PAL, sAMY, STRd, STRv,
-thalamus and hindbrain. Clusters in the scRNA-seq dataset were then used
-to assign similar clusters of cell types in the MERFISH data to the
-regions they are predominantly found in the scRNA-seq data. To account
-for clusters that were found at low frequency in regions outside its
-main region we calculated for each cell its 50 nearest neighbors in
-physical space and reassigned each cell to the region annotation
-dominating its neighborhood.
+To assign region labels to the MERFISH data, we use a cell type
+clustering approach previously detailed\textsuperscript{46}. In short,
+manually dissected scRNAseq data was used to establish the distribution
+of cell types present in each of the following major regions:
+cerebellum, CTXsp, hindbrain, HPF, hypothalamus, isocortex, LSX,
+midbrain, OLF, PAL, sAMY, STRd, STRv, thalamus and hindbrain. Clusters
+in the scRNA-seq dataset were then used to assign similar clusters of
+cell types in the MERFISH data to the regions they are predominantly
+found in the scRNA-seq data. To account for clusters that were found at
+low frequency in regions outside its main region we calculated for each
+cell its 50 nearest neighbors in physical space and reassigned each cell
+to the region annotation dominating its neighborhood.
 
-\textbf{Section matching via global alignment.} A major challenge was
-compensating for oblique cutting angles and non-uniform section
-thickness, which distort the anatomical shape and spacing of the
-reconstructed volume. Rather than directly warping the MERFISH data into
-atlas space, we globally aligned the AllenCCFv3 to the MERFISH
-coordinate system. This was done via an affine transformation followed
-by resampling of AllenCCFv3 sections to match the number and orientation
-of MERFISH sections. This approach minimizes interpolation artifacts in
-the MERFISH data and facilitates one-to-one section matching.
+A major challenge was compensating for oblique cutting angles and
+non-uniform section thickness, which distort the anatomical shape and
+spacing of the reconstructed volume. Rather than directly warping the
+MERFISH data into atlas space, we globally aligned the AllenCCFv3 to the
+MERFISH coordinate system. This was done via an affine transformation
+followed by resampling of AllenCCFv3 sections to match the number and
+orientation of MERFISH sections. This approach minimizes interpolation
+artifacts in the MERFISH data and facilitates one-to-one section
+matching.
 
-\textbf{Landmark-driven deformable alignment.} We used a 2.5D approach
-for fine alignment of individual sections. In each MERFISH slice,
-deformable registration was driven by sequential alignment of anatomical
-landmarks between the label maps derived from MERFISH and AllenCCFv3. A
-total of nine regions, including isocortical layers 2/3, 5, and 6, the
-striatum, hippocampus, thalamus, and medial/lateral habenula, were
-registered in an empirically determined order. After each round,
-anatomical alignment was visually assessed by an expert, and the next
-structure was selected to maximize improvement in the remaining
-misaligned regions.
+We used a 2.5D approach for fine alignment of individual sections. In
+each MERFISH slice, deformable registration was driven by sequential
+alignment of anatomical landmarks between the label maps derived from
+MERFISH and AllenCCFv3. A total of nine regions, including isocortical
+layers 2/3, 5, and 6, the striatum, hippocampus, thalamus, and
+medial/lateral habenula, were registered in an empirically determined
+order. After each round, anatomical alignment was visually assessed by
+an expert, and the next structure was selected to maximize improvement
+in the remaining misaligned regions.
 
 The final transform for each section combined the global affine
 alignment and the per-structure deformable registrations. These were
@@ -960,42 +954,39 @@ smooth deformation of anatomical structures over time. Importantly, the
 framework is extensible and can naturally accommodate additional
 timepoints for the potential expansion of the DevCCF.
 
-\textbf{Point sampling and region correspondence.} We first coalesced
-the anatomical labels across the seven DevCCF templates (E11.5, E13.5,
-E15.5, E18.5, P4, P14, P56) into 26 common structures that could be
-consistently identified across development. These include major brain
-regions such as the cortex, cerebellum, hippocampus, midbrain, and
-ventricles. For each successive pair of templates, we performed
-multi-label deformable registration using ANTsX to generate forward and
-inverse transforms between anatomical label volumes. From the P56 space,
-we randomly sampled approximately 1e6 points within and along the
-boundaries of each labeled region and propagated them through each
-pairwise mapping step (e.g., P56 \(\rightarrow\) P14, P14
-\(\rightarrow\) P4, \ldots, E13.5 \(\rightarrow\) E11.5). This procedure
-created time-indexed point sets tracing the spatial evolution of each
-region.
+We first coalesced the anatomical labels across the seven DevCCF
+templates (E11.5, E13.5, E15.5, E18.5, P4, P14, P56) into 26 common
+structures that could be consistently identified across development.
+These include major brain regions such as the cortex, cerebellum,
+hippocampus, midbrain, and ventricles. For each successive pair of
+templates, we performed multi-label deformable registration using ANTsX
+to generate forward and inverse transforms between anatomical label
+volumes. From the P56 space, we randomly sampled approximately 1e6
+points within and along the boundaries of each labeled region and
+propagated them through each pairwise mapping step (e.g., P56
+\(\rightarrow\) P14, P14 \(\rightarrow\) P4, \ldots, E13.5
+\(\rightarrow\) E11.5). This procedure created time-indexed point sets
+tracing the spatial evolution of each region.
 
-\textbf{Velocity field fitting.} Using these point sets, we fit a
-continuous velocity field over developmental time using a generalized
-B-spline scattered data approximation method\textsuperscript{86}. The
-field was parameterized over a log-scaled time axis to ensure finer
-temporal resolution during early embryonic stages, where morphological
-changes are most rapid. Optimization proceeded for approximately 125
-iterations, minimizing the average Euclidean norm between transformed
-points at each step. Ten integration points were used to ensure
-numerical stability. The result is a smooth, differentiable vector field
-that defines a diffeomorphic transform between any two timepoints within
-the template range.
+Using these point sets, we fit a continuous velocity field over
+developmental time using a generalized B-spline scattered data
+approximation method\textsuperscript{86}. The field was parameterized
+over a log-scaled time axis to ensure finer temporal resolution during
+early embryonic stages, where morphological changes are most rapid.
+Optimization proceeded for approximately 125 iterations, minimizing the
+average Euclidean norm between transformed points at each step. Ten
+integration points were used to ensure numerical stability. The result
+is a smooth, differentiable vector field that defines a diffeomorphic
+transform between any two timepoints within the template range.
 
-\textbf{Applications and availability.} This velocity model can be used
-to estimate spatial transformations between any pair of developmental
-stages---even those for which no empirical template exists---allowing
-researchers to create interpolated atlases, align new datasets, or
-measure continuous structural changes. It also enables developmental
-alignment of multi-modal data (e.g., MRI to LSFM) by acting as a
-unifying spatiotemporal scaffold. The underlying components for velocity
-field fitting and integration are implemented in ITK, and the complete
-workflow is accessible in both ANTsPy
+This velocity model can be used to estimate spatial transformations
+between any pair of developmental stages---even those for which no
+empirical template exists---allowing researchers to create interpolated
+atlases, align new datasets, or measure continuous structural changes.
+It also enables developmental alignment of multi-modal data (e.g., MRI
+to LSFM) by acting as a unifying spatiotemporal scaffold. The underlying
+components for velocity field fitting and integration are implemented in
+ITK, and the complete workflow is accessible in both ANTsPy
 (\texttt{ants.fit\_time\_varying\_transform\_to\_point\_sets(...)}) and
 ANTsR. In addition the availability of the DevCCF use case,
 self-contained examples and usage tutorials are provided in our public
@@ -1037,13 +1028,13 @@ available through ANTsXNet, all training scripts and data augmentation
 generators are publicly available at
 \textbf{\url{https://github.com/ntustison/ANTsXNetTraining}}.
 
-\textbf{Data augmentation.} Robust data augmentation was critical to
-generalization across scanners, contrast types, and resolutions. We
-applied both intensity- and shape-based augmentation strategies:
+Robust data augmentation was critical to generalization across scanners,
+contrast types, and resolutions. We applied both intensity- and
+shape-based augmentation strategies:
 
 \begin{itemize}
 \item
-  \emph{Intensity augmentations:}
+  Intensity augmentations:
 
   \begin{itemize}
   \tightlist
@@ -1060,7 +1051,7 @@ applied both intensity- and shape-based augmentation strategies:
     \texttt{antspynet.histogram\_warp\_image\_intensities(...)}
   \end{itemize}
 \item
-  \emph{Shape augmentations:}
+  Shape augmentations:
 
   \begin{itemize}
   \tightlist
@@ -1878,7 +1869,8 @@ The authors declare no competing interests. \clearpage
 
 \clearpage
 
-\section{Figure Legends}\label{figure-legends}
+\section*{Figure Legends}\label{figure-legends}
+\addcontentsline{toc}{section}{Figure Legends}
 
 \textbf{Figure 1.} Overview of ANTsX pipelines for mapping MERFISH and
 fMOST data to the AllenCCFv3. Diagram of the two ANTsX-based pipelines

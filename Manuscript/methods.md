@@ -18,7 +18,7 @@ spatial registration, template generation, and visualization. Table
 \ref{table:methods} provides a concise summary of the relevant ANTsX
 functionality.
 
-**Preprocessing: bias field correction and denoising.** Standard preprocessing
+Standard preprocessing
 steps in mouse brain imaging include correcting for spatial intensity
 inhomogeneities and reducing image noise, both of which can impact registration
 accuracy and downstream analysis. ANTsX provides implementations of widely used
@@ -28,7 +28,7 @@ mitigates artifactual, low-frequency intensity variation and is accessible via
 `ants.n4_bias_field_correction(...)`. Patch-based denoising [@Manjon:2010aa] has
 been implemented as `ants.denoise_image(...)`.
 
-**Image registration.** ANTsX includes a robust and flexible framework for
+ANTsX includes a robust and flexible framework for
 pairwise and groupwise image registration [@Avants:2014aa]. At its core is the
 SyN algorithm [@Avants:2008aa], a symmetric diffeomorphic model with optional
 B-spline regularization [@Tustison:2013ac]. In ANTsPy, registration is performed
@@ -37,14 +37,14 @@ via `ants.registration(...)` using preconfigured parameter sets (e.g.,
 imaging modalities and levels of computational demand. Resulting transformations
 can be applied to new images with `ants.apply_transforms(...)`.
 
-**Template generation.** ANTsX supports population-based template generation
+ANTsX supports population-based template generation
 through iterative pairwise registration to an evolving estimate of the mean
 shape and intensity reference space across subjects [@Avants:2010aa]. This
 functionality was used in generating the DevCCF templates [@Kronman:2024aa]. The
 procedure, implemented as `ants.build_template(...)`, produces average images in
 both shape and intensity by aligning all inputs to a common evolving template.
 
-**Visualization.** To support visual inspection and quality control, ANTsPy
+To support visual inspection and quality control, ANTsPy
 provides flexible image visualization with `ants.plot(...)`. This function
 enables multi-slice and multi-orientation rendering with optional overlays and
 label maps.
@@ -53,7 +53,7 @@ label maps.
 
 ## Mapping fMOST data to AllenCCFv3
 
-**Preprocessing.** Mapping fMOST data into the AllenCCFv3 presents unique
+Mapping fMOST data into the AllenCCFv3 presents unique
 challenges due to its native ultra-high resolution and imaging artifacts common
 to the fMOST modality. Each fMOST image can exceed a terabyte in size, with
 spatial resolutions far exceeding those of the AllenCCFv3 (25 $\mu m$
@@ -70,7 +70,7 @@ along a user-specified axis in the Fourier domain. In addition, intensity
 inhomogeneity across sections, often arising from variable staining or
 illumination, was corrected using N4 bias field correction.
 
-**Template-based spatial normalization.** To facilitate reproducible mapping, we
+To facilitate reproducible mapping, we
 first constructed a contralaterally symmetric average template from 30 fMOST
 brains and their mirrored counterparts using ANTsX template-building tools.
 Because the AllenCCFv3 and fMOST data differ substantially in both intensity
@@ -87,7 +87,7 @@ Each new fMOST brain was then registered to the average fMOST template using
 intensity-based registration, followed by concatenation of transforms to produce
 the final mapping into AllenCCFv3 space. 
 
-**Mapping neuron projections.** A key advantage of fMOST imaging is its ability
+A key advantage of fMOST imaging is its ability
 to support single neuron projection reconstruction across the entire brain
 [@Peng:2021aa]. Because these reconstructions are stored as 3D point sets
 aligned to the original fMOST volume, we applied the same composite transform
@@ -99,7 +99,7 @@ facilitating comparative analyses across specimens.
 
 ## Mapping MERFISH data to AllenCCFv3
 
-**Preprocessing.** MERFISH data are acquired as a series of 2D tissue sections,
+MERFISH data are acquired as a series of 2D tissue sections,
 each comprising spatially localized gene expression measurements at subcellular
 resolution. To enable 3D mapping to the AllenCCFv3, we first constructed
 anatomical reference images by aggregating the number of detected transcripts
@@ -114,7 +114,7 @@ tissue loss. To further constrain alignment and enable deformable registration,
 we derived region-level anatomical labels directly from the gene expression
 data.
 
-**Label creation.** To assign region labels to the MERFISH data, we use a cell
+To assign region labels to the MERFISH data, we use a cell
 type clustering approach previously detailed [@Yao:2023aa]. In short,
 manually dissected scRNAseq data was used to establish the distribution of cell
 types present in each of the following major regions: cerebellum, CTXsp,
@@ -126,7 +126,7 @@ found at low frequency in regions outside its main region we calculated for each
 cell its 50 nearest neighbors in physical space and reassigned each cell to the
 region annotation dominating its neighborhood.
 
-**Section matching via global alignment.** A major challenge was compensating
+A major challenge was compensating
 for oblique cutting angles and non-uniform section thickness, which distort the
 anatomical shape and spacing of the reconstructed volume. Rather than directly
 warping the MERFISH data into atlas space, we globally aligned the AllenCCFv3 to
@@ -135,7 +135,7 @@ followed by resampling of AllenCCFv3 sections to match the number and
 orientation of MERFISH sections. This approach minimizes interpolation artifacts
 in the MERFISH data and facilitates one-to-one section matching.
 
-**Landmark-driven deformable alignment.** We used a 2.5D approach for fine
+We used a 2.5D approach for fine
 alignment of individual sections. In each MERFISH slice, deformable registration
 was driven by sequential alignment of anatomical landmarks between the label
 maps derived from MERFISH and AllenCCFv3. A total of nine regions, including
@@ -169,7 +169,7 @@ deformation of anatomical structures over time. Importantly, the framework is
 extensible and can naturally accommodate additional timepoints for the 
 potential expansion of the DevCCF. 
 
-**Point sampling and region correspondence.** We first coalesced the anatomical
+We first coalesced the anatomical
 labels across the seven DevCCF templates (E11.5, E13.5, E15.5, E18.5, P4, P14,
 P56) into 26 common structures that could be consistently identified across
 development. These include major brain regions such as the cortex, cerebellum,
@@ -182,7 +182,7 @@ each labeled region and propagated them through each pairwise mapping step
 E11.5). This procedure created time-indexed point sets tracing the spatial
 evolution of each region.
 
-**Velocity field fitting.** Using these point sets, we fit a continuous velocity
+Using these point sets, we fit a continuous velocity
 field over developmental time using a generalized B-spline scattered data
 approximation method [@Tustison:2006aa]. The field was parameterized over a
 log-scaled time axis to ensure finer temporal resolution during early embryonic
@@ -193,7 +193,7 @@ numerical stability. The result is a smooth, differentiable vector field that
 defines a diffeomorphic transform between any two timepoints within the template
 range.
 
-**Applications and availability.** This velocity model can be used to estimate
+This velocity model can be used to estimate
 spatial transformations between any pair of developmental stages—even those for
 which no empirical template exists—allowing researchers to create interpolated
 atlases, align new datasets, or measure continuous structural changes. It also
@@ -239,12 +239,11 @@ available through ANTsXNet, all training scripts and data augmentation
 generators are publicly available at
 **[https://github.com/ntustison/ANTsXNetTraining](https://github.com/ntustison/ANTsXNetTraining)**.
 
-
-**Data augmentation.** Robust data augmentation was critical to generalization
+Robust data augmentation was critical to generalization
 across scanners, contrast types, and resolutions. We applied both intensity- and
 shape-based augmentation strategies:
 
-* *Intensity augmentations:*
+* Intensity augmentations:
 
   * Gaussian, Poisson, and salt-and-pepper noise:  
     `ants.add_noise_to_image(...)`
@@ -253,7 +252,7 @@ shape-based augmentation strategies:
   * Histogram warping to simulate contrast variation [@Tustison:2021ab]:   
     `antspynet.histogram_warp_image_intensities(...)`
 
-* *Shape augmentations:*
+* Shape augmentations:
 
   * Random nonlinear deformations and affine transforms:  
     `antspynet.randomly_transform_image_data(...)`

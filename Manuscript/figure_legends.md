@@ -1,7 +1,7 @@
 
 \clearpage
 
-# Figure Legends
+# Figure Legends {-}
 
 __Figure 1.__ Overview of ANTsX pipelines for mapping MERFISH and fMOST data to
 the AllenCCFv3. Diagram of the two ANTsX-based pipelines for mapping (a) MERFISH
