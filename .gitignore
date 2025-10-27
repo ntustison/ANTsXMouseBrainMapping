@@ -1,6 +1,13 @@
 .DS_Store
 PairwiseRegistrations*
 
+stitched.aux
+stitched.fdb_latexmk
+stitched.fls
+stitched.md
+stitched.pdf
+stitched.synctex.gz
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
