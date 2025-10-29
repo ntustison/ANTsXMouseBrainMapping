@@ -18,7 +18,7 @@ DevCCF. Annotated regions representing common labels across developmental
 stages, shown for both P4 and P14.
 
 __Figure 4.__ Convergence and evaluation of the velocity flow model across the
-DevCCF develop- mental trajectory. (Top left) Total displacement error over
+DevCCF developmental trajectory. (Top left) Total displacement error over
 iterations. (Top right) Median displacement error per integration point across
 the optimization timeline, spanning embryonic (E11.5) to postnatal (P56) stages.
 (Bottom) Dice similarity scores comparing region-level label overlap between:
