@@ -1,5 +1,5 @@
 
-## The Advanced Normalization Tools Ecosystem (ANTsX)
+<!-- ## The Advanced Normalization Tools Ecosystem (ANTsX) -->
 
 The Advanced Normalization Tools Ecosystem (ANTsX) has been used in a number of
 applications for mapping mouse brain data as part of core processing steps in
@@ -36,7 +36,7 @@ highlights usage across distinct BICCN projects such as spatial transcriptomic
 data from MERFISH, structural data from fMOST, and multimodal developmental data
 from LSFM and MRI. 
 
-## Novel ANTsX-based open-source contributions
+<!-- ## Novel ANTsX-based open-source contributions -->
 
 We introduce two novel contributions to ANTsX developed as part of collabortive
 efforts in creating the Developmental Common Coordinate Framework (DevCCF)

@@ -2,13 +2,12 @@
 \PassOptionsToPackage{unicode}{hyperref}
 \PassOptionsToPackage{hyphens}{url}
 \PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+%
 \documentclass[
   12pt,
 ]{article}
-\usepackage{xcolor}
-\usepackage[margin=1.0in]{geometry}
 \usepackage{amsmath,amssymb}
-\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{setspace}
 \usepackage{iftex}
 \ifPDFTeX
   \usepackage[T1]{fontenc}
@@ -22,7 +21,7 @@
 \usepackage{lmodern}
 \ifPDFTeX\else
   % xetex/luatex font selection
-    \setmainfont[]{Georgia}
+  \setmainfont[]{Georgia}
 \fi
 % Use upquote if available, for straight quotes in verbatim environments
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
@@ -30,7 +29,6 @@
   \usepackage[]{microtype}
   \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
 }{}
-\usepackage{setspace}
 \makeatletter
 \@ifundefined{KOMAClassName}{% if non-KOMA class
   \IfFileExists{parskip.sty}{%
@@ -41,21 +39,25 @@
 }{% if KOMA class
   \KOMAoptions{parskip=half}}
 \makeatother
+\usepackage{xcolor}
+\usepackage[margin=1.0in]{geometry}
 \usepackage{graphicx}
 \makeatletter
-\newsavebox\pandoc@box
-\newcommand*\pandocbounded[1]{% scales image to fit in text height/width
-  \sbox\pandoc@box{#1}%
-  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
-  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
-  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi% select the smaller of both
-  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
-  \else\usebox{\pandoc@box}%
-  \fi%
-}
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
 % Set default figure placement to htbp
+\makeatletter
 \def\fps@figure{htbp}
 \makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
 % definitions for citeproc citations
 \NewDocumentCommand\citeproctext{}{}
 \NewDocumentCommand\citeproc{mm}{%
@@ -85,13 +87,10 @@
   \setlength{\itemsep}{#2\baselineskip}}}
  {\end{list}}
 \usepackage{calc}
-\newcommand{\CSLBlock}[1]{\hfill\break\parbox[t]{\linewidth}{\strut\ignorespaces#1\strut}}
+\newcommand{\CSLBlock}[1]{\hfill\break#1\hfill\break}
 \newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{\strut#1\strut}}
 \newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{\strut#1\strut}}
 \newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
-\setlength{\emergencystretch}{3em} % prevent overfull lines
-\providecommand{\tightlist}{%
-  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 \usepackage{longtable}
 \usepackage{graphicx}
 \usepackage{booktabs}
@@ -109,7 +108,10 @@
 \definecolor{listnumbers}{gray}{0.65}
 \definecolor{listlightgray}{gray}{0.955}
 \definecolor{listwhite}{gray}{1.0}
-\usepackage{bookmark}
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
 \urlstyle{same}
 \hypersetup{
@@ -161,15 +163,15 @@ James C. Gee\textsuperscript{2,\textrm{\Letter}}
 
 \small
 
-\textsuperscript{1}Department of Radiology and Medical Imaging, University of Virginia, Charlottesville, VA \\
-\textsuperscript{2}Department of Radiology, University of Pennsylvania, Philadelphia, PA \\
-\textsuperscript{3}Department of Neuroscience and Experimental Therapeutics, Penn State University, Hershey, PA \\
-\textsuperscript{4}Allen Institute for Brain Science, Seattle, WA \\
-\textsuperscript{5}Santiago High School, Corona, CA \\
+\textsuperscript{1}Department of Radiology and Medical Imaging, University of Virginia, Charlottesville, VA, USA \\
+\textsuperscript{2}Department of Radiology, University of Pennsylvania, Philadelphia, PA, USA \\
+\textsuperscript{3}Department of Neuroscience and Experimental Therapeutics, Penn State University, Hershey, PA, USA \\
+\textsuperscript{4}Allen Institute for Brain Science, Seattle, WA, USA \\
+\textsuperscript{5}Santiago High School, Corona, CA, USA
 
 \end{centering}
 
-\vspace{3.5 cm}
+\vspace{2.5 cm}
 
 \noindent
 
@@ -246,9 +248,6 @@ the Allen Mouse Brain Common Coordinate Framework
 references\textsuperscript{13--15} and developmental
 atlases\textsuperscript{16,17} that track structural change across time.
 
-\subsection{Mouse brain mapping
-challenges}\label{mouse-brain-mapping-challenges}
-
 Robust mapping of cell type data into CCFs is essential for integrative
 analysis of morphology, connectivity, and molecular identity. However,
 each modality poses unique challenges. For example, differences in
@@ -313,9 +312,6 @@ data types. We first introduce key components of the ANTsX toolkit,
 which provide a basis for all of the mapping workflows described here,
 and then detail the specific contributions made in each pipeline.
 
-\subsection{The Advanced Normalization Tools Ecosystem
-(ANTsX)}\label{the-advanced-normalization-tools-ecosystem-antsx}
-
 The Advanced Normalization Tools Ecosystem (ANTsX) has been used in a
 number of applications for mapping mouse brain data as part of core
 processing steps in various workflows\textsuperscript{31,46--49},
@@ -353,9 +349,6 @@ challenges of each modality. This paper highlights usage across distinct
 BICCN projects such as spatial transcriptomic data from MERFISH,
 structural data from fMOST, and multimodal developmental data from LSFM
 and MRI.
-
-\subsection{Novel ANTsX-based open-source
-contributions}\label{novel-antsx-based-open-source-contributions}
 
 We introduce two novel contributions to ANTsX developed as part of
 collabortive efforts in creating the Developmental Common Coordinate
@@ -500,14 +493,14 @@ discrete sampling limits the ability to model continuous transformations
 across time. To address this, we developed a velocity flow--based
 modeling approach that enables anatomically plausible, diffeomorphic
 transformations between any two continuous time points within the DevCCF
-range. Unlike traditional pairwise interpolation, which requires
-sequential warping through each intermediate stage, this model, defined
-by a time-varying velocity field (i.e., a smooth vector field defined
-over space and time that governs the continuous deformation of an image
-domain), allows direct computation of deformations between any two time
-points in the continuum which improves smoothness and enables flexible
-spatiotemporal alignment. This functionality is implemented in both
-ANTsR and ANTsPy (see
+range (Figure 2). Unlike traditional pairwise interpolation, which
+requires sequential warping through each intermediate stage, this model,
+defined by a time-varying velocity field (i.e., a smooth vector field
+defined over space and time that governs the continuous deformation of
+an image domain), allows direct computation of deformations between any
+two time points in the continuum which improves smoothness and enables
+flexible spatiotemporal alignment. This functionality is implemented in
+both ANTsR and ANTsPy (see
 \texttt{ants.fit\_time\_varying\_transform\_to\_point\_sets(...)}) and
 integrates seamlessly with existing ANTsX workflows. The velocity field
 is represented as a 4D ITK image where each voxel stores the
@@ -539,9 +532,9 @@ both boundary (contour) and interior (region) points from the P56 labels
 and propagated them to each developmental stage using the learned
 pairwise transforms. Contours were sampled at 10\% of available points
 and regions at 1\%, yielding 173,303 total points per atlas
-(\(N_{contour} = 98{,}151\); \(N_{region} =
-75{,}152\)). Boundary points were assigned double weight during
-optimization to emphasize anatomical boundary correspondence.
+(\(N_{contour} = 98{,}151\); \(N_{region} = 75{,}152\)). Boundary points
+were assigned double weight during optimization to emphasize anatomical
+boundary correspondence.
 
 The velocity field was optimized using the seven corresponding point
 sets and their associated weights. The field geometry was defined at
@@ -670,8 +663,8 @@ used in training the brain extraction and parcellation networks. Data
 includes 12 specimens each imaged at seven time points (Day 0, Day 3,
 Week 1, Week 4, Week 8, Week 20) with in-house-generated brain masks
 (i.e., produced by the data providers) for a total of 84 images. Spacing
-is anistropic with an in-plane resolution of \(0.1
-\times 0.1\) mm\(^2\) and a slice thickness of \(0.5\) mm.
+is anistropic with an in-plane resolution of \(0.1 \times 0.1\) mm\(^2\)
+and a slice thickness of \(0.5\) mm.
 
 Figure\,8 summarizes the whole-brain overlap between manually segmented
 reference masks and the predicted segmentations for all 84 images in the
@@ -1851,7 +1844,7 @@ extraction network.
 \addcontentsline{toc}{section}{Author contributions}
 
 N.T., M.C., and J.G. wrote the main manuscript text and figures. M.C.,
-M.K., R.D., S.S., Q.W., L.G., J.D., C.G., and J.G. developed the Allen
+M.K., R.D., S.S., Q.W., L.N., J.D., C.G., and J.G. developed the Allen
 registration pipelines. N.T., F.K., J.G., and Y.K. developed the
 time-varying velocity transformation model for the DevCCF. N.T. and M.T.
 developed the brain parcellation and cortical thickness methodology. All
@@ -1889,7 +1882,7 @@ of the DevCCF. Annotated regions representing common labels across
 developmental stages, shown for both P4 and P14.
 
 \textbf{Figure 4.} Convergence and evaluation of the velocity flow model
-across the DevCCF develop- mental trajectory. (Top left) Total
+across the DevCCF developmental trajectory. (Top left) Total
 displacement error over iterations. (Top right) Median displacement
 error per integration point across the optimization timeline, spanning
 embryonic (E11.5) to postnatal (P56) stages. (Bottom) Dice similarity

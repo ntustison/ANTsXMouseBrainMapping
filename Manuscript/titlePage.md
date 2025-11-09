@@ -33,15 +33,15 @@ James C. Gee\textsuperscript{2,\textrm{\Letter}}
 
 \small
 
-\textsuperscript{1}Department of Radiology and Medical Imaging, University of Virginia, Charlottesville, VA \\
-\textsuperscript{2}Department of Radiology, University of Pennsylvania, Philadelphia, PA \\
-\textsuperscript{3}Department of Neuroscience and Experimental Therapeutics, Penn State University, Hershey, PA \\
-\textsuperscript{4}Allen Institute for Brain Science, Seattle, WA \\
-\textsuperscript{5}Santiago High School, Corona, CA \\
+\textsuperscript{1}Department of Radiology and Medical Imaging, University of Virginia, Charlottesville, VA, USA \\
+\textsuperscript{2}Department of Radiology, University of Pennsylvania, Philadelphia, PA, USA \\
+\textsuperscript{3}Department of Neuroscience and Experimental Therapeutics, Penn State University, Hershey, PA, USA \\
+\textsuperscript{4}Allen Institute for Brain Science, Seattle, WA, USA \\
+\textsuperscript{5}Santiago High School, Corona, CA, USA
 
 \end{centering}
 
-\vspace{3.5 cm}
+\vspace{2.5 cm}
 
 \noindent\rule{4cm}{0.4pt}
 

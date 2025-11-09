@@ -20,7 +20,7 @@ Although this collection provides broad developmental coverage, its discrete
 sampling limits the ability to model continuous transformations across time. To
 address this, we developed a velocity flow–based modeling approach that enables
 anatomically plausible, diffeomorphic transformations between any two continuous
-time points within the DevCCF range. Unlike traditional pairwise interpolation,
+time points within the DevCCF range (Figure 2). Unlike traditional pairwise interpolation,
 which requires sequential warping through each intermediate stage, this model,
 defined by a time-varying velocity field (i.e., a smooth vector field defined
 over space and time that governs the continuous deformation of an image domain),

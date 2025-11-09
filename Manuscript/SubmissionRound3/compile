@@ -1,0 +1,16 @@
+
+paper=$1
+if [ ${#paper} -lt 2 ] ; then 
+ echo usage 
+ echo $0 myfile
+ exit
+else 
+ paper=` echo $paper | cut -d '.' -f 1 `
+fi
+echo compiling $paper to pdf 
+for x in 1 2 3 ; do
+  pdflatex $paper 
+  bibtex $paper
+done
+rm $paper.aux $paper.log $paper.spl $paper.bbl $paper.blg $paper.out
+

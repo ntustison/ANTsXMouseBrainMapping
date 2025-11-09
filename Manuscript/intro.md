@@ -25,7 +25,7 @@ Framework (CCFv3) [@Wang:2020aa]. Other CCFs include modality-specific
 references [@perens:2021aa;@ma:2005aa;@qu:2022aa] and developmental atlases
 [@Kronman:2024aa;@chuang:2011aa] that track structural change across time.
 
-## Mouse brain mapping challenges
+<!-- ## Mouse brain mapping challenges -->
 
 Robust mapping of cell type data into CCFs is essential for integrative analysis
 of morphology, connectivity, and molecular identity. However, each modality
