@@ -1,6 +1,6 @@
 [![DOI](https://zenodo.org/badge/660785162.svg)](https://doi.org/10.5281/zenodo.17451722)
 
-# [The ANTsX ecosystem for mapping the mouse brain]([https://www.nature.com/articles/s41467-025-66741-5])
+# [The ANTsX ecosystem for mapping the mouse brain](https://www.nature.com/articles/s41467-025-66741-5)
 
 Two novel open-source contributions:
 
